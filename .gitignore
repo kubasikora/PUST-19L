@@ -40,6 +40,7 @@
 *.synctex.gz(busy)
 *.pdfsync
 
+
 ## Auxiliary and intermediate files from other packages:
 # algorithms
 *.alg
@@ -240,3 +241,6 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+# result file
+*.pdf
