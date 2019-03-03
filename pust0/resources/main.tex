@@ -1,0 +1,79 @@
+\documentclass{mwrep}
+
+% Polskie znaki
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{indentfirst}
+
+% Strona tytułowa
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\usepackage{paracol}
+
+% Pływające obrazki
+\usepackage{float}
+\usepackage{svg}
+\usepackage{graphicx}
+
+% table of contents refs
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage{listings}
+
+\usepackage{subfiles}
+
+\SendSettingsToPgf
+\title{\bf __PROJECT_NAME__ \vskip 0.1cm}
+\author{__AUTHORS__}
+\date{\today}
+\pgfplotsset{compat=1.15}	
+\begin{document}
+
+\makeatletter
+\renewcommand{\maketitle}{\begin{titlepage}
+		\begin{center}{
+				\LARGE {\bf Politechnika Warszawska}}\\
+            \vspace{0.4cm}
+            \leftskip-0.9cm
+            {\LARGE {\bf \mbox{Wydział Elektroniki i Technik Informacyjnych}}}\\
+            \vspace{0.2cm}
+            {\LARGE {\bf \mbox{Instytut Automatyki i Informatyki Stosowanej}}}\\
+            
+            \vspace{5cm}
+            \leftskip-1.3cm
+			{\bf \Huge \mbox{__COURSE_NAME__} \vskip 0.1cm}
+		\end{center}
+		\vspace{0.1cm}
+
+		\begin{center}
+			{\bf \LARGE \@title}
+		\end{center}
+
+		\vspace{10cm}
+		\begin{paracol}{2}
+			\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+			\subsection*{Zespół:}
+			\bf{ \Large{ \noindent\@author \par}}
+			\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+			\switchcolumn \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+			\subsection*{Prowadzący:}
+			\bf{\Large{\noindent __TEACHER__}}
+			\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+		\end{paracol}
+		\vspace*{\stretch{6}}
+		\begin{center}
+			\bf{\large{Warszawa, \@date\vskip 0.1cm}}
+		\end{center}
+	\end{titlepage}
+}
+\makeatother
+\maketitle
+\tableofcontents
+
+
+\end{document}
