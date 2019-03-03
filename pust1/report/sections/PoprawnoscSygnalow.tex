@@ -1,0 +1,36 @@
+\chapter{Sprawdzenie poprawności wartości sygnałów $U_{\mathrm{pp}}$ i $Y_{\mathrm{pp}}$}
+\label{zad1}
+
+\section{Opis eksperymentu}
+Aby sprawdzić poprawność wartości sygnałów $U_{\mathrm{pp}}$ i $Y_{\mathrm{pp}}$ wykonaliśmy eksperyment polegający na
+pobudzeniu wejścia obiektu stałym sygnałem o wartości $U_{\mathrm{pp}}$ i sprawdzeniu czy sygnał wyjściowy stabilizuje 
+się na wartości $Y_{\mathrm{pp}}$. Symulację obiektu przeprowadziliśmy za pomocą funkcji 
+\verb+symulacja_obiektu1Y+. Spodziewanym wyjściem procesu dla wejścia $U_{\mathrm{pp}} = \num{0.5}$ jest
+wyjście równe $Y_{\mathrm{pp}} = \num{4}$.
+
+\section{Przeprowadzenie badań}
+Eksperyment przeprowadziliśmy za pomocą skryptu \verb+zad1.m+, którego zadaniem było przeprowadzenie symulacji 
+oraz zapis danych do pliku. Zebrana odpowiedź obiektu została przedstawiona na rysunku \ref{zad1_output}. Obiekt 
+przy stałym pobudzeniu $U_{\mathrm{pp}} = \num{0.5}$, stabilizuje sygnał wyjściowy na wartości $Y_{\mathrm{pp}} = \num{4}$.
+Jednoznacznie potwierdza to poprawność zadanych wartości.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=200,ymin=0,ymax=8,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    xtick={0, 50, 100, 150, 200},
+    ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/zad1_output.csv};
+    \legend{$y[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź symulowanego procesu na stałe wejście o wartości $U_{\mathrm{pp}}$}
+    \label{zad1_output}
+\end{figure}
