@@ -3,8 +3,7 @@
 %          Projekt 1, zadanie 1
 %
 %   Weryfikacja poprawności wartości
-%   sygnałów Upp i Ypp
-%                                         
+%   sygnałów Upp i Ypp                                      
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% tworzenie sygnalu sterujacego i wczytanie funkcji symulującej obiekt
@@ -17,7 +16,7 @@ output = zeros(sim_len, 1);
 
 %% symulacja obiektu
 for k=12:sim_len
-    output(k) = symulacja_obiektu1Y(input(k-10),input(k-11), output(k-1), output(k-2));
+    output(k) = symulacja_obiektu1Y(input(k-10), input(k-11), output(k-1), output(k-2));
 end
 
 plot(time, output, time, input);
