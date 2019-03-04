@@ -1,2 +1,40 @@
-\chapter{Wyznaczanie odpowiedzi skokowej obiektu}
+\chapter{Wyznaczanie odpowiedzi skokowej procesu}
 \label{zad2}
+
+\section{Odpowiedź procesu na skokową zmianę sygnału sterującego}
+\label{zad2_skoki}
+
+
+
+\section{Wyznaczanie charakterystyki statycznej procesu}
+\label{zad2_char_stat}
+Poprzednio przedstawione odpowiedzi skokowe symulowanego procesy pozwalają nam
+na podejrzenie że proces jest liniowy. Aby dokładnie wykreślić charakterystykę statyczną 
+obiektu i z większą pewnością stwierdzić jego liniowość napisaliśmy skrypt \verb+zad2_static.m+,
+którego zadaniem było przeprowadzenie symulacji dla wejść zmieniających się w zakresie ograniczeń
+sygnału sterującego od $U^{\mathrm{min}} = \num{0.3}$ do $U^{\mathrm{max}} = \num{0.7}$. Dla każdego 
+badanego wejścia, program badał wartość na której proces nasycał się. Efektem działania skryptu
+jest rysunek \ref{zad2_stat_wykres}. 
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0.3,xmax=0.7,ymin=3.5,ymax=4.5,
+    xlabel={$u$},
+    ylabel={$y(u)$},
+    xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/zad2_static_char.csv};
+    \legend{$y(u)$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Charakterystka statyczna $y(u)$ symulowanego procesu}
+    \label{zad2_stat_wykres}
+\end{figure}
+
+\section{Analiza właściwości statycznych i dynamicznych procesu}

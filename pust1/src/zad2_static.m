@@ -2,8 +2,8 @@
 %   Projektowanie układów sterowania
 %          Projekt 1, zadanie 1
 %
-%   Zebranie kilku odpowiedzi skokowych 
-%   obiektu                               
+%   Wykreslenie charakterystyki statycznej
+%   y(u) obiektu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% wczytanie funkcji symulującej obiekt i generacja wektorów bazowych
