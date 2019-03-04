@@ -37,4 +37,27 @@ jest rysunek \ref{zad2_stat_wykres}.
     \label{zad2_stat_wykres}
 \end{figure}
 
-\section{Analiza właściwości statycznych i dynamicznych procesu}
+\section{Wzmocnienie statyczne}
+\label{zad2_wzmocnienie}
+Procesy dynamiczne o liniowej dynamice charakteryzują się 
+parametrem zwanym wzmocnieniem statycznym, 
+standardowo oznaczanym przez $K_{\mathrm{stat}}$.
+Opisuje on stosunek między róznicą wyjścia procesu w stanie ustalonym i wyjścia w punkcie pracy
+od różnicy stałego wejścia procesu i wejścia w punkcie pracy. Innymi słowy, opisuje on zależność
+wyjścia w stanie ustalonym od wejścia względem pewnego punktu pracy.
+
+\begin{equation}
+K_{\mathrm{stat}} = \lim_{t \to \infty} \frac{y(t)- Y_{\mathrm{pp}}}{u_0 - U_{\mathrm{pp}}}
+\end{equation}
+
+W przypadku tak wykreślonej charakterystyki, wzmocnienie statyczne jest równe tangensowi kąta $\alpha$
+pomiędzy prostą a osią $OX$. 
+\begin{equation}
+K_{\mathrm{stat}} = \tg{\alpha}
+\end{equation}
+
+Dla symulowanego procesu omawianego w tym projekcie wzmocnienie statyczne 
+równe jest $K_{\mathrm{stat}} = 2$. 
+
+
+

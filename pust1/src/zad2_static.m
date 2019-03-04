@@ -24,6 +24,9 @@ for i=1:length(inputs)
 end
 
 %% zapisanie charakterystki statycznej
+hold on
+grid on
+grid minor
 plot(inputs, saturated_outputs);
 static_char = [inputs saturated_outputs];
 dlmwrite("../data/zad2_static_char.csv", static_char, '\t');
