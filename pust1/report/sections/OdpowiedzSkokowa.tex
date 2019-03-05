@@ -4,8 +4,49 @@
 \section{Odpowiedź procesu na skokową zmianę sygnału sterującego}
 \label{zad2_skoki}
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0.0,xmax=200,ymin=3.5,ymax=4.5,
+    xlabel={$t$},
+    ylabel={$y(t)$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$\Delta$ o 0,05},
+    \addlegendentry{$\Delta$ o 0,10},
+    \addlegendentry{$\Delta$ o 0,15},
+    \addlegendentry{$\Delta$ o 0,20},
+    \addlegendentry{$\Delta$ o -0,05},
+    \addlegendentry{$\Delta$ o -0,10},
+    \addlegendentry{$\Delta$ o -0,15},
+    \addlegendentry{$\Delta$ o -0,20},
+    \addlegendimage{no markers,green}
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,yellow}
+	\addlegendimage{no markers,blue}
+	\addlegendimage{no markers,black}
+	\addlegendimage{no markers,orange}
+	\addlegendimage{no markers,brown}
+	\addlegendimage{no markers,violet}
+    \addplot[green, semithick] file{../data/zad2_output0.05.csv};
+    \addplot[red, semithick] file{../data/zad2_output0.1.csv};
+    \addplot[yellow, semithick] file{../data/zad2_output0.15.csv};
+    \addplot[blue, semithick] file{../data/zad2_output0.2.csv};
+    \addplot[black, semithick] file{../data/zad2_output-0.05.csv};
+    \addplot[orange, semithick] file{../data/zad2_output-0.1.csv};
+    \addplot[brown, semithick] file{../data/zad2_output-0.15.csv};
+    \addplot[violet, semithick] file{../data/zad2_output-0.2.csv};
 
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+\end{figure}
 
+Na powyższym wykresie możemy zaobserwować, że wraz z wzrostem wartości skoku rośnie również wartość odpowiedzi procesu y(t). Jest to zachowanie zgodne z naszymi oczekiwaniami przed rozpoczęciem eksperymentu.
 \section{Wyznaczanie charakterystyki statycznej procesu}
 \label{zad2_char_stat}
 Poprzednio przedstawione odpowiedzi skokowe symulowanego procesy pozwalają nam
