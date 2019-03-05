@@ -8,7 +8,7 @@
     \centering
     \begin{tikzpicture}
     \begin{axis}[
-    width=\textwidth,
+    width=0.98\textwidth,
     xmin=0.0,xmax=200,ymin=3.5,ymax=4.5,
     xlabel={$k$},
     ylabel={$y[k]$},
@@ -44,9 +44,14 @@
     \end{axis}
     \end{tikzpicture}
     \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{zad2_porow_odp_skok}
 \end{figure}
 
-Na powyższym wykresie możemy zaobserwować, że wraz z wzrostem wartości skoku rośnie również wartość odpowiedzi procesu y(t). Jest to zachowanie zgodne z naszymi oczekiwaniami przed rozpoczęciem eksperymentu.
+Na wykresie \ref{zad2_porow_odp_skok} możemy zaobserwować, że wraz z wzrostem wartości skoku 
+rośnie również wartość odpowiedzi procesu y[k]. Zachowanie procesu jest zgodne 
+z typową charakterystyką obiektów dynamicznych liniowych, w których wartość ustalona 
+zmienia się liniowo wraz ze zmianą sygnału sterującego. 
+
 \section{Wyznaczanie charakterystyki statycznej procesu}
 \label{zad2_char_stat}
 Poprzednio przedstawione odpowiedzi skokowe symulowanego procesy pozwalają nam
@@ -61,7 +66,7 @@ jest rysunek \ref{zad2_stat_wykres}.
     \centering
     \begin{tikzpicture}
     \begin{axis}[
-    width=\textwidth,
+    width=0.98\textwidth,
     xmin=0.3,xmax=0.7,ymin=3.5,ymax=4.5,
     xlabel={$u$},
     ylabel={$y(u)$},
@@ -89,12 +94,14 @@ wyjścia w stanie ustalonym od wejścia względem pewnego punktu pracy.
 
 \begin{equation}
 K_{\mathrm{stat}} = \lim_{t \to \infty} \frac{y(t)- Y_{\mathrm{pp}}}{u_0 - U_{\mathrm{pp}}}
+\label{zad2_wzm_statyczne_wzor}
 \end{equation}
 
 W przypadku tak wykreślonej charakterystyki, wzmocnienie statyczne jest równe tangensowi kąta $\alpha$
 pomiędzy prostą a osią $OX$. 
 \begin{equation}
 K_{\mathrm{stat}} = \tg{\alpha}
+\label{zad2_wzm_statyczne_wzor_tg}
 \end{equation}
 
 Dla symulowanego procesu omawianego w tym projekcie wzmocnienie statyczne 

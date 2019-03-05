@@ -3,4 +3,38 @@
 
 \section{Postać ogólna znormalizowanej odpowiedzi skokowej}
 Znormalizowana odpowiedź skokowa wykorzystywana jest jako model w predykcyjnym
-regulatorze DMC. Jest to zestaw liczb 
+regulatorze DMC. Jest to zestaw liczb $s_{1}, s_{2}, \ldots$, które opisują zachowanie
+procesu przy skoku sterowania z $u_{\mathrm{0}}=\num{0}$ na $u_{\mathrm{1}}=\num{1}$ w chwili $k=\num{0}$. 
+Aby znormalizować uzyskaną wcześniej odpowiedź, biorąc pod uwagę punkt pracy procesu należy
+posłużyć się przekształceniem:
+
+\begin{equation}
+    s_{i} = \frac{s^{\mathrm{0}}_{i} - Y_{\mathrm{pp}}}{U_{\mathrm{s}} - U_{\mathrm{pp}}},  \hbox{ dla } i = 1,2,\ldots
+    \label{zad3_norm_odp_skok_wzor}
+\end{equation}
+
+W celu wyznaczenia znormalizowanej odpowiedzi skokowej napisaliśmy skrypt \verb+zad3.m+,
+który wykonał symulację skoku sterowania o $\Delta u = \num{0,1}$ a następnie za pomocą
+wzoru \ref{zad3_norm_odp_skok_wzor} znormalizował odpowiedź. Efektem działania tego programu
+jest rysunek \ref{zad3_norm_odp}.
+
+\begin{figure}[b]
+    \label{zad3_norm_odp}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=200,ymin=0,ymax=4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    xtick={0, 50, 100, 150, 200},
+    ytick={0, 1, 2, 3, 4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/zad3_norm_odp.csv};
+    \legend{$y[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Postać znormalizowanej odpowiedzi skokowej symulowanego procesu}
+\end{figure}

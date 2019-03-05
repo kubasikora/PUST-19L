@@ -22,7 +22,7 @@ end
 plot(time, output, time, input);
 
 %% zapis danych do pliku
-input_ts = [time input];
-output_ts = [time output];
+input_ts = [time-1 input];
+output_ts = [time-1 output];
 dlmwrite("../data/zad1_input.csv", input_ts, '\t');
 dlmwrite("../data/zad1_output.csv", output_ts, '\t');
