@@ -33,7 +33,7 @@ setpoint = stpt_value*ones(sim_len,1);
 input = Upp*ones(sim_len, 1);
 
 % wektor wyjscia
-output = Ypp*ones(sim_len, 1);
+output = Ypp*ones(sim_len+10, 1);
 
 rescaled_output = 0;
 rescaled_input = zeros(sim_len, 1);
@@ -70,6 +70,10 @@ for k = 12:sim_len
     end   
     input(k) = input(k) + rescaled_input(k);
 end
+
+% przyciecie wektora wyjscia
+output = output(11:510);
+output(491:500) = output(490);
 
 %% wykresy sterowania oraz wyjscia
 figure(1)
