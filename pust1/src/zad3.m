@@ -28,6 +28,24 @@ output = output / deltaU;
 
 
 %% zapisanie znormalizowanej odpowiedzi skokowej
-norm_resp = [time-1 output];
-plot(time-1, output);
+norm_resp = [time output];
+plot(time, output);
 dlmwrite("../data/zad3_norm_odp.csv", norm_resp, '\t');
+
+
+%% obcięcie odpowiedzi skokowej
+EPS = 0.0001;
+cut_time = 0;
+for i=2:SIM_LEN
+    if (output(i)-output(i-1) < EPS && output(i) ~= 0)
+        cut_time = i;
+        break
+    end
+end
+
+%% zapis obciętej odpowiedzi skokowej
+cut_time_vect = transpose(1:(cut_time));
+cut_response = output(1:cut_time);
+plot(cut_time_vect, cut_response);
+cut_resp = [cut_time_vect cut_response];
+dlmwrite("../data/zad3_cut_norm_odp.csv", cut_resp, '\t');

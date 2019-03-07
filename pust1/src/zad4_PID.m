@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Projektowanie uk³adów sterowania
+%   Projektowanie ukï¿½adï¿½w sterowania
 %          Projekt 1, zadanie 4
 %
-%   Program symuluj¹cy cyfrowy algorytm PID
+%   Program symulujï¿½cy cyfrowy algorytm PID
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Dodanie sciezki ze skryptem symulujacym dzialanie obiektu
@@ -58,7 +58,7 @@ for k = 12:sim_len
     output(k) = symulacja_obiektu1Y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
     rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
-    error(k) = stpt - rescaled_output;   % obliczenie uchyby   
+    error(k) = s    tpt - rescaled_output;   % obliczenie uchyby   
     
     rescaled_input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + rescaled_input(k-1);  % wyliczenie sterowania 
   

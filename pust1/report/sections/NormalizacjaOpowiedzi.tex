@@ -24,11 +24,11 @@ jest rysunek \ref{zad3_norm_odp}.
     \begin{tikzpicture}
     \begin{axis}[
     width=\textwidth,
-    xmin=0,xmax=200,ymin=0,ymax=4,
+    xmin=1,xmax=200,ymin=0,ymax=3,
     xlabel={$k$},
-    ylabel={$y[k]$},
-    xtick={0, 50, 100, 150, 200},
-    ytick={0, 1, 2, 3, 4},
+    ylabel={$s_{k}$},
+    xtick={1, 50, 100, 150, 200},
+    ytick={0, 1, 2, 3},
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
@@ -36,5 +36,55 @@ jest rysunek \ref{zad3_norm_odp}.
     \legend{$y[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Postać znormalizowanej odpowiedzi skokowej symulowanego procesu}
+    \caption{Postać znormalizowanej nieobciętej odpowiedzi skokowej symulowanego procesu}
+\end{figure}
+\FloatBarrier
+
+\section{Stabilizacja odpowiedzi skokowej}
+Współczynniki odpowiedzi skokowej po nasyceniu można odrzucić ponieważ
+nie poprawiają one jakości regulacji a zwiększają narzut obliczeniowy.
+Długość użytecznej odpowiedzi skokowej oznaczamy przez $D$ i nazywamy
+horyzontem dynamiki procesu. \\
+\indent{} Druga część skryptu \verb+zad3.m+ automatycznie 
+wyznacza ten parametr poprzez porównywanie róznic pomiędzy próbkami $y[i]$ a 
+$y[i-1]$. Jeżeli wartości próbek są niezerowe oraz różnica jest mniejsza niż \verb+EPS+.
+Dokładny opis algorytmu został przedstawiony na listingu \ref{zad3_lst}\\
+
+
+\begin{lstlisting}[style=customc,frame=single,label={zad3_lst},caption={Opis automatycznego skracania odpowiedzi skokowej},captionpos=b] 
+EPS = 0.0001;
+cut_time = 0;
+for i=2:SIM_LEN
+    if (output(i)-output(i-1) < EPS && output(i) ~= 0)
+        cut_time = i;
+        break
+    end
+end
+\end{lstlisting}
+
+
+W przypadku rozważanego procesu horyzont dynamiki równy jest $D=\num{91}$. Ostateczna 
+postać odpowiedzi skokowej została przedstawiona na rysunku \ref{zad3_obcieta_norm_odp}.
+Informacja ta zostanie wykorzystana w dalszej części projektu, przy implementacji
+algorytmu DMC.
+
+\begin{figure}[b]
+    \label{zad3_obcieta_norm_odp}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=1,xmax=91,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    xtick={1, 30, 60, 91},
+    ytick={0, 1, 2, 3},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/zad3_cut_norm_odp.csv};
+    \legend{$y[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Ostateczna postać znormalizowanej odpowiedzi skokowej symulowanego procesu}
 \end{figure}
