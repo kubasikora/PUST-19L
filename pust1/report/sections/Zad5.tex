@@ -115,14 +115,204 @@ Wartości liczbowe parametrów:
 \begin{center}
 $K_{r}=0,72 T_{i}=9,5 T_{d}=2,28$
 \end{center}
-\\wskaźnik jakości regulacji:
+~\\wskaźnik jakości regulacji:
 \begin{center}
 $E=1,6185$
 \end{center}
-\\\\Widać, że regulator dostrojony za pomocą metody Zieglera-Nicholsa zachowuje się co najwyżej poprawnie (w stosunkowo krótkim czasie osiąga wartość zadaną). Przebieg sygnału sterującego prezentuje się całkiem dobrze. Jednak nasz zespół miał uwagi do odpowiedzi regulatora na skok wartości zadanej. W takiej sytuacji sygnał na okres około 50 próbek bardzo mocno przekracza wielkość zadaną. Taka sytuacja może być nie do zaakceptowania, wszędzie tam gdzie sterowanie musi być bardzo precyzyjne, a zmiany wartości zadanej są częste i charakteryzują się dużymi skokami. Szukając lepszych nastawów przechodzimy do metody eksperymentalnej w której to jakość regulacji będziemy oceniali jakościowo i ilościowo wg. wzoru:
+~\\\\Widzimy, że regulator dostrojony za pomocą metody Zieglera-Nicholsa zachowuje się co najwyżej poprawnie (w stosunkowo krótkim czasie osiąga wartość zadaną). Przebieg sygnału sterującego prezentuje się całkiem dobrze. Jednak nasz zespół miał uwagi do odpowiedzi regulatora na skok wartości zadanej. W takiej sytuacji sygnał na okres około 50 próbek bardzo mocno przekracza wielkość zadaną. Taka sytuacja może być nie do zaakceptowania, wszędzie tam gdzie sterowanie musi być bardzo precyzyjne, a zmiany wartości zadanej są częste i charakteryzują się dużymi skokami. Szukając lepszych nastawów przechodzimy do metody eksperymentalnej w której to jakość regulacji będziemy oceniali jakościowo i ilościowo wg. wzoru:
 \begin{center}
 $E=\sum_{k-1}^{K_{konc}}(y^{zad}(k)-y(k))^{2}$.
 \end{center}
 
+\indent 3. K=0.45
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.45_Ti_9.5_Td_2.28.csv};
+    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.45_Ti_9.5_Td_2.28.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa układu regulacji}
+    \label{zad5_niegasnące_oscylacje}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.45_Ti_9.5_Td_2.28.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Sygnał sterujący u}
+    \label{zad2_stat_wykres}
+\end{figure}
+\FloatBarrier
+
+\indent 3. K=0.225
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.225_Ti_9.5_Td_2.28.csv};
+    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.225_Ti_9.5_Td_2.28.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa układu regulacji}
+    \label{zad5_niegasnące_oscylacje}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.225_Ti_9.5_Td_2.28.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Sygnał sterujący u}
+    \label{zad2_stat_wykres}
+\end{figure}
+\FloatBarrier
 
 
+\indent 3. Ti=4.9007
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.19152_Ti_4.9007_Td_0.1.csv};
+    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.19152_Ti_4.9007_Td_0.1.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa układu regulacji}
+    \label{zad5_niegasnące_oscylacje}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.19152_Ti_4.9007_Td_0.1.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Sygnał sterujący u}
+    \label{zad2_stat_wykres}
+\end{figure}
+\FloatBarrier
+
+\indent 3. Ti=4.9007 >>> K=0.171 /// male Td
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.171_Ti_5.2007_Td_0.090366.csv};
+    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.171_Ti_5.2007_Td_0.090366.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa układu regulacji}
+    \label{zad5_niegasnące_oscylacje}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.171_Ti_5.2007_Td_0.090366.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Sygnał sterujący u}
+    \label{zad2_stat_wykres}
+\end{figure}
+\FloatBarrier

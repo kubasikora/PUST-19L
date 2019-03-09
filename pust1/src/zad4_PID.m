@@ -48,15 +48,15 @@ rescaled_input = zeros(sim_len, 1);
 % wektor uchybu
 error = zeros(sim_len, 1);
 
-%% Definicja parametrow ciaglych regulatora PID
+% Definicja parametrow ciaglych regulatora PID
+
+K = 0.38*0.45;
+Ti = 5.2007;%1000000;
+Td = 0.090366;
 
 % K = 0.42559*0.45;
-% Ti = 14*0.5;%1000000;
-% Td = 1*0.12;
-
-K = 1.6*0.45;
-Ti = 19*0.5%4.9007;
-Td = 19*0.12%0.090366;
+% Ti = 4.9007%4.9007;
+% Td = 0.090366;
 
 % zoptymalizowane parametry
 % K = 0.20296;
@@ -110,7 +110,7 @@ title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
 
 % zapis do plikow
-%% wypisanie wartosci wspolczynnikow 
+% wypisanie wartosci wspolczynnikow 
 str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td));
 disp(str)
 input_ts = [sim_time-1 input];
