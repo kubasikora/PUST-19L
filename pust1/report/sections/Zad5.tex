@@ -1,0 +1,128 @@
+\chapter{Dobieranie nastawów regulatorów PID i DMC}
+\label{zad5}
+
+\section{Strojenie regulatora PID}
+\label{zad5_PID_wykresy}
+
+Do naszej metody eksperymentalnej włączyliśmy metodę Zieglera-Nicholsa. Taki zabieg miał na celu znalezienie dobrego punktu początkowego od którego mogliśmy zacząć dobierać parametry metodą eksperymentalną.
+
+Dobierając nastawy według metody Zieglera-Nicholsa, stosowaliśmy wzory do obliczenia parametrów regulatora PID: 
+\begin{center}
+$K_{r}=0,6K_{k}, T_{i}=0,5T_{k}, T_{d}=0,12T_{k}$
+\\gdzie $K_{k}$ - wzmocnienie krytyczne, $T_{k}$ - okres oscylacji
+\end{center}
+Na początku doprowadziliśmy układ do granicy stabilności, czyli momentu, w którym zaczęły pojawiać się niegasnące oscylacje. Zrealizowaliśmy to zwiększając współczynnik wzmocnienia $K_{r}$ przy wyłączonych członach całkującym i różniczkującym, w tym momencie regulator stał się regulatorem typu P. Gdy zaobserwowaliśmy niegasnące oscylacje wyznaczyliśmy wzmocnienie krytyczne $K_{k}$, które było równe aktualnemu wzmocnieniu regulatora $K_{r}$ oraz zmierzyliśmy okres oscylacji drgań krytycznych $T_{k}$ ($K_{k} = 1,6 \hspace{0.3 cm} T_{k}=19$). Wiemy że okres próbkowania wynosi $0,5$ s, a okres oscylacji odpowiada $38$ próbką, stąd możemy łatwo wyliczyć okres drgań krytycznych $T_{k}=19$ s. Ustalone wartości $K_{r}$ i $T_{k}$ podstawiliśmy do wzorów przedstawionych wyżej, aby wyliczyć parametry $K_{r}, T_{i}, T_{d}$. 
+\newpage
+Przebieg wyznaczania parametrów dla regulatora PID:
+~\\\\
+\indent 1. Pojawiają się niegasnące oscylacje, w tym momencie możemy określić wartość $T_{k}=19$ i $K_{k}=1.6$ s
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa układu regulacji}
+    \label{zad5_niegasnące_oscylacje}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0.45, ymax=0.75,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Sygnał sterujący u}
+    \label{zad2_stat_wykres}
+\end{figure}
+\FloatBarrier
+
+\indent 2. Poniższe charakterystyki otrzymałem po podstawieniu wartości $K_{k}$ i $T_{k}$ do wzorów na $K_{r}, T_{i}, T_{d}$
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa układu regulacji}
+    \label{zad5_niegasnące_oscylacje}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Sygnał sterujący u}
+    \label{zad2_stat_wykres}
+\end{figure}
+\FloatBarrier
+
+Wartości liczbowe parametrów:
+\begin{center}
+$K_{r}=0,72 T_{i}=9,5 T_{d}=2,28$
+\end{center}
+\\wskaźnik jakości regulacji:
+\begin{center}
+$E=1,6185$
+\end{center}
+\\\\Widać, że regulator dostrojony za pomocą metody Zieglera-Nicholsa zachowuje się co najwyżej poprawnie (w stosunkowo krótkim czasie osiąga wartość zadaną). Przebieg sygnału sterującego prezentuje się całkiem dobrze. Jednak nasz zespół miał uwagi do odpowiedzi regulatora na skok wartości zadanej. W takiej sytuacji sygnał na okres około 50 próbek bardzo mocno przekracza wielkość zadaną. Taka sytuacja może być nie do zaakceptowania, wszędzie tam gdzie sterowanie musi być bardzo precyzyjne, a zmiany wartości zadanej są częste i charakteryzują się dużymi skokami. Szukając lepszych nastawów przechodzimy do metody eksperymentalnej w której to jakość regulacji będziemy oceniali jakościowo i ilościowo wg. wzoru:
+\begin{center}
+$E=\sum_{k-1}^{K_{konc}}(y^{zad}(k)-y(k))^{2}$.
+\end{center}
+
+
+
