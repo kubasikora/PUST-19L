@@ -54,14 +54,6 @@ K = 0.38*0.45;
 Ti = 5.2007;%1000000;
 Td = 0.090366;
 
-% K = 0.42559*0.45;
-% Ti = 4.9007%4.9007;
-% Td = 0.090366;
-
-% zoptymalizowane parametry
-% K = 0.20296;
-% Ti = 4.9007;
-% Td = 0.090366;
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
@@ -113,9 +105,9 @@ hold off
 % wypisanie wartosci wspolczynnikow 
 str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td));
 disp(str)
-input_ts = [sim_time-1 input];
-output_ts = [sim_time-1 output];
-setpoint_ts = [sim_time-1 setpoint];
-dlmwrite(strcat('../data/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
-dlmwrite(strcat('../data/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
-dlmwrite(strcat('../data/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+% input_ts = [sim_time-1 input];
+% output_ts = [sim_time-1 output];
+% setpoint_ts = [sim_time-1 setpoint];
+% dlmwrite(strcat('../data/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
+% dlmwrite(strcat('../data/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
+% dlmwrite(strcat('../data/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
