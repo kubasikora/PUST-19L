@@ -50,9 +50,13 @@ error = zeros(sim_len, 1);
 
 % Definicja parametrow ciaglych regulatora PID
 
-K = 0.38*0.45;
-Ti = 5.2007;%1000000;
-Td = 0.090366;
+% K = 0.38*0.45;
+% Ti = 5.2007;%1000000;
+% Td = 0.090366;
+
+K = 3;
+Ti = 1000000;
+Td = 0;
 
 
 %% Definicja wspolczynnikow regulatora cyfrowego
@@ -75,8 +79,8 @@ for k = 12:sim_len
   
     % ograniczenia  
     if rescaled_input(k) - rescaled_input(k-1) >= dUmax
-        rescaled_input(k) = dUmax + input(k-1);
-    elseif input(k) - rescaled_input(k-1) <= -dUmax
+        rescaled_input(k) = dUmax + rescaled_input(k-1);
+    elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
         rescaled_input(k) = rescaled_input(k-1) - dUmax;
     end   
     input(k) = input(k) + rescaled_input(k);
