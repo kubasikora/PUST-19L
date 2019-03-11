@@ -19,7 +19,7 @@ Td_min = 0.001;
 Td_max = 3;
 
 %% inicjalizacja punktu poczatkowego i opcji funkcji minimalizujacej
-parameters0 = [0.20296 4.9007 0.090366];
+parameters0 = [0.42559*0.45 14*0.5 1*0.12];
 options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter');
 
 %% optymalizacja funkcja fmincon

@@ -45,14 +45,14 @@ error = zeros(sim_len, 1);
 
 %% Definicja parametrow ciaglych regulatora PID
 
-K = 0.19;
-Ti = 4.9;
-Td = 0.088;
+% K = 0.19;
+% Ti = 4.9;
+% Td = 0.088;
 
 % zoptymalizowane parametry
-% K = 0.20296;
-% Ti = 4.9007;
-% Td = 0.090366;
+K = 0.19578;
+Ti = 6.9997;
+Td = 0.1206;
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
@@ -66,7 +66,7 @@ for k = 12:sim_len
     output(k) = symulacja_obiektu1Y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
     rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
-    error(k) = s    tpt - rescaled_output;   % obliczenie uchyby   
+    error(k) = stpt - rescaled_output;   % obliczenie uchyby   
     
     error_sum = error_sum + error(k)^2;
     
