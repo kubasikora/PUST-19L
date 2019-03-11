@@ -19,6 +19,10 @@ Cały proces dobierania parametrów składał się z następujących kroków:
 \end{enumerate}
 \end{center}
 
+Chcąc znaleźć jeszcze lepsze nastawy regulatora, po wyznaczeniu parametrów za pomocą metody Zieglera-Nicholsa, zastosowaliśmy metodę eksperymentalną. W której jakość regulacji ocenialiśmy jakościowo (na podstawie przebiegów sygnałów na wykresach) oraz ilościowo, za pomocą wskaźnika jakości regulacji
+\begin{equation}
+E=\sum_{k-1}^{K_{konc}}(y^{zad}[k]-y[k])^{2}
+\end{equation}
 \subsection{Wyznaczenie wzmocnienia $K_{\mathrm{k}}$ i okresu oscylacji $T_{\mathrm{k}}$}
 Na początku doprowadziliśmy układ do granicy stabilności, czyli momentu
 w którym zaczęły pojawiać się niegasnące oscylacje. Zrealizowaliśmy to
@@ -28,36 +32,26 @@ zwiększając jego wartość w przypadku gasnących oscylacji oraz zmniejszając
 niestabilnej odpowiedzi obiektu.
 
 Gdy ostatecznie zaobserwowaliśmy niegasnące oscylacje zapisaliśmy aktualne wzmocnienie 
-jako wzmocnienie krytyczne $K_{k}$. Dodatkowow zmierzyliśmy okres oscylacji drgań 
-krytycznych $T_{k}$ ($K_{k} = 1,6 T_{k}=19$). Wiedząc że okres próbkowania procesu 
-wynosi $\num{0,5}s$, a zmierzony okres oscylacji wynosił $\num{38}$ próbek, wyliczyliśmy że
-okres drgań krytycznych równa się $T_{k}=19s$. 
+jako wzmocnienie krytyczne $K_{k}$ i zmierzyliśmy okres oscylacji drgań 
+krytycznych $T_{k}$ ($K_{k} = 1,8 T_{k}=18,5 $). Wiedząc że okres próbkowania procesu 
+wynosi $\num{0,5}s$, a zmierzony okres oscylacji wynosił $\num{37}$ próbek, wyliczyliśmy że
+okres drgań krytycznych równa się $T_{k}=18,5s$. 
 
-Analizując przebieg sygnału sterującego zauważyliśmy że sygnał sterujący nasyca się na górnych
-ograniczeniach. Zdecydowaliśmy się jednak zignorować ten fakt, biorąc pod uwagę że eksperyment
-ten ma na celu wyznaczenie tylko wartości początkowych parametrów, które posłużą potem jako
-baza do rozważań w metodzie inżynierskiej.
-%Ustalone wartości $K_{r}$ i $T_{k}$ 
-%podstawiliśmy do wzorów przedstawionych wyżej, aby wyliczyć parametry 
-%$K_{r}, T_{i}, T_{d}$.
-%Przebieg wyznaczania parametrów dla regulatora PID:
-%\\
-%Pojawiają się niegasnące oscylacje, w tym momencie możemy określić wartość $T_{k}=19$ i $K_{k}=\num{1.6}s$ 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=500,ymin=3.7, ymax=4.3,
     xlabel={$k$},
     ylabel={$y[k]$},
-    xtick={0, 100, 200, 300, 400, 500},
-    ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_1.6_Ti_1000000000_Td_0.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/zad5_PID_setpoint_exampleK_1.8_Ti_1000000000000_Td_0.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/zad5_PID_output_exampleK_1.8_Ti_1000000000000_Td_0.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
@@ -73,7 +67,7 @@ baza do rozważań w metodzie inżynierskiej.
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=0.45, ymax=0.75,
+    xmin=0,xmax=500,ymin=0.25, ymax=0.75,
     xlabel={$k$},
     ylabel={$u[k]$},
     %xtick={0, 0.4, 0.5, 0.6, 0.7},
@@ -81,7 +75,7 @@ baza do rozważań w metodzie inżynierskiej.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/zad5_PID_input_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/zad5_PID_input_exampleK_1.8_Ti_1000000000000_Td_0.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
@@ -93,9 +87,10 @@ baza do rozważań w metodzie inżynierskiej.
 \subsection{Wyliczenie parametrów regulatora}
 Dobierając nastawy według metody Zieglera-Nicholsa, 
 stosowaliśmy wzory do obliczenia parametrów regulatora PID: 
+
 \begin{equation}
 \label{zad5_zn_wzory}
-K_{\mathrm{r}}=\num{0,6}K_{\mathrm{k}}; T_{\mathrm{i}}=\num{0,5} T_{\mathrm{k}}; T_{\mathrm{d}}=\num{0,12} T_{\mathrm{k}}
+K_{\mathrm{r}}=\num{0,6}K_{\mathrm{k}}; \hspace{0.5 cm} T_{\mathrm{i}}=\num{0,5} \hspace{0.5 cm} T_{\mathrm{k}}; T_{\mathrm{d}}=\num{0,12} T_{\mathrm{k}}
 \end{equation}
 gdzie:
 \begin{center}
@@ -107,27 +102,17 @@ gdzie:
 
 Wyliczone wartości liczbowe parametrów:
 \begin{center}
-$K_{r}=\num{0,72}
-T_{i}=\num{9,5} 
-T_{d}=\num{2,28}$
+$K_{r}=\num{1,08} \hspace{0.5 cm}
+T_{i}=\num{9,25}   \hspace{0.5 cm}
+T_{d}=\num{2,22}$
 \end{center}
 
-Regulator z parametrami wyznaczonomi przy pomocy metody opisanej przez panów Johna Zieglera i Nathaniela Nicholsa,
-zachowuje się poprawnie. 
+Regulator z parametrami wyznaczonymi przy pomocy metody opisanej przez panów Johna Zieglera i Nathaniela Nicholsa, nadal charakteryzuje się niegasnącymi oscylacjami. Oczywiście takie przebiegi sygnałów nie są dla nas satysfakcjonujące. W następnych korkach udało nam się zażegnać pojawiające się problemy przy takich nastawach. ??????????????????DO pisać ????????????????????????????????????
 
-%opisać jak zachowuje się proces
-
-W metodzie inżynierskiej do oceny zestawu parametrów będziemy posługiwali się wskaźnikiem jakości regulacji danym
-wzorem:
-\begin{equation}
-E=\sum_{k-1}^{K_{konc}}(y^{zad}[k]-y[k])^{2}
-\end{equation}
-W przypadku omawianego regulatora, wskaźnik jakości regulacji równy jest  \mbox{$E=1,6185$}
-
-Na rysunku \ref{zad5_zn_regulator} przedstawiono przebiegu wartości zadanej oraz
+~\\Na rysunku \ref{zad5_zn_regulator} przedstawiono przebiegu wartości zadanej oraz
 wyjścia obiektu z widocznie przedstawionym przeregulowaniem porównywalnym z wysokością 
 skoku wartości zadanej. Rysunek \ref{zad5_zn_sterowanie} przedstawia zmianę sygnału sterującego
-generowanego przez regulator.
+generowanego przez regulator.?????????????????????????????????????????????
 \begin{figure}[b]
     \centering
     \begin{tikzpicture}
@@ -141,8 +126,8 @@ generowanego przez regulator.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.72_Ti_9.5_Td_2.28.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/zad5_PID_setpoint_exampleK_1.08_Ti_9.25_Td_2.22.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/zad5_PID_output_exampleK_1.08_Ti_9.25_Td_2.22.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
@@ -166,7 +151,7 @@ generowanego przez regulator.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/zad5_PID_input_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/zad5_PID_input_exampleK_1.08_Ti_9.25_Td_2.22.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
