@@ -6,8 +6,8 @@ step = step(:, 2);
 
 %% parametry regulatora 
 D = 91;
-N = 91;
-Nu = 91;
+N = 25;
+Nu = 5;
 lambda = 10;
 
 %% Definicja stalych
@@ -76,9 +76,12 @@ for i = 1:N
         end
     end
 end
+A = M' * M;
+B = lambda * eye(Nu);
+C = M';
 
 % macierz K
-K = (M'*M + lambda*eye(Nu))*M';
+K = (A + B)*C;
 
 %% symulacja
 Ke = sum(K(1,:));
