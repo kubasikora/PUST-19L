@@ -6,9 +6,9 @@ step = step(:, 2);
 
 %% parametry regulatora 
 D = 91;
-N = 91;
-Nu = 91;
-lambda = 10;
+N = 30;
+Nu = 3;
+lambda = 0.1;
 
 %% Definicja stalych
 Upp = 0.5;
@@ -95,7 +95,7 @@ for k=12:sim_len
         if (k-i-1) <= 0
             du2 = 0;
         else
-            du2 = rescaled_input(k - i - 1);
+            du2 = input(k - i - 1);
         end 
         dUp(i) = du1 - du2;
     end

@@ -55,9 +55,9 @@ error = zeros(sim_len, 1);
 % Td = 0.088;
 
 % zoptymalizowane parametry
-K = 0.19578;
-Ti = 6.9997;
-Td = 0.1206;
+K = 0.23125;
+Ti = 5.0018;
+Td = 0.015538;
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
