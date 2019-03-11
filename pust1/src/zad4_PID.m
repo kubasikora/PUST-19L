@@ -27,9 +27,14 @@ sim_time = 1:sim_len; % do plotowania
 sim_time = sim_time';
 
 % wartosc zadana
-stpt_value = 4.2;
+stpt_value = 4.211111111111111;
 setpoint = stpt_value*ones(sim_len,1);
 setpoint(1:11) = Ypp;
+
+% setpoint(200:350)=3.8;
+% setpoint(351:500)=4;
+% % setpoint(301:400)=4;
+
 
 % wektor sygnalu sterujacego
 input = Upp*ones(sim_len, 1);
@@ -43,7 +48,7 @@ rescaled_input = zeros(sim_len, 1);
 % wektor uchybu
 error = zeros(sim_len, 1);
 
-%% Definicja parametrow ciaglych regulatora PID
+% Definicja parametrow ciaglych regulatora PID
 
 % K = 0.19;
 % Ti = 4.9;
@@ -62,7 +67,7 @@ r2 = (K*Td)/T;
 
 %% Petla symulujaca dzialanie cyfrowego algorytmu PID
 error_sum = 0;
-for k = 12:sim_len    
+for k = 12:sim_len     
     output(k) = symulacja_obiektu1Y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
     rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
@@ -74,8 +79,8 @@ for k = 12:sim_len
   
     % ograniczenia  
     if rescaled_input(k) - rescaled_input(k-1) >= dUmax
-        rescaled_input(k) = dUmax + input(k-1);
-    elseif input(k) - rescaled_input(k-1) <= -dUmax
+        rescaled_input(k) = dUmax + rescaled_input(k-1);
+    elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
         rescaled_input(k) = rescaled_input(k-1) - dUmax;
     end   
     input(k) = input(k) + rescaled_input(k);
@@ -85,11 +90,6 @@ for k = 12:sim_len
         input(k) = Umin;
     end 
 end
-
-%% to sie moze przydac do generowania plikow z danymi (przesuwa wykres)
-% przyciecie wektora wyjscia
-% output = output(11:500);
-% output(491:500) = output(490);
 
 %% wykresy sterowania oraz wyjscia
 figure(1)
@@ -105,8 +105,13 @@ plot(sim_time, output);
 title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
 
-%% zapis do plikow
+% zapis do plikow
+% wypisanie wartosci wspolczynnikow 
+str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td));
+disp(str)
 % input_ts = [sim_time-1 input];
 % output_ts = [sim_time-1 output];
-% dlmwrite("../data/zad4_PID_input_example.csv", input_ts, '\t');
-% dlmwrite("../data/zad4_PID_output_example.csv", output_ts, '\t');
+% setpoint_ts = [sim_time-1 setpoint];
+% dlmwrite(strcat('../data/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
+% dlmwrite(strcat('../data/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
+% dlmwrite(strcat('../data/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
