@@ -19,7 +19,7 @@ Cały proces dobierania parametrów składał się z następujących kroków:
 \end{enumerate}
 \end{center}
 
-Chcąc znaleźć jeszcze lepsze nastawy regulatora, po wyznaczeniu parametrów za pomocą metody Zieglera-Nicholsa, zastosowaliśmy metodę eksperymentalną. W której jakość regulacji ocenialiśmy jakościowo (na podstawie przebiegów sygnałów na wykresach) oraz ilościowo, za pomocą wskaźnika jakości regulacji
+Chcąc znaleźć jeszcze lepsze nastawy regulatora, po wyznaczeniu parametrów za pomocą metody Zieglera-Nicholsa, zastosowaliśmy metodę eksperymentalną. W której jakość regulacji ocenialiśmy jakościowo (na podstawie przebiegów sygnałów na wykresach) oraz ilościowo, za pomocą wskaźnika jakości regulacji danego wzorem:
 \begin{equation}
 E=\sum_{k-1}^{K_{konc}}(y^{zad}[k]-y[k])^{2}
 \end{equation}
@@ -33,7 +33,7 @@ niestabilnej odpowiedzi obiektu.
 
 Gdy ostatecznie zaobserwowaliśmy niegasnące oscylacje zapisaliśmy aktualne wzmocnienie 
 jako wzmocnienie krytyczne $K_{k}$ i zmierzyliśmy okres oscylacji drgań 
-krytycznych $T_{k}$ ($K_{k} = 1,8 T_{k}=18,5 $). Wiedząc że okres próbkowania procesu 
+krytycznych $T_{k}$ ($K_{k} = 1,8 \hspace{0.3 cm} T_{k}=18,5 $). Wiedząc że okres próbkowania procesu 
 wynosi $\num{0,5}s$, a zmierzony okres oscylacji wynosił $\num{37}$ próbek, wyliczyliśmy że
 okres drgań krytycznych równa się $T_{k}=18,5s$. 
 
@@ -107,12 +107,11 @@ T_{i}=\num{9,25}   \hspace{0.5 cm}
 T_{d}=\num{2,22}$
 \end{center}
 
-Regulator z parametrami wyznaczonymi przy pomocy metody opisanej przez panów Johna Zieglera i Nathaniela Nicholsa, nadal charakteryzuje się niegasnącymi oscylacjami. Oczywiście takie przebiegi sygnałów nie są dla nas satysfakcjonujące. W następnych korkach udało nam się zażegnać pojawiające się problemy przy takich nastawach. ??????????????????DO pisać ????????????????????????????????????
+Regulator z parametrami wyznaczonymi przy pomocy metody opisanej przez panów Johna Zieglera i Nathaniela Nicholsa, nadal charakteryzuje się niegasnącymi oscylacjami. Oczywiście takie przebiegi sygnałów nie są dla nas satysfakcjonujące, z tego powodu użyliśmy metody eksperymentalnej w następnych krokach. Polegała ona na zmianie poszczególnych parametrów i krytycznej ocenie jakości regulacji po takich zmianach. 
 
 ~\\Na rysunku \ref{zad5_zn_regulator} przedstawiono przebiegu wartości zadanej oraz
-wyjścia obiektu z widocznie przedstawionym przeregulowaniem porównywalnym z wysokością 
-skoku wartości zadanej. Rysunek \ref{zad5_zn_sterowanie} przedstawia zmianę sygnału sterującego
-generowanego przez regulator.?????????????????????????????????????????????
+wyjścia obiektu z widocznie przedstawionymi oscylacjami wokół wartości zadanej. Rysunek \ref{zad5_zn_sterowanie} przedstawia zmianę sygnału sterującego
+generowanego przez regulator.
 \begin{figure}[b]
     \centering
     \begin{tikzpicture}
@@ -159,6 +158,61 @@ generowanego przez regulator.?????????????????????????????????????????????
     \label{zad5_zn_sterowanie}
 \end{figure}
 \FloatBarrier
+
+\subsection{Ręczna poprawa wartości wzmocnienia członu proporcjonalnego $K_{\mathrm{r}}$ }
+
+dsafasfd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
