@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Projektowanie uk³adów sterowania
+%   Projektowanie ukï¿½adï¿½w sterowania
 %          Projekt 1, zadanie 4
 %
-%   Program symuluj¹cy cyfrowy algorytm PID
+%   Program symulujï¿½cy cyfrowy algorytm PID
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Dodanie sciezki ze skryptem symulujacym dzialanie obiektu
@@ -19,7 +19,7 @@ Umax = 0.7;
 dUmax = 0.05;
 
 T = 0.5;   
-sim_len = 500;
+sim_len = 600;
 
 %% Inicjalizacja wektorow
 % czas symulacji
@@ -27,8 +27,10 @@ sim_time = 1:sim_len; % do plotowania
 sim_time = sim_time';
 
 % wartosc zadana
-stpt_value = 4.211111111111111;
-setpoint = stpt_value*ones(sim_len,1);
+stpt_value_1 = 4.15;
+stpt_value_2 = 3.91;
+stpt_value_3 = 4.3;
+setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
 setpoint(1:11) = Ypp;
  
 % setpoint(200:350)=3.8;
@@ -55,10 +57,10 @@ error = zeros(sim_len, 1);
 % Td = 0.090366;
 
 K = 0.5;
-Ti = 14.5*0.5;
-Td = 13.5*0.12;%23.5*0.12;
+Ti = 9.25;
+Td = 2.22; 
 
-save_file = false;
+save_file = true;
 % K = 0.19;
 % Ti = 4.9;
 % Td = 0.088;
@@ -129,7 +131,7 @@ if(save_file)
     input_ts = [sim_time-1 input];
     output_ts = [sim_time-1 output];
     setpoint_ts = [sim_time-1 setpoint];
-    dlmwrite(strcat('../data/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
-    dlmwrite(strcat('../data/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
-    dlmwrite(strcat('../data/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
 end
