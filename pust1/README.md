@@ -17,3 +17,4 @@ Zadanie 5 Strojenie PID:
 - wiem że chaber czy Ławryn zabronił ale proponuję czasmi używać h bo przy t i b często zostaje dużo pustego miejsc nie jesteśmy w stanie do kązdego wykresu dawać 0,5 strony a4 opisu (nie ma aż tak dużo zmian) - przemyślcie czy będziemy robili czasmi z h
 - wypunktowanie w pod subsection jest zrobione za pomocą \indent - jest to wersja robocza będziem trzeb to zmineić na coś pod subsection (myślę że same punkty wystarczą - tylko wrzucić to w coś co doda to do spisu treści)
 - wartości parametrów w poszczególnych wykresach są w nazwach plików 
+- nasze ostateczne parametry do PID to: K_0.5 Ti_7.25 Td_1.62 E_1.1056
