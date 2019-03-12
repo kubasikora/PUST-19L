@@ -94,7 +94,7 @@ stosowaliśmy wzory do obliczenia parametrów regulatora PID:
 
 \begin{equation}
 \label{zad5_zn_wzory}
-K_{\mathrm{r}}=\num{0,6}K_{\mathrm{k}}; \hspace{0.5 cm} T_{\mathrm{i}}=\num{0,5} \hspace{0.5 cm} T_{\mathrm{k}}; T_{\mathrm{d}}=\num{0,12} T_{\mathrm{k}}
+K_{\mathrm{r}}=\num{0,6}K_{\mathrm{k}} \hspace{1cm} T_{\mathrm{i}}=\num{0,5} \hspace{1cm} T_{\mathrm{k}} T_{\mathrm{d}}=\num{0,12} T_{\mathrm{k}}
 \end{equation}
 gdzie:
 \begin{center}
@@ -173,9 +173,6 @@ dobrym punktem wyjścia dla metody eksperymentalnej.
     \label{zad5_zn_sterowanie}
 \end{figure}
 \FloatBarrier
-
-
-
 
 \subsection{Ręczna poprawa wartości wzmocnienia członu proporcjonalnego $K_{\mathrm{r}}$ }
 \label{zad5_poprawa_Kr}
@@ -416,7 +413,7 @@ sygnał sterujący nasyca się na górnych ograniczeniach przy większych skoka
 wyjście obiektu cechuje się zwiększonym przeregulowaniem i porównywalnym czasem regulacji. Omawiane przebiegi
 znajdują się na rysunkach \ref{zad5_4_Ti_odp} i \ref{zad5_4_zmiana_Ti}. 
 
-Biorąc pod uwagę powyższe rozważania, zdecydowaliśmy się na pozostanie przy wartości parametru $T_{\mathrm{i}} = \num{6,25}$.
+Biorąc pod uwagę powyższe rozważania, zdecydowaliśmy się na pozostanie przy wartości parametru $T_{\mathrm{i}} = \num{7,25}$.
 Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\mathrm{d}}$. 
 
 %%%%%%%%%%% Ti = 8.25
@@ -627,17 +624,41 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
 \end{figure}
 \FloatBarrier
 
-
-\iffalse
-\indent 3.
 \subsection{Ręczna poprawa wartości wzmocnienia członu całkującego $T_{\mathrm{d}}$ }
-\indent 1. Człon całkujący zminiejszyliśmy o 1 
-\begin{figure}[b]
+\label{zad5_poprawa_Td}
+
+\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{1,86}$}
+W pierwszym kroku postanowiliśmy że zmniejszymy wartość czasu wyprzedzenia $T_{\mathrm{d}}$
+aby sprawdzić jak zmieniają się przebiegi sygnału wyjściowego i wejściowegop przy zmniejszaniu
+tego parametru. Okazało się że przy zmniejszeniu $\mathbf{T_{\mathrm{d}}}$, przebiegi wygładziły się.
+Czas regulacji zmalał w porównaniu do poprzednio rozważanych regulatorów. Wartość wskaźnika regulacji 
+wyniosła $E = \num{5,8043}$ co jest zaskakujące, ponieważ jest to wartość większa niż w przypadku poprzednio
+rozważanych zestawów parametrów. Pomimo gorszego wskaźnika, jakościowo regulator ten jest lepszy od pozostałych.
+
+Omawiane przebiegi testowe dla tego regulatora znajdują się na wykresach \ref{zad5_1_zmiana_Td} oraz \ref{zad5_1_Td_odp}.
+
+\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{1,62}$}
+Zmniejszenie wartości czasu wyprzedzenia pozwoliło na zachowanie wszystkich pozytywnych cech
+poprzedniego regulatora, przy jednoczesnym zmniejszeniu sumy kwadratów uchybu. W przypadku zmniejszonego $T_{\mathrm{d}}$
+wartość wskaźnika jakości regulacji wyniosła $E = \num{5,7888}$. Sygnał wyjściowy w szybki ale i zarazem łagodny 
+sposób nadąża do wartości zadanej tak jak przedstawiono to na wykresie \ref{zad5_2_Td_odp}. Co więcej,
+sygnał sterujący zmienia swoją wartość w umiarkowany sposób, nie nachodząc na ogranieczenia. Przebieg 
+sterowania dla trajektorii testowej znajduje się na rysunku \ref{zad5_2_zmiana_Td}.
+
+\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{1,26}$}
+Dalsze zmniejszanie parametru $T_{\mathrm{d}}$ nie przyniosło oczekiwanych skutków. Pomimo
+zmniejszonej wartości wskaźnika jakości regulacji, która w tym przypadku wyniosła $E=\num{5,7682}$,
+Na przebiegu sygnału wyjściowego, przedstawionego na rysunku \ref{zad5_3_Td_odp} pojawiła się mocno tłumiona
+oscylacja. Dodatkowo, zmniejszenie $T_{\mathrm{d}}$ spowodowało większe piki na przebiegach 
+sygnału sterującego. Dalsze zmniejszanie wartości czasu wyprzedzenia spowoduje powiększanie się obu tych negatywnych
+efektów, dlatego proces strojenia zakończymy na poprzednim zestawie parametrów.
+
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
-    \begin{axis}[d
+    \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xmin=0,xmax=600, ymin=3.8, ymax=4.4,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -645,24 +666,25 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
-    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.86_E_5.8043.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.86_E_5.8043.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź układu na skok wartości zadanej}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z 
+    parametrami \mbox{$K_{\mathrm{r}} = \num{0,5}$; $T_{\mathrm{i}} = \num{7,25}$; $T_{\mathrm{d}} = \num{1,86}$}}
     \label{zad5_1_Td_odp}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,ymin=0.45, xmax= 500,
+    xmin=0.0,ymin=0.38, xmax=600, ymax=0.72,
     xlabel={$k$},
     ylabel={$u[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -670,22 +692,23 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.86_E_5.8043.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator z 
+    parametrami \mbox{$K_{\mathrm{r}} = \num{0,5}$; $T_{\mathrm{i}} = \num{7,25}$; $T_{\mathrm{d}} = \num{1,86}$}}
     \label{zad5_1_zmiana_Td}
 \end{figure}
-\FloatBarrier
 
-\indent 2.
-\begin{figure}[b]
+%%%%%%%%%%%%% Td = 1.62
+
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xmin=0,xmax=600, ymin=3.8, ymax=4.4,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -693,24 +716,25 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
-    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.62_E_5.7888.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.62_E_5.7888.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź układu na skok wartości zadanej}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z 
+    parametrami \mbox{$K_{\mathrm{r}} = \num{0,5}$; $T_{\mathrm{i}} = \num{7,25}$; $T_{\mathrm{d}} = \num{1,86}$}}
     \label{zad5_2_Td_odp}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,ymin=0.45, xmax= 500,
+    xmin=0.0,ymin=0.38, xmax=600, ymax=0.72,
     xlabel={$k$},
     ylabel={$u[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -718,22 +742,23 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.62_E_5.7888.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator z 
+    parametrami \mbox{$K_{\mathrm{r}} = \num{0,5}$; $T_{\mathrm{i}} = \num{7,25}$; $T_{\mathrm{d}} = \num{1,62}$}}
     \label{zad5_2_zmiana_Td}
 \end{figure}
-\FloatBarrier
 
-\indent 3.
-\begin{figure}[b]
+%%%%%%%%%%%%%%%%%% Td = 1.26
+
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xmin=0,xmax=600, ymin=3.8, ymax=4.4,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -741,24 +766,25 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
-    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.26_E_5.7682.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.26_E_5.7682.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź układu na skok wartości zadanej}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z
+    parametrami \mbox{$K_{\mathrm{r}} = \num{0,5}$; $T_{\mathrm{i}} = \num{7,25}$; $T_{\mathrm{d}} = \num{1,62}$}}
     \label{zad5_3_Td_odp}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,ymin=0.45, xmax= 500,
+    xmin=0.0,ymin=0.38, xmax=600, ymax=0.72,
     xlabel={$k$},
     ylabel={$u[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -766,12 +792,26 @@ Minimalnie przeregulowanie postaramy się zniwelować za pomocą parametru $T_{\
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/D/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.26_E_5.7682.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator z 
+    parametrami \mbox{$K_{\mathrm{r}} = \num{0,5}$; $T_{\mathrm{i}} = \num{7,25}$; $T_{\mathrm{d}} = \num{1,86}$}}
     \label{zad5_3_zmiana_Td}
 \end{figure}
-\FloatBarrier
-\fi
+
+\subsection{Ostateczny zestaw parametrów}
+\label{zad5_result}
+Ostatecznie zdecydowaliśmy się na regulator o poniższym parametrach:
+
+\begin{center}
+    $K_{\mathrm{r}} = \num{0,5} \mathrm{\hspace{1cm}}T_{\mathrm{i}} = \num{7,25} \mathrm{\hspace{1cm}} T_{\mathrm{d}} = \num{1,62}$
+\end{center}
+
+Wskaźnik jakości regulacji osiągnął wartość $E = \num{5,7888}$. Nie jest to najmniejsza 
+uzyskana wartość, jednak przebiegi wyjściowe dla tych parametrów cechują się innymi właściwościami,
+których ten wskaźnik nie mierzy. W przypadku w którym chcielibyśmy stroić regulator PID tylko i wyłącznie
+za pomocą analizy wskaźnika jakości, na przykład tak jak w automatycznych metodach strojenia, należałoby
+inaczej skonstruować wskaźnik jakości tak aby brał pod uwagę inne aspekty takie jak przeregulowanie czy czas
+regulacji.

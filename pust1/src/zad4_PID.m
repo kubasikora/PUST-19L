@@ -54,13 +54,13 @@ error = zeros(sim_len, 1);
 
 % K = 0.38*0.45;
 % Ti = 5.2007;%1000000;
-% Td = 0.090366;
+% Td = 0.090366;true
 
 K = 0.5;
-Ti = 5.25;
-Td = 2.22; 
+Ti = 6.25;
+Td = 1.62; 
 
-save_file = true;
+save_file = false;
 % K = 0.19;
 % Ti = 4.9;
 % Td = 0.088;
@@ -132,7 +132,7 @@ if(save_file)
     input_ts = [sim_time-1 input];
     output_ts = [sim_time-1 output];
     setpoint_ts = [sim_time-1 setpoint];
-    dlmwrite(strcat('../data/zad5_multiplejumps/I/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
-    dlmwrite(strcat('../data/zad5_multiplejumps/I/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
-    dlmwrite(strcat('../data/zad5_multiplejumps/I/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/D/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/D/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/D/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
 end
