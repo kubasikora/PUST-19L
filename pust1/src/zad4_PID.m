@@ -57,7 +57,7 @@ error = zeros(sim_len, 1);
 % Td = 0.090366;
 
 K = 0.5;
-Ti = 9.25;
+Ti = 5.25;
 Td = 2.22; 
 
 save_file = true;
@@ -94,7 +94,7 @@ for k = 12:sim_len
     
     rescaled_input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + rescaled_input(k-1);  % wyliczenie sterowania 
   
-    % ograniczenia  
+    %ograniczenia  
     if rescaled_input(k) - rescaled_input(k-1) >= dUmax
         rescaled_input(k) = dUmax + rescaled_input(k-1);
     elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
@@ -126,12 +126,13 @@ hold off
 % wypisanie wartosci wspolczynnikow 
 str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td), '_E_', num2str(error_sum));
 disp(str)
+disp(error_sum)
 
 if(save_file)
     input_ts = [sim_time-1 input];
     output_ts = [sim_time-1 output];
     setpoint_ts = [sim_time-1 setpoint];
-    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
-    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
-    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/I/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/I/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/I/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
 end
