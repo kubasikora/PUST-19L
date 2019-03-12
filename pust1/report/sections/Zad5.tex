@@ -19,7 +19,14 @@ Cały proces dobierania parametrów składał się z następujących kroków:
 \end{enumerate}
 \end{center}
 
+Chcąc znaleźć jeszcze lepsze nastawy regulatora, po wyznaczeniu parametrów za pomocą metody Zieglera-Nicholsa, zastosowaliśmy metodę eksperymentalną. W której jakość regulacji ocenialiśmy jakościowo (na podstawie przebiegów sygnałów na wykresach) oraz ilościowo, za pomocą wskaźnika jakości regulacji danego wzorem:
+\begin{equation}
+E=\sum_{k=0}^{K_{konc}}(y^{zad}[k]-y[k])^{2}
+\end{equation}
+
+
 \subsection{Wyznaczenie wzmocnienia $K_{\mathrm{k}}$ i okresu oscylacji $T_{\mathrm{k}}$}
+\label{zad5_wyznaczanie_parametrow_zn}
 Na początku doprowadziliśmy układ do granicy stabilności, czyli momentu
 w którym zaczęły pojawiać się niegasnące oscylacje. Zrealizowaliśmy to
 zwiększając współczynnik wzmocnienia $K_{\mathrm{r}}$ przy wyłączonych członach 
@@ -28,36 +35,26 @@ zwiększając jego wartość w przypadku gasnących oscylacji oraz zmniejszając
 niestabilnej odpowiedzi obiektu.
 
 Gdy ostatecznie zaobserwowaliśmy niegasnące oscylacje zapisaliśmy aktualne wzmocnienie 
-jako wzmocnienie krytyczne $K_{k}$. Dodatkowow zmierzyliśmy okres oscylacji drgań 
-krytycznych $T_{k}$ ($K_{k} = 1,6 T_{k}=19$). Wiedząc że okres próbkowania procesu 
-wynosi $\num{0,5}s$, a zmierzony okres oscylacji wynosił $\num{38}$ próbek, wyliczyliśmy że
-okres drgań krytycznych równa się $T_{k}=19s$. 
+jako wzmocnienie krytyczne $K_{k}$ i zmierzyliśmy okres oscylacji drgań 
+krytycznych $T_{k}$ ($K_{k} = 1,8 \hspace{0.3 cm} T_{k}=18,5 $). Wiedząc że okres próbkowania procesu 
+wynosi $\num{0,5}s$, a zmierzony okres oscylacji wynosił $\num{37}$ próbek, wyliczyliśmy że
+okres drgań krytycznych równa się $T_{k}=18,5s$. 
 
-Analizując przebieg sygnału sterującego zauważyliśmy że sygnał sterujący nasyca się na górnych
-ograniczeniach. Zdecydowaliśmy się jednak zignorować ten fakt, biorąc pod uwagę że eksperyment
-ten ma na celu wyznaczenie tylko wartości początkowych parametrów, które posłużą potem jako
-baza do rozważań w metodzie inżynierskiej.
-%Ustalone wartości $K_{r}$ i $T_{k}$ 
-%podstawiliśmy do wzorów przedstawionych wyżej, aby wyliczyć parametry 
-%$K_{r}, T_{i}, T_{d}$.
-%Przebieg wyznaczania parametrów dla regulatora PID:
-%\\
-%Pojawiają się niegasnące oscylacje, w tym momencie możemy określić wartość $T_{k}=19$ i $K_{k}=\num{1.6}s$ 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=500,ymin=3.7, ymax=4.3,
     xlabel={$k$},
     ylabel={$y[k]$},
-    xtick={0, 100, 200, 300, 400, 500},
-    ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_1.6_Ti_1000000000_Td_0.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/zad5_PID_setpoint_exampleK_1.8_Ti_1000000000000_Td_0.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/zad5_PID_output_exampleK_1.8_Ti_1000000000000_Td_0.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
@@ -73,7 +70,7 @@ baza do rozważań w metodzie inżynierskiej.
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=0.45, ymax=0.75,
+    xmin=0,xmax=500,ymin=0.25, ymax=0.75,
     xlabel={$k$},
     ylabel={$u[k]$},
     %xtick={0, 0.4, 0.5, 0.6, 0.7},
@@ -81,7 +78,7 @@ baza do rozważań w metodzie inżynierskiej.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/zad5_PID_input_exampleK_1.6_Ti_1000000000_Td_0.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/zad5_PID_input_exampleK_1.8_Ti_1000000000000_Td_0.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
@@ -90,12 +87,14 @@ baza do rozważań w metodzie inżynierskiej.
 \end{figure}
 \FloatBarrier
 
-\subsection{Wyliczenie parametrów regulatora}
+\subsection{Wyliczenie wstępnych parametrów regulatora}
+\label{zad5_regulator_zn}
 Dobierając nastawy według metody Zieglera-Nicholsa, 
 stosowaliśmy wzory do obliczenia parametrów regulatora PID: 
+
 \begin{equation}
 \label{zad5_zn_wzory}
-K_{\mathrm{r}}=\num{0,6}K_{\mathrm{k}}; T_{\mathrm{i}}=\num{0,5} T_{\mathrm{k}}; T_{\mathrm{d}}=\num{0,12} T_{\mathrm{k}}
+K_{\mathrm{r}}=\num{0,6}K_{\mathrm{k}}; \hspace{0.5 cm} T_{\mathrm{i}}=\num{0,5} \hspace{0.5 cm} T_{\mathrm{k}}; T_{\mathrm{d}}=\num{0,12} T_{\mathrm{k}}
 \end{equation}
 gdzie:
 \begin{center}
@@ -107,33 +106,33 @@ gdzie:
 
 Wyliczone wartości liczbowe parametrów:
 \begin{center}
-$K_{r}=\num{0,72}
-T_{i}=\num{9,5} 
-T_{d}=\num{2,28}$
+$K_{r}=\num{1,08} \hspace{0.5 cm}
+T_{i}=\num{9,25}   \hspace{0.5 cm}
+T_{d}=\num{2,22}$
 \end{center}
 
-Regulator z parametrami wyznaczonomi przy pomocy metody opisanej przez panów Johna Zieglera i Nathaniela Nicholsa,
-zachowuje się poprawnie. 
-
-%opisać jak zachowuje się proces
-
-W metodzie inżynierskiej do oceny zestawu parametrów będziemy posługiwali się wskaźnikiem jakości regulacji danym
-wzorem:
-\begin{equation}
-E=\sum_{k-1}^{K_{konc}}(y^{zad}[k]-y[k])^{2}
-\end{equation}
-W przypadku omawianego regulatora, wskaźnik jakości regulacji równy jest  \mbox{$E=1,6185$}
+Regulator z parametrami wyznaczonymi przy pomocy metody opisanej przez panów Johna Zieglera
+i Nathaniela Nicholsa, nadal charakteryzuje się niegasnącymi oscylacjami. Takie 
+przebiegi sygnałów są nieakceptowalne, dlatego w dalszych krokach ręcznie modyfikowaliśmy 
+wartości parametrów. 
 
 Na rysunku \ref{zad5_zn_regulator} przedstawiono przebiegu wartości zadanej oraz
-wyjścia obiektu z widocznie przedstawionym przeregulowaniem porównywalnym z wysokością 
-skoku wartości zadanej. Rysunek \ref{zad5_zn_sterowanie} przedstawia zmianę sygnału sterującego
+wyjścia obiektu z widocznie przedstawionymi oscylacjami wokół wartości zadanej.
+Rysunek \ref{zad5_zn_sterowanie} przedstawia zmianę sygnału sterującego
 generowanego przez regulator.
-\begin{figure}[b]
+
+Tak nastrojony regulator PID bardzo słabo radzi sobie z utrzymywaniem sygnału wyjściowego
+procesu na poziomie wartości zadanej. Niegasnące oscylacje nie pozwalają na zastosowanie
+tego zestawu parametrów do regulacji procesem. Dla zadanej trajektorii testowej, obliczony 
+wskaźnik jakości regulacji wyniósł $E = \num{5,8385}$. Pomimo swoich wad, regulator ten jest 
+dobrym punktem wyjścia dla metody eksperymentalnej.
+
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=600,ymin=3.7, ymax=4.4,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -141,16 +140,269 @@ generowanego przez regulator.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.72_Ti_9.5_Td_2.28.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/zad5_PID_setpoint_exampleK_1.08_Ti_9.25_Td_2.22_E_5.8385.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/zad5_PID_output_exampleK_1.08_Ti_9.25_Td_2.22_E_5.8385.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
     \label{zad5_zn_regulator}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.3, xmax= 600,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/zad5_PID_input_exampleK_1.08_Ti_9.25_Td_2.22_E_5.8385.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
+    \label{zad5_zn_sterowanie}
+\end{figure}
+\FloatBarrier
+
+
+
+
+\subsection{Ręczna poprawa wartości wzmocnienia członu proporcjonalnego $K_{\mathrm{r}}$ }
+\label{zad5_poprawa_Kr}
+\subsubsection{Wzmocnienie regulatora $K_{r}=0,75$}
+W pierwszej kolejności skupiliśmy się na zmianie parametru $K_{\mathrm{r}}$.
+Zmniejszenie $K_{\mathrm{r}}$ do wartości $\num{0.75}$ sprawiło że pozbyliśmy się oscylacji. Czas regulacji
+wyniósł około 100 próbek. Dodatkowo, sygnał wyjściowy procesu nie cechuje się przeregulowaniem,
+czyli przekroczenie wartości zadanej. Wyjście obiektu już nie oscyluje tak jak to było w przypadku regulatora z \ref{zad5_regulator_zn},
+jak i została przywrócona stabilność procesu. Sygnał sterujący cechuje się oscylacjami przy zmianach
+wartości zadanej, co powoduje nierówny przebieg wyjścia procesu.
+Wartość wskaźnika jakości regulacji dla tego regulatora przy tej samej
+testowej trajektorii zadanej wyniosła $E=\num{5,6914}$, co jest niewielką poprawą w stosunku 
+do bazowego regulatora.
+Przebiegi sygnału wyjściowego jaki i sygnału sterującego, odbiegały od pożądanych.
+
+Wykres \ref{zad5_1_K_odp} przedstawia przebiegi wyjścia procesu oraz trajektorii zadanej.
+Na rysunku \ref{zad5_1_zmiana_K} przedstawiliśmy przebieg sygnału sterującego generowanego przez regulator.
+
+\subsubsection{Wzmocnienie regulatora $K_{r}=0,6$}
+Zmniejszenie $K_{\mathrm{r}}$ do poziomu $\num{0,6}$ spowodowało wizualną poprawę odpowiedzi układu 
+na zmianę wartości zadanej. Przebieg sygnału wyjściowego wygładził się, proces w łagodniejszy sposób
+dociera do wartości zadanej. Czas regulacji niie zmienił się w porównaniu do poprzedniego regulatora.
+Przebieg sygnału sterującego również uległ wygładzeniu, chociaż oscylacje nie zniknęły w całości.
+Wartość wskaźnika jakości regulacji dla tego 
+przypadku wyniosła $E=\num{6.1449}$, co zaskakująco, jest wartością większą w porównaniu do poprzedniego 
+$K_{\mathrm{r}}$ regulatora. Łagodniejszy przebieg wyjścia powoduje zwiększenie sumy kwadratów uchybu.
+
+Wykres \ref{zad5_2_K_odp} przedstawia przebiegi wyjścia procesu oraz trajektorii zadanej.
+Na rysunku \ref{zad5_2_zmiana_K} przedstawiliśmy przebieg sygnału sterującego generowanego przez regulator.
+
+\subsubsection{Wzmocnienie regulatora $K_{r}=0,5$}
+Na wykresach \ref{zad5_3_K_odp} i \ref{zad5_3_zmiana_K} przedstawiono przebiegi powstałe 
+dla regulatora z wzmocnieniem $ K_{\mathrm{r}} = \num{0,5}$. Sygnał sterujący praktycznie nie
+oscyluje, natomiast sygnał wyjściowy ma jeszcze bardziej łagodny przebieg przez co czas regulacji 
+nieznacznie wzrósł. Niestety wskaźnik jakości 
+regulacji wzrósł do wartości $E=\num{6,5814}$. Zauważyliśmy że jego wartość rośnie przy zmniejszaniu  
+parametru $ K_{\mathrm{r}}$, dlatego postanowiliśmy 
+ostatecznie przyjąć wartość $K_{\mathrm{r}} = \num{0,5}$ i przejść do manipulowania 
+pozostałymi parametrami. Dalsze zmniejszanie nie spowoduje 
+znaczącej poprawy przebiegów sygnału a jedynie pogorszy wskaźnik jakości regulacji. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% wykresy dla k = 0.75
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=600,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_setpoint_exampleK_0.75_Ti_9.25_Td_2.22_E_5.6914.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_output_exampleK_0.75_Ti_9.25_Td_2.22_E_5.6914.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z 
+    parametrami \mbox{$K_{r} = \num{0,75}$; $T_{i} = \num{9,25}$; $T_{d} = \num{2,22}$}}
+    \label{zad5_1_K_odp}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0, ymin=0.44, xmax=600, ymax=0.68,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_input_exampleK_0.75_Ti_9.25_Td_2.22_E_5.6914.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator z 
+    parametrami \mbox{$K_{r} = \num{0,75}$; $T_{i} = \num{9,25}$; $T_{d} = \num{2,22}$}}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% wykresy dla k = 0.6
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=600,ymin=3.9, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_setpoint_exampleK_0.6_Ti_9.25_Td_2.22_E_6.1449.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_output_exampleK_0.6_Ti_9.25_Td_2.22_E_6.1449.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z 
+    parametrami \mbox{$K_{r} = \num{0,6}$; $T_{i} = \num{9,25}$; $T_{d} = \num{2,22}$}}
+    \label{zad5_2_K_odp}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.44, xmax=600, ymax=0.68,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_input_exampleK_0.6_Ti_9.25_Td_2.22_E_6.1449.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator z 
+    parametrami \mbox{$K_{r} = \num{0,6}$; $T_{i} = \num{9,25}$; $T_{d} = \num{2,22}$}}
+    \label{zad5_2_zmiana_K}
+\end{figure}
+\FloatBarrier
+
+%%%%%%%%%%%%%%%%%%%%%% wykresy dla k = 0.5
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_setpoint_exampleK_0.5_Ti_9.25_Td_2.22_E_6.5814.csv};
+    \addplot[red, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_output_exampleK_0.5_Ti_9.25_Td_2.22_E_6.5814.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z 
+    parametrami \mbox{$K_{r} = \num{0,5}$; $T_{i} = \num{9,25}$; $T_{d} = \num{2,22}$}}
+    \label{zad5_3_K_odp}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad5_multiplejumps/P/zad5_PID_input_exampleK_0.5_Ti_9.25_Td_2.22_E_6.5814.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator z 
+    parametrami \mbox{$K_{r} = \num{0,5}$; $T_{i} = \num{9,25}$; $T_{d} = \num{2,22}$}}
+    \label{zad5_3_zmiana_K}
+\end{figure}
+\FloatBarrier
+
+
+
+
+
+
+
+\iffalse
+\subsection{Ręczna poprawa wartości wzmocnienia członu całkującego $T_{\mathrm{i}}$ }
+\indent 1. Człon całkujący zminiejszyliśmy o 1 
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_setpoint_exampleK_0.5_Ti_8.25_Td_2.22_E_1.1833.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_output_exampleK_0.5_Ti_8.25_Td_2.22_E_1.1833.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_Ti_odp}
 \end{figure}
 
 \begin{figure}[t]
@@ -166,32 +418,22 @@ generowanego przez regulator.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/zad5_PID_input_exampleK_0.72_Ti_9.5_Td_2.28.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_input_exampleK_0.5_Ti_8.25_Td_2.22_E_1.1833.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
-    \label{zad5_zn_sterowanie}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_Ti}
 \end{figure}
 \FloatBarrier
 
-
-
-%% od tego momentu jest zle
-
-
-\iffalse
-\indent 3. Zmiany zaczęliśmy od członu proporcjonalnego. Postanowiliśmy go zmniejszyć, co spowodowało wygładzenie odpowiedzi skokowej. Pas ponad wartością zadaną stał się szerszy, ale przebieg sygnału był zdecydowanie łagodniejszy (nie było szpiczastych pików i zniknęły małe drgania). Nastąpiła zdecydowana zmiana przebiegu sygnału sterującego. Był on nadal ucinany przez ograniczenie, ale jego zmiany stały się bardziej regularne (łagodnie opadł do poziomu 0,6 co zapewnia utrzymanie wartości zadanej).
-
-\begin{center}
-Wartość wskaźnika regulacji wynosi $E=2,9694$.
-\end{center}
-\begin{figure}[h]
+\indent 2.
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -199,19 +441,19 @@ Wartość wskaźnika regulacji wynosi $E=2,9694$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.45_Ti_9.5_Td_2.28.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.45_Ti_9.5_Td_2.28.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_2.22_E_1.1138.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_2.22_E_1.1138.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź skokowa układu regulacji}
-    \label{zad5_niegasnące_oscylacje}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_2_Ti_odp}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -224,25 +466,22 @@ Wartość wskaźnika regulacji wynosi $E=2,9694$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.45_Ti_9.5_Td_2.28.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_2.22_E_1.1138.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Sygnał sterujący u}
-    \label{zad2_stat_wykres}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_2_zmiana_Ti}
 \end{figure}
 \FloatBarrier
 
-\indent 4. W następnym kroku zmniejszyliśmy jeszcze bardziej wartość członu proporcjonalnego. W ten sposób chcieliśmy zmniejszyć wartość uchybu ustalonego. Niestety nie osiągneliśmy zadanego celu, dodatkowo zwiększył nam się czas regulacji (jest to zachowanie zgodne z matematycznymi wzorami dla regulatora PID), dlatego podjęliśmy decyzję o zmianach wartościami dla innych członów. 
-\begin{center}
-Wartość wskaźnika regulacji wynosi $E=5,7761$.
-\end{center}
-\begin{figure}[h]
+\indent 3.
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -250,20 +489,19 @@ Wartość wskaźnika regulacji wynosi $E=5,7761$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.225_Ti_9.5_Td_2.28.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.225_Ti_9.5_Td_2.28.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_setpoint_exampleK_0.5_Ti_6.25_Td_2.22_E_1.0548.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_output_exampleK_0.5_Ti_6.25_Td_2.22_E_1.0548.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź skokowa układu regulacji}
-    \label{zad5_niegasnące_oscylacje}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_3_Ti_odp}
 \end{figure}
 
-\begin{figure}[h]
-	\label{zad5_sterowanie_ustalenie_k}
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -276,25 +514,23 @@ Wartość wskaźnika regulacji wynosi $E=5,7761$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.225_Ti_9.5_Td_2.28.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_input_exampleK_0.5_Ti_6.25_Td_2.22_E_1.0548.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Sygnał sterujący u}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_3_zmiana_Ti}
 \end{figure}
 \FloatBarrier
 
-
-\indent 5. Zmniejszenie wartości $T_{i}$ powoduj wzrost znaczenie członu całkującego. Najprościej mówiąc dodaje on stale sygnał uchybu. Gdy uchyb jest powyżej 0 wymusza on na sygnale sterującym coraz większą wartość. Efektem jego działania jest sprowadzenie uchybu do zera. Jego działanie możemy zaobserwować po przez szybszy czas regulacji (wartość z regulatora szybciej zbiega do wartości zadanej), a przy nie zerowym uchybie sterowanie również osiąga większe wartości (widzimy to porównując wykresy \ref{zad5_sterowanie_ustalenie_k} i \ref{zad5_sterowanie_ustalenie_ti}).
-\begin{center}
-Wartość wskaźnika regulacji wynosi $E=4,1742$.
-\end{center}
-\begin{figure}[h]
+\subsection{Ręczna poprawa wartości wzmocnienia członu całkującego $T_{\mathrm{d}}$ }
+\indent 1. Człon całkujący zminiejszyliśmy o 1 
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -302,20 +538,19 @@ Wartość wskaźnika regulacji wynosi $E=4,1742$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.19152_Ti_4.9007_Td_0.1.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.19152_Ti_4.9007_Td_0.1.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź skokowa układu regulacji}
-    \label{zad5_niegasnące_oscylacje}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_Td_odp}
 \end{figure}
 
-\begin{figure}[h]
-    \label{zad5_sterowanie_ustalenie_ti}
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -328,21 +563,22 @@ Wartość wskaźnika regulacji wynosi $E=4,1742$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.19152_Ti_4.9007_Td_0.1.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Sygnał sterujący u}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_Td}
 \end{figure}
 \FloatBarrier
 
-\indent 6. W ostatnim kroku kluczowym etapem było obniżenie wartości członu różniczkującego. Jego działanie jest tym mocniejsze im szybciej zmienia się uchyb. Jego 10-krotne zmniejszenie spowodowało zanik przeregulowania, a także skróciło czas regulacji. Są to wielkości, którymi możemy manipulować za pomocą wartości $T_{d}$. Zmieniając kosmetycznie wartości K i $T_{i}$ uzyskaliśmy najmnniejszą wartość wskaźnika regulacji równą $E=1,016$. W tym przypadku przebieg sygnałów odpowiedzi regulatora i sterującego jest także najlepszy. 
-\begin{figure}[h]
+\indent 2.
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0,xmax=500,ymin=3.9, ymax=4.4,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
     xlabel={$k$},
     ylabel={$y[k]$},
     %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
@@ -350,19 +586,19 @@ Wartość wskaźnika regulacji wynosi $E=4,1742$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_setpoint_exampleK_0.171_Ti_5.2007_Td_0.090366.csv};
-    \addplot[red, semithick] file{../data/zad5_PID_output_exampleK_0.171_Ti_5.2007_Td_0.090366.csv};
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedź skokowa układu regulacji}
-    \label{zad5_niegasnące_oscylacje}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_2_Td_odp}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -375,12 +611,60 @@ Wartość wskaźnika regulacji wynosi $E=4,1742$.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad5_PID_input_exampleK_0.171_Ti_5.2007_Td_0.090366.csv};
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Sygnał sterujący u}
-    \label{zad2_stat_wykres}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_2_zmiana_Td}
+\end{figure}
+\FloatBarrier
+
+\indent 3.
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_3_Td_odp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_3_zmiana_Td}
 \end{figure}
 \FloatBarrier
 \fi

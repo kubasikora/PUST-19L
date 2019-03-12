@@ -11,3 +11,10 @@ Zadanie 2:
 - plik zad2_ouputs_merged.csv zawiera wszystkie szesc skokow do zbiorczego rysunku, w pierwszym rzedzie
     znajduje się czas dyskretny
     
+Zadanie 5 Strojenie PID:
+- pliki do wykresów które bierzemy pod uwagę są w ....data\Zad5_figure_data
+- pliki w data z 5 te co usunąłem, ale musiałem je wrzucić bo nadal sa używane w latex (w tej części co Sikor zrobiłeś iffalse) zostawiłem je w razie czego jak chcielibyśmy coś sprawdzić i żeby latex nie miął problemów. Gdy skońcyzmy aktualną wersję to usunie się tekst z iffalse z latex i wtedy tamto też wyrzucimy (dzisij powinniśmy skończyć) 
+- wiem że chaber czy Ławryn zabronił ale proponuję czasmi używać h bo przy t i b często zostaje dużo pustego miejsc nie jesteśmy w stanie do kązdego wykresu dawać 0,5 strony a4 opisu (nie ma aż tak dużo zmian) - przemyślcie czy będziemy robili czasmi z h
+- wypunktowanie w pod subsection jest zrobione za pomocą \indent - jest to wersja robocza będziem trzeb to zmineić na coś pod subsection (myślę że same punkty wystarczą - tylko wrzucić to w coś co doda to do spisu treści)
+- wartości parametrów w poszczególnych wykresach są w nazwach plików 
+- nasze ostateczne parametry do PID to: K_0.5 Ti_7.25 Td_1.62 E_1.1056

@@ -19,7 +19,7 @@ Umax = 0.7;
 dUmax = 0.05;
 
 T = 0.5;   
-sim_len = 500;
+sim_len = 600;
 
 %% Inicjalizacja wektorow
 % czas symulacji
@@ -27,10 +27,12 @@ sim_time = 1:sim_len; % do plotowania
 sim_time = sim_time';
 
 % wartosc zadana
-stpt_value = 4.211111111111111;
-setpoint = stpt_value*ones(sim_len,1);
+stpt_value_1 = 4.15;
+stpt_value_2 = 3.91;
+stpt_value_3 = 4.3;
+setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
 setpoint(1:11) = Ypp;
-
+ 
 % setpoint(200:350)=3.8;
 % setpoint(351:500)=4;
 % % setpoint(301:400)=4;
@@ -50,14 +52,29 @@ error = zeros(sim_len, 1);
 
 % Definicja parametrow ciaglych regulatora PID
 
+% K = 0.38*0.45;
+% Ti = 5.2007;%1000000;
+% Td = 0.090366;
+
+K = 0.5;
+Ti = 9.25;
+Td = 2.22; 
+
+save_file = true;
 % K = 0.19;
 % Ti = 4.9;
 % Td = 0.088;
 
 % zoptymalizowane parametry
-K = 0.23125;
-Ti = 5.0018;
-Td = 0.015538;
+
+% K = 0.19578;
+% Ti = 6.9997;
+% Td = 0.1206;
+
+% K = 0.23125;
+% Ti = 5.0018;
+% Td = 0.015538;
+
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
@@ -107,11 +124,14 @@ hold off
 
 % zapis do plikow
 % wypisanie wartosci wspolczynnikow 
-str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td));
+str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td), '_E_', num2str(error_sum));
 disp(str)
-% input_ts = [sim_time-1 input];
-% output_ts = [sim_time-1 output];
-% setpoint_ts = [sim_time-1 setpoint];
-% dlmwrite(strcat('../data/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
-% dlmwrite(strcat('../data/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
-% dlmwrite(strcat('../data/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+
+if(save_file)
+    input_ts = [sim_time-1 input];
+    output_ts = [sim_time-1 output];
+    setpoint_ts = [sim_time-1 setpoint];
+    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad5_multiplejumps/P/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+end
