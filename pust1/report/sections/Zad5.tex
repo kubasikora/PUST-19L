@@ -160,26 +160,440 @@ generowanego przez regulator.
 \FloatBarrier
 
 \subsection{Ręczna poprawa wartości wzmocnienia członu proporcjonalnego $K_{\mathrm{r}}$ }
+\indent 1. Pierwszą naszą czynnością było zmniejszenie $K_{\mathrm{r}}$ do wartości $\num{0.75}$. Dzięki temu pozbyliśmy się oscylacji. Wartość wskaźnika jakości regulacji dla tego przypadku wyniosła $E=\num{1.088}$, była to jedna z niższych wartości jakie udało nam się uzyskać, jednak przebiegi odpowiedzi skokowej jaki i sygnału sterującego odbiegały nadal od takich które charakteryzują dobre układy regulacji. Pojawiają się krótkie gasnące oscylacje na wykresie \ref{zad5_1_zmiana_K}, a wartość zadania jest osiągana krótkimi skokami zaprezentowanymi na \ref{zad5_1_K_odp}. Szukając lepszych nastawów dalej zmniejszaliśmy wartość wzmocnienia członu proporcjonalnego.
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_setpoint_exampleK_0.75_Ti_9.25_Td_2.22_E_1.088.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_output_exampleK_0.75_Ti_9.25_Td_2.22_E_1.088.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
-dsafasfd
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_input_exampleK_0.75_Ti_9.25_Td_2.22_E_1.088.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\indent 2. Zmniejszenie $K_{\mathrm{r}}$ do poziomu $\num{0,6}$ spowodowało poprawę odpowiedzi układu na skok wartości zadanej, ale przebieg sygnału sterującego ciągle odbiegał od oczekiwanego (nadal widoczne były krótkie oscylacje). Wartość wskaźnika jakości regulacji dla tego przypadku wyniosła $E=\num{1.175}$, jest to wartość większa w porównaniu do poprzedniego $K_{\mathrm{r}}$, jednak opłacało się ją trochę zwiększyć bo uzyskaliśmy dużo lepszy przebieg sygnału na wykresie \ref{zad5_2_K_odp}.
 
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_setpoint_exampleK_0.6_Ti_9.25_Td_2.22_E_1.175.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_output_exampleK_0.6_Ti_9.25_Td_2.22_E_1.175.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_2_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_input_exampleK_0.6_Ti_9.25_Td_2.22_E_1.175.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\indent 3. Prezentowane poniżej przebiegi powstały dla $ K_{\mathrm{r}} = \num{0,5}$. Nastąpiła wyrźna poprawa sygnału sterującego (nie ma już oscylacji), został niestety spory skok tego sygnału na początku symulacji, jednak go postaramy się wyeliminować za pomocą zmiany parametrów $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$. Niestety znowu wzrósł nam znacznie wskaźnika jakości regulacji do wartości $E=\num{1.2857}$. Możemy zauważyć, że jest to skolerowane z zmniejszaniem parametru $ K_{\mathrm{r}}$, dlatego postanowiliśmy ostatecznie przyjąć wartość $ K_{\mathrm{r}} = \num{0,5}$, ponieważ dalsze zmniejszanie nie spowoduje znaczącej poprawy przebiegów sygnału w porównaniu do tych którymi teraz dysponujemy, a pogorszy jedynie wskaźnik jakości regulacji. 
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_setpoint_exampleK_0.5_Ti_9.25_Td_2.22_E_1.2587.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_output_exampleK_0.5_Ti_9.25_Td_2.22_E_1.2587.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_K/zad5_PID_input_exampleK_0.5_Ti_9.25_Td_2.22_E_1.2587.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\subsection{Ręczna poprawa wartości wzmocnienia członu całkującego $T_{\mathrm{i}}$ }
+\indent 1. Człon całkujący zminiejszyliśmy o 1 
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_setpoint_exampleK_0.5_Ti_8.25_Td_2.22_E_1.1833.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_output_exampleK_0.5_Ti_8.25_Td_2.22_E_1.1833.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_input_exampleK_0.5_Ti_8.25_Td_2.22_E_1.1833.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\indent 2.
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_2.22_E_1.1138.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_2.22_E_1.1138.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_2.22_E_1.1138.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\indent 3.
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_setpoint_exampleK_0.5_Ti_6.25_Td_2.22_E_1.0548.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_output_exampleK_0.5_Ti_6.25_Td_2.22_E_1.0548.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Ti/zad5_PID_input_exampleK_0.5_Ti_6.25_Td_2.22_E_1.0548.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\subsection{Ręczna poprawa wartości wzmocnienia członu całkującego $T_{\mathrm{d}}$ }
+\indent 1. Człon całkujący zminiejszyliśmy o 1 
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.86_E_1.1087.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\indent 2.
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.62_E_1.1056.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
+\indent 3.
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=3.9, ymax=4.3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_setpoint_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \addplot[red, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_output_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź układu na skok wartości zadanej}
+    \label{zad5_1_K_odp}
+\end{figure}
 
-
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.45, xmax= 500,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/Zad5_figure_data/Zmiany_na_Td/zad5_PID_input_exampleK_0.5_Ti_7.25_Td_1.26_E_1.1015.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{zad5_1_zmiana_K}
+\end{figure}
+\FloatBarrier
 
 
 

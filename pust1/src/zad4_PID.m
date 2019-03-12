@@ -69,9 +69,9 @@ save_file = false;
 % Ti = 6.9997;
 % Td = 0.1206;
 
-K = 0.23125;
-Ti = 5.0018;
-Td = 0.015538;
+% K = 0.23125;
+% Ti = 5.0018;
+% Td = 0.015538;
 
 
 %% Definicja wspolczynnikow regulatora cyfrowego
