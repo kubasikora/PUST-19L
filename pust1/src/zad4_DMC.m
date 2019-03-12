@@ -6,8 +6,8 @@ step = step(:, 2);
 
 %% parametry regulatora 
 D = 91;
-N = 25;
-Nu = 5;
+N = D;  % pkt startowy do strojenia
+Nu = N;
 lambda = 10;
 
 %% Definicja stalych
@@ -76,12 +76,9 @@ for i = 1:N
         end
     end
 end
-A = M' * M;
-B = lambda * eye(Nu);
-C = M';
 
 % macierz K
-K = (A + B)*C;
+K = inv((M' * M + lambda * eye(Nu)))*M';
 
 %% symulacja
 Ke = sum(K(1,:));
@@ -143,3 +140,13 @@ plot(sim_time, output);
 title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
 
+%% zapis do plikow
+% wypisanie wartosci wspolczynnikow 
+str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda));
+disp(str)
+% input_ts = [sim_time-1 input];
+% output_ts = [sim_time-1 output];
+% setpoint_ts = [sim_time-1 setpoint];
+% dlmwrite(strcat('../data/zad5_DMC_input_example', str, '.csv'), input_ts, '\t');
+% dlmwrite(strcat('../data/zad5_DMC_output_example', str, '.csv'), output_ts, '\t');
+% dlmwrite(strcat('../data/zad5_DMC_setpoint_example', str, '.csv'), setpoint_ts, '\t');
