@@ -16,3 +16,4 @@ Zadanie 5 Strojenie PID:
 - pliki w data z 5 te co usunąłem, ale musiałem je wrzucić bo nadal sa używane w latex (w tej części co Sikor zrobiłeś iffalse) zostawiłem je w razie czego jak chcielibyśmy coś sprawdzić i żeby latex nie miął problemów. Gdy skońcyzmy aktualną wersję to usunie się tekst z iffalse z latex i wtedy tamto też wyrzucimy (dzisij powinniśmy skończyć) 
 - wiem że chaber czy Ławryn zabronił ale proponuję czasmi używać h bo przy t i b często zostaje dużo pustego miejsc nie jesteśmy w stanie do kązdego wykresu dawać 0,5 strony a4 opisu (nie ma aż tak dużo zmian) - przemyślcie czy będziemy robili czasmi z h
 - wypunktowanie w pod subsection jest zrobione za pomocą \indent - jest to wersja robocza będziem trzeb to zmineić na coś pod subsection (myślę że same punkty wystarczą - tylko wrzucić to w coś co doda to do spisu treści)
+- wartości parametrów w poszczególnych wykresach są w nazwach plików 
