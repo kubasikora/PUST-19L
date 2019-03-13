@@ -1,0 +1,39 @@
+\chapter{Modelowanie obiektu rzeczywistego}
+\label{lab3}
+
+\section{Normalizacja odpowiedzi skokowej na rzecz algorytmu DMC}
+\label{lab3_norm}
+Wyjaśnienie czym jest odpowiedź skokowa oraz proces jej wyznaczania został 
+szeroko opisany w rozdziałach \ref{zad3} oraz \ref{lab1}, dlatego też w tej części 
+skupimy się tylko na prezentacji wyniku.
+
+Za pomocą skryptu \verb+lab/zad3.m+ dokonaliśmy automatycznej normalizacji odpowiedzi skokowej.
+Z czterech zebranych wybraliśmy tą uzyskaną dla skoku sterowania $\Delta u = \num{-10}$, ponieważ 
+w naszej opinii została ona najdokładniej zebrana. Na podstawie tej odpowiedzi ustaliliśmy wartość
+horyzontu dynamiki procesu na $D = \num{500}$ próbek.
+
+\begin{figure}[b]
+    \label{zad3_norm_odp}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=1,xmax=500,ymin=0.0,ymax=0.5,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    xtick={0, 100, 200, 300, 400, 500},
+    ytick={0, 0.1, 0.2, 0.3, 0.4, 0.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad3_cut_odp.csv};
+    \legend{$y[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Postać znormalizowanej odpowiedzi skokowej rzeczywistego procesu}
+\end{figure}
+\FloatBarrier
+
+\section{Aproksymacja odpowiedzi skokowej inercją drugiego rzędu z opóźnieniem}
+\label{lab3_modelowanie}
+
