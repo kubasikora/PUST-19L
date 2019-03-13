@@ -1,0 +1,52 @@
+\chapter{Obiekt laboratoryjny -- stanowisko chłodząco-grzejące}
+\label{lab1}
+
+\section{Wyznaczenie punktu pracy}
+\label{lab1_punkt_pracy}
+
+Po zapoznaniu się ze środowiskiem przystąpiliśmy do wyznaczenia punktu pracy.
+Od prowadzącego otrzymaliśmy informację o wartości sygnału sterującego w punkcie pracy 
+równej $U_{\mathrm{pp}} = 26\%$. W celu wyznaczenia wartości sygnału wyjściowego w 
+punkcie pracy $Y_{\mathrm{pp}}$ na wejście obiektu podaliśmy stałe wejście o wartości 
+$U_{\mathrm{pp}}$ i zaczekaliśmy aż wyjście ustabilizuje się. Po odczekaniu około 5 minut,
+wyjście obiektu ustabilizowało się na wartości $Y_{\mathrm{pp}} = \num{34,5} \degree $C
+
+
+\section{Wzmocnienie statyczne}
+\label{lab1_odpowiedzi}
+Aby zbadać właściwości statyczne obiektu, zebraliśmy cztery odpowiedzi skokowe z punktu pracy.
+Zostały one przedstawione na rysunku \ref{lab1_odpowiedzi_rys}. Wzmocnienie obiektu różni się w 
+zależności od tego czy skok sterowania był dodatni lub ujemny, jednak pomimo tego różnice są 
+tak niewielkie, że obiekt można traktować jako liniowy. Korzystając ze wzoru \ref{zad2_wzm_statyczne_wzor}
+wyliczyliśmy efektywne wzmocnienie dla każdego badanego skoku i policzyliśmy ich średnią arytmetyczną, 
+ostatecznie otrzymując $K_{\mathrm{stat}} = \num{0.328}$.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=550,ymin=30,ymax=38,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$\Delta u = \num{4}\%$},
+    \addlegendentry{$\Delta u = \num{10}\%$}
+    \addlegendentry{$\Delta u = \num{-5}\%$},
+    \addlegendentry{$\Delta u = \num{-10}\%$},
+    \addlegendimage{no markers,green}
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,yellow}
+	\addlegendimage{no markers,blue}
+    \addplot[green, semithick, thick] file{../data/lab/zad2_skok_o_4.csv};
+    \addplot[red, semithick, thick] file{../data/lab/zad2_skok_o_10.csv};
+    \addplot[yellow, semithick, thick] file{../data/lab/zad2_skok_o_-5.csv};
+    \addplot[blue, semithick, thick] file{../data/lab/zad2_skok_o_-10.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{lab1_odpowiedzi_rys}
+\end{figure}
