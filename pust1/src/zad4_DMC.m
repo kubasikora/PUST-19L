@@ -6,9 +6,14 @@ step = step(:, 2);
 
 %% parametry regulatora 
 D = 91;
-N = D;  % pkt startowy do strojenia
-Nu = N;
-lambda = 10;
+% N = D;  % pkt startowy do strojenia
+% Nu = N;
+% lambda = 10;
+
+%% parametry otrzymane w wyniku optymalizacji funkcja gradientowa
+N = 40;
+Nu = 5;
+lambda = 1;
 
 %% Definicja stalych
 Upp = 0.5;
@@ -28,7 +33,7 @@ sim_time = 1:sim_len; % do plotowania
 sim_time = sim_time';
 
 % wartosc zadana
-stpt_value = 4.2;
+stpt_value = 4.05;
 setpoint = stpt_value*ones(sim_len,1);
 setpoint(1:11) = Ypp;
 
