@@ -59,8 +59,8 @@ for k = 12:sim_len
 
     % ograniczenia szybkosci zmian sterowania 
     if rescaled_input(k) - rescaled_input(k-1) >= dUmax
-        rescaled_input(k) = dUmax + input(k-1);
-    elseif input(k) - rescaled_input(k-1) <= -dUmax
+        rescaled_input(k) = dUmax + rescaled_input(k-1);
+    elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
         rescaled_input(k) = rescaled_input(k-1) - dUmax;
     end   
     

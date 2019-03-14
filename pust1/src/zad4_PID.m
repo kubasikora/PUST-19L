@@ -100,7 +100,9 @@ for k = 12:sim_len
     elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
         rescaled_input(k) = rescaled_input(k-1) - dUmax;
     end   
+    
     input(k) = input(k) + rescaled_input(k);
+    
     if input(k) >= Umax
         input(k) = Umax;
     elseif input(k) <= Umin
