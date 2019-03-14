@@ -1,36 +1,35 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Projektowanie uk³adów sterowania
+%          Projekt 1, zadanie 6
+%
+%   Program bêd¹cy funkcj¹ celu w procesie 
+%   optymalizacji parametrów regulatora DMC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function error_sum = zad6_DMC_target_function(parameters)
 addpath ../
+floor(parameters(1));
+floor(parameters(2));
 
 %% wczytanie wektora znormalizowanej odp skokowej
 step = importdata('../data/zad3_cut_norm_odp.csv');
 step = step(:, 2);
 
-%% parametry regulatora 
-D = 91;
-N = 30;
-Nu = 3;
-lambda = 0.1;
+%% inicjalizacja wskaznika jakosci oraz stalych w programie
+error_sum = 0;
 
-%% Definicja stalych
+D = 91;
 Upp = 0.5;
 Ypp = 4;
-
 Umin = 0.3;
 Umax = 0.7;
 dUmax = 0.05;
-T = 0.5;   
 sim_len = 500;
+T = 0.5; 
 
-%% inicjalizacja potrzebnych zmiennych
-error_sum = 0;
-
-% czas symulacji
-sim_time = 1:sim_len; % do plotowania
-sim_time = sim_time';
-
+%% inicjalizacja potrzebnych wektorow sygnalow procesowych
 % wartosc zadana
-stpt_value = 4.2;
+stpt_value = 4.05;
 setpoint = stpt_value*ones(sim_len,1);
-setpoint(1:11) = Ypp;
 
 % wektor sygnalu sterujacego
 input = Upp*ones(sim_len, 1);
@@ -38,11 +37,17 @@ input = Upp*ones(sim_len, 1);
 % wektor wyjscia
 output = Ypp*ones(sim_len, 1);
 
+% wektor uchybu
+error = zeros(sim_len, 1);
+
+% skalowane sygnaly
 rescaled_output = 0;
 rescaled_input = zeros(sim_len, 1);
 
-% wektor uchybu
-error = zeros(sim_len, 1);
+%% Definicja parametrow regulatora DMC przeslanych jako argument funkcji
+N = floor(parameters(1));
+Nu =floor(parameters(2));
+lambda = parameters(3);
 
 %% inicjalizacja macierzy algorytmu
 dU = zeros(Nu, 1);
@@ -78,13 +83,12 @@ for i = 1:N
 end
 
 % macierz K
-K = (M'*M + lambda*eye(Nu))*M';
+K = inv((M' * M + lambda * eye(Nu)))*M';
 
-%% symulacja
+%% Petla symulujaca dzialanie cyfrowego algorytmu DMC
 Ke = sum(K(1,:));
 Ku = K(1,:) * Mp;
-
-for k=12:sim_len    
+for k = 12:sim_len
     % wektor dUp
     for i = 1:(D-1)
         if (k-i) <= 0
@@ -95,7 +99,7 @@ for k=12:sim_len
         if (k-i-1) <= 0
             du2 = 0;
         else
-            du2 = input(k - i - 1);
+            du2 = rescaled_input(k - i - 1);
         end 
         dUp(i) = du1 - du2;
     end
@@ -111,32 +115,18 @@ for k=12:sim_len
     rescaled_input(k) = rescaled_input(k-1) + rescaled_input(k);
     
     % ograniczenia  
-    if rescaled_input(k) - rescaled_input(k-1) >= dUmax
-        rescaled_input(k) = dUmax + rescaled_input(k-1);
-    elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
-        rescaled_input(k) = rescaled_input(k-1) - dUmax;
-    end   
+%     if rescaled_input(k) - rescaled_input(k-1) >= dUmax
+%         rescaled_input(k) = dUmax + rescaled_input(k-1);
+%     elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
+%         rescaled_input(k) = rescaled_input(k-1) - dUmax;
+%     end   
     
     input(k) = input(k) + rescaled_input(k);  
     
-    if input(k) >= Umax
-        input(k) = Umax;
-    elseif input(k) <= Umin
-        input(k) = Umin;
-    end 
+%     if input(k) >= Umax
+%         input(k) = Umax;
+%     elseif input(k) <= Umin
+%         input(k) = Umin;
+%     end 
 end
-
-%% wykresy sterowania oraz wyjscia
-figure(1)
-stairs(sim_time, input);
-hold on 
-title('Sterowanie');
-hold off
-
-figure(2)
-plot(sim_time, setpoint);
-hold on
-plot(sim_time, output);
-title(['Wyjscie, E = ' num2str(error_sum)]);
-hold off
-
+end

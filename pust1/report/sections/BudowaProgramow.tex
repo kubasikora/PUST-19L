@@ -3,7 +3,182 @@
 
 \section{Implementacja algorytmu PID}
 \label{zad4_pid}
+Tworzenie programu symulującego działanie regulatora PID należało rozpocząć od zdefiniowania stałych, podanych w poleceniu. Były to podane w poleceniu wartości w punkcie pracy sygnałów wyjściowego oraz sterującego oznaczonych jako $Y_{\mathrm{pp}}$ i $U_{\mathrm{pp}}$. Kolejno zdefiniowane zostały wartości ograniczeń sygnału sterującego oraz okres próbkowania i długość symulacji.
+\\ 
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_const_lst},caption={Definicja stałych wartości używanych w programie},captionpos=b]
+Upp = 0.5;
+Ypp = 4;
+
+Umin = 0.3;
+Umax = 0.7;
+dUmax = 0.05;
+
+T = 0.5;   
+sim_len = 600;
+\end{lstlisting}
+
+
+W następnej części programu miała miejsce rezerwacja pamięci na wektory danych programu. Pierwszym wektorem, który wykorzystywany jest przy symulacji jest wektor \verb+setpoint+. Aby możliwe było wykonanie zaplanowanej trajektorii zadanej dla kilku skoków wartości, zostały zdefiniowane pomocnicze wartości: \verb+stpt_value_1+, \verb+stpt_value_2+, \verb+stpt_value_3+.\\
+\indent{} Wektorami przechowującymi najważniejsze dane są wektory \verb+input+ oraz \verb+output+, które są reprezentacją sygnałów wejściowych i wyjściowych podczas pracy skryptu. Zostały one zainicjalizowane wartościami wspomnianych sygnałów w punkcie pracy w celu uproszczenia przeskalowywania wyliczanych wartości.\\ 
+\indent{} Skalar \verb+rescaled_output+ oraz wektor \verb+rescaled_input+ to zmienne używane do przechowywania tymczasowych wartości przeskalowanych sygnałów podczas symulacji. Na koniec został utworzony wektor \verb+error+ przechowujący uchyby podczas trwania symualcji.
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_wek_lst},caption={Inicjalizacja wektorów},captionpos=b]
+%czas symulacji
+sim_time = 1:sim_len; %wykorzystywany do tworzenia wykresow
+sim_time = sim_time';
+
+%wartosc zadana
+stpt_value_1 = 4.15;
+stpt_value_2 = 3.91;
+stpt_value_3 = 4.3;
+setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
+setpoint(1:11) = Ypp;
+
+%wektor sygnalu sterujacego
+input = Upp*ones(sim_len, 1);
+
+% wektor wyjscia
+output = Ypp*ones(sim_len, 1);
+
+rescaled_output = 0;
+rescaled_input = zeros(sim_len, 1);
+
+% wektor uchybu
+error = zeros(sim_len, 1);
+\end{lstlisting}
+
+Po wykonaniu niezbędnych przygotowań programu oraz inicjalizacji przeszliśmy do implementacji samego algorytmu, zaczynając od definicji parametrów ciągłego regulatora PID: $K$, $T_\mathrm{i}$, $T_\mathrm{d}$. Następnie zdefiniowane zostały współczynniki regulatora cyfrowego: $r_0$, $r_1$, $r_2$ wykorzystywane później w równaniu służącym do obliczania sterowania.
+\\
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_param_lst},caption={Definicja współczynników regulatora PID},captionpos=b]
+K = 0.5;
+Ti = 6.25;
+Td = 1.62;
+
+r0 = K*(1 + T/(2*Ti) + Td/T);
+r1 = K*(T/(2*Ti) - (2*Td)/T - 1);
+r2 = (K*Td)/T;
+\end{lstlisting}
+
+Ostatnią fazą było utworzenie pętli, w której odbywała się symulacja. Każdy przebieg rozpoczynał pomiar aktualnej wartości wyjścia obiektu otrzymywanej za pomocą skryptu \verb+symulacja_obiektu1Y.m+. Kolejnym krokiem było przeskalowanie zmierzonego wyjścia obiektu oraz wartości zadanej poprzez odjęcie od nich wartości $Y_{\mathrm{pp}}$. Po tej operacji obliczany był uchyb. Podczas symulacji w każdej chwili dyskretnej $k$ obliczany był wskaźnik jakości jako suma kwadratów uchybów ze wszystkich chwil. W programie zmienna przechowująca wartość wskaźnika została nazwana \verb+error_sum+. Ostatnia część iteracji związana była z wyliczeniem sterowania. Wyliczona wartość jest wartością przeskalowaną, którą należy dodać do wartości sterowania w punkcie pracy. Po nałożeniu ograniczeń na sygnał sterujący rozpoczynała się kolejna iteracja. Postać pętli symulacyjnej przedstawia listing \ref{zad4_sim_lst}.\\ 
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Petla symulujaca dzialanie cyfrowego algorytmu PID},captionpos=b]
+error_sum = 0;
+for k = 12:sim_len     
+    output(k) = symulacja_obiektu1Y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+    rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
+    stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
+    error(k) = stpt - rescaled_output;   % obliczenie uchyby   
+    
+    error_sum = error_sum + error(k)^2;
+    
+    rescaled_input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + rescaled_input(k-1);  % wyliczenie sterowania 
+  
+    %ograniczenia  
+    if rescaled_input(k) - rescaled_input(k-1) >= dUmax
+        rescaled_input(k) = dUmax + rescaled_input(k-1);
+    elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
+        rescaled_input(k) = rescaled_input(k-1) - dUmax;
+    end   
+    input(k) = input(k) + rescaled_input(k);
+    if input(k) >= Umax
+        input(k) = Umax;
+    elseif input(k) <= Umin
+        input(k) = Umin;
+    end 
+end
+\end{lstlisting}
+
+Po zakończonej symulacji wyświetlane były wykresy z wynikami oraz po odpowiedniej, krótkiej obróbce danych generowane były pliki \verb+.csv+ wykorzystywane do tworzenia wykresów w systemie \LaTeX.
 
 
 \section{Implementacja algorytmu DMC}
 \label{zad4_dmc}
+
+Implementacja drugiego algorytmu przebiegała w bardzo podobny sposób, jeśli chodzi o budowę programu. Różnicą pojawiającą się na początku skryptu było wczytanie modelu wykorzystywanego do regulacji z wykorzystaniem algorytmu DMC - znormalizowanej odpowiedzi skokowej obiektu.
+
+\begin{lstlisting}
+[style=custommatlab,frame=single,label={zad4_step_lst},caption={Import znormalizowanej odpowiedzi skokowej},captionpos=b]
+step = importdata('../data/zad3_cut_norm_odp.csv');
+step = step(:, 2);
+\end{lstlisting}
+
+Następnie, tak jak poprzednio, zdefiniowane zostały stałe wykorzystywane w programie jak i parametry wykorzystywanego algorytmu. Horyzont dynamiki równał się długości wektora z odpowiedzią skokową. Horyzonty predykcji oraz sterowania, a także współczynnik kary $\lambda$ były odpowiednio modyfikowane w późniejszym procesie strojenia regulatora. \\
+\indent{} Kolejnym krokiem, również powtórzonym była deklaracja wektorów wykorzystywanych do przechowywania wartości sygnałów.
+
+
+\begin{lstlisting}
+[style=custommatlab,frame=single,label={zad4_vecDMC_lst}, caption={Inicjalizacja wektorów}, captionpos=b]
+% czas symulacji
+sim_time = 1:sim_len; % do plotowania
+sim_time = sim_time';
+
+% wartosc zadana
+stpt_value = 4.05;
+setpoint = stpt_value*ones(sim_len,1);
+setpoint(1:11) = Ypp;
+
+% wektor sygnalu sterujacego
+input = Upp*ones(sim_len, 1);
+
+% wektor wyjscia
+output = Ypp*ones(sim_len, 1);
+
+rescaled_output = 0;
+rescaled_input = zeros(sim_len, 1);
+
+% wektor uchybu
+error = zeros(sim_len, 1);
+
+\end{lstlisting}
+
+Pracę nad algorytmem należało rozpocząć od inicjalizacji macierzy algorytmu, używanych później do symulacji. Ważnym aspektem tej czynności jest poprawne określenie wymiarów każdej macierzy. Mając zdefiniowane w ten sposób zmienne mogliśmy kontrolować, czy poszczególne obliczenia, tworzące poniższe elementy algorytmu, przebiegały poprawnie.
+\\
+
+\begin{lstlisting}
+[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
+dU = zeros(Nu, 1);
+dUp = zeros(D-1, 1);
+M = zeros(N, Nu);
+Mp = zeros(N, D-1);
+K = zeros(Nu, N);
+\end{lstlisting}
+
+Następnie przystąpiliśmy do wyliczenia macierzy, których postać była niezmienna podczas działania programu. Kolejno obliczona została macierz $M$, $M_\mathrm{p}$ oraz $K$ zgodnie ze wzorami:
+\\
+
+\begin{equation}
+M=\left[
+\begin{array}
+{cccc}
+s_{1} & 0 & \ldots & 0\\
+s_{2} & s_{1} & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+s_{N} & s_{N-1} & \ldots &  s_{N-N_{\mathrm{u}}+1}
+\end{array}
+\right]
+\end{equation}
+
+\begin{equation}
+M^{\mathrm{p}}=\left[
+\begin{array}
+{cccc}
+s_{\mathrm{2}} - s_{\mathrm{1}} & s_{\mathrm{3}} - s_{\mathrm{2}} & \ldots & s_{\mathrm{D}} - s_{\mathrm{D-1}}\\
+s_{\mathrm{3}} - s_{\mathrm{1}} & s_{\mathrm{4}} - s_{\mathrm{2}} & \ldots & s_{\mathrm{D+1}} - s_{\mathrm{D-1}}\\
+\vdots & \vdots & \ddots & \vdots\\
+s_{\mathrm{N+1}} - s_{1} & s_{\mathrm{N+2}} - s_{\mathrm{2}} & \ldots &  s_{N + \mathrm{D} - 1} - s_{{\mathrm{D-1}}}
+\end{array}
+\right]
+\end{equation}
+\\
+
+%\begin{lstlisting}
+%[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
+%\end{lstlisting}
+%\begin{lstlisting}
+%[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
+%\end{lstlisting}
+%\begin{lstlisting}
+%[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
+%\end{lstlisting}
+
