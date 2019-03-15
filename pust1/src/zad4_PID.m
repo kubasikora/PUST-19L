@@ -60,7 +60,12 @@ K = 0.5;
 Ti = 6.25;
 Td = 1.62; 
 
+K = 1.1497;
+Ti = 6.9813;
+Td = 2.151;
+
 save_file = false;
+save_file_zad6 = false;
 % K = 0.19;
 % Ti = 4.9;
 % Td = 0.088;
@@ -137,4 +142,14 @@ if(save_file)
     dlmwrite(strcat('../data/zad5_multiplejumps/D/zad5_PID_input_example', str, '.csv'), input_ts, '\t');
     dlmwrite(strcat('../data/zad5_multiplejumps/D/zad5_PID_output_example', str, '.csv'), output_ts, '\t');
     dlmwrite(strcat('../data/zad5_multiplejumps/D/zad5_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+end
+
+
+if(save_file_zad6)
+    input_ts = [sim_time-1 input];
+    output_ts = [sim_time-1 output];
+    setpoint_ts = [sim_time-1 setpoint];
+    dlmwrite(strcat('../data/zad6_multiplejumps/PID/zad6_PID_input_example', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad6_multiplejumps/PID/zad6_PID_output_example', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad6_multiplejumps/PID/zad6_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
 end
