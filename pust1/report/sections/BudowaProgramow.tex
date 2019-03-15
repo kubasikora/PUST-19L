@@ -7,7 +7,7 @@
     keywordstyle=\color{blue},%
     morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
     identifierstyle=\color{black},%
-    stringstyle=\color{lilas},
+    stringstyle=\color{mylilas},
     commentstyle=\color{green},%
     showstringspaces=false,%without this there will be a symbol in the places where there is a space
     numbers=left,%
@@ -67,8 +67,22 @@ rescaled_input = zeros(sim_len, 1);
 error = zeros(sim_len, 1);
 \end{lstlisting}
 
-Po wykonaniu niezbędnych przygotowań programu oraz inicjalizacji przeszliśmy do implementacji samego algorytmu, zaczynając od definicji parametrów ciągłego regulatora PID: $K$, $T_\mathrm{i}$, $T_\mathrm{d}$. Następnie zdefiniowane zostały współczynniki regulatora cyfrowego: $r_0$, $r_1$, $r_2$ wykorzystywane później w równaniu służącym do obliczania sterowania.
+Po wykonaniu niezbędnych przygotowań programu oraz inicjalizacji przeszliśmy do implementacji samego algorytmu, zaczynając od definicji parametrów ciągłego regulatora PID: $K$, $T_\mathrm{i}$, $T_\mathrm{d}$. Następnie zdefiniowane zostały współczynniki regulatora cyfrowego: $r_0$, $r_1$, $r_2$ oraz zaimplementowane zostały wzory (\ref{eq_r0}), (\ref{eq_r1}), (\ref{eq_r2}). Wartości współczynników wykorzystywane były później w równaniu służącym do obliczania sterowania.
 \\
+\begin{equation}
+\label{eq_r0}
+r_{0} = K (1 + \frac{T}{2 T_{\mathrm{i}}} + \frac{T_{\mathrm{d}}}{T})
+\end{equation}
+
+\begin{equation}
+\label{eq_r1}
+r_{1} = K (\frac{T}{2 T_{\mathrm{i}}} - \frac{2 T_{\mathrm{d}}}{T} - 1)
+\end{equation}
+
+\begin{equation}
+\label{eq_r2}
+r_{2} = \frac{K T_{\mathrm{d}}}{T}
+\end{equation}
 
 \begin{lstlisting}[style=custommatlab,frame=single,label={zad4_param_lst},caption={Definicja współczynników regulatora PID},captionpos=b]
 K = 0.5;
@@ -84,14 +98,16 @@ Ostatnią fazą było utworzenie pętli, w której odbywała się symulacja. Ka�
 \begin{lstlisting}[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Petla symulujaca dzialanie cyfrowego algorytmu PID},captionpos=b]
 error_sum = 0;
 for k = 12:sim_len     
-    output(k) = symulacja_obiektu1Y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+    output(k) = symulacja_obiektu1Y(input(k-10), input(k-11),
+    			output(k-1), output(k-2));    % pomiar wyjscia
     rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
     error(k) = stpt - rescaled_output;   % obliczenie uchyby   
     
     error_sum = error_sum + error(k)^2;
     
-    rescaled_input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + rescaled_input(k-1);  % wyliczenie sterowania 
+    rescaled_input(k) = r2 * error(k-2) + r1 * error(k-1) +
+    		r0 * error(k) + rescaled_input(k-1);  % wyliczenie sterowania 
   
     %ograniczenia  
     if rescaled_input(k) - rescaled_input(k-1) >= dUmax
@@ -113,18 +129,12 @@ Po zakończonej symulacji wyświetlane były wykresy z wynikami oraz po odpowied
 \section{Implementacja algorytmu DMC}
 \label{zad4_dmc}
 
-Implementacja drugiego algorytmu przebiegała w bardzo podobny sposób, jeśli chodzi o budowę programu. Różnicą pojawiającą się na początku skryptu było wczytanie modelu wykorzystywanego do regulacji z wykorzystaniem algorytmu DMC - znormalizowanej odpowiedzi skokowej obiektu.
-
-\begin{lstlisting}
-[style=custommatlab,frame=single,label={zad4_step_lst},caption={Import znormalizowanej odpowiedzi skokowej},captionpos=b]
-step = importdata('../data/zad3_cut_norm_odp.csv');
-step = step(:, 2);
-\end{lstlisting}
-
-Następnie, tak jak poprzednio, zdefiniowane zostały stałe wykorzystywane w programie jak i parametry wykorzystywanego algorytmu. Horyzont dynamiki równał się długości wektora z odpowiedzią skokową. Horyzonty predykcji oraz sterowania, a także współczynnik kary $\lambda$ były odpowiednio modyfikowane w późniejszym procesie strojenia regulatora. \\
+Implementacja drugiego algorytmu przebiegała w bardzo podobny sposób, jeśli chodzi o budowę programu. Różnicą pojawiającą się na początku skryptu było wczytanie modelu wykorzystywanego do regulacji z wykorzystaniem algorytmu DMC - znormalizowanej odpowiedzi skokowej obiektu.\\
+\indent{} Następnie, tak jak poprzednio, zdefiniowane zostały stałe wykorzystywane w programie jak i parametry wykorzystywanego algorytmu. Horyzont dynamiki równał się długości wektora z odpowiedzią skokową. Horyzonty predykcji oraz sterowania, a także współczynnik kary $\lambda$ były odpowiednio modyfikowane w późniejszym procesie strojenia regulatora. \\
 \indent{} Kolejnym krokiem, również powtórzonym była deklaracja wektorów wykorzystywanych do przechowywania wartości sygnałów.
+%[language=Matlab]
 
-\begin{lstlisting}[language=Matlab]
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_vecDMC_lst},caption={Inizjalizacja wektorów używanych do przechowywania sygnałów.},captionpos=b]
 % czas symulacji
 sim_time = 1:sim_len; % do plotowania
 sim_time = sim_time';
@@ -151,8 +161,7 @@ error = zeros(sim_len, 1);
 Pracę nad algorytmem należało rozpocząć od inicjalizacji macierzy algorytmu, używanych później do symulacji. Ważnym aspektem tej czynności jest poprawne określenie wymiarów każdej macierzy. Mając zdefiniowane w ten sposób zmienne mogliśmy kontrolować, czy poszczególne obliczenia, tworzące poniższe elementy algorytmu, przebiegały poprawnie.
 \\
 
-\begin{lstlisting}
-[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
 dU = zeros(Nu, 1);
 dUp = zeros(D-1, 1);
 M = zeros(N, Nu);
@@ -174,7 +183,7 @@ s_{N} & s_{N-1} & \ldots &  s_{N-N_{\mathrm{u}}+1}
 \end{array}
 \right]
 \end{equation}
-
+\\
 \begin{equation}
 M^{\mathrm{p}}=\left[
 \begin{array}
@@ -187,14 +196,121 @@ s_{\mathrm{N+1}} - s_{1} & s_{\mathrm{N+2}} - s_{\mathrm{2}} & \ldots &  s_{N + 
 \right]
 \end{equation}
 \\
-dupa dupa
-%\begin{lstlisting}
-%[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
+\begin{equation}
+K = (M^{\mathrm{T}} M + \lambda I_{\mathrm{N_{\mathrm{u}}} \times \mathrm{N_{\mathrm{u}}}})^{\mathrm{-1}} M^{\mathrm{T}}
+\end{equation}
+\\
+Implementację powyższych wzorów przedstawiono na listingu \ref{zad4_matrices_lst}.\\
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_matrices_lst},caption={Wyliczenie macierzy stałych algorytmu DMC},captionpos=b]
+% macierz M
+for i = 1:Nu
+    k = 1;
+    for j = 1:N
+        if j < i
+            M(j, i) = 0;
+        else
+            M(j, i) = step(k);
+            k = k + 1;
+        end
+    end
+end
+
+% macierz Mp
+for i = 1:N
+    for j = 1:(D-1)
+        k = i + j;
+        if k > D
+            Mp(i,j) = step(D) - step(j);
+        else
+            Mp(i,j) = step(k) - step(j);
+        end
+    end
+end
+
+% macierz K
+K = inv((M' * M + lambda * eye(Nu)))*M';
 %\end{lstlisting}
-%\begin{lstlisting}
-%[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
-%\end{lstlisting}
-%\begin{lstlisting}
-%[style=custommatlab,frame=single,label={zad4_sim_lst},caption={Definicja macierzy algorytmu DMC},captionpos=b]
-%\end{lstlisting}
+Wersja algorytmu DMC użyta w programie jest wersją oszczędną to znaczy podczas symulacji nie jest obliczany cały wektor przyrostów sterowania $\Delta u(k)$, a jedynie pierwszy jego element faktycznie wykorzystywany do sterowania obiektem. Dana wartość obliczana jest ze wzoru:
+
+\begin{equation}
+\label{du(k)}
+\Delta u(k) = K_{\mathrm{e}} e(k) - K_{\mathrm{u}} \Delta U^{\mathrm{P}}(k)
+\end{equation}
+
+gdzie $K_{\mathrm{e}}$ jest wyrażonym wzorem (\ref{eq_Ke}), $K_{\mathrm{u}}$ jest wektorem powstałym z pomnożenia pierwszego wiersza macierzy $K$ oraz macierzy $M^{\mathrm{P}}$ co przedstawia wzór (\ref{eq_Ku}). Wektor $\Delta U^{\mathrm{P}}(k)$ jest wektorem różnic sterowania między kolejnymi jego wartościami z przeszłości danym wzorem:
+
+\begin{equation}
+\Delta U^{\mathrm{P}}(k)=\left[
+\begin{array}{c}
+u(k-1) - u(k-2)\\
+u(k-2) - u(k-3)\\
+\vdots\\
+u(k-\mathrm{D}+1) - u(k-\mathrm{D})
+\end{array}
+\right]
+\end{equation}
+
+\begin{equation}
+\label{eq_Ke}
+K_{\mathrm{e}} = \sum_{i=1}^{N} K_{1,i}
+\end{equation}
+
+\begin{equation}
+\label{eq_Ku}
+K_{\mathrm{u}} = \overline{K_{1}} M^{\mathrm{P}}
+\end{equation}
+
+Wektor $\Delta U^{\mathrm{P}}(k)$ jest obliczany w każdej iteracji pętli symulacyjnej w celu uniknięcia niepotrzebnych komplikacji związanych z przesuwaniem jego wartości. Przed wejściem do pętli obliczane są wartości $K_{\mathrm{e}}$ oraz $K_{\mathrm{e}}$. Symulacja działania algorytmu za pomocą pętli została przedstawiona na listingu \ref{zad4_dmc_sim_lst}.\\
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={zad4_dmc_sim_lst},caption={Pętla symulująca działanie regulatora DMC},captionpos=b]
+Ke = sum(K(1,:));
+Ku = K(1,:) * Mp;
+
+for k=12:sim_len    
+    % wektor dUp
+    for i = 1:(D-1)
+        if (k-i) <= 0
+            du1 = 0;
+        else
+            du1 = rescaled_input(k - i);
+        end
+        if (k-i-1) <= 0
+            du2 = 0;
+        else
+            du2 = rescaled_input(k - i - 1);
+        end 
+        dUp(i) = du1 - du2;
+    end
+    
+    output(k) = symulacja_obiektu1Y(input(k-10), input(k-11),
+    			output(k-1), output(k-2));    % pomiar wyjscia
+    rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
+    stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
+    error(k) = stpt - rescaled_output; % obliczenie uchyby   
+    
+    error_sum = error_sum + error(k)^2; % wskaznik jakosci
+    
+    rescaled_input(k) = Ke * error(k) - Ku * dUp;
+    rescaled_input(k) = rescaled_input(k-1) + rescaled_input(k);
+    
+    % ograniczenia  
+    if rescaled_input(k) - rescaled_input(k-1) >= dUmax
+        rescaled_input(k) = dUmax + rescaled_input(k-1);
+    elseif rescaled_input(k) - rescaled_input(k-1) <= -dUmax
+        rescaled_input(k) = rescaled_input(k-1) - dUmax;
+    end   
+    
+    input(k) = input(k) + rescaled_input(k);  
+    
+    if input(k) >= Umax
+        input(k) = Umax;
+    elseif input(k) <= Umin
+        input(k) = Umin;
+    end 
+end
+\end{lstlisting}
+
+Pętla jest zbudowana w taki podobny sposób co pętla do symulacji algorytmu PID. Różnicą na początku jest obliczenie wektora $\Delta U^{\mathrm{P}}(k)$. Następnie następuje pomiar wyjścia i przeskalowanie sygnałów: wyjściowego oraz wartości zadanej. Po obliczeniu uchybu oraz wskaźnika jakości następuje obliczenie wartości przyrostu sterowania zgodnie ze wzorem (\ref{du(k)}). Ostatnią częścią jest uwzględnienie ograniczeń sygnału sterującego, po którym następuje kolejna iteracja.\\
+\indent{} W skrypcie \verb+zad4_DMC.m+ po zakończeniu symulacji również następuje wyświetlenie wyników, krótka obróbka danych oraz generowanie plików z danymi.
 
