@@ -19,16 +19,21 @@ Td_min = 0.001;
 Td_max = 3;
 
 %% inicjalizacja punktu poczatkowego i opcji funkcji minimalizujacej
-parameters0 = [0.2 5 0.01];
+% parameters0 = [K, Ti, Td] 
+parameters0 = [0.5 7.25 1.62];
 options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter');
 
 %% optymalizacja funkcja fmincon
+error_sum2 = @zad6_PID_target_function;
+error_sum = error_sum2(parameters0); %upewniæ siê czy na pewno jest dobrze przekazywany error - jest dobrze
 parameters = fmincon(@zad6_PID_target_function, parameters0,[],[],[],[],[K_min Ti_min Td_min],[K_max Ti_max Td_max], [], options);
 
 %% wypisanie wartosci wspolczynnikow 
 disp(['K = ' num2str(parameters(1)) ';']);
 disp(['Ti = ' num2str(parameters(2)) ';']);
 disp(['Td = ' num2str(parameters(3)) ';']);
+disp(['E = ' num2str(error_sum) ';']);
+
 
 
 
