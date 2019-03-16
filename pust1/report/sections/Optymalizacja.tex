@@ -1,38 +1,76 @@
 \chapter{Optymalizacjyne metody strojenia regulatorów PID i DMC}
 \label{zad6}
-Ostatnim krokiem, którym wykonaliśmy podczas strojenia regulatorów PID i DMC była optymalizacja parametrów tych regulatorów pod kątem wskaźnika jakości $E$. Eksperymenty przeprowadziliśmy z użyciem inżynierskiego oprogramowania MATLAB i funkcji \textit{fmincon} znajdującej minima nieliniowej funkcji wielu zmiennych przy określonych ograniczeniach. W następnych punktach opisujemy stosowaną przez nas metodykę, którą stosowaliśmy podczas optymalizacji parametrów regulatorów PID i DMC.
+Ostatnim krokiem, którym wykonaliśmy podczas strojenia regulatorów PID i DMC 
+była optymalizacja parametrów tych regulatorów pod kątem wskaźnika jakości $E$. 
+Eksperymenty przeprowadziliśmy przy użyciu  
+funkcji \textit{fmincon} znajdującej minimum nieliniowej funkcji wielu zmiennych 
+przy określonych ograniczeniach.
+
 \section{Optymalizacjyne strojenie regulatora PID}
 \label{zad6_pid}
-Za pomocą funkcji \textit{fmincon} dobieraliśmy współczynniki $K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$, które zapewniały jak najmniejszą wartość wskaźnika jakości $E$. Liczba iteracji dla \textit{fmincon} zależała od tego czy zmiana $E$ jest mniejsza od $\Delta E$ która miała stałą wartość równą $10^{\num{-6}}$ ($|E(k) - E(k-1)| < \Delta E$). W naszym przypadku algorytm \textit{fmincon} potrzebował od 24 do 52 iteracji na znalezienie minimum. Jako argument przyjmował ona wektor złożony z $K, T_{\mathrm{i}}, T_{\mathrm{d}}$, który na początku eksperymentów dobieraliśmy całkowicie losowo. Na współczynniki $K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$ nałożyliśmy odpowiednie ograniczenia, które były uwzględniane przez funkcję \textit{fmincon}.
+Za pomocą funkcji \textit{fmincon} dobraliśmy współczynniki 
+$K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$, które zapewniały 
+jak najmniejszą wartość wskaźnika jakości $E$. Liczba iteracji  
+\textit{fmincon} zależała zmiany obliczonego wskaźnika $E$. Algorytm zatrzymywał się 
+w przypadku gdy zmiana $\Delta E$ jest mniejsza od $10^{\num{-6}}$. 
+Jako punkt początkowy podaliśmy wektor złożony z $K, T_{\mathrm{i}}, 
+T_{\mathrm{d}}$, który na początku eksperymentów dobieraliśmy całkowicie losowo. 
+Na współczynniki $K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$ nałożyliśmy następujące
+ograniczenia:
 
 \begin{center}
-$\num{0,1} \leq K_{\mathrm{r}} \leq \num{3}$\\
+$\num{0.01} \leq K_{\mathrm{r}} \leq \num{10}$\\
 $\num{1} \leq T_{\mathrm{i}} \leq \num{20}$\\
-$\num{0,001} \leq T_{\mathrm{d}} \leq \num{3}$
+$\num{0,001} \leq T_{\mathrm{d}} \leq \num{10}$
 \end{center}
 
-Proces optymalizacyjnego strojenia regulatora PID:
-\begin{center}
-\begin{enumerate}
-    \item Wyniki optymalizacji dla losowo wybranych parametrów $K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$ przyjmowanych przez funkcje \textit{fmincon} jako argument.
-    \item Poprawa wartości parametrów z pkt 1 przyjmowanych przez funkcje \textit{fmincon} jako argument.
-    \item Użycie współczynników wyznaczonych metodą eksperymentalną \ref{zad5_result} podczas strojenia regulatora PID  jako argumentów dla funkcji \textit{fmincon}. 
-\end{enumerate}
-\end{center}
-
-\subsection{Wyniki optymalizacji dla losowo wybranych parametrów $K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$}
+\subsection{Wyniki optymalizacji dla losowo wybranego punktu początkowego}
 \label{zad6_losowo}
-Jako wartości wejściowe wybraliśmy współczynniki równe: $K = 4, {T_{\mathrm{i}} = 8}, T_{\mathrm{d}} = \num{0.2}$. Po uruchomieniu skryptu odpowiedzialnego za optymalizację \newline (\verb|zad6_PID_optimization.m|) otrzymaliśmy wyniki równe $K_{\mathrm{r}} = \num{1.1496}, {T_{\mathrm{i}} = 7.022}, T_{\mathrm{d}} = \num{2.1442}$. W tym miejscu warto przypomnieć, że parametry są dobierane pod kątem optymalizacji wskaźnika jakości $E$, który w tym przypadku ostatecznie wyniósł $E=\num{4.8277}$. Jak widać na rysunkach \ref{zad6_losowo_1} i \ref{zad6_losowo_sterowanie_1} przebiegi charakteryzują się mocnymi oscylacjami, które są niepożądane w regulacji. Mimo, że wskaźnik jakości jest naprawdę niski nie moglibyśmy brać pod uwagę wartości $K_{\mathrm{r}} = \num{1.1496}, {T_{\mathrm{i}} = 7.022}, T_{\mathrm{d}} = \num{2.1442}$ wygenerowanych podczas tej optymalizacji, ponieważ po dłuższej analizie wykresów zobaczymy, że nasze oscylacje rosną razem z czasem regulacji. Z tego powodu stanowczo rezygnujemy z tych nastawów. W następnym kroku również wybraliśmy zupełnie losowe argumenty dla funkcji \textit{fmincon}. Jednak wzięliśmy pod uwagę wnioski z strojenia PID metodą eksperymentalną i z pierwszej naszej próby optymalizacji, dlatego wektor wejściowy składający się z $K_{\mathrm{r}}, T_{\mathrm{i}}, T_{\mathrm{d}}$ przyjął mniejsze wartości.
+Jako punkt początkowy algorytmu optymalizacji wybraliśmy następujące współczynniki: 
+\begin{center}
+$K = 4, {T_{\mathrm{i}} = 8}, T_{\mathrm{d}} = \num{0.2}$. 
+\end{center}
+Po uruchomieniu skryptu \verb+zad6_PID_optimization.m+ otrzymaliśmy 
+wyniki równe:
+\begin{center}
+$K_{\mathrm{r}} = \num{1.1496}, T_{\mathrm{i}} = \num{7.022}, T_{\mathrm{d}} = \num{2.1442}$
+\end{center}
 
-\subsection{Wyniki optymalizacji dla argumentu funkcji \textit{fmincon} w postaci $K = 2, T_{\mathrm{i}} = 6, T_{\mathrm{d}} = 0.01$ }
-\label{zad6_pid_najlepszy}
-Dla wartości wejściowych podanych w tytule podrozdziału otrzymaliśmy wyniki równe $K_{\mathrm{r}} = \num{0.65915}, {T_{\mathrm{i}} = 6.8394}, {T_{\mathrm{d}} = \num{0.001}}$. Gdy dokonamy analizy rysunków \ref{zad6_losowo_2} i \ref{zad6_losowo_sterowanie_2} zobaczymy, że przebiegi sygnałów wyglądają już dużo lepiej. Co prawda nadal są lekko oscylacyjne, jednak są one dość małe i co najważniejsze gasnące. Możemy przypuszczać, że gdyby wydłużyć czas dążenia do wartości zadanej to zostałaby w końcu ona osiągnięta lub sygnał oscylowałby wokół niej z bardzo małym uchybem. Aktualna wartość wskaźnika jakości regulacji wynosi $E = \num{4.5486}$, wynik ten jest mniejszy niż uzyskany w przypadku \ref{zad6_losowo}.
-\subsection{Wyniki optymalizacji za pomocą funkcji \textit{fmincon}, gdzie argumentem zostały współczynniki PID wyznaczone metodą eksperymentalną }
-\label{zad6_nasz_opis}
-Uznaliśmy, że warto zobaczyć jakie parametry dla naszego regulatora otrzymamy, jeżeli wektor wejściowy będzie składał się z wartości uzyskanych przez nas podczas stosowania metody eksperymentalnej. Współczynniki jakie otrzymaliśmy po uruchomieniu skryptu dokonującego optymalizację prezentowały się następująco $K_{\mathrm{r}} = \num{1.1497}, {T_{\mathrm{i}} = 6.9813}, {T_{\mathrm{d}} = \num{2.151}}$. Wartości te są bardzo podobne do uzyskanych w próbie \ref{zad6_losowo}. Gdy porównamy wykresy \ref{zad6_losowo_1} i \ref{zad6_losowo_sterowanie_1} z \ref{zad6_nasze} i \ref{zad6_nasze_sterowanie_1} zobaczymy, że przebiegi te prezentują się analogicznie. Dla przypadku \ref{zad6_nasz_opis} pojawiają się te same niepożądane sytuacje co w \ref{zad6_losowo} (tzn. niegasnące oscylacje). Co może być pewnym zaskoczeniem (szczególnie patrząc po zachowaniu sygnałów na wykresach) wskaźnik jakości regulacji jest najmniejszy z pośród wszystkich przeprowadzonych badań, $E = \num{4.4822}$. Gdy skupimy się tylko na wskaźniku jakości, jest to najlepsze rozwiązanie. Jednak kiedy postanowimy ocenić również zachowanie regulatora, oczywistym jest, że nie możemy brać pod uwagę tego rozwiązania. 
+Wskaźnik jakości wyniósł $E=\num{4.8277}$ co jest
+znaczną poprawą w porównaniu do ręcznie dobieranych parametrów regulatora. 
+Niestety jakość regulacji tego regulatora jest nieakceptowalna. Jak widać na rysunkach 
+\ref{zad6_losowo_1} i \ref{zad6_losowo_sterowanie_1} przebiegi charakteryzują 
+się mocnymi narastającymi oscylacjami, które wykluczają ten regulator z użycia.\\
 
-\subsection{Wnioski po etapie optymalizacyjnego strojenia PID}
-Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru innych m. in. dla wektora wejściowego w postaci $K = 1, {T_{\mathrm{i}} = 3}, {T_{\mathrm{d}} = \num{0.01}}$ i $K = \num{0.5}, {T_{\mathrm{i}} = 3}, {T_{\mathrm{d}} = \num{0.01}}$ uzyskanych wyników postanowiliśmy nie opisywać, ponieważ są one takie same jak dla przypadku \ref{zad6_nasz_opis} i \ref{zad6_losowo} (pierwszy wektor) lub przypadku \ref{zad6_pid_najlepszy} (drugi wektor). Najważniejszą wiedzę jaką wynieśliśmy z realizacji tego zadania jest fakt, że uzyskanie najmniejszego wskaźnika jakości nie zawsze musi wiązać się z mistrzowskimi przebiegami sygnałów regulacji. 
+W kolejnej próbie spróbowaliśmy wystartować algorytm optymalizacyjny z mniejszego
+punktu początkowego. Jako startowe wartości obraliśmy
+\begin{center}
+$K = 2, T_{\mathrm{i}} = 6, T_{\mathrm{d}} = 0.01$ 
+\end{center} Po uruchomieniu solvera otrzymaliśmy 
+wyniki równe:
+\begin{center}
+$K_{\mathrm{r}} = \num{0.659}, T_{\mathrm{i}} = \num{6.8394}, T_{\mathrm{d}} = \num{0.001}$. 
+\end{center}
+Testowe przebiegi zostały przedstawione na rysunkach \ref{zad6_losowo_2} i 
+\ref{zad6_losowo_sterowanie_2}. Jakość regulacji tego regulatora jest znacznie lepsza,
+uchyb zbiega do zera a sygnał sterujący nie zmienia się w bardzo gwałtowny sposób.
+Dla danej próby udało się poprawić wartość wskaźnika jakości regulacji do $E = \num{4.5486}$.
+Warto zauważyć że wartość parametru $T_{\mathrm{d}}$ osiągnęła swoje dolne ograniczenie, czyli 
+w pewien sposób optymalizator zdecydował o wyłączeniu członu różniczkującego.
+
+\subsubsection{Zmiana funkcji optymalizowanej}
+Do tej pory w funkcji optymalizowanej, regulator był testowany na trzech skokach wartości zadanej.
+Doszliśmy do wniosku że taki sposób symulacji może wpływać oscylacyjny charakter obu uzyskanych regulatorów.
+Dlatego postanowiliśmy jeszcze raz spróbować znaleźć optymalne parametry, tym razem dla pojedynczego skoku wartości zadanej.
+Okazało się że, istotnie budowa funkcji minimalizowanej ma duży wpływ ostateczny charakter regulatora.
+Dla takich samych punktów początkowych uzyskaliśmy następujący zestaw parametrów:
+\begin{center}
+    $K_{\mathrm{r}} = \num{0.876}, T_{\mathrm{i}} = \num{5.6771}, T_{\mathrm{d}} = \num{2.7848}$. 
+\end{center}
+Na rysunkach \ref{zad6_jeden_skok} i \ref{zad6_jeden_skok_sterowanie} przedstawiony został test regulatora
+dla kilku zmian wartości zadanej. Przebieg wyjścia obiektu jest najlepszy z wszystkich trzech prób, pomimo że wartość
+wskaźnika regulacji pogorszyła się względem poprzedniego zestawu parametrów i wynosi $E = \num{4,8867}$.
+
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -54,7 +92,7 @@ Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru inn
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami wyznaczonymi za pomocą optymalizacji}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{1.1496}, T_{\mathrm{i}} = \num{7.022}, T_{\mathrm{d}} = \num{2.1442}$}}
     \label{zad6_losowo_1}
 \end{figure}
 
@@ -75,7 +113,7 @@ Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru inn
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą optymalizacji}
+    \caption{Przebieg sygnału sterującego regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{1.1496}, T_{\mathrm{i}} = \num{7.022}, T_{\mathrm{d}} = \num{2.1442}$}}
     \label{zad6_losowo_sterowanie_1}
 \end{figure}
 \FloatBarrier
@@ -101,7 +139,7 @@ Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru inn
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami wyznaczonymi za pomocą optymalizacji}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{0.65915}, T_{\mathrm{i}} = \num{6.8394}, T_{\mathrm{d}} = \num{0.001}$}}
     \label{zad6_losowo_2}
 \end{figure}
 
@@ -122,7 +160,7 @@ Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru inn
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą optymalizacji}
+    \caption{Przebieg sygnału sterującego regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{0.65915}, T_{\mathrm{i}} = \num{6.8394}, T_{\mathrm{d}} = \num{0.001}$}}
     \label{zad6_losowo_sterowanie_2}
 \end{figure}
 \FloatBarrier
@@ -140,16 +178,16 @@ Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru inn
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad6_multiplejumps/PID/zad6_PID_setpoint_exampleK_1.1497_Ti_6.9813_Td_2.151_E_4.4822.csv};
-    \addplot[red, semithick] file{../data/zad6_multiplejumps/PID/zad6_PID_output_exampleK_1.1497_Ti_6.9813_Td_2.151_E_4.4822.csv};
+    \addplot[blue, semithick] file{../data/zad6/zad6_PID_setpoint_exampleK_0.87623_Ti_5.6771_Td_2.7848_E_4.8867.csv};
+    \addplot[red, semithick] file{../data/zad6/zad6_PID_output_exampleK_0.87623_Ti_5.6771_Td_2.7848_E_4.8867.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami wyznaczonymi za pomocą optymalizacji}
-    \label{zad6_nasze}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{0.87623}, T_{\mathrm{i}} = \num{5.6771}, T_{\mathrm{d}} = \num{2.7848}$}}
+    \label{zad6_jeden_skok}
 \end{figure}
 
 \begin{figure}[b]
@@ -165,14 +203,15 @@ Oprócz eksperymentów przedstawionych powyżej, dokonaliśmy również paru inn
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/zad6_multiplejumps/PID/zad6_PID_input_exampleK_1.1497_Ti_6.9813_Td_2.151_E_4.4822.csv};
+    \addplot[const plot, blue, semithick] file{../data/zad6/zad6_PID_input_exampleK_0.87623_Ti_5.6771_Td_2.7848_E_4.8867.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą optymalizacji}
-    \label{zad6_nasze_sterowanie_1}
+    \caption{Przebieg sygnału sterującego regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{0.87623}, T_{\mathrm{i}} = \num{5.6771}, T_{\mathrm{d}} = \num{2.7848}$}}
+    \label{zad6_jeden_skok_sterowanie}
 \end{figure}
 \FloatBarrier
+
  
 \section{Optymalizacyjne strojenie regulatora DMC}
 \label{zad6_dmc}
