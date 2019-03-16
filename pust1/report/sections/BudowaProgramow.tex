@@ -7,11 +7,8 @@
     keywordstyle=\color{blue},%
     morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
     identifierstyle=\color{black},%
-<<<<<<< HEAD
     stringstyle=\color{mylilas},
-=======
     stringstyle=\color{magenta},
->>>>>>> ba1f189ad267111a58d91c47a5cb11d238fc80a0
     commentstyle=\color{green},%
     showstringspaces=false,%without this there will be a symbol in the places where there is a space
     numbers=left,%
@@ -55,18 +52,16 @@ sim_time = sim_time';
 stpt_value_1 = 4.15;
 stpt_value_2 = 3.91;
 stpt_value_3 = 4.3;
-setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
+setpoint = [(stpt_value_1*ones(sim_len/3,1))'
+			(stpt_value_2*ones(sim_len/3,1))'
+			(stpt_value_3*ones(sim_len/3,1))']';
 setpoint(1:11) = Ypp;
-
 %wektor sygnalu sterujacego
 input = Upp*ones(sim_len, 1);
-
 % wektor wyjscia
 output = Ypp*ones(sim_len, 1);
-
 rescaled_output = 0;
 rescaled_input = zeros(sim_len, 1);
-
 % wektor uchybu
 error = zeros(sim_len, 1);
 \end{lstlisting}
