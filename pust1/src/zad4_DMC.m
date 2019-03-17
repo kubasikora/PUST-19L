@@ -15,6 +15,18 @@ N = 40;
 Nu = 5;
 lambda = 1;
 
+N = floor(27.483);
+Nu = floor(4.4078);
+lambda = 0.016859;
+
+%N = floor(39.7583);
+%Nu = floor(1.8752);
+%lambda = 78.1327;
+
+N = round(21.6692);
+Nu = round(1.9447);
+lambda = 0.76823;
+
 %% Definicja stalych
 Upp = 0.5;
 Ypp = 4;
@@ -23,7 +35,7 @@ Umin = 0.3;
 Umax = 0.7;
 dUmax = 0.05;
 T = 0.5;   
-sim_len = 500;
+sim_len = 600;
 
 %% inicjalizacja potrzebnych zmiennych
 error_sum = 0;
@@ -33,10 +45,12 @@ sim_time = 1:sim_len; % do plotowania
 sim_time = sim_time';
 
 % wartosc zadana
-stpt_value = 4.05;
-setpoint = stpt_value*ones(sim_len,1);
+% wartosc zadana
+stpt_value_1 = 4.15;
+stpt_value_2 = 3.91;
+stpt_value_3 = 4.3;
+setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
 setpoint(1:11) = Ypp;
-
 % wektor sygnalu sterujacego
 input = Upp*ones(sim_len, 1);
 
@@ -149,9 +163,9 @@ hold off
 % wypisanie wartosci wspolczynnikow 
 str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda));
 disp(str)
-% input_ts = [sim_time-1 input];
-% output_ts = [sim_time-1 output];
-% setpoint_ts = [sim_time-1 setpoint];
-% dlmwrite(strcat('../data/zad5_DMC_input_example', str, '.csv'), input_ts, '\t');
-% dlmwrite(strcat('../data/zad5_DMC_output_example', str, '.csv'), output_ts, '\t');
-% dlmwrite(strcat('../data/zad5_DMC_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+input_ts = [sim_time-1 input];
+output_ts = [sim_time-1 output];
+setpoint_ts = [sim_time-1 setpoint];
+dlmwrite(strcat('../data/zad6_multiplejumps/DMC/opt_DMC_input_', str, '.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/zad6_multiplejumps/DMC/opt_DMC_output_', str, '.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/zad6_multiplejumps/DMC/opt_DMC_stpt_', str, '.csv'), setpoint_ts, '\t');

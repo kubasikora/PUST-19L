@@ -1,9 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Projektowanie uk³adów sterowania
+%   Projektowanie ukï¿½adï¿½w sterowania
 %          Projekt 1, zadanie 6
 %
-%   Program bêd¹cy funkcj¹ celu w procesie 
-%   optymalizacji parametrów regulatora DMC
+%   Program bï¿½dï¿½cy funkcjï¿½ celu w procesie 
+%   optymalizacji parametrï¿½w regulatora DMC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function error_sum = zad6_DMC_target_function(parameters)
 addpath ../
@@ -23,13 +23,17 @@ Ypp = 4;
 Umin = 0.3;
 Umax = 0.7;
 dUmax = 0.05;
-sim_len = 500;
+sim_len = 900;
 T = 0.5; 
 
 %% inicjalizacja potrzebnych wektorow sygnalow procesowych
 % wartosc zadana
-stpt_value = 4.05;
-setpoint = stpt_value*ones(sim_len,1);
+% wartosc zadana
+stpt_value_1 = 4.15;
+stpt_value_2 = 3.91;
+stpt_value_3 = 4.3;
+setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
+setpoint(1:11) = Ypp;
 
 % wektor sygnalu sterujacego
 input = Upp*ones(sim_len, 1);

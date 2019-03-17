@@ -113,7 +113,7 @@ wskaźnika regulacji pogorszyła się względem poprzedniego zestawu parametrów
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{1.1496}, T_{\mathrm{i}} = \num{7.022}, T_{\mathrm{d}} = \num{2.1442}$}}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator PID z parametrami \mbox{$K_{\mathrm{r}} = \num{1.1496}, T_{\mathrm{i}} = \num{7.022}, T_{\mathrm{d}} = \num{2.1442}$}}
     \label{zad6_losowo_sterowanie_1}
 \end{figure}
 \FloatBarrier
@@ -160,7 +160,7 @@ wskaźnika regulacji pogorszyła się względem poprzedniego zestawu parametrów
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{0.65915}, T_{\mathrm{i}} = \num{6.8394}, T_{\mathrm{d}} = \num{0.001}$}}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator PID z parametrami \mbox{$K_{\mathrm{r}} = \num{0.65915}, T_{\mathrm{i}} = \num{6.8394}, T_{\mathrm{d}} = \num{0.001}$}}
     \label{zad6_losowo_sterowanie_2}
 \end{figure}
 \FloatBarrier
@@ -207,7 +207,7 @@ wskaźnika regulacji pogorszyła się względem poprzedniego zestawu parametrów
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora z parametrami \mbox{$K_{\mathrm{r}} = \num{0.87623}, T_{\mathrm{i}} = \num{5.6771}, T_{\mathrm{d}} = \num{2.7848}$}}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator PID z parametrami \mbox{$K_{\mathrm{r}} = \num{0.87623}, T_{\mathrm{i}} = \num{5.6771}, T_{\mathrm{d}} = \num{2.7848}$}}
     \label{zad6_jeden_skok_sterowanie}
 \end{figure}
 \FloatBarrier
@@ -215,3 +215,88 @@ wskaźnika regulacji pogorszyła się względem poprzedniego zestawu parametrów
  
 \section{Optymalizacyjne strojenie regulatora DMC}
 \label{zad6_dmc}
+
+W przypadku dobierania parametrów algorytmu DMC w wyniku optymalizacji wskaźnika jakości, od razu
+zwróciliśmy uwagę na to aby funkcja testująca, która symulowała dany regulator, robiła to przy pomocy
+kilku skoków wartości zadanej. 
+
+Bardzo szybko okazało się że optymalizacja parametrów przy pomocy
+polecenia \emph{fmincon} jest nieskuteczna. Wynika to z faktu że parametry $N$ i $N_{\mathrm{u}}$ mają
+wartości całkowite. Funkcja \emph{fmincon} jest algorytmem gradientowym, która bada gradient sprawdzając
+jak zmienia się wartość funkcji celu w zależności od zmiany wartości parametrów, starając się przy tym 
+tak dobierać parametry aby funkcja celu jak najszybciej dążyła do ekstremum. W przypadku parametrów całkowitych,
+dla małych kroków wartośc funkcji celu nie zmienia się, co powoduje że algorytm modyfikuje tylko i wyłącznie 
+parametr $\lambda$.
+
+Z tego powodu, zdecydowaliśmy się na zmianę algorytmu optymalizacyjnego z gradientowego
+na ewolucyjny. Algorytmy ewolucyjne to grupa algorytmów wzorowanych na biologicznej
+ewolucji stosowanych do zadań optymalizacyjnych. W środowisku MATLAB, podstawowy algorytm 
+ewolucyjny można wywołać za pomocą polecenia \verb+ga+. 
+
+Optymalizacją regulatora DMC zajął się skrypt \verb+zad6_DMC_optimization.m+. Wybór punktu początkowego nie
+ma tak dużego znaczenia jak w przypadku algorytmu gradientowego, ponieważ algorytm genetyczny, dzięki swoim
+cechom losowym, skuteczniej przeszukuje dziedzinę problemu. 
+Uruchomienie skryptu zwróciło nam następujące parametry:
+
+\begin{center}
+    $N = \num{21.6692}$;
+    $N_{\mathrm{u}} = \num{1.9447}$;
+    $\lambda = \num{0.768}$
+\end{center}
+
+Oczywiście, parametry $N$ i $N_{u}$ należy zaokrąglić.
+\begin{center}
+    $N = \num{22}$;
+    $N_{\mathrm{u}} = \num{2}$;
+    $\lambda = \num{0.768}$
+\end{center}
+
+Dla tego zestawu parametrów przeprowadziliśmy testowe symulacje, których 
+przebiegi zostały przedstawione na rysunkach \ref{zad6_dmc_wyjscie} i \ref{zad6_dmc_ster}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=600,ymin=3.8, ymax=4.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad6_multiplejumps/DMC/opt_DMC_stpt_N_22_Nu_2_lambda_0.76823.csv};
+    \addplot[red, semithick] file{../data/zad6_multiplejumps/DMC/opt_DMC_output_N_22_Nu_2_lambda_0.76823.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora DMC z parametrami \mbox{$N = \num{22}, N_{\mathrm{u}} = \num{2}, \lambda = \num{0.768}$}}
+    \label{zad6_dmc_wyjscie}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,ymin=0.3, xmax=600,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0.3, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad6_multiplejumps/DMC/opt_DMC_input_N_22_Nu_2_lambda_0.76823.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator DMC z parametrami \mbox{$N = \num{22}, N_{\mathrm{u}} = \num{2}, \lambda = \num{0.768}$}}
+    \label{zad6_dmc_ster}
+\end{figure}
+\FloatBarrier
