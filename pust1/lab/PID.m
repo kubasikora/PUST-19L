@@ -4,7 +4,7 @@ addpath('F:\SerialCommunication'); % add a path to the functions
 initSerialControl COM21 % initialise com port
 
 Upp = 26;
-Ypp = 34.3; % do ogarniecia
+Ypp = 34.5; % do ogarniecia
 Umin = 0;
 Umax = 100;
 T = 1;
