@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Projektowanie uk³adów sterowania
+%   Projektowanie ukï¿½adï¿½w sterowania
 %          Projekt 1, zadanie 6
 %
-%   Program znajduj¹cy optymalne parametry 
+%   Program znajdujï¿½cy optymalne parametry 
 %               regulatora DMC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -15,8 +15,8 @@ N_max = 40;
 Nu_min = 1;
 Nu_max = 15;
 
-lambda_min = 1;
-lambda_max = 10;
+lambda_min = 0.000001;
+lambda_max = 10000;
 
 %% inicjalizacja punktu poczatkowego i opcji funkcji minimalizujacej
 parameters = [22 6 5];

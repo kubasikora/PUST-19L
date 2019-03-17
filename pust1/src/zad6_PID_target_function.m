@@ -1,9 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Projektowanie uk³adów sterowania
+%   Projektowanie ukï¿½adï¿½w sterowania
 %          Projekt 1, zadanie 6
 %
-%   Program bêd¹cy funkcj¹ celu w procesie 
-%   optymalizacji parametrów regulatora PID
+%   Program bï¿½dï¿½cy funkcjï¿½ celu w procesie 
+%   optymalizacji parametrï¿½w regulatora PID
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function error_sum = zad6_PID_target_function(parameters)
@@ -27,7 +27,7 @@ T = 0.5;
 stpt_value_1 = 4.15;
 stpt_value_2 = 3.91;
 stpt_value_3 = 4.3;
-setpoint = [(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
+setpoint = stpt_value_1*ones(sim_len,1);%[(stpt_value_1*ones(sim_len/3,1))' (stpt_value_2*ones(sim_len/3,1))' (stpt_value_3*ones(sim_len/3,1))']';
 setpoint(1:11) = Ypp;
 
 % wektor sygnalu sterujacego

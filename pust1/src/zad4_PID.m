@@ -64,8 +64,13 @@ K = 1.1497;
 Ti = 6.9813;
 Td = 2.151;
 
+
+K = 1.1496;
+Ti = 7.022;
+Td = 2.1442;
+
 save_file = false;
-save_file_zad6 = false;
+save_file_zad6 = true;
 % K = 0.19;
 % Ti = 4.9;
 % Td = 0.088;
@@ -79,6 +84,10 @@ save_file_zad6 = false;
 % K = 0.23125;
 % Ti = 5.0018;
 % Td = 0.015538;
+
+K = 0.87623;
+Ti = 5.6771;
+Td = 2.7848;
 
 
 %% Definicja wspolczynnikow regulatora cyfrowego
@@ -149,7 +158,7 @@ if(save_file_zad6)
     input_ts = [sim_time-1 input];
     output_ts = [sim_time-1 output];
     setpoint_ts = [sim_time-1 setpoint];
-    dlmwrite(strcat('../data/zad6_multiplejumps/PID/zad6_PID_input_example', str, '.csv'), input_ts, '\t');
-    dlmwrite(strcat('../data/zad6_multiplejumps/PID/zad6_PID_output_example', str, '.csv'), output_ts, '\t');
-    dlmwrite(strcat('../data/zad6_multiplejumps/PID/zad6_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
+    dlmwrite(strcat('../data/zad6/zad6_PID_input_example', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad6/zad6_PID_output_example', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad6/zad6_PID_setpoint_example', str, '.csv'), setpoint_ts, '\t');
 end

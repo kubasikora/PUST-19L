@@ -1,22 +1,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Projektowanie uk³adów sterowania
+%   Projektowanie ukï¿½adï¿½w sterowania
 %          Projekt 1, zadanie 6
 %
-%   Program znajduj¹cy optymalne parametry 
+%   Program znajdujï¿½cy optymalne parametry 
 %          cyfrowego regulatora PID
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 error_sum = 0;
 
 %% okreslenie ograniczen dla parametrow algorytmu
-K_min = 0.1;
-K_max = 3;
-
+K_min = 0.01;
+K_max = 10;
+    
 Ti_min = 1;
 Ti_max = 20;
 
 Td_min = 0.001;
-Td_max = 3;
+Td_max = 10;
 
 %% inicjalizacja punktu poczatkowego i opcji funkcji minimalizujacej
 % parameters0 = [K, Ti, Td] 

@@ -1,3 +1,6 @@
+% normalizacja odpowiedzi skokowej
+
+
 %% wczytanie funkcji symulującej i inicjalizacja symulacji
 Upp = 26;
 Ypp = 34.5;

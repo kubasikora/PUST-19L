@@ -37,3 +37,100 @@ horyzontu dynamiki procesu na $D = \num{500}$ próbek.
 \section{Aproksymacja odpowiedzi skokowej inercją drugiego rzędu z opóźnieniem}
 \label{lab3_modelowanie}
 
+\subsection{Postać modelu}
+\label{lab3_postac_modelu}
+Poszukiwana przez nas transmitancja dyskretna jest postaci:
+
+\begin{equation}
+G(z) = \frac{b_{\mathrm{1}} z^{-1} + b_{\mathrm{2}} z^{-2}}{1 + a_{\mathrm{1}} z^{-1} + a_{\mathrm{2}} z^{-2}} z^{-T_{\mathrm{d}}}
+\end{equation}
+
+\subsection{Optymalizacja}
+Przy pomocy skryptu \verb+zad3_modelowanie.m+ znaleźliśmy parametry transmitancji 
+$b_{i}$, $a_{i}$ oraz $T_{\mathrm{d}}$. Wykorzystaliśmy w nim funkcję \emph{fmincon}, 
+która optymalizuje zadaną funkcję przy danych ograniczeniach. Optymalizowaną funkcją 
+był bład modelu w odniesieniu do znormalizowanej odpowiedzi skokowej. Ograniczenia na 
+parametry $b_{i}$, $a_{i}$ zostały tak dobrane aby algorytm mógł swobodnie przeszukać 
+sporą przestrzeń.
+
+$$ \num{-1000} \leq b_{i}, a_{i} \leq \num{1000} $$
+
+Inaczej wyglądała sytuacja w przypadku parametru $T_{\mathrm{d}}$, który opisywał opóźnienie a 
+dokładnie liczbę próbek opóźnienia modelu. W naszym przypadku dobraliśmy ograniczenie:
+
+$$ \num{1} \leq T_{\mathrm{d}} \leq \num{20} $$
+
+Ostatecznie otrzymaliśmy model postaci:
+\begin{equation}
+    G(z) =  z^{-8} \frac{\num{0.00133} z^{-1} + \num{0.00133} z^{-2}}{1 + \num{-1.1963} z^{-1} - \num{0.20402} z^{-2}}
+\end{equation}
+
+Wartość funkcji błędu wynosiła $E = \num{0.0099}$. W przypadku doboru parametrów ciągłych, 
+funkcja \emph{fmincon} dobrze radzi sobie z ich doborem. W przypadku dyskretnego parametru 
+$T_{\mathrm{d}}$ sprawa wygląda zupełnie inaczej. Małe zmiany tego parametru w żaden sposób
+nie wpływają na wynik symulacji, ponieważ funkcja ta zaokrągla jego wartość do liczby całkowitej.
+
+\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB}
+W celu dokładniejszego zamodelowania opóźnienia badanego obietku posłużyliśmy 
+się zaawansowanym toolboxem pakietu MATLAB System Identification. Pakiet ten 
+pozwala na znalezienie parametrów różnych modeli. Po załadowaniu odpowiedzi skokowej,
+wybraliśmy \emph{Transfer Function Model} jako rodzaj żądanego modelu a następnie po chwili mieliśmy gotowy obiekt typu \verb+idtf+. 
+
+Otrzymany model:
+\begin{equation}
+    G(z) =  z^{-12} \frac{\num{0.003551} z^{-1} + \num{0.003395} z^{-2}}{1 + \num{0.01013} z^{-1} - \num{0.9899} z^{-2}}
+\end{equation}
+
+Dokładniejsza identyfikacja opóźnienia pozwoliła na zmniejszenie wartości funkcji błędu do $E = \num{0.0088}$.
+
+\begin{figure}[t]
+    \label{zad3_norm_odp}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=1,xmax=500,ymin=0.0,ymax=0.5,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    xtick={0, 100, 200, 300, 400, 500},
+    ytick={0, 0.1, 0.2, 0.3, 0.4, 0.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/model_response_fmincon.csv};
+    \addplot[blue, semithick] file{../data/lab/zad3_cut_odp.csv};
+    \addlegendentry{Model},
+    \addlegendentry{Obiekt},
+    \addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie modelu obiektu otrzymanego optymalizując funkcji błędu przy pomocy \emph{fmincon} z rzeczywistą odpowiedzią skokową}
+\end{figure}
+
+\begin{figure}[b]
+    \label{zad3_norm_odp}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=1,xmax=500,ymin=0.0,ymax=0.5,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    xtick={0, 100, 200, 300, 400, 500},
+    ytick={0, 0.1, 0.2, 0.3, 0.4, 0.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/model_response_MAT.csv};
+    \addplot[blue, semithick] file{../data/lab/zad3_cut_odp.csv};
+    \addlegendentry{Model},
+    \addlegendentry{Obiekt},
+    \addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction z rzeczywistą odpowiedzią skokową}
+\end{figure}
+\FloatBarrier
+
