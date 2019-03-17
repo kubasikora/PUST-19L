@@ -11,6 +11,7 @@ Td = 12;
 model_output = zeros(500,1);    
 error = zeros(500,1);
 input = ones(500,1);
+
 for k = (Td+2+1):500   
     model_output(k) =  b1*input(k - Td - 1) + b2* input(k - Td - 2) - a1*model_output(k-1) - a2*model_output(k-2); % pomiar wyjscia    
     error(k) = output(k) - model_output(k);
