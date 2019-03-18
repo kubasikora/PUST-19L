@@ -34,5 +34,22 @@ N = 280;
 Nu = 50; 
 lambda = 150;
 
+## Nowe DMC
+1. Dla N
+D = 500;
+N = 200; 
+Nu = N; 
+lambda = 100;
+
+D = 500;
+N = 140; 
+Nu = N; 
+lambda = 100;
+
+D = 500;
+N = 100; 
+Nu = N; 
+lambda = 100;
+
 
 
