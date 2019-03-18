@@ -14,7 +14,7 @@ E=\sum_{k=0}^{K_{konc}}(y^{zad}[k]-y[k])^{2}
 Strojenie odbywało się dla trzech różnych zmian wartości zadanej.
 \\
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -39,7 +39,7 @@ Strojenie odbywało się dla trzech różnych zmian wartości zadanej.
     \label{dmc_start}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -59,16 +59,16 @@ Strojenie odbywało się dla trzech różnych zmian wartości zadanej.
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 91$, $N = 91$, $N_{\mathrm{u}} = 91$, $\lambda = 1$}
     \label{dmc_start_ster}
 \end{figure}
+\FloatBarrier
 
-
-\section{Dobór horyzontu predykcji N}
+\subsection{Dobór horyzontu predykcji N}
 \label{zad_dobor_N}
 Dobór horyzontu predykcji polegał na jego stopniowym skracaniu, wraz z nim skróceniu ulegał horyzont sterowania, który powinien być mniejszy lub równy horyzontowi sterowania. W procesie strojenia regulatora najważniejszymi aspektami były dla nas: zmniejszenie wartości sumy kwadratów uchybów oraz otrzymanie względnie łagodnych przebiegów sygnałów procesowych.
 
-\subsection{Horyzont predykcji N = 40}
+\subsubsection{Horyzont predykcji N = 40}
 W przedziale od $D$ do $40$ nie zauważyliśmy różnicy w wykresach sygnałów procesowych. Co więcej, wskaźnik jakości regulacji również pozostawał stały. Jego wartość wynosiła $E = 3,918$. Występowały oscylacje sygnału wyjściowego i znaczne przeregulowanie. Sygnały stabilizowały się po około 95 próbkach od chwili skoku wartości $y^{\mathrm{zad}}$. Zjawiskiem niepożądanym było uderzanie sygnału sterującego w ograniczenia. Wyniki eksperymentu przedstawiają rysunki \ref{dmc_N_40_y} oraz \ref{dmc_N_40_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -114,10 +114,10 @@ W przedziale od $D$ do $40$ nie zauważyliśmy różnicy w wykresach sygnałów 
     \label{dmc_N_40_u}
 \end{figure}
 
-\subsection{Horyzont predykcji N = 35}
+\subsubsection{Horyzont predykcji N = 35}
 Przy eksperymentach przyjęliśmy krok zmiejszania horyzontu predykcji równy 5. Regulator pracował tak samo jak w poprzednich przypadkach. Wykresy przebiegów zostały zamieszczone na rysunkach \ref{dmc_N_35_y} oraz \ref{dmc_N_35_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -163,10 +163,10 @@ Przy eksperymentach przyjęliśmy krok zmiejszania horyzontu predykcji równy 5.
     \label{dmc_N_35_u}
 \end{figure}
 
-\subsection{Horyzont predykcji N = 30}
+\subsubsection{Horyzont predykcji N = 30}
 W kolejnym kroku ponownie nie zaobserwowaliśmy żadnych zmian. Regulator wciąż działał dobrze, a wskaźnik jakości utrzymywał swoją początkową wartość $E = 3.918$. Wyniki przedstawiają rysunki \ref{dmc_N_30_y} oraz \ref{dmc_N_30_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -212,10 +212,10 @@ W kolejnym kroku ponownie nie zaobserwowaliśmy żadnych zmian. Regulator wcią�
     \label{dmc_N_30_u}
 \end{figure}
 
-\subsection{Horyzont predykcji N = 25}
+\subsubsection{Horyzont predykcji N = 25}
 Po wykonanym eksperymencie przy $N = 25$, patrząc na wykresy nie zauważyliśmy żadnych zmian. Zmienił się jednak wskaźnik jakości, zwiększając swoją wartość do $E = 3.9188$. Mimo iż jest to mała zmiana do dalszego strojenia wybraliśmy wartość horyzontu predykcji $N = 30$. Wyniki dla horyzontu równego 25 ukazują rysunki \ref{dmc_N_25_y} i \ref{dmc_N_25_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -260,12 +260,12 @@ Po wykonanym eksperymencie przy $N = 25$, patrząc na wykresy nie zauważyliśmy
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 91$, $N = 25$, $N_{\mathrm{u}} = 25$, $\lambda = 1$}
     \label{dmc_N_25_u}
 \end{figure}
-
-\section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
-\subsection{Horyzont sterowania $N_{\mathrm{u}} = 15$}
+\FloatBarrier
+\subsection{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 15$}
 Zmniejszanie horyzontu sterowania nie przynosiło żadnych rezultatów aż do wartości $N_{\mathrm{u}} = 15$, przy której wskaźnik jakości zmniejszył się nieznacznie do wartości $E = 3,9179$. Jest to niezauważalna zmiana jednak wyznacza ona punkt początkowy do szukania optymalnego horyzontu sterowania. Praca regulatora nie różniła się znacząco od poprzednich przypadków - regulacja przebiegała szybko, ale wciąż nie udało się wyraźnie zmniejszyć przeregulowania oraz oscylacji sygnałów. Wynik ukazują rysunki \ref{dmc_Nu_15_y} i \ref{dmc_Nu_15_u}.
 \\
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -312,10 +312,10 @@ Zmniejszanie horyzontu sterowania nie przynosiło żadnych rezultatów aż do wa
 \end{figure}
 
 
-\subsection{Horyzont sterowania $N_{\mathrm{u}} = 10$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 10$}
 Po wykonaniu eksperymentu dla $N_{\mathrm{u}} = 10$ jedyną zmianą przez nas zaobserwowaną była zmiana wartości wskaźnika E, który był równy $E = 3,9171$. Wykresy zamieszczone zostały na rysunkach \ref{dmc_Nu_10_y} i \ref{dmc_Nu_10_u}.
 \\
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -361,10 +361,10 @@ Po wykonaniu eksperymentu dla $N_{\mathrm{u}} = 10$ jedyną zmianą przez nas za
     \label{dmc_Nu_10_u}
 \end{figure}
 
-\subsection{Horyzont sterowania $N_{\mathrm{u}} = 5$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 5$}
 Zmniejszając horyzont sterowania do 5 otrzymaliśmy przebieg sygnału wyjściowego o większym błędzie niż w przypadku poprzednim. Dla $N_{\mathrm{u}} = 5$ $E = 3,9198$. Mimo gorszego wyniku postalowiliśmy zbadać kilka mniejszych wartości. Wyniki dla $N_{\mathrm{u}} = 5$ przedstawiają rysunki \ref{dmc_Nu_5_y} oraz \ref{dmc_Nu_5_u}.
 \\
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -410,10 +410,10 @@ Zmniejszając horyzont sterowania do 5 otrzymaliśmy przebieg sygnału wyjściow
     \label{dmc_Nu_5_u}
 \end{figure}
 
-\subsection{Horyzont sterowania $N_{\mathrm{u}} = 3$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 3$}
 Ponowne zmniejszenie badanego parametru przyniosło zadowalający efekt. Wskaźnik jakości zmalał o względnie dużą różnicę w stosunku do poprzednich eksperymentów. Dla $N_{\mathrm{u}} = 3$ wynosił on $E = 3,9$ co było najlepszym wynikiem podczas wszystkich dotychczasowych testów. Niestety jednego celu nie udało nam się osiągnąć, mianowicie wykres sygnału sterującego wciąż charakteryzował się dosyć dużymi pikami oraz uderzał w ograniczenia dwukrotnie podczas ostatniego skoku wartości zadanej. Wynik przedstawiają rysunki \ref{dmc_Nu_3_y} i \ref{dmc_Nu_3_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -459,10 +459,10 @@ Ponowne zmniejszenie badanego parametru przyniosło zadowalający efekt. Wskaźn
     \label{dmc_Nu_3_u}
 \end{figure}
 
-\subsection{Horyzont sterowania $N_{\mathrm{u}} = 2$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 2$}
 Zmniejszenie horyzontu do 2 spowodowało nieznaczne powiększenie się sumy kwadratów uchybów, która wyniosła $E = 3,9034$. Uznaliśmy, że jest to niewielka strata do poprzedniego testu. W zamian za to udało nam się w końcu uzyskać łagodniejsze przebiegi sygnałów procesowych. Oscylacje sygnału wyjściowego zmniejszyły się. Podobnie było z sygnałem sterującym, który nie oscylował tak bardzo oraz uderzał w ograniczenia tylko jeden raz przy ostatniej zmianie wartości $y^{\mathrm{zad}}$. Wynik eksperymentu ukazują rysunki \ref{dmc_Nu_2_y} i \ref{dmc_Nu_2_u}.
 \\  
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -508,11 +508,11 @@ Zmniejszenie horyzontu do 2 spowodowało nieznaczne powiększenie się sumy kwad
     \label{dmc_Nu_2_u}
 \end{figure}
 
-\subsection{Horyzont sterowania $N_{\mathrm{u}} = 1$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 1$}
 Zmniejszenie horyzontu sterowania do minimum skutkuje dotychczas najbardziej łagodnym przebiegiem. Sygnał sterowania również przebiega spokojnie, obserwujemy jedynie krótkie naruszenie ograniczeń. Niestety w porównaniu z poprzednimi przykładami błąd wzrasta o znaczną wartość i wynosi $E = 3,9774$. Przebieg ostatniego eksperymentu przedstawiony jest na rysunkach \ref{dmc_Nu_1_y} oraz \ref{dmc_Nu_1_u}.\\
 \indent{} Za najlepszy wynik uznaliśmy horyzont sterowania $N_{\mathrm{u}} = 2$, który cechował się bardzo małym błędem przy jednoczesnym spokojnym przebiegu sygnału sterującego.
 \\
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -557,12 +557,12 @@ Zmniejszenie horyzontu sterowania do minimum skutkuje dotychczas najbardziej ła
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 91$, $N = 30$, $N_{\mathrm{u}} = 1$, $\lambda = 1$}
     \label{dmc_Nu_1_u}
 \end{figure}
-
-\section{Dobór współczynnika $\lambda$}
-\subsection{Współczynnik $\lambda = 0.5$}
+\FloatBarrier
+\subsection{Dobór współczynnika $\lambda$}
+\subsubsection{Współczynnik $\lambda = 0.5$}
 Zmniejszenie o połowę współczynnika kary skutkuje szybszym działaniem regulatora oraz zmniejszeniem błędu. Wskaźnik jakości wynosi $E = 3,8981$. Dzieje się tak ponieważ zmniejszanie wartości $\lambda$ powoduje przyspieszenie przebiegu wyjścia, poprzez stosowanie coraz większych amplitud sygnału sterowania. Można zauważyć, że przebiegi sygnałów stają się bardziej agresywne - kosztem szybszego działania jest większe przeregulowanie oraz oscylacje. Obrazują to rysunki \ref{dmc_lam_0_5_y} i \ref{dmc_lam_0_5_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -608,10 +608,10 @@ Zmniejszenie o połowę współczynnika kary skutkuje szybszym działaniem regul
     \label{dmc_lam_0_5_u}
 \end{figure}
 
-\subsection{Współczynnik $\lambda = 1.5$}
+\subsubsection{Współczynnik $\lambda = 1.5$}
 Zwiększanie współczynnika $\lambda$ powoduje z kolei uspokojenie sygnałów procesowych. Spokojny przebieg sterowania powoduje spowolnienie sygnału wyjścia. Skutkuje to mniejszym przeregulowaniem, jednak generalnie błąd regulacji rośnie. W eksperymencie z $\lambda = 1.5$ wskaźnik $E$ wynosił $\num{3,9124}$. Wynik eksperymentu przedstawiony został na rysunkach \ref{dmc_lam_1_5_y} oraz \ref{dmc_lam_1_5_u}
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -657,11 +657,10 @@ Zwiększanie współczynnika $\lambda$ powoduje z kolei uspokojenie sygnałów p
     \label{dmc_lam_1_5_u}
 \end{figure}
 
-
-\subsection{Współczynnik $\lambda = 2$}
+\subsubsection{Współczynnik $\lambda = 2$}
 Zgodnie z naszymi przeczuciami, dalsze zwiększanie współczynnika $\lambda$ wygładza przebiegi sygnału wyjściowego oraz sterowania. Na tym etapie przeregulowanie oraz oscylacje sygnałów są już bardzo niewielkie, rośnie za to błąd spowodowany wolniejszym działaniem regulatora. Idąc tym tropem można stwierdzić, że dalsze zwiększanie $\lambda$ będzie skutkowało większym błędem oraz wolniejszym działaniem. Wynik testu zamieszczony został na rysunkach \ref{dmc_lam_2_y} i \ref{dmc_lam_2_u}.
 
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -707,10 +706,10 @@ Zgodnie z naszymi przeczuciami, dalsze zwiększanie współczynnika $\lambda$ wy
     \label{dmc_lam_2_u}
 \end{figure}
 
-\subsection{Współczynnik $\lambda = 10$}
+\subsubsection{Współczynnik $\lambda = 10$}
 Eksperyment przeprowadzony ze współczynnikiem $\lambda = 10$ służy jako potwierdzenie tezy postawionej w poprzednim podpunkcie. Wynikiem eksperymentu jest niemalże gładki sygnał wyjścia bez przeregulowania. Sygnał sterujący również przebiega bardzo spokojnie, nie udało się jednak wyeliminować uderzenia w ograniczenie górne sygnału. Wraz ze zwiększeniem wartości parametru wzrósł również błąd, a wskaźnik jakości regulacji wynosił $E = \num{3,9606}$ co jest znaczącą zmianą w porównaniu z poprzednimi wynikami. Przebiegi sygnałów można obejrzeć na rysunkach \ref{dmc_lam_10_y} oraz \ref{dmc_lam_10_u}.
 	
-\begin{figure}[b]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -755,7 +754,7 @@ Eksperyment przeprowadzony ze współczynnikiem $\lambda = 10$ służy jako potw
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 91$, $N = 30$, $N_{\mathrm{u}} = 2$, $\lambda = 10$}
     \label{dmc_lam_10_u}
 \end{figure}
-
+\FloatBarrier
 \section{Ostateczny zestaw parametrów}
 Ostatecznie zdecydowaliśmy się na regulator o poniższych parametrach:\\
 
