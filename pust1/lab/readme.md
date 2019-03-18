@@ -42,11 +42,11 @@ Dla N
 - D = 500; N = 100; Nu = N;  lambda = 100; % done
 
 Dla Nu
-- D = 500; N = 140; Nu = 40; lambda = 100; % widać zmiane w stosunku do 140 % done ale zastanowic sie czy nie trzeba poprawic
-- D = 500; N = 140; Nu = 10; lambda = 100; % jest spoko ale pierwszy garb jest troche przeregulowany 
-- D = 500; N = 140; Nu = 1; lambda = 100; % mysle, ze najlepszy 
+- D = 500; N = 140; Nu = 40; lambda = 100; % widać zmiane w stosunku do 140 % done ale zastanowic sie czy nie trzeba poprawic%done 
+- D = 500; N = 140; Nu = 10; lambda = 100; % jest spoko ale pierwszy garb jest troche przeregulowany %done 
+- D = 500; N = 140; Nu = 1; lambda = 100; % mysle, ze najlepszy %done 
 
 Dla lambda
-- D = 500; N = 140;  Nu = 1;  lambda = 80; % najlepsze (zdecydowanie najlepsze dla 200 probek)
-- D = 500; N = 140;  Nu = 1;  lambda = 50; % dochodzi do wartosci zadanej dopiero po 400 probkach
-- D = 500; N = 140;  Nu = 1;  lambda = 130; % wzrasta przeregulowanie (dość mocno) nie musimy tego sprawdzać na labach, ale fajnie wiedziec co się dzieje dla większyc wartości 
+- D = 500; N = 140;  Nu = 1;  lambda = 80; % najlepsze (zdecydowanie najlepsze dla 200 probek)%done 
+- D = 500; N = 140;  Nu = 1;  lambda = 50; % dochodzi do wartosci zadanej dopiero po 400 probkach%done 
+- D = 500; N = 140;  Nu = 1;  lambda = 130; % wzrasta przeregulowanie (dość mocno) nie musimy tego sprawdzać na labach, ale fajnie wiedziec co się dzieje dla większyc wartości %done 
