@@ -12,9 +12,9 @@ w kwestii Ti:
 - K = 20 Ti = 200 Td = 0 %done
 
 w kwestii Td:
-- K = 20 Ti = 200 Td = 10
-- K = 20 Ti = 200 Td = 1
-- K = 20 Ti = 200 Td = 0.3
+- K = 20 Ti = 200 Td = 10 %done
+- K = 20 Ti = 200 Td = 1 % done 
+- K = 20 Ti = 200 Td = 0.3 % done 
 
 ## DMC LAB
 1. 
@@ -37,7 +37,7 @@ lambda = 150;
 
 ## Nowe DMC
 Dla N
-- D = 500; N = 200; Nu = N; lambda = 100;
+- D = 500; N = 200; Nu = N; lambda = 100; % done
 - D = 500; N = 140; Nu = N;  lambda = 100; % najlepszy 
 - D = 500; N = 100; Nu = N;  lambda = 100;
 
