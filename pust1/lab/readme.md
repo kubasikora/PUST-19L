@@ -2,18 +2,19 @@ POMIARY DO WYKONANIA:
 
 ## PID
 w kwestii K:
-- K = 20 Ti = 9999999999999 Td = 0
-- K = 40 Ti = 9999999999999 Td = 0
+- K= 1 Ti = 9999999999999 Td = 0 %done
+- K = 20 Ti = 9999999999999 Td = 0  %done
+- K = 40 Ti = 9999999999999 Td = 0 %done 
 
 w kwestii Ti:
-- K = 50 Ti = 1000 Td = 0
-- K = 50 Ti = 500 Td = 0
-- K = 50 Ti = 200 Td = 0
+- K = 20 Ti = 1000 Td = 0 %done 
+- K = 20 Ti = 500 Td = 0 %done
+- K = 20 Ti = 200 Td = 0 %done
 
 w kwestii Td:
-- K = 50 Ti = 500 Td = 5
-- K = 50 Ti = 500 Td = 1
-- K = 50 Ti = 500 Td = 0.3
+- K = 20 Ti = 200 Td = 10
+- K = 20 Ti = 200 Td = 1
+- K = 20 Ti = 200 Td = 0.3
 
 ## DMC LAB
 1. 
