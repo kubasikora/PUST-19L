@@ -27,8 +27,14 @@ Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40
 
 \newpage
 \section{Dobór czasu zdwojenia $T_{\mathrm{i}}$}
-\subsubsection{Czas zdwojenia $\mathbf{T_{\mathrm{i}}} = \num{1000}$} 
+\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{1000}$} 
+Wykorzystanie regulatora PI pozwoliło na zmniejszenie uchybu ustalonego widocznego na rysunku \ref{zad5_niegasnace_oscylacje_20}. Dla wartości $T_{\mathrm{i}} = 1000$ przebieg wyjścia obiektu stał się bardziej wygładzony, a amplituda wartości wyjścia była mniejsza. Jednak nadal wartość zadana jest osiągana tylko dla próbek z przedziału $60 - 70$. W późniejszym czasie wyjście jest poniżej sygnału zadanego. Spora poprawa nastąpiła dla spadku temperatury, ponieważ wyjście obiektu powoli zaczyna stabilizować się na poziomie sygnału zadanego. Sygnał sterujący dłużej niż na wykresie \ref{zad5_niegasnace_oscylacje_ster_20} utrzymuje się na ograniczeniach, nie jest to dla nas problemem szczególnie w przypadku gdy jednocześnie następuje poprawa wyjścia obiektu. Oprócz tego przebiegi sygnałów sterujących są podobne. 
 
+\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{500}$} 
+Zmniejszenie wartości $T_{\mathrm{i}}$ pozwoliło na zsumowanie większej ilości uchybów z przeszłości, co pozwoliło poprawić działanie regulatora. Nastąpiła poprawa w przebiegu wyjścia obiektu, ponieważ jest on zdecydowanie bliżej sygnału zadanego. Nie występuje już zjawisko uchybu ustalonego. Niestety pojawiły się gasnące oscylacje o większej amplitudzie co uniemożliwia osiągnięcie w pełni wartości zadanej. Widząc jednak poprawę w porównaniu do wykresów \ref{zad5_niegasnace_oscylacje_20_500} i \ref{zad5_niegasnace_oscylacje_ster_20_500} postanowliśmy dalej zmniejszać współczynniki $T_{\mathrm{i}}$.
+
+\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{200}$} 
+Dla $T_{\mathrm{i}} = \num{200}$ udało nam się doprowadzić do gasnących oscylacji wyjścia obiektu wokół sygnału zadanego. W ten sposób całkowicie pozbyliśmy się problemu z występowaniem uchybu ustalonego, podczas zwiększania wartości zadanej. W następnych krokach będziemy skupiali się na wyeliminowaniu oscylacji. Niestety pojawił się mały uchyb ustalony podczas obniżania temperatury. Dalsze zmniejszanie $T_{\mathrm{i}} $ nie przynosi poprawy, ponieważ prowadzi do wolniejszej reakcji regulatora na zmiany sygnału i zwiększa amplitudę oscylacji. Za pomocą członu różniczkującego będziemy starali się poprawić jakość regulacji. 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
