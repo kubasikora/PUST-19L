@@ -312,16 +312,16 @@ z regulacją stanowiska chłodząco-grzejącego.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000_td=1.csv};
-    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000_td=1.csv};
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=200_td=1.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=200_td=1.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 1$}
-    \label{zad5_niegasnace_oscylacje_20_1000}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 1$}
+    \label{zad5_niegasnace_oscylacje_20_200_1}
 \end{figure}
 
 \begin{figure}[b]
@@ -337,12 +337,12 @@ z regulacją stanowiska chłodząco-grzejącego.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000_td=1.csv};
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=200_td=1.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 1$}
-    \label{zad5_niegasnace_oscylacje_ster_20_1000}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 1$}
+    \label{zad5_niegasnace_oscylacje_ster_20_200_1}
 \end{figure}
 \FloatBarrier
 
@@ -359,16 +359,16 @@ z regulacją stanowiska chłodząco-grzejącego.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000_td=5.csv};
-    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000_td=5.csv};
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=200_td=5.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=200_td=5.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 5$}
-    \label{zad5_niegasnace_oscylacje_20_1000_5}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 5$}
+    \label{zad5_niegasnace_oscylacje_20_200_5}
 \end{figure}
 
 \begin{figure}[b]
@@ -384,12 +384,12 @@ z regulacją stanowiska chłodząco-grzejącego.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000_td=5.csv};
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=200_td=5.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 5$}
-    \label{zad5_niegasnace_oscylacje_ster_20_1000_5}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 5$}
+    \label{zad5_niegasnace_oscylacje_ster_20_200_5}
 \end{figure}
 \FloatBarrier
 
@@ -406,15 +406,15 @@ z regulacją stanowiska chłodząco-grzejącego.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000_td=10.csv};
-    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000_td=10.csv};
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=200_td=10.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=200_td=10.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 10$}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$}
     \label{zad5_niegasnace_oscylacje_20_1000_10}
 \end{figure}
 
@@ -431,11 +431,11 @@ z regulacją stanowiska chłodząco-grzejącego.
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000_td=10.csv};
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=200_td=10.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 10$}
-    \label{zad5_niegasnace_oscylacje_ster_20_1000_10}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$}
+    \label{zad5_niegasnace_oscylacje_ster_20_200_10}
 \end{figure}
 \FloatBarrier
