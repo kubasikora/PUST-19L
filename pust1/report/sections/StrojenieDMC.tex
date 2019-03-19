@@ -1,0 +1,444 @@
+\chapter{Strojenie regulatora DMC na obiekcie rzeczywistym}
+\label{lab5_dmc}
+Podczas pracy w laboratorium, dobralismy parametry regulatora DMC metodą eksperymentalną. Tak jak w przypadku regulatora PID, wstępne symulacje stanowiska grzejąco-chłodzącego przeprowadziliśmy korzystając z modelu wyznaczonego w \ref{lab3}. Dzięki podjętym krokom udało się nam wyznaczyć nastawy regualtora, które należało przetestować podczas zajęć.\\
+\indent{} Po wyznaczeniu odpowiedzi skokowych w zadaniu \ref{lab1}, jako horyzont dynamiki przyjęliśmy wartość $D = 500$.\\
+\indent{} Eksperymenty wykonywane były dla dwóch skoków wartości zadanej o różnej amplitudzie. Pojedyncza próba odbywała się w czasie 400 sekund.
+
+\section{Dobór horyzontu predykcji N}
+\subsubsection{Horyzontu predykcji N = 200}
+Podczas skracania horyzontu predykcji zauważalne zmiany zauważyliśmy przy wartości $N = 200$, przy której wskaźnik jakości regulacji $E$ nieznacznie zmalał. Na rysunkach \ref{dmc_N_200_y} oraz \ref{dmc_N_200_u} widzimy, że regulator działa bardzo wolno. Słabe działanie potwierdza również wskaźnk jakości wynoszący $\num{12774}$.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=200Nu=200l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=200Nu=200l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 200$, $N_{\mathrm{u}} = 200$, $\lambda = 100$}
+    \label{dmc_N_200_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=200Nu=200l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 200$, $N_{\mathrm{u}} = 200$, $\lambda = 100$}
+    \label{dmc_N_200_u}
+\end{figure}
+
+\subsubsection{Horyzontu predykcji N = 140}
+W kolejnej próbie zauważyliśmy nieznaczną poprawę jeśli chodzi o błąd regulacji. Na wykresach możemy zobaczyć niewielkie przeregulowanie, ale podczas eksperymentu otrzymaliśmy wartość $E = 12694$ co, choć nie jest wielką zmianą, daje podstawy do zakwalifikowania próby jako lepszej. Mimo to, regulator wciąż pracuje bardzo wolno. Sygnał sterujący przebiega łagodnie, nie zbliżając się do ograniczeń. Wynik ekperymentu przedstawiają rysunki \ref{dmc_N_140_y} i \ref{dmc_N_140_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=140l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=140l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 140$, $\lambda = 100$}
+    \label{dmc_N_140_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=140l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 140$, $\lambda = 100$}
+    \label{dmc_N_140_u}
+\end{figure}
+
+\subsubsection{Horyzontu predykcji N = 100}
+Dalsze zmniejszanie horyzontu $N$ skutkuje większym przeregulowaniem i dużo wolniejszą pracą regulatora, zwłaszcza po drugim skoku wartości zadanej. Ma to swoje odzwierciedlenie we wskaźniku $E$, który drastycznie zwiększył swoją wartość i wyniósł $E = 14023$. Wykresy przebiegów zawierają rysunki \ref{dmc_N_100_y} oraz \ref{dmc_N_100_u}.\\
+\indent{} Jako najlepszą wartość horyzontu predykcji uznaliśmy $N = 140$ i dla tej wartości kontynuowaliśmy eksperymenty.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=100Nu=100l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=100Nu=100l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
+    \label{dmc_N_100_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=100Nu=100l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
+    \label{dmc_N_100_u}
+\end{figure}
+
+\section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 40$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=40l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=40l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 40$, $\lambda = 100$}
+    \label{dmc_Nu_40_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=40l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 40$, $\lambda = 100$}
+    \label{dmc_Nu_40_u}
+\end{figure}
+
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 10$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=10l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=10l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 10$, $\lambda = 100$}
+    \label{dmc_Nu_10_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=10l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 10$, $\lambda = 100$}
+    \label{dmc_Nu_10_u}
+\end{figure}
+
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 1$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
+    \label{dmc_Nu_1_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
+    \label{dmc_Nu_1_u}
+\end{figure}
+
+\section{Dobór współczynnika $\lambda$}
+\subsubsection{Współczynnik $\lambda = 80$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=80.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=80.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 80$}
+    \label{dmc_lam_80_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=80.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 80$}
+    \label{dmc_lam_80_u}
+\end{figure}
+
+\subsubsection{Współczynnik $\lambda = 50$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=50.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=50.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{dmc_lam_50_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=50.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{dmc_lam_50_u}
+\end{figure}
+
+\subsubsection{Współczynnik $\lambda = 10$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=10.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=10.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
+    \label{dmc_lam_10_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=10.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
+    \label{dmc_lam_10_u}
+\end{figure}
