@@ -155,6 +155,7 @@ Dalsze zmniejszanie horyzontu $N$ skutkuje większym przeregulowaniem i dużo wo
 
 \section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
 \subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 40$}
+Kolejnym krokiem było zbadanie efektu skracania horyzontu sterowania na jakość regulacji. Zmiana z wartości $N_{\mathrm{u}} = 100$ do wartości $N_{\mathrm{u}} = 40$ przyniosła zadowalające rezultaty w postaci zmniejszenia wskaźnika jakości regulacji do wartości $E = \num{12209}$ i choć rysunki \ref{dmc_Nu_40_y} oraz \ref{dmc_Nu_40_u} na pierwszy rzut oka nie pokazują wielkich zmian, możemy wnioskować, że regulator działa nieco szybciej.
 
 \begin{figure}[t]
     \centering
@@ -203,6 +204,7 @@ Dalsze zmniejszanie horyzontu $N$ skutkuje większym przeregulowaniem i dużo wo
 \end{figure}
 
 \subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 10$}
+Następna wartość horyzontu sterowania przyniosła jeszcze lepsze wyniki. Na wykresie można zauważyć brak przeregulowania przy dojściu do wartości zadanej po pierwszym skoku. Patrząc uważnie, można również zaobserwować szybszą reakcję na drugą zmianę wartości zadanej. Zmniejszył się również wskaźnik jakości, który wyniósł $E = \num{10897}$. Wyniki zamieszczono na rysunkach \ref{dmc_Nu_10_y} oraz \ref{dmc_Nu_10_u}.
 
 \begin{figure}[t]
     \centering
@@ -251,6 +253,7 @@ Dalsze zmniejszanie horyzontu $N$ skutkuje większym przeregulowaniem i dużo wo
 \end{figure}
 
 \subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 1$}
+Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwiązanie. Po pierwsze wskaźnik jakości ponownie się zmniejszył i przyjął wartość $E = \num{10519}$. Po drugie zauważyliśmy, że wyjście szybciej zbiega do wartości zadanej oraz utrzymuje ten pułap przez dłuższą niż w poprzednim przypadku chwilę. Nie występuje przeregulowanie, a sygnał sterujący wciąż przebiega gładko. Dalsze strojenie regulatora przeprowadzaliśmy przy $N_{\mathrm{u}} = 1$. Wynik eksperymentu przedstawiony został na rysunkach \ref{dmc_Nu_1_y} i \ref{dmc_Nu_1_u}.
 
 \begin{figure}[t]
     \centering
