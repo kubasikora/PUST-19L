@@ -178,7 +178,7 @@ z regulacją stanowiska chłodząco-grzejącego.
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o parametrach $K_{\mathrm{r}} = \num{40}, T_{\mathrm{i}} = 200$}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o parametrach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200$}
     \label{zad5_niegasnace_oscylacje_40_200}
 \end{figure}
 
@@ -199,7 +199,7 @@ z regulacją stanowiska chłodząco-grzejącego.
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{40}, T_{\mathrm{i}} = 200$}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200$}
     \label{zad5_niegasnace_oscylacje_ster_40_200}
 \end{figure}
 \FloatBarrier
@@ -225,7 +225,7 @@ z regulacją stanowiska chłodząco-grzejącego.
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{40}, T_{\mathrm{i}} = 500$}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 500$}
     \label{zad5_niegasnace_oscylacje_20_500}
 \end{figure}
 
@@ -246,7 +246,7 @@ z regulacją stanowiska chłodząco-grzejącego.
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{40}, T_{\mathrm{i}} = 500$}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 500$}
     \label{zad5_niegasnace_oscylacje_ster_20_500}
 \end{figure}
 \FloatBarrier
@@ -296,5 +296,146 @@ z regulacją stanowiska chłodząco-grzejącego.
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000$}
     \label{zad5_niegasnace_oscylacje_ster_20_1000}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000_td=1.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000_td=1.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 1$}
+    \label{zad5_niegasnace_oscylacje_20_1000}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000_td=1.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 1$}
+    \label{zad5_niegasnace_oscylacje_ster_20_1000}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000_td=5.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000_td=5.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 5$}
+    \label{zad5_niegasnace_oscylacje_20_1000_5}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000_td=5.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 5$}
+    \label{zad5_niegasnace_oscylacje_ster_20_1000_5}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000_td=10.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000_td=10.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 10$}
+    \label{zad5_niegasnace_oscylacje_20_1000_10}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000_td=10.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000, T_{\mathrm{d}} = 10$}
+    \label{zad5_niegasnace_oscylacje_ster_20_1000_10}
 \end{figure}
 \FloatBarrier
