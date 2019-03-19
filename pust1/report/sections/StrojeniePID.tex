@@ -10,12 +10,24 @@ najlepszą jakość regulacji.
 \section{Dobór wzmocnienia regulatora $K_{\mathrm{r}}$}
 
 \subsubsection{Wzmocnienie $\mathbf{K_{\mathrm{r}}} = \num{1}$}
+\label{lab_1}
 W pierwszej kolejności zdecydowaliśmy się na sprawdzenie jak będzie zachowywał się
 obiekt sterowany regulatorem o wzmocnieniu $K_{\mathrm{r}}$. Pozwoliło to nam
 na rozeznanie się jakie rzędy wartości parametru, potrzebne są do skutecznej
-regulacji. Okazuje się że wzmocnienie jednostkowe bardzo słabo radzi sobie
+regulacji. Okazuje się, że wzmocnienie jednostkowe bardzo słabo radzi sobie
 z regulacją stanowiska chłodząco-grzejącego. 
 
+\subsubsection{Wzmocnienie $\mathbf{K_{\mathrm{r}}} = \num{20}$}
+\label{zad5_Kr20}
+Wyciągając wnioski z eksperymentu dla $K_{\mathrm{r}} = \num{1}$ zdecydowanie podnieśliśmy wartość wzmocnienia $K_{\mathrm{r}}$. Jego aktualna wartość wynosi $K_{\mathrm{r}} = \num{20}$ co pozwoliło na chwilowe osiągnięcie wartości zadanej. Jednak po ustabilizowaniu się wyjścia obiektu uzyskaliśmy efekt uchybu ustalonego. Z tego powodu postanowiliśmy w następnym kroku sprawdzić zachowanie regulatora dla jeszcze większej wartości wzmocnienia $K_{\mathrm{r}}$. 
+\\\\Na rysunku \ref{zad5_niegasnace_oscylacje_20} widać, że w przypadku spadku temperatury zadanej jest ona osiągana precyzyjniej. Jest to związane z tym, że schładzanie obiektu następuje wolniej, nie jest to proces tak dynamiczny jak ogrzewanie. Na skutek tego działanie regulatora jest dokładniejsze, dzięki czemu uchyb ustalony jest mniejszy.
+
+\subsubsection{Wzmocnienie $\mathbf{K_{\mathrm{r}}} = \num{40}$} 
+Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40}$ zostały zaprezentowane na rysunkach \ref{zad5_niegasnace_oscylacje_40} i \ref{zad5_niegasnace_oscylacje_ster_40}. Możemy zaobserwować, że trajektoria wyjścia obiektu oscyluje wokół wartości zadanej. Regulator szybko reaguje na zmiany wartości zadanej, jednak nie jest w stanie ustabilizować przebiegów sygnałów. Oscylacje niegasnące wstępują również dla sygnału sterującego. Regulator z wartością wzmocnienia równą $K_{\mathrm{r}} = \num{40}$ zachowuje się dużo gorzej od regulatora z eksperymentu dla $K_{\mathrm{r}} = \num{20}$, jako wartość wzmocnienia do dalszego strojenia wybraliśmy $K_{\mathrm{r}} = \num{20}$.
+
+\newpage
+\section{Dobór czasu zdwojenia $T_{\mathrm{i}}$}
+ 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -320,7 +332,7 @@ z regulacją stanowiska chłodząco-grzejącego.
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 1$}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PID o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 1$}
     \label{zad5_niegasnace_oscylacje_20_200_1}
 \end{figure}
 
@@ -341,7 +353,7 @@ z regulacją stanowiska chłodząco-grzejącego.
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 1$}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PID o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 1$}
     \label{zad5_niegasnace_oscylacje_ster_20_200_1}
 \end{figure}
 \FloatBarrier
@@ -367,7 +379,7 @@ z regulacją stanowiska chłodząco-grzejącego.
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 5$}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PID o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 5$}
     \label{zad5_niegasnace_oscylacje_20_200_5}
 \end{figure}
 
@@ -388,7 +400,7 @@ z regulacją stanowiska chłodząco-grzejącego.
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 5$}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PID o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 5$}
     \label{zad5_niegasnace_oscylacje_ster_20_200_5}
 \end{figure}
 \FloatBarrier
@@ -414,7 +426,7 @@ z regulacją stanowiska chłodząco-grzejącego.
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PID o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$}
     \label{zad5_niegasnace_oscylacje_20_1000_10}
 \end{figure}
 
@@ -435,7 +447,7 @@ z regulacją stanowiska chłodząco-grzejącego.
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PID o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$}
     \label{zad5_niegasnace_oscylacje_ster_20_200_10}
 \end{figure}
 \FloatBarrier
