@@ -1,0 +1,64 @@
+\chapter{Strojenie regulatora PID na obiekcie rzeczywistym}
+\label{lab5_pid}
+
+W ramach laboratorium, dobralismy nastawy regulatora PID metodą inżynierską.
+Korzystając z modelu wyznaczonego w \ref{lab3}, w domu zebralismy wstępne nastawy
+aby następnie przetestować je w trakcie zajęc. Korzystając z tych nastawów 
+jako punktów startowych, ręcznie poprawialiśmy wartości aby uzyskać jak 
+najlepszą jakość regulacji.
+
+\section{Dobór wzmocnienia regulatora $K_{\mathrm{r}}$}
+
+\subsubsection{Wzmocnienie $\mathbf{K_{\mathrm{r}}} = \num{1}$}
+W pierwszej kolejności zdecydowaliśmy się na sprawdzenie jak będzie zachowywał się
+obiekt sterowany regulatorem o wzmocnieniu $K_{\mathrm{r}}$. Pozwoliło to nam
+na rozeznanie się jakie rzędy wartości parametru, potrzebne są do skutecznej
+regulacji. Okazuje się że wzmocnienie jednostkowe bardzo słabo radzi sobie
+z regulacją stanowiska chłodząco-grzejącego. 
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=800,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=1.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=1.csv};
+    \addlegendentry{$y^{zad}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu P o wzmocnieniu $K_{\mathrm{r}} = \num{1}$}
+    \label{zad5_niegasnace_oscylacje}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=800,ymin=20, ymax=35,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=1.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu P o wzmocnieniu $K_{\mathrm{r}} = \num{1}$}
+    \label{zad5_niegasnace_oscylacje_ster}
+\end{figure}
+\FloatBarrier
