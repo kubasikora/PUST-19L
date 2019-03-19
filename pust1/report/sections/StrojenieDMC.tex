@@ -303,6 +303,7 @@ Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwi
 
 \section{Dobór współczynnika $\lambda$}
 \subsubsection{Współczynnik $\lambda = 80$}
+Zmniejszenie współczynnika $\lambda$ zaowocowało przyspieszeniem regulacji oraz zmniejszeniem jej błędu. W stosunku do poprzednich prób zmiana była wyraźna, a wskaźnik wynosił $E = \num{8610,3}$. Niepokojącym może być fakt, że sygnał wyjścia nie osiągnął zadanego punktu pracy, jednak po jego trajektorii można stwierdzić, że po upływie większej ilości próbek mógłby się ustabilizować na żądanym poziomie. Zmiana współczynnika kary, poza szybszym narastaniem, nie wpłynęła znacząco na sygnał sterujący, którego przebieg był niemalże gładki. Wyniki przedstawiono na rysunkach \ref{dmc_lam_80_y} i \ref{dmc_lam_80_u}.
 
 \begin{figure}[t]
     \centering
@@ -351,6 +352,7 @@ Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwi
 \end{figure}
 
 \subsubsection{Współczynnik $\lambda = 50$}
+Kolejne zmniejszenie badanego parametru skutkuje względnie niewielkim zmniejszeniem błędu: $E = \num{8527,0}$. Wpływ współczynnika $\lambda$ widać za to wyraźniej, gdy spojrzymy na wykres sterowania, który stał się bardziej pofalowany. Zastanawiający jest również fakt wystąpienia niewielkiego uchybu ustalonego. Na podstawie wykresu wyjścia nie możemy jasno powiedzieć, że wyjście osiągnęłoby wartość zadaną, dlatego stwierdziliśmy pogorszenie w stosunku do poprzedniego eksperymentu. Wykresy zamieściliśmy na rysunkach \ref{dmc_lam_50_y} oraz \ref{dmc_lam_50_u}.
 
 \begin{figure}[t]
     \centering
@@ -399,6 +401,7 @@ Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwi
 \end{figure}
 
 \subsubsection{Współczynnik $\lambda = 10$}
+Dalsze zmniejszanie współczynnika kary poskutkowało ponownym zmniejszeniem błędu. Wskaźnik jakości wyniósł $E = \num{7359,2}$. Mogłoby się wydawać, że to bardzo dobry wynik i faktycznie regulator pracuje bardzo szybko, ale wykres sygnału sterowania przy takiej wartości $\lambda$ przedstawia zdecydowanie bardziej niestabilny przebieg. Kolejną rzeczą jest uchyb ustalony w pierwszej fazie eksperymentu, mimo szybkiego działania sygnał wyjścia nie osiąga wartości zadanej. Przebiegi sygnałów przedstawiono na rysunkach \ref{dmc_lam_10_y} oraz \ref{dmc_lam_10_u}. 
 
 \begin{figure}[t]
     \centering
