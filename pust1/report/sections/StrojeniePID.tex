@@ -27,7 +27,8 @@ Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40
 
 \newpage
 \section{Dobór czasu zdwojenia $T_{\mathrm{i}}$}
- 
+\subsubsection{Czas zdwojenia $\mathbf{T_{\mathrm{i}}} = \num{1000}$} 
+
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -182,16 +183,16 @@ Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=200.csv};
-    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=200.csv};
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o parametrach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200$}
-    \label{zad5_niegasnace_oscylacje_40_200}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o parametrach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000$}
+    \label{zad5_niegasnace_oscylacje_40_1000}
 \end{figure}
 
 \begin{figure}[b]
@@ -207,12 +208,12 @@ Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=200.csv};
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200$}
-    \label{zad5_niegasnace_oscylacje_ster_40_200}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000$}
+    \label{zad5_niegasnace_oscylacje_ster_40_1000}
 \end{figure}
 \FloatBarrier
 
@@ -277,16 +278,16 @@ Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=1000.csv};
-    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=1000.csv};
+    \addplot[red, semithick] file{../data/lab/pid/stpt_k=20_ti=200.csv};
+    \addplot[blue, semithick] file{../data/lab/pid/output_k=20_ti=200.csv};
     \addlegendentry{$y^{zad}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000$}
-    \label{zad5_niegasnace_oscylacje_20_1000}
+    \caption{Przebieg wyjścia obiektu sterowanego regulatora typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200$}
+    \label{zad5_niegasnace_oscylacje_20_200}
 \end{figure}
 
 \begin{figure}[b]
@@ -302,12 +303,12 @@ Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=1000.csv};
+    \addplot[const plot, blue, semithick] file{../data/lab/pid/input_k=20_ti=200.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 1000$}
-    \label{zad5_niegasnace_oscylacje_ster_20_1000}
+    \caption{Przebieg sygnału sterującego generowanego przez regulator typu PI o wzmocnieniu $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200$}
+    \label{zad5_niegasnace_oscylacje_ster_20_200}
 \end{figure}
 \FloatBarrier
 
