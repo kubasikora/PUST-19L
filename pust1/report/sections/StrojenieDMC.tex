@@ -152,6 +152,7 @@ Dalsze zmniejszanie horyzontu $N$ skutkuje większym przeregulowaniem i dużo wo
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
     \label{dmc_N_100_u}
 \end{figure}
+\FloatBarrier
 
 \section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
 \subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 40$}
@@ -204,7 +205,7 @@ Kolejnym krokiem było zbadanie efektu skracania horyzontu sterowania na jakoś�
 \end{figure}
 
 \subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 10$}
-Następna wartość horyzontu sterowania przyniosła jeszcze lepsze wyniki. Na wykresie można zauważyć brak przeregulowania przy dojściu do wartości zadanej po pierwszym skoku. Patrząc uważnie, można również zaobserwować szybszą reakcję na drugą zmianę wartości zadanej. Zmniejszył się również wskaźnik jakości, który wyniósł $E = \num{10897}$. Wyniki zamieszczono na rysunkach \ref{dmc_Nu_10_y} oraz \ref{dmc_Nu_10_u}.
+Następna wartość horyzontu sterowania przyniosła jeszcze lepsze wyniki. Na wykresie można zauważyć brak przeregulowania przy dojściu do wartości zadanej po pierwszym skoku. Patrząc uważnie, można również zaobserwować szybszą reakcję na drugą zmianę wartości zadanej. Zmniejszył się również wskaźnik jakości, który wyniósł $E = \num{10897}$. Wyniki zamieszczono na rysunkach \ref{dmc_Nu_10_y} oraz \ref{dmc_Nu_10_u_lab}.
 
 \begin{figure}[t]
     \centering
@@ -249,11 +250,11 @@ Następna wartość horyzontu sterowania przyniosła jeszcze lepsze wyniki. Na w
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 10$, $\lambda = 100$}
-    \label{dmc_Nu_10_u}
+    \label{dmc_Nu_10_u_lab}
 \end{figure}
 
 \subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 1$}
-Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwiązanie. Po pierwsze wskaźnik jakości ponownie się zmniejszył i przyjął wartość $E = \num{10519}$. Po drugie zauważyliśmy, że wyjście szybciej zbiega do wartości zadanej oraz utrzymuje ten pułap przez dłuższą niż w poprzednim przypadku chwilę. Nie występuje przeregulowanie, a sygnał sterujący wciąż przebiega gładko. Dalsze strojenie regulatora przeprowadzaliśmy przy $N_{\mathrm{u}} = 1$. Wynik eksperymentu przedstawiony został na rysunkach \ref{dmc_Nu_1_y} i \ref{dmc_Nu_1_u}.
+Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwiązanie. Po pierwsze wskaźnik jakości ponownie się zmniejszył i przyjął wartość $E = \num{10519}$. Po drugie zauważyliśmy, że wyjście szybciej zbiega do wartości zadanej oraz utrzymuje ten pułap przez dłuższą niż w poprzednim przypadku chwilę. Nie występuje przeregulowanie, a sygnał sterujący wciąż przebiega gładko. Dalsze strojenie regulatora przeprowadzaliśmy przy $N_{\mathrm{u}} = 1$. Wynik eksperymentu przedstawiony został na rysunkach \ref{dmc_Nu_1_y_lab} i \ref{dmc_Nu_1_u_pro}.
 
 \begin{figure}[t]
     \centering
@@ -277,7 +278,7 @@ Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwi
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
-    \label{dmc_Nu_1_y}
+    \label{dmc_Nu_1_y_lab}
 \end{figure}
 
 \begin{figure}[b]
@@ -298,8 +299,9 @@ Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwi
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
-    \label{dmc_Nu_1_u}
+    \label{dmc_Nu_1_u_pro}
 \end{figure}
+\FloatBarrier
 
 \section{Dobór współczynnika $\lambda$}
 \subsubsection{Współczynnik $\lambda = 80$}
@@ -401,7 +403,7 @@ Kolejne zmniejszenie badanego parametru skutkuje względnie niewielkim zmniejsze
 \end{figure}
 
 \subsubsection{Współczynnik $\lambda = 10$}
-Dalsze zmniejszanie współczynnika kary poskutkowało ponownym zmniejszeniem błędu. Wskaźnik jakości wyniósł $E = \num{7359,2}$. Mogłoby się wydawać, że to bardzo dobry wynik i faktycznie regulator pracuje bardzo szybko, ale wykres sygnału sterowania przy takiej wartości $\lambda$ przedstawia zdecydowanie bardziej niestabilny przebieg. Kolejną rzeczą jest uchyb ustalony w pierwszej fazie eksperymentu, mimo szybkiego działania sygnał wyjścia nie osiąga wartości zadanej. Przebiegi sygnałów przedstawiono na rysunkach \ref{dmc_lam_10_y} oraz \ref{dmc_lam_10_u}. 
+Dalsze zmniejszanie współczynnika kary poskutkowało ponownym zmniejszeniem błędu. Wskaźnik jakości wyniósł $E = \num{7359,2}$. Mogłoby się wydawać, że to bardzo dobry wynik i faktycznie regulator pracuje bardzo szybko, ale wykres sygnału sterowania przy takiej wartości $\lambda$ przedstawia zdecydowanie bardziej niestabilny przebieg. Kolejną rzeczą jest uchyb ustalony w pierwszej fazie eksperymentu, mimo szybkiego działania sygnał wyjścia nie osiąga wartości zadanej. Przebiegi sygnałów przedstawiono na rysunkach \ref{dmc_lam_10_y_lab} oraz \ref{dmc_lam_10_u_lab}. 
 
 \begin{figure}[t]
     \centering
@@ -425,7 +427,7 @@ Dalsze zmniejszanie współczynnika kary poskutkowało ponownym zmniejszeniem b�
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
-    \label{dmc_lam_10_y}
+    \label{dmc_lam_10_y_lab}
 \end{figure}
 
 \begin{figure}[b]
@@ -446,5 +448,6 @@ Dalsze zmniejszanie współczynnika kary poskutkowało ponownym zmniejszeniem b�
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
-    \label{dmc_lam_10_u}
+    \label{dmc_lam_10_u_lab}
 \end{figure}
+\FloatBarrier

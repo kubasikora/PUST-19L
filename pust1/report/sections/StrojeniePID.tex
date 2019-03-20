@@ -25,28 +25,6 @@ Wyciągając wnioski z eksperymentu dla $K_{\mathrm{r}} = \num{1}$ zdecydowanie 
 \subsubsection{Wzmocnienie $\mathbf{K_{\mathrm{r}}} = \num{40}$} 
 Przebiegi wyjścia obiektu i sygnału sterującego dla $K_{\mathrm{r}} = \num{40}$ zostały zaprezentowane na rysunkach \ref{zad5_niegasnace_oscylacje_40} i \ref{zad5_niegasnace_oscylacje_ster_40}. Możemy zaobserwować, że trajektoria wyjścia obiektu oscyluje wokół wartości zadanej. Regulator szybko reaguje na zmiany wartości zadanej, jednak nie jest w stanie ustabilizować przebiegów sygnałów. Oscylacje niegasnące wstępują również dla sygnału sterującego. Regulator z wartością wzmocnienia równą $K_{\mathrm{r}} = \num{40}$ zachowuje się dużo gorzej od regulatora z eksperymentu dla $K_{\mathrm{r}} = \num{20}$, jako wartość wzmocnienia do dalszego strojenia wybraliśmy $K_{\mathrm{r}} = \num{20}$.
 
-\newpage
-\section{Dobór czasu zdwojenia $T_{\mathrm{i}}$}
-\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{1000}$} 
-Wykorzystanie regulatora PI pozwoliło na zmniejszenie uchybu ustalonego widocznego na rysunku \ref{zad5_niegasnace_oscylacje_20}. Dla wartości $T_{\mathrm{i}} = 1000$ przebieg wyjścia obiektu stał się bardziej wygładzony, a amplituda wartości wyjścia była mniejsza. Jednak nadal wartość zadana jest osiągana tylko dla próbek z przedziału $60 - 70$. W późniejszym czasie wyjście jest poniżej sygnału zadanego. Spora poprawa nastąpiła dla spadku temperatury, ponieważ wyjście obiektu powoli zaczyna stabilizować się na poziomie sygnału zadanego. Sygnał sterujący dłużej niż na wykresie \ref{zad5_niegasnace_oscylacje_ster_20} utrzymuje się na ograniczeniach, nie jest to dla nas problemem szczególnie w przypadku gdy jednocześnie następuje poprawa wyjścia obiektu. Oprócz tego przebiegi sygnałów sterujących są podobne. 
-
-\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{500}$} 
-Zmniejszenie wartości $T_{\mathrm{i}}$ pozwoliło na zsumowanie większej ilości uchybów z przeszłości, co pozwoliło poprawić działanie regulatora. Nastąpiła poprawa w przebiegu wyjścia obiektu, ponieważ jest on zdecydowanie bliżej sygnału zadanego. Nie występuje już zjawisko uchybu ustalonego. Niestety pojawiły się gasnące oscylacje o większej amplitudzie co uniemożliwia osiągnięcie w pełni wartości zadanej. Widząc jednak poprawę w porównaniu do wykresów \ref{zad5_niegasnace_oscylacje_20_500} i \ref{zad5_niegasnace_oscylacje_ster_20_500} postanowliśmy dalej zmniejszać współczynniki $T_{\mathrm{i}}$.
-
-\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{200}$} 
-Dla $T_{\mathrm{i}} = \num{200}$ udało nam się doprowadzić do gasnących oscylacji wyjścia obiektu wokół sygnału zadanego. W ten sposób całkowicie pozbyliśmy się problemu z występowaniem uchybu ustalonego, podczas zwiększania wartości zadanej. W następnych krokach będziemy skupiali się na wyeliminowaniu oscylacji. Niestety pojawił się mały uchyb ustalony podczas obniżania temperatury. Dalsze zmniejszanie $T_{\mathrm{i}} $ nie przynosi poprawy, ponieważ prowadzi do wolniejszej reakcji regulatora na zmiany sygnału i zwiększa amplitudę oscylacji. Za pomocą członu różniczkującego będziemy starali się poprawić jakość regulacji. 
-
-\newpage
-\subsection{Dobór wartości parametru członu różniczkującego $T_{\mathrm{d}}$ }
-\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{1}$}
-Zastosowanie już stosunkowo małej wielkości $T_{\mathrm{d}} = 1$ pozwoliło na wyeliminowanie oscylacji. Zachowanie obiektu wokół wartości zadanej nadal nie jest jeszcze wzorowe, ponieważ występują pewne przeregulowania. Widząc poprawę w stosunku do przebiegów z rysunku  \ref{zad5_niegasnace_oscylacje_20_200} postanowiliśmy jeszcze bardziej zwiększyć $T_{\mathrm{d}}$.
-
-\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{5}$}
-Dla wartości parametru członu różniczkującego $T_{\mathrm{d}} = 5$ występuje jedno małe przeregulowanie w okolicach próbki 60. Dla późniejszych chwil regulator zachowuje się poprawnie. Pojawia się co prawda bardzo mały uchyb ustalony, jednak musimy pamiętać, że na laboratorium mamy do czynienia z obiektem rzeczywistym, dlatego taka mała różnica pomiędzy wyjściem obiektu, a wartością zadaną jest akceptowalna. Dalszym zwiększaniem $T_{\mathrm{d}}$ postaramy się usunąć występujące pojedyncze przeregulowanie. 
-
-\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{10}$}
-Dla regulatora PID o nastawach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$ uzyskaliśmy najlepsze przebiegi wyjścia obiektu i sygnału sterującego. Udało się całkowicie wyeliminować oscylacje i przeregulowania. Przyczyna występowania małego uchybu ustalonego została wyjaśniona w opisie eksperymentu dla $ T_{\mathrm{d}} = 5$. Parametry znalezione w tym eksperymencie są najlepszymi nastawami jakie udało nam się dobrać. 
-
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -187,6 +165,16 @@ Dla regulatora PID o nastawach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200,
     \label{zad5_niegasnace_oscylacje_ster_40}
 \end{figure}
 \FloatBarrier
+
+\section{Dobór czasu zdwojenia $T_{\mathrm{i}}$}
+\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{1000}$} 
+Wykorzystanie regulatora PI pozwoliło na zmniejszenie uchybu ustalonego widocznego na rysunku \ref{zad5_niegasnace_oscylacje_20}. Dla wartości $T_{\mathrm{i}} = 1000$ przebieg wyjścia obiektu stał się bardziej wygładzony, a amplituda wartości wyjścia była mniejsza. Jednak nadal wartość zadana jest osiągana tylko dla próbek z przedziału $60 - 70$. W późniejszym czasie wyjście jest poniżej sygnału zadanego. Spora poprawa nastąpiła dla spadku temperatury, ponieważ wyjście obiektu powoli zaczyna stabilizować się na poziomie sygnału zadanego. Sygnał sterujący dłużej niż na wykresie \ref{zad5_niegasnace_oscylacje_ster_20} utrzymuje się na ograniczeniach, nie jest to dla nas problemem szczególnie w przypadku gdy jednocześnie następuje poprawa wyjścia obiektu. Oprócz tego przebiegi sygnałów sterujących są podobne. 
+
+\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{500}$} 
+Zmniejszenie wartości $T_{\mathrm{i}}$ pozwoliło na zsumowanie większej ilości uchybów z przeszłości, co pozwoliło poprawić działanie regulatora. Nastąpiła poprawa w przebiegu wyjścia obiektu, ponieważ jest on zdecydowanie bliżej sygnału zadanego. Nie występuje już zjawisko uchybu ustalonego. Niestety pojawiły się gasnące oscylacje o większej amplitudzie co uniemożliwia osiągnięcie w pełni wartości zadanej. Widząc jednak poprawę w porównaniu do wykresów \ref{zad5_niegasnace_oscylacje_20_500} i \ref{zad5_niegasnace_oscylacje_ster_20_500} postanowliśmy dalej zmniejszać współczynniki $T_{\mathrm{i}}$.
+
+\subsubsection{Czas zdwojenia $T_{\mathrm{i}} = \num{200}$} 
+Dla $T_{\mathrm{i}} = \num{200}$ udało nam się doprowadzić do gasnących oscylacji wyjścia obiektu wokół sygnału zadanego. W ten sposób całkowicie pozbyliśmy się problemu z występowaniem uchybu ustalonego, podczas zwiększania wartości zadanej. W następnych krokach będziemy skupiali się na wyeliminowaniu oscylacji. Niestety pojawił się mały uchyb ustalony podczas obniżania temperatury. Dalsze zmniejszanie $T_{\mathrm{i}} $ nie przynosi poprawy, ponieważ prowadzi do wolniejszej reakcji regulatora na zmiany sygnału i zwiększa amplitudę oscylacji. Za pomocą członu różniczkującego będziemy starali się poprawić jakość regulacji. 
 
 \begin{figure}[t]
     \centering
@@ -329,6 +317,16 @@ Dla regulatora PID o nastawach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200,
     \label{zad5_niegasnace_oscylacje_ster_20_200}
 \end{figure}
 \FloatBarrier
+
+\subsection{Dobór wartości parametru członu różniczkującego $T_{\mathrm{d}}$ }
+\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{1}$}
+Zastosowanie już stosunkowo małej wielkości $T_{\mathrm{d}} = 1$ pozwoliło na wyeliminowanie oscylacji. Zachowanie obiektu wokół wartości zadanej nadal nie jest jeszcze wzorowe, ponieważ występują pewne przeregulowania. Widząc poprawę w stosunku do przebiegów z rysunku  \ref{zad5_niegasnace_oscylacje_20_200} postanowiliśmy jeszcze bardziej zwiększyć $T_{\mathrm{d}}$.
+
+\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{5}$}
+Dla wartości parametru członu różniczkującego $T_{\mathrm{d}} = 5$ występuje jedno małe przeregulowanie w okolicach próbki 60. Dla późniejszych chwil regulator zachowuje się poprawnie. Pojawia się co prawda bardzo mały uchyb ustalony, jednak musimy pamiętać, że na laboratorium mamy do czynienia z obiektem rzeczywistym, dlatego taka mała różnica pomiędzy wyjściem obiektu, a wartością zadaną jest akceptowalna. Dalszym zwiększaniem $T_{\mathrm{d}}$ postaramy się usunąć występujące pojedyncze przeregulowanie. 
+
+\subsubsection{Czas wyprzedzenia regulatora $\mathbf{T_{\mathrm{d}}}=\num{10}$}
+Dla regulatora PID o nastawach $K_{\mathrm{r}} = \num{20}, T_{\mathrm{i}} = 200, T_{\mathrm{d}} = 10$ uzyskaliśmy najlepsze przebiegi wyjścia obiektu i sygnału sterującego. Udało się całkowicie wyeliminować oscylacje i przeregulowania. Przyczyna występowania małego uchybu ustalonego została wyjaśniona w opisie eksperymentu dla $ T_{\mathrm{d}} = 5$. Parametry znalezione w tym eksperymencie są najlepszymi nastawami jakie udało nam się dobrać. 
 
 \begin{figure}[t]
     \centering
