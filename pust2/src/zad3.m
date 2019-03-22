@@ -50,5 +50,44 @@ grid on
 plot(time, output_d);
 hold off
 
-dlmwrite("../data/zad3/zad3_input_norm_resp.csv", norm_resp_u, '\t');
-dlmwrite("../data/zad3/zad3_disturbance_norm_resp.csv", norm_resp_d, '\t');
+%% zapis odpowiedzi skokowych
+% dlmwrite("../data/zad3/zad3_input_norm_resp.csv", norm_resp_u, '\t');
+% dlmwrite("../data/zad3/zad3_disturbance_norm_resp.csv", norm_resp_d, '\t');
+
+%% przyciecie odpowiedzi skokowych na potrzeby algorytmu DMC
+cut_time_u = 0;
+cut_time_d = 0;
+
+eps = 0.0001;
+
+for i=2:sim_len
+    if (output_u(i) - output_u(i-1) < eps && output_u(i) ~= 0)
+        cut_time_u = i;
+        break
+    end
+end
+
+%% idk czy to potrzebne bo tam bylo ze Dz ma byc umiarkowanie maly
+% for i=2:sim_len
+%     if (output_d(i) - output_d(i-1) < eps && output_d(i) ~= 0)
+%         cut_time_d = i;
+%         break
+%     end
+% end
+
+%% zapis odpowiedzi skokowej z uwzglednieniem horyzontow D i Dz
+cut_resp_u = output_u(1:cut_time_u);
+% cut_resp_d = output_d(1:cut_time_d);
+
+figure(3)
+plot(cut_resp_u);
+
+% figure(4)
+% plot(cut_resp_d);
+
+cut_resp_u = [(1:cut_time_u)'-1 cut_resp_u];
+% cut_resp_d = [(1:cut_time_d)'-1 cut_resp_d];
+
+%% zapis do plikow 
+% dlmwrite("../data/zad3/zad3_input_cut_response.csv", cut_resp_u, '\t');
+% dlmwrite("../data/zad3/zad3_disturbance_cut_response.csv", cut_resp_d, '\t');
