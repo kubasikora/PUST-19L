@@ -1,0 +1,87 @@
+\chapter{Normalizacja odpowiedzi skokowych}
+\label{zad3}
+Proces normalizacji odpowiedzi skokowych dla torów wejście-wyjście, zakłócenie-wyjście rozpoczęliśmy od przeprowadzenia dwóch eksperymentów oraz pobrania potrzebnych danych. Eksperymenty polegały na skokowej zmianie wartości sygnałów sterowania i zakłócenia. Skoki odbywały się z punktu pracy, w którym wartości sygnałów były równe 0. Zadanie realizuje skrypt \verb+zad3.m+.\\
+\indent{} Po otrzymaniu odpowiedzi skokowych nieznormalizowanych następowała normalizacja otrzymanych danych, która np. dla skoku sterowania przyjmowała następującą postać:
+
+\begin{equation}
+\label{norm1}
+Y = Y - Y_{\mathrm{pp}}
+\end{equation}
+
+\begin{equation}
+\label{norm2}
+Y = Y / \Delta u
+\end{equation}
+\\
+We wzorach \ref{norm1} i \ref{norm2} $Y$ jest wektorem wyjścia obiektu po przeprowadzonym eksperymencie, wartość $Y_{\mathrm{pp}}$ wartością wyjścia w punkcie pracy, a $\Delta u$ zmianą wartości sterowania podczas skoku.
+
+\section{Znormalizowana odpowiedź toru wejście-wyjście}
+Na rysunku \ref{zad3_norm_odp_u} obserwujemy wynik normalizacji odpowiedzi skokowej obiektu na skokową zmianę sygnału sterującego. Wartość wyjścia w stanie ustalonym wynosi $y = \num{2,296}$. Wartość zgadza się z wynikiem otrzymanym na charakterystyce statycznej toru wejście-wyjście, gdzie możemy zaobserwować, że wartość sygnału $y$ przy pobudzeniu sygnałem $u = 1$ powinna wynosić $\num{2,296}$.   
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=300,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+	\addlegendimage{no markers,red}
+    \addplot[red, semithick, thick] file{../data/zad3/zad3_input_norm_resp.csv};   
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Znormalizowana odpowiedź skokowa toru wejście-wyjście}
+    \label{zad3_norm_odp_u}
+\end{figure}
+
+
+\section{Znormalizowana odpowiedź toru zakłócenie-wyjście}
+Wynik normalizacji odpowiedzi skokowej toru zakłócenie-wyjście również znajduje potwierdzenie w charakterystyce statycznej tego toru. Przy pobudzeniu obiektu sygnałem zakłócenia o wartości $\num{1}$ wyjście osiąga punkt pracy $y = \num{1,497}$. Znormalizowaną odpowiedź skokową przedstawia rysunek \ref{zad3_norm_odp_d}.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=300,ymin=0,ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+	\addlegendimage{no markers,red}
+    \addplot[red, semithick, thick] file{../data/zad3/zad3_disturbance_norm_resp.csv};   
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Znormalizowana odpowiedź skokowa toru zakłócenie-wyjście}
+    \label{zad3_norm_odp_d}
+\end{figure}
+
+\section{Wyznaczenie horyzontu dynamiki $D$}
+Współczynniki odpowiedzi skokowej po nasyceniu można odrzucić ponieważ nie poprawiają one jakości regulacji a zwiększają narzut obliczeniowy. Należy więc dobrać horyzont dynamiki $D$ użytecznych próbek odpowiedzi skokowej, które będą użyte w algorytmie DMC.\\
+\indent{} W skrypcie \verb+zad3.m+ dobór horyzontu jest realizowany automatycznie poprzez określenie dozwolonej odległości między kolejnymi próbkami odpowiedzi skokowej. Odległość ta wynosiła $eps = \num{0,0001}$, a wyznaczony horyzont dynamiki był długości $D = \num{155}$ próbek. Model uwzględniany w algorytmie DMC został przedstawia rysunek \ref{zad3_cut_resp}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=155,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+	\addlegendimage{no markers,red}
+    \addplot[red, semithick, thick] file{../data/zad3/zad3_input_cut_response.csv};   
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedź skokowa z uwzględnieniem horyzontu dynamiki równego $D = 155$}
+    \label{zad3_cut_resp}
+\end{figure}
