@@ -1,3 +1,4 @@
+%close all;
 clear all;
 addpath ../
 
@@ -8,12 +9,12 @@ step = step(:, 2);
 step_d = step_d(:, 2);
 
 %% parametry regulatora 
-D = length(step);
-N = D;  
-Nu = N;
-lambda = 80;
+D = 155;
+N = 70;  
+Nu = 1;
+lambda = 10;
 
-Dz = 20;
+Dz = 147;
 
 %% uwzglednienie zaklocen
 disturb = 0;    % uwzglednienie zaklocenia
