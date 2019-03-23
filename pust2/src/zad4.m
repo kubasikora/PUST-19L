@@ -17,7 +17,7 @@ Dz = 20;
 
 %% uwzglednienie zaklocen
 disturb = 0;    % uwzglednienie zaklocenia
-do_disturb = 1; % flaga do realizacji skoku zaklocenia
+do_disturb = 0; % flaga do realizacji skoku zaklocenia
 
 %% Definicja stalych
 Upp = 0;
@@ -34,18 +34,24 @@ error_sum = 0;
 % czas symulacji
 sim_time = 1:sim_len;
 sim_time = sim_time';
+
 % wartosc zadana
 stpt_value = 1;
 setpoint = stpt_value * ones(sim_len,1);
+
 % wektor sygnalu sterujacego
 input = Upp*ones(sim_len, 1);
+
 % wektor wyjscia
 output = Ypp*ones(sim_len, 1);
+
 % zaklocenia
 disturbance = Dpp*ones(sim_len,1);
+
 % przeskalowane sygnaly
 rescaled_output = 0;
 rescaled_input = zeros(sim_len, 1);
+
 % wektor uchybu
 error = zeros(sim_len, 1);
 
@@ -141,30 +147,25 @@ for k=8:sim_len
     
     if do_disturb == 1 && error(k) < eps 
         disturbance(k:end) = 1;
+        jump = k;
         do_disturb = 0;
     end    
     
     if disturb == 1
         % wektor dZ
-        for i = 1:Dz
+        for i = 1:Dz            
             if (k-i+1) <= 0
                 dd1 = 0;
-            elseif (k-i+1) > Dz
-                dd1 = step_d(Dz);
             else
-                dd1 = step_d(k - i + 1);
+                dd1 = disturbance(k - i + 1);
             end
-            
             if (k-i) <= 0
                 dd2 = 0;
-            elseif (k-i) > Dz
-                dd2 = step_d(Dz);
             else
-                dd2 = step_d(k - i);
-            end 
-            
+                dd2 = disturbance(k - i);
+            end             
             dDp(i) = dd1 - dd2;
-        end        
+        end           
         rescaled_input(k) = Ke * error(k) - K(1,:) * (Mp * dUp + Mzp * dDp);
     else
         rescaled_input(k) = Ke * error(k) - K(1,:) * Mp * dUp;
@@ -179,18 +180,49 @@ end
 figure(1)
 stairs(sim_time, input);
 hold on 
+grid on
 title('Sterowanie');
 hold off
 
 figure(2)
 plot(sim_time, setpoint);
 hold on
+grid on
 plot(sim_time, output);
 title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
 
 figure(3)
 stairs(sim_time, disturbance);
-hold on 
+hold on
+grid on
 title('Zaklocenie');
 hold off
+
+if disturb == 0 && do_disturb == 0
+    %% zapis do plikow: ZADANIE 4.
+    str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda));
+    disp(str)
+
+    input_ts = [sim_time-1 input];
+    output_ts = [sim_time-1 output];
+    setpoint_ts = [sim_time-1 setpoint];
+
+    dlmwrite(strcat('../data/zad4/zad4_input_', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad4/zad4_output_', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad4/zad4_stpt_', str, '.csv'), setpoint_ts, '\t');
+else
+    %% zapis do plikow: ZADANIE 5.
+    str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda), '_D_jump_', num2str(jump));
+    disp(str)
+    
+    input_ts = [sim_time-1 input];
+    output_ts = [sim_time-1 output];
+    setpoint_ts = [sim_time-1 setpoint];
+    disturbance_ts = [sim_time-1 disturbance];
+    
+    dlmwrite(strcat('../data/zad5/zad5_input_', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/zad5/zad5_output_', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/zad5/zad5_stpt_', str, '.csv'), setpoint_ts, '\t');
+    dlmwrite(strcat('../data/zad5/zad5_disturbance_', str, '.csv'), disturbance_ts, '\t');
+end
