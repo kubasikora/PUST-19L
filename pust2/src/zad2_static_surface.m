@@ -1,6 +1,6 @@
  clear all
  close all
- 
+ addpath ../
  Z = linspace(-1,1,200);
  U = linspace(-1,1,200);
  output = zeros(300,1);
@@ -37,7 +37,7 @@
  surf(U,Z,Y);
  
  %% zapis do plikow
- dlmwrite('../data/zad2/zad2_vector_U.csv', U);
- dlmwrite('../data/zad2/zad2_vector_Z.csv', Z);
- dlmwrite('../data/zad2/zad2_surface_Y.csv', Y, '\t');
+ %dlmwrite('../data/zad2/zad2_vector_U.csv', U);
+ %dlmwrite('../data/zad2/zad2_vector_Z.csv', Z);
+ %dlmwrite('../data/zad2/zad2_surface_Y.csv', Y, '\t');
 %  dlmwrite('../data/zad2/zad2_surface_Y_coordinates.csv', Y_coordinates, '\t');

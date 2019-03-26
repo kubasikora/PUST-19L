@@ -87,7 +87,7 @@ Odpowiedź skokową toru zakłócenie-wyjście otrzymywaliśmy poprzez skokową 
     \addplot[violet, semithick, thick] file{../data/zad2/zad2_disturbance_output-0.5.csv};    
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału zaklócenia}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału zakłócenia}
     \label{zad2_odp_skok_disturbance}
 \end{figure}
 
@@ -105,3 +105,13 @@ Wynik można zobaczyć na rysunku \ref{zad2_static_surf}.\\
 \indent{} Wykres przedstawia płaszczyznę $y(u,z)$. Skoro powstały wykres 
 jest płaszczyzną to można wywnioskować, że mamy do czynienia z obiektem liniowym. 
 
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[grid=both,view={225}{20},colormap/viridis,width=1.00\textwidth]
+            \addplot3+[surf,mesh/rows=100, mesh/ordering=colwise,no marks] file{../data/zad2/mesh.csv};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Charakterystyka $y(u,z)$ badanego procesu}
+    \label{zad2_y_od_u_i_z}
+\end{figure}
