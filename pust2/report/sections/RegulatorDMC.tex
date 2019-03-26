@@ -231,6 +231,31 @@ wartości horyzontu predykcji $N = \num{70}$ aby przejść do badania parametru 
 
 
 \section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
+W kolejnym kroku zmniejszaliśmy horyzont sterowania $N_{\mathrm{u}}$, utrzymując wartość
+horyzontu predykcji na stałym poziomie równym $N = \num{70}$.
+
+\subsubsection{Wartość horyzontu sterowania $N_{\mathrm{u}} = 35$}
+W pierwszej kolejności zmniejszyliśmy parametr $N_{\mathrm{u}}$ aby rozpoznać jak jego zmiana
+wpływa na jakość regulacji. Zmniejszenie wartości horyzontu sterowania pozwoliło na
+delikatne wygładzenie przebiegu sygnału wyjściowego procesu i zmniejszenie wskaźnika jakości
+do wartości $E=\num{15,9583}$. Przebiegi wejścia i wyjścia symulowanego obiektu przedstawiliśmy 
+na rysunkach \ref{zad4_Nu_1_y} i \ref{zad4_Nu_1_u}. Idąc tym tropem postanowiliśmy jeszcze bardziej zmniejszyć
+wartość tego parametru.
+
+\subsubsection{Wartość horyzontu sterowania $N_{\mathrm{u}} = 2$}
+Początkowy entuzjazm spowodowany poprawieniem jakości regulacji skłonił nas do przeprowadzania
+próby w której wartość tego parametru jest równa $N_{\mathrm{u}} = 2$. Przebiegi sygnału 
+wyjściowego znacznie bardziej wygładziły się, jednak kosztem pogorszenia wskaźnika jakości, 
+który dla tej symulacji wyniósł $E = \num{16,3116}$. Wyniki symulacji zostały przedstawione 
+na wykresach \ref{zad4_Nu_2_y} i \ref{zad4_Nu_2_u}
+
+\subsection{Wartość horyzontu sterowania $N_{\mathrm{u}} = 1$}
+Kierowani intuicją inżynierską, nie zważając na niepowodzenie poprzedniej symulacji, postanowiliśmy
+jeszcze bardziej zmniejszyć wartość tego parametru, osiągając najniższą możliwą wartość równą 
+$N_{\mathrm{u}} = 1$. Był to strzał w dziesiątkę, ponieważ taki zabieg pozwolił nam utrzymanie
+gładkiego przebiegu sygnału wyjściowego oraz na zmniejszenie wartości wskaźnika jakości do poziomu
+$E = \num{15,7448}$. Nie mogąc już dalej manipulować wartością horyzontu sterowania, przeszliśmy do 
+ostatniego etapu strojenia parametrów algorytmu.
 
 \begin{figure}[t]
     \centering
@@ -378,6 +403,11 @@ wartości horyzontu predykcji $N = \num{70}$ aby przejść do badania parametru 
 \FloatBarrier
 
 \section{Dobór parametru $\lambda$}
+
+
+\iffalse
+todo 
+\fi
 
 \begin{figure}[t]
     \centering
