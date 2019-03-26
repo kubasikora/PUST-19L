@@ -61,14 +61,14 @@ Odpowiedź skokową toru zakłócenie-wyjście otrzymywaliśmy poprzez skokową 
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ] 
-    \addlegendentry{$\Delta d = \num{0,05}$},
-    \addlegendentry{$\Delta d = \num{0,2}$}
-    \addlegendentry{$\Delta d = \num{0,35}$},
-    \addlegendentry{$\Delta d = \num{0,5}$},
-    \addlegendentry{$\Delta d = \num{-0,05}$},
-    \addlegendentry{$\Delta d = \num{-0,2}$},
-    \addlegendentry{$\Delta d = \num{-0,35}$},
-    \addlegendentry{$\Delta d = \num{-0,5}$},
+    \addlegendentry{$\Delta z = \num{0,05}$},
+    \addlegendentry{$\Delta z = \num{0,2}$}
+    \addlegendentry{$\Delta z = \num{0,35}$},
+    \addlegendentry{$\Delta z = \num{0,5}$},
+    \addlegendentry{$\Delta z = \num{-0,05}$},
+    \addlegendentry{$\Delta z = \num{-0,2}$},
+    \addlegendentry{$\Delta z = \num{-0,35}$},
+    \addlegendentry{$\Delta z = \num{-0,5}$},
     \addlegendimage{no markers,green}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,yellow}
@@ -92,55 +92,16 @@ Odpowiedź skokową toru zakłócenie-wyjście otrzymywaliśmy poprzez skokową 
 \end{figure}
 
 \section{Wyznaczenie charakterystyki statycznej $y(u,z)$}
-Wyznaczenie charakterystyki $y(u,z)$ rozpoczęliśmy od wyznaczenia charakterystyk $y(u)$ i $y(z)$. Na dalszym etapie zadania pomogło to w określeniu wzmocnień statycznych torów wejście-wyjście, zakłócenie-wyjśćie. 
+Wyznaczenie charakterystyki $y(u,z)$ rozpoczęliśmy od wyznaczenia charakterystyk $y(u)$ i $y(z)$. 
+Na dalszym etapie zadania pomogło to w określeniu wzmocnień statycznych torów wejście-wyjście, zakłócenie-wyjśćie. 
 
-\subsection{Charakterystyki $y(u)$ i $y(z)$}
-Generacje oddzielnych charakterystyk statycznych przeprowadza skrypt \verb+zad2_static.m+. Zadaniem programu była symulacja obiektu dla zmieniających się sygnałów wejścia i zakłócenia w zaresie od -1 do 1. Dla każdej wartości każdego z sygnałów sprawdzana była wartość nasycenia sygnału wyjścia. Wyniki symulacji przedstawiają wykresy \ref{zad2_static_u} oraz \ref{zad2_static_d.}.\\
-\indent{} Wyznaczone charakterystyki posłużyły do wyznaczenia wzmocnienia statycznego oraz odegrały kluczową rolę w procesie sprawdzania poprawności charakterystyki $y(u,z)$.
-
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=-1.0,xmax=1,ymin=-2.5,ymax=2.5,
-    xlabel={$u$},
-    ylabel={$y(u)$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y(u)$},
-    \addlegendimage{no markers,red}
-    \addplot[red, semithick, thick] file{../data/zad2/zad2_static_char_u.csv};    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Charakterystyka statyczna toru wejście-wyjście}
-    \label{zad2_static_u}
-\end{figure}
-
-\begin{figure}[b]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=-1.0,xmax=1,ymin=-1.5,ymax=1.5,
-    xlabel={$d$},
-    ylabel={$y(d)$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y(d)$},
-    \addlegendimage{no markers,red}
-    \addplot[red, semithick, thick] file{../data/zad2/zad2_static_char_d.csv};    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Charakterystyka statyczna toru zakłócenie-wyjście}
-    \label{zad2_static_d}
-\end{figure}
- 
-\subsection{Charakterystyka $y(u,z)$}
-Aby otrzymać wykres charakterystyki statycznej obiektu w zależności od dwóch argumentów należało przeprowadzić symulacje dla każdej wartości sygnałów $u$ oraz $d$ i zapamiętaniu wartości nasycenia sygnału $y$. Program, który realizujący zadanie to \verb+zad2_static_surface.m+ wykonywał wspomniane działania, a wyniki zapisywał do tablicy z wartościami charakterystyki statycznej. Wynik można zobaczyć na rysunku \ref{zad2_static_surf}.\\
-\indent{} Poprawność wygenerowanych wartości badaliśmy sprawdzając i porównując punkty pracy z charakterystyk \ref{zad2_static_u} i \ref{zad2_static_d} z odpowiadającymi im punktami na wykresie \ref{zad2_static_surf}. Na podstawie zgodności wywnioskowaliśmy, że charakterystyka $y(u,z)$ została wygenerowana poprawnie.\\
-\indent{} Wykres przedstawia płaszczyznę $y(u,z)$. Skoro powstały wykres jest płaszczyzną to można wywnioskować, że mamy do czynienia z obiektem liniowym. 
+Aby otrzymać wykres charakterystyki statycznej obiektu w zależności od 
+dwóch argumentów należało przeprowadzić symulacje dla każdej 
+wartości sygnałów $u$ oraz $d$ i zapamiętaniu wartości 
+nasycenia sygnału $y$. Program, który realizujący zadanie to 
+\verb+zad2_static_surface.m+ wykonywał wspomniane działania, 
+a wyniki zapisywał do tablicy z wartościami charakterystyki statycznej. 
+Wynik można zobaczyć na rysunku \ref{zad2_static_surf}.\\
+\indent{} Wykres przedstawia płaszczyznę $y(u,z)$. Skoro powstały wykres 
+jest płaszczyzną to można wywnioskować, że mamy do czynienia z obiektem liniowym. 
 
