@@ -19,7 +19,7 @@ nie ma różnicy
 E = 15.9773
 
 
-### podejście 2
+### podejście 3
 D = 155 
 N = 70
 Nu = N
@@ -29,7 +29,7 @@ nie ma różnicy
 E = 15.9763
 
 
-### podejście 3
+### podejście 4
 D = 155 
 N = 60
 Nu = N

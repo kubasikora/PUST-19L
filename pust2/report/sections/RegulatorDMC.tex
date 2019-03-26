@@ -1,5 +1,525 @@
 \chapter{Dobór parametrów algorytmu DMC}
 \label{zad4}
 
+Parametry regulatora DMC dobraliśmy metodą eksperymentalną.
+W niniejszym rozdziale udokumentowalismy ten proces.
 
 \section{Dobór horyzontu predykcji $N$}
+W trakcie doboru horyzontu predykcji $N$ założyliśmy że wartość horyzontu sterowania nie może być 
+większa od $N$, dlatego równocześnie zmniejszaliśmy oba parametry, utrzymując zależność $N = N_{\mathrm{u}}$.
+
+\subsubsection{Horyzont predykcji $N = \num{155}$}
+W pierwszej kolejności przyjęliśmy wartość horyzontu predykcji równą wartości horyzontu dynamiki
+symulowanego procesu. Regulator działał w sposób zadowalający, jednak cechował się pofałdowanym
+przebiegiem wyjściowym. Wskaźnik jakości regulacji wyniósł $E = \num{15,9773}$ co jest wartością
+zadowalającą, jednak świadomi możliwości poprawy, postanowiliśmy skrócić długość horyzontu
+predykcji. Przebiegi wyjściowe i wejściowe procesu z zaznaczoną wartością zadaną zostały przedstawione
+na rysunkach \ref{zad4_N_1_y} i \ref{zad4_N_1_u}.
+
+\subsubsection{Horyzont predykcji $N = \num{100}$}
+Dla skróconego horyzontu predykcji, wartość wskaźnika jakości nie zmniejszyła się i utrzymała się
+na poziomie $E = \num{15,9773}$. Przebieg wyjścia nadal pozostał pofałdowany. Potwierdzają to rysunki
+\ref{zad4_N_2_y} i \ref{zad4_N_2_u}. Inżynierska intuicja 
+podpowiada że za mało skróciliśmy horyzont predykcji aby zauważyć jakiekolwiek zmiany. 
+
+\subsubsection{Horyzont predykcji $N = \num{70}$}
+Dopiero przy skróceniu horyzontu predykcji do $N = \num{70}$ zauważyliśmy zmianę wskaźnika jakości, 
+który dla takiego zestawu parametrów wyniósł $E = \num{15,9763}$. Mała zmiana tego parametru, może nieznacznie
+poprawiła wskaźnik jakości, jednak nie wpłynęła na pofałdowanie przebiegu wyjścia procesu. Efekty działania tego
+regulatora przedstawiono na rysunkach \ref{zad4_N_3_y} i \ref{zad4_N_3_u}.
+
+\subsubsection{Horyzont predykcji $N = \num{60}$}
+Próbując jeszcze bardziej poprawić wskaźnik jakości, zmniejszyliśmy długość horyzontu predykcji do $N = \num{60}$.
+Po przeprowadzeniu symulacji, której wyniki znajdują się na wykresach \ref{zad4_N_4_y} i \ref{zad4_N_4_u}, 
+zauważyliśmy niespodziewane pogorszenie wskaźnika jakości. Jego wartość wzrosła do $E = \num{15,9874}$.
+Biorąc pod uwagę ten fakt, postanowiliśmy porzucić dalsze manipulowanie parametrem $N$ i pozostać przy
+wartości horyzontu predykcji $N = \num{70}$ aby przejść do badania parametru $N_{\mathrm{u}}$.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_155_Nu_155_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_155_Nu_155_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 155$, $N_{\mathrm{u}} = 155$, $\lambda = 100$}
+    \label{zad4_N_1_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_155_Nu_155_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 155$, $N_{\mathrm{u}} = 155$, $\lambda = 100$}
+    \label{zad4_N_1_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_100_Nu_100_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_100_Nu_100_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
+    \label{zad4_N_2_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_100_Nu_100_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
+    \label{zad4_N_2_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_70_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_70_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 70$, $\lambda = 100$}
+    \label{zad4_N_3_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_70_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 70$, $\lambda = 100$}
+    \label{zad4_N_3_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_60_Nu_60_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_60_Nu_60_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 60$, $N_{\mathrm{u}} = 60$, $\lambda = 100$}
+    \label{zad4_N_4_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_60_Nu_60_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 60$, $N_{\mathrm{u}} = 60$, $\lambda = 100$}
+    \label{zad4_N_4_u}
+\end{figure}
+\FloatBarrier
+
+
+\section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_35_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_35_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 35$, $\lambda = 100$}
+    \label{zad4_Nu_1_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_35_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 35$, $\lambda = 100$}
+    \label{zad4_Nu_1_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_2_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_2_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 2$, $\lambda = 100$}
+    \label{zad4_Nu_2_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_2_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 2$, $\lambda = 100$}
+    \label{zad4_Nu_2_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_100.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
+    \label{zad4_Nu_3_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
+    \label{zad4_Nu_3_u}
+\end{figure}
+\FloatBarrier
+
+\section{Dobór parametru $\lambda$}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_50.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_50.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{zad4_lambda_1_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_50.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{zad4_lambda_1_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_50.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_50.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{zad4_lambda_2_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_50.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{zad4_lambda_2_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_10.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_10.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
+    \label{zad4_lambda_3_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_10.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
+    \label{zad4_lambda_3_u}
+\end{figure}
+\FloatBarrier
