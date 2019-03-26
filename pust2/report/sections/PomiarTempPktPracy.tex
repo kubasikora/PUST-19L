@@ -1,0 +1,45 @@
+\chapter{Obiekt laboratoryjny -- stanowisko chłodząco-grzejące}
+\label{lab1}
+
+\section{Wyznaczenie punktu pracy}
+\label{lab1_punkt_pracy}
+
+Po sprawdzeniu możliwości sterowania i pomiaru w komunikacji ze stanowiskiem przystąpiliśmy do wyznaczenia punktu pracy.
+Od prowadzącego otrzymaliśmy informację o wartości sygnału sterującego w punkcie pracy 
+równej $U_{\mathrm{pp}} = 26\%$. W celu wyznaczenia wartości sygnału wyjściowego w 
+punkcie pracy $Y_{\mathrm{pp}}$ na wejście obiektu podaliśmy stałe wejście o wartości 
+$U_{\mathrm{pp}}$ i zaczekaliśmy aż wyjście ustabilizuje się. Po odczekaniu około 5 minut,
+wyjście obiektu ustabilizowało się na wartości $Y_{\mathrm{pp}} = \num{32} \degree $C
+
+
+\section{Wyznaczenie odpowiedzi skokowych toru zakłócenie-wyjście}
+\label{lab1_odpowiedzi}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=600,ymin=31,ymax=36,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=north west,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{Skok o 10},
+    \addlegendentry{Skok o -10}
+    \addlegendentry{Skok o 20},
+    \addlegendimage{no markers,green}
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+    \addplot[green, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_10.csv};
+    \addplot[red, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_-10.csv};
+    \addplot[blue, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_20.csv};
+
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{zad2_porow_odp_skok}
+\end{figure}
