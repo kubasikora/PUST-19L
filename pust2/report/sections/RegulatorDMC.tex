@@ -403,11 +403,45 @@ ostatniego etapu strojenia parametrów algorytmu.
 \FloatBarrier
 
 \section{Dobór parametru $\lambda$}
+Symulowany proces w bardzo spokojny sposób osiąga wartość zadaną, jednak wydaje się że czas regulacji
+tego obiektu mógłby być krótszy. Taki efekt możemy osiągnąć poprzez zwiększenie zmienności
+sygnału sterującego. Aby tego dokonać, sukcesywnie zmniejszaliśmy parametr kary $\lambda$, 
+badając wskaźnik jakości.
+
+\subsubsection{Wartość parametru $\lambda = \num{50}$}
+Zmniejszenie parametru $\lambda$ o połowę nie spowodowało drastycznej zmiany przebiegów sygnałów
+wejściowych i wyjściowych. Wyniki symulacji zostały przedstawione poniżej na rysunkach \ref{zad4_lambda_1_y}
+i \ref{zad4_lambda_1_u}. Mimo że przebiegi na pierwszy rzut oka wyglądają tak samo, to wartość 
+wskaźnika jakości zmalała do wartości $E = \num{15,509}$ co skłoniło nas do dalszego zmniejszania
+tego parametru.
+
+\subsubsection{Wartość parametru $\lambda = \num{20}$}
+Kolejną symulacje przeprowadzilismy dla regulatora DMC z parametrem $\lambda = \num{20}$. Wyniki tej
+symulacji zostały przedstawione na rysunkach \ref{zad4_lambda_2_y} i \ref{zad4_lambda_2_u}. Dla tej 
+próby wskaźnik jakości jeszcze bardziej zmalał do wartości $E = \num{15,336}$.
+
+\subsubsection{Wartość parametru $\lambda = \num{10}$}
+Idąc dalej, zmniejszyliśmy aktualną wartość parametru o połowę do wartości $\lambda = \num{10}$. Symulacja
+tego regulatora została zaprezentowana na wykresach \ref{zad4_lambda_3_y} i \ref{zad4_lambda_3_u}. Wartość wskaźnika
+jakości wyniosła $E = \num{15,318}$, co można uznać za nieznaczną poprawę.
+
+\subsubsection{Wartość parametru $\lambda = \num{0,01}$}
+Aby przetestować jak bardzo jeszcze możemy zmniejszyć wartość parametru $\lambda$, postanowiliśmy
+zmniejszyć ją o dwa rzędy wielkości do wartości $\lambda = \num{0,01}$. Przyniosło to korzyść w postaci
+zmniejszenia wskaźnika jakości $E = \num{15,27}$, jednak spowodowało to że sygnał sterujący zmienia się 
+w bardzo gwałtowny sposób. Idąc na inżynierski kompromis, mając na uwadze że ten regulator będzie wystawiany
+na oddziaływanie zakłóceń postanowiliśmy wrócić do poprzedniej wartości tego parametru i zakończyć proces strojenia.
+Przebieg wyjścia procesu został przedstawiony na rysunku \ref{zad4_lambda_4_y}. Przebieg sterowania, z widocznym 
+większym pikiem sterowania został pokazany na wykresie \ref{zad4_lambda_4_u}.
+
+\section{Ostateczny zestaw parametrów}
+Ostatecznie zdecydowaliśmy się na następujący zestaw parametrów algorytmu regulacji DMC.
+
+\begin{center}
+    $N = \num{70}$ \hspace{1cm} $N_{\mathrm{u}} = \num{1}$ \hspace{1cm} $\lambda = \num{10}$ 
+\end{center}
 
 
-\iffalse
-todo 
-\fi
 
 \begin{figure}[t]
     \centering
@@ -471,15 +505,15 @@ todo
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_50.csv};
-    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_50.csv};
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_20.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_20.csv};
     \addlegendentry{$y^{\mathrm{zad}}[k]$},
     \addlegendentry{$y[k]$},
     \addlegendimage{no markers, blue}
 	\addlegendimage{no markers, red}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 20$}
     \label{zad4_lambda_2_y}
 \end{figure}
 
@@ -496,11 +530,11 @@ todo
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]
-    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_50.csv};
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_20.csv};
     \legend{$u[k]$}
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 20$}
     \label{zad4_lambda_2_u}
 \end{figure}
 \FloatBarrier
@@ -551,5 +585,54 @@ todo
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
     \label{zad4_lambda_3_u}
+\end{figure}
+\FloatBarrier
+
+%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad4/zad4_stpt_N_70_Nu_1_lambda_0.01.csv};
+    \addplot[red, semithick] file{../data/zad4/zad4_output_N_70_Nu_1_lambda_0.01.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = \num{0.01}$}
+    \label{zad4_lambda_4_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=1,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad4/zad4_input_N_70_Nu_1_lambda_0.01.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 155$, $N = 70$, $N_{\mathrm{u}} = 1$, $\lambda = \num{0.01}$}
+    \label{zad4_lambda_4_u}
 \end{figure}
 \FloatBarrier

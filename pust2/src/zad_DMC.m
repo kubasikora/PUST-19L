@@ -12,14 +12,14 @@ step_d = step_d(:, 2);
 D = 155;
 N = 70;  
 Nu = 1;
-lambda = 10;
+lambda = 0.01;
 
 Dz = 147;
 
 %% uwzglednienie zaklocen
 disturb = 0;    % uwzglednienie zaklocenia
-do_disturb = 1; % flaga do realizacji skoku zaklocenia
-do_sine = 1;    % wlaczenie zaklocenia sinusoidalnego
+do_disturb = 0; % flaga do realizacji skoku zaklocenia
+do_sine = 0;    % wlaczenie zaklocenia sinusoidalnego
 
 %% Definicja stalych
 Upp = 0;
@@ -210,28 +210,28 @@ hold off
 
 % if disturb == 0 && do_disturb == 0
 %     %% zapis do plikow: ZADANIE 4.
-%     str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda));
-%     disp(str)
-% 
-%     input_ts = [sim_time-1 input];
-%     output_ts = [sim_time-1 output];
-%     setpoint_ts = [sim_time-1 setpoint];
-% 
-%     dlmwrite(strcat('../data/zad4/zad4_input_', str, '.csv'), input_ts, '\t');
-%     dlmwrite(strcat('../data/zad4/zad4_output_', str, '.csv'), output_ts, '\t');
-%     dlmwrite(strcat('../data/zad4/zad4_stpt_', str, '.csv'), setpoint_ts, '\t');
+     str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda));
+     disp(str)
+ 
+     input_ts = [sim_time-1 input];
+     output_ts = [sim_time-1 output];
+     setpoint_ts = [sim_time-1 setpoint];
+ 
+     dlmwrite(strcat('../data/zad4/zad4_input_', str, '.csv'), input_ts, '\t');
+     dlmwrite(strcat('../data/zad4/zad4_output_', str, '.csv'), output_ts, '\t');
+     dlmwrite(strcat('../data/zad4/zad4_stpt_', str, '.csv'), setpoint_ts, '\t');
 % else
 %     %% zapis do plikow: ZADANIE 5.
-%     str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda), '_D_jump_', num2str(jump));
-%     disp(str)
-%     
-%     input_ts = [sim_time-1 input];
-%     output_ts = [sim_time-1 output];
-%     setpoint_ts = [sim_time-1 setpoint];
-%     disturbance_ts = [sim_time-1 disturbance];
-%     
-%     dlmwrite(strcat('../data/zad5/zad5_input_', str, '.csv'), input_ts, '\t');
-%     dlmwrite(strcat('../data/zad5/zad5_output_', str, '.csv'), output_ts, '\t');
-%     dlmwrite(strcat('../data/zad5/zad5_stpt_', str, '.csv'), setpoint_ts, '\t');
+%      str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda), '_D_jump_', num2str(jump));
+%      disp(str)
+%      
+%      input_ts = [sim_time-1 input];
+%      output_ts = [sim_time-1 output];
+%      setpoint_ts = [sim_time-1 setpoint];
+%      disturbance_ts = [sim_time-1 disturbance];
+%      
+%      dlmwrite(strcat('../data/zad4/zad5_input_', str, '.csv'), input_ts, '\t');
+%      dlmwrite(strcat('../data/zad5/zad5_output_', str, '.csv'), output_ts, '\t');
+%      dlmwrite(strcat('../data/zad5/zad5_stpt_', str, '.csv'), setpoint_ts, '\t');
 %     dlmwrite(strcat('../data/zad5/zad5_disturbance_', str, '.csv'), disturbance_ts, '\t');
 % end

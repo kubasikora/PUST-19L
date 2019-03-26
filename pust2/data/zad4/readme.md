@@ -86,7 +86,7 @@ E = 15.509
 D = 155 
 N = 70
 Nu = 1
-lambda = 50
+lambda = 20
 
 ciut lepiej widac ze poprawia sie
 E = 15.336
@@ -97,7 +97,16 @@ N = 70
 Nu = 1
 lambda = 10
 
-jeszcze lepiej, piszemy ze stop bo jeszcze mniej nie pomaga
+jeszcze lepiej, 
 E = 15.3181
 
+### podejście 4
+D = 155 
+N = 70
+Nu = 1
+lambda = 0.01
+
+niby lepiej ale pik sterowania za duzy wiec odrzucamy
+
+E = 15.27
 
