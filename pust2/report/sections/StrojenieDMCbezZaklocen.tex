@@ -1,2 +1,44 @@
 \section{Strojenie regulatora DMC na stanowisku laboratoryjnym bez zakłóceń}
 \label{zad4_lab_opis}
+\begin{figure}[t]
+    \label{zad4_lab_proces}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=200,ymin=-1,ymax=1,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad4/dmc_bez_zaklocen_output.csv};
+	\addplot[blue, semithick] file{../data/lab/zad4/setpoint_ts.csv};    
+    \legend{$y[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC}
+\end{figure}
+
+\begin{figure}[b]
+    \label{zad4_lab_proces}
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=200,ymin=-1,ymax=1,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad4/input_ts.csv};    
+    \legend{$y[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dostrojonego regulatora DMC}
+\end{figure}
