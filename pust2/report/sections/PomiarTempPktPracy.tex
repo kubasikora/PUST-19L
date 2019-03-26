@@ -26,26 +26,33 @@ wyjście obiektu ustabilizowało się na wartości $Y_{\mathrm{pp}} = \num{32} \
     legend pos=north west,
     y tick label style={/pgf/number format/1000 sep=},
     ] 
-    \addlegendentry{Skok o 10},
-    \addlegendentry{Skok o -10}
-    \addlegendentry{Skok o 20}
-    \addlegendentry{Skok o -20},
-    \addlegendimage{no markers,green}
+    \addlegendentry{$\Delta z = \num{-10}$}
+    \addlegendentry{$\Delta z = \num{20}$}
+    \addlegendentry{$\Delta z = \num{-20}$},
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
-	\addlegendimage{no markers, orange}
-    \addplot[green, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_10.csv};
+	\addlegendimage{no markers,green}
     \addplot[red, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_-10.csv};
     \addplot[blue, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_20.csv};
-    \addplot[blue, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_-20.csv};
+    \addplot[green, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_-20.csv};
     \end{axis}
     \end{tikzpicture}
     \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
-    \label{zad2_porow_odp_skok_lab}
+    \label{lab1_porow_odp_skok_lab}
 \end{figure}
 \FloatBarrier
 
-Zebraliśmy cztery odpowiedzi
-skokowe z punktu pracy w celu zbadania właściwości statycznych obiektu. Zostały one przedstawione na rysunku \ref{zad2_porow_odp_skok_lab}. Wzmocnienie obiektu różni się w zależności od tego czy skok sterowania był dodatni lub ujemny, jednak różnice te są niewielkie, że obiekt można traktować
-jako liniowy. Korzystając z odpowiedniego  wzoru wyliczyliśmy efektywne wzmocnienie dla każdego badanego skoku i policzyliśmy ich średnia arytmetyczna, ostatecznie
-otrzymując Kstat POLICZYC.
+Zebraliśmy trzy odpowiedzi
+skokowe z punktu pracy w celu zbadania właściwości statycznych obiektu. 
+Zostały one przedstawione na rysunku \ref{lab1_porow_odp_skok_lab}. 
+Wzmocnienie obiektu różni się w zależności od tego czy skok sterowania 
+był dodatni lub ujemny, jednak różnice te są niewielkie, że obiekt 
+można traktować jako liniowy. Korzystając z wzoru:
+
+\begin{equation}
+    K_{\mathrm{stat}} = \lim_{t \to \infty} \frac{y(t)- Y_{\mathrm{pp}}}{u_0 - U_{\mathrm{pp}}}
+    \label{zad2_wzm_statyczne_wzor}
+ \end{equation}
+
+wyliczyliśmy efektywne wzmocnienie dla każdego badanego skoku i policzyliśmy ich średnią arytmetyczną ostatecznie
+otrzymując $K_{\mathrm{stat}} = \num{0,1581}$.

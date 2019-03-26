@@ -5,15 +5,10 @@ Proces normalizacji odpowiedzi skokowych dla toru wejście-wyjście oraz dla tor
 
 \begin{equation}
 \label{norm1}
-Y = Y - Y_{\mathrm{pp}}
+s = \frac{Y - Y_{\mathrm{pp}}}{\Delta u}
 \end{equation}
 
-\begin{equation}
-\label{norm2}
-Y = Y / \Delta u
-\end{equation}
-\\
-We wzorach \ref{norm1} i \ref{norm2} $Y$ jest wektorem wyjścia obiektu po przeprowadzonym eksperymencie, wartość $Y_{\mathrm{pp}}$ wartością wyjścia w punkcie pracy, a $\Delta u$ zmianą wartości sterowania podczas skoku.
+We wzorze \ref{norm1} $Y$ jest wektorem wyjścia obiektu po przeprowadzonym eksperymencie, wartość $Y_{\mathrm{pp}}$ wartością wyjścia w punkcie pracy, a $\Delta u$ zmianą wartości sterowania podczas skoku.
 
 \section{Znormalizowana odpowiedź toru wejście-wyjście}
 Na rysunku \ref{zad3_norm_odp_u} obserwujemy wynik normalizacji odpowiedzi skokowej obiektu na skokową zmianę sygnału sterującego. Wartość wyjścia w stanie ustalonym wynosi $y = \num{2,296}$. Wartość zgadza się z wynikiem otrzymanym na charakterystyce statycznej toru wejście-wyjście, gdzie możemy zaobserwować, że wartość sygnału $y$ przy pobudzeniu sygnałem $u = 1$ powinna wynosić $\num{2,296}$.   
@@ -110,5 +105,5 @@ Odpowiedź skokowa ustalała się po $D_{\mathrm{z}} = \num{147}$ próbkach.
     \end{axis}
     \end{tikzpicture}
     \caption{Odpowiedź skokowa z uwzględnieniem horyzontu dynamiki zakłóceń równego $D_{\mathrm{z}} = 147$}
-    \label{zad3_cut_resp}
+    \label{zad3_cut_resp_disturbance}
 \end{figure}
