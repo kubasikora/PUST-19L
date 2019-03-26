@@ -15,13 +15,12 @@ wyjście obiektu ustabilizowało się na wartości $Y_{\mathrm{pp}} = \num{32} \
 \section{Wyznaczenie odpowiedzi skokowych toru zakłócenie-wyjście}
 \label{lab1_odpowiedzi}
 
-
-\begin{figure}[t]
+\begin{figure}[b]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=600,ymin=31,ymax=36,
+    xmin=0.0,xmax=600,ymin=29.5,ymax=36,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=north west,
@@ -29,17 +28,24 @@ wyjście obiektu ustabilizowało się na wartości $Y_{\mathrm{pp}} = \num{32} \
     ] 
     \addlegendentry{Skok o 10},
     \addlegendentry{Skok o -10}
-    \addlegendentry{Skok o 20},
+    \addlegendentry{Skok o 20}
+    \addlegendentry{Skok o -20},
     \addlegendimage{no markers,green}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
+	\addlegendimage{no markers, orange}
     \addplot[green, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_10.csv};
     \addplot[red, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_-10.csv};
     \addplot[blue, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_20.csv};
-
-    
+    \addplot[blue, semithick, thick] file{../data/lab/zad2/zad2_skok_zakl_o_-20.csv};
     \end{axis}
     \end{tikzpicture}
     \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
-    \label{zad2_porow_odp_skok}
+    \label{zad2_porow_odp_skok_lab}
 \end{figure}
+\FloatBarrier
+
+Zebraliśmy cztery odpowiedzi
+skokowe z punktu pracy w celu zbadania właściwości statycznych obiektu. Zostały one przedstawione na rysunku \ref{zad2_porow_odp_skok_lab}. Wzmocnienie obiektu różni się w zależności od tego czy skok sterowania był dodatni lub ujemny, jednak różnice te są niewielkie, że obiekt można traktować
+jako liniowy. Korzystając z odpowiedniego  wzoru wyliczyliśmy efektywne wzmocnienie dla każdego badanego skoku i policzyliśmy ich średnia arytmetyczna, ostatecznie
+otrzymując Kstat POLICZYC.
