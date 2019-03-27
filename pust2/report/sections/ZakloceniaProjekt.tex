@@ -74,6 +74,7 @@ uzyskujące $D_{\mathrm{z}} = \num{53}$.
 \FloatBarrier
 
 \section{Działanie algorytmu regulacji przy skokowej zmianie zakłócenia}
+\label{zad5_step_dist}
 Uwzględnienie zakłóceń mierzalnych w rozsądny sposób, powinno w każdym przypadku 
 poprawić jakość regulacji. W kolejnych eksperymentach sprawdziliśmy zachowanie procesu
 przy sterowaniu generowanym przez algorytm DMC w trzech przypadkach:
@@ -331,3 +332,271 @@ i \ref{zad5_step_disturbance_comp_u}.
     \caption{Porównanie generowanego sterowania}
     \label{zad5_step_disturbance_comp_u}
 \end{figure}
+
+\section{Działanie algorytmu regulacji przy zakłóceniu sinusoidalnym}
+\label{zad5_sine_dist}
+Wyżej przedstawione eksperymenty ponowiliśmy dla zakłócenia sinusoidalnego, aby zbadać
+jak zachowa się obiekt wystawiony na działanie ciągle zmiennego zakłócenia. W przypadku
+gdy algorytm bierze pod uwagę tylko przeszłe wartości zakłócenia, spodziewamy się że 
+wyjście procesu będzie stale wytrącone z wartości zadanej. Tak jak poprzednio zdecydowaliśmy
+się na przeprowadzenie trzech eksperymentów:
+
+\begin{itemize}
+    \item bez uwzględnienia mierzalnego zakłócenia
+    \item z uwzględnieniem mierzalnego zakłócenia z nieoptymalizowanym parametrem $D_{\mathrm{z}} = \num{147}$
+    \item z uwzględnieniem mierzalnego zakłócenia z optymalizowanym parametrem $D_{\mathrm{z}} = \num{53}$
+\end{itemize}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=500,ymin=-1.2, ymax=1.2,
+    xlabel={$k$},
+    ylabel={$z[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad6/zad6_disturbance_N_70_Nu_1_lambda_10_D_jump_184_Dz_53D_1.csv};
+    \addlegendentry{$z[k]$},
+    \addlegendimage{no markers, blue}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Postać badanych zakłóceń - sinusoidalny przebieg zakłóceń o amplitudzie $\num{1}$.}
+    \label{zad5_sine_disturbance_z}
+\end{figure}
+\FloatBarrier
+
+
+\subsection{Regulacja bez uwzględnienia mierzalnego zakłócenia}
+W przypadku regulacji bez pomiaru mierzalnego zakłócenia, uzyskaliśmy wskaźnik jakości regulacji
+równy $E = \num{185,2752}$. Wynik symulacji znajduje się na rysunkach \ref{zad5_sine_disturbance_without_y}
+i \ref{zad5_sine_disturbance_without_u}.
+
+\subsection{Regulacja z uwzględnienia mierzalnego zakłócenia bez optymalizacji parametru $D_{\mathrm{z}}$}
+W przypadku regulacji z pomiaru mierzalnego zakłócenia ale bez optymalizacji parametru $D_{\mathrm{z}}$, uzyskaliśmy wskaźnik jakości regulacji
+równy $E = \num{68,2297}$. Wynik symulacji znajduje się na rysunkach \ref{zad5_sine_disturbance_with_opt_without_y}
+i \ref{zad5_sine_disturbance_with_opt_without_u}.
+
+\subsection{Regulacja z uwzględnienia mierzalnego zakłócenia Z optymalizacją parametru $D_{\mathrm{z}}$}
+W przypadku regulacji z pomiaru mierzalnego zakłócenia z zoptymalizowanym parametrem $D_{\mathrm{z}}$, uzyskaliśmy wskaźnik jakości regulacji
+równy $E = \num{50,1943}$. Wynik symulacji znajduje się na rysunkach \ref{zad5_sine_disturbance_with_opt_with_y}
+i \ref{zad5_sine_disturbance_with_opt_with_u}.
+
+\subsection{Wnioski}
+Zgodnie z naszymi oczekiwaniami, najlepsze rezultaty uzyskaliśmy przy sterowaniu algorytmem DMC 
+z uwzględnieniem zakłóceń mierzalnych i z zoptymalizowanym parametrem $D_{\mathrm{z}} = \num{53}$. W przypadku zmiennego 
+zakłócenia, optymalizacja parametru $D_{\mathrm{z}}$ przyniosła jeszcze większą poprawę niż w przypadku
+stałego zakłócenia. Porównawcze przebiegi
+wyjścia i wejścia wszystkich trzech symulacji zostały przedstawione na rysunkach \ref{zad5_sine_disturbance_comp_y}
+i \ref{zad5_sine_disturbance_comp_u}. 
+
+Aby jeszcze bardziej zminimalizować efekt zakłócenia, należałoby przewidywać
+przyszłą wartość zakłócenia. W tym celu należy skonstruować model zakłócenia. Można zrobić to poprzez 
+zaprojektowanie autoregresyjnego modelu AR niskiego rzędu. Niestety nie jest to tematem tego projektu.  
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=-0.4, ymax=2.4,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad6/zad6_stpt_N_70_Nu_1_lambda_10_D_jump_184D_0.csv};
+    \addplot[red, semithick] file{../data/zad6/zad6_output_N_70_Nu_1_lambda_10_D_jump_184D_0.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora bez uwzględniania skokowego zakłócenia}
+    \label{zad5_sine_disturbance_without_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=-0.4, ymax=1.2,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad6/zad6_input_N_70_Nu_1_lambda_10_D_jump_184D_0.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego bez uwzględniania skokowego zakłócenia}
+    \label{zad5_sine_disturbance_without_u}
+\end{figure}
+
+%%%%
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad6/zad6_stpt_N_70_Nu_1_lambda_10_D_jump_184D_1.csv};
+    \addplot[red, semithick] file{../data/zad6/zad6_output_N_70_Nu_1_lambda_10_D_jump_184D_1.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z uwzględnieiem skokowego zakłócenia 
+    z niezoptymalizowanym parametrem $D_{\mathrm{z}} = \num{147}$}
+    \label{zad5_sine_disturbance_with_opt_without_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=-0.6, ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad6/zad6_input_N_70_Nu_1_lambda_10_D_jump_184D_1.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego z uwzględnieiem skokowego zakłócenia 
+    z niezoptymalizowanym parametrem $D_{\mathrm{z}} = \num{147}$}
+    \label{zad5_sine_disturbance_with_opt_without_u}
+\end{figure}
+
+%%% 
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=0, ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/zad6/zad6_stpt_N_70_Nu_1_lambda_10_D_jump_184_Dz_53D_1.csv};
+    \addplot[red, semithick] file{../data/zad6/zad6_output_N_70_Nu_1_lambda_10_D_jump_184_Dz_53D_1.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z uwzględnieiem skokowego zakłócenia 
+    z zoptymalizowanym parametrem $D_{\mathrm{z}} = \num{147}$}
+    \label{zad5_sine_disturbance_with_opt_with_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=-0.5, ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/zad6/zad6_input_N_70_Nu_1_lambda_10_D_jump_184_Dz_53D_1.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego z uwzględnieiem skokowego zakłócenia 
+    z zoptymalizowanym parametrem $D_{\mathrm{z}} = \num{147}$}
+    \label{zad5_sine_disturbance_with_opt_with_u}
+\end{figure}
+
+%%% 
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=-0.5, ymax=2.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, dotted] file{../data/zad6/zad6_output_N_70_Nu_1_lambda_10_D_jump_184D_0.csv};
+    \addplot[red, semithick] file{../data/zad6/zad6_output_N_70_Nu_1_lambda_10_D_jump_184D_1.csv};
+    \addplot[green, dash dot] file{../data/zad6/zad6_output_N_70_Nu_1_lambda_10_D_jump_184_Dz_53D_1.csv};
+    \addlegendentry{$D_{\mathrm{z}} = \num{0}$},
+    \addlegendentry{$D_{\mathrm{z}} = \num{55}$},
+    \addlegendentry{$D_{\mathrm{z}} = \num{147}$},
+    \addlegendimage{no markers, blue}
+    \addlegendimage{no markers, red}
+    \addlegendimage{no markers, green}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie przebiegów wyjściowych}
+    \label{zad5_sine_disturbance_comp_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=500,ymin=-1.2, ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, dotted] file{../data/zad6/zad6_input_N_70_Nu_1_lambda_10_D_jump_184D_0.csv};
+    \addplot[red, semithick] file{../data/zad6/zad6_input_N_70_Nu_1_lambda_10_D_jump_184D_1.csv};
+    \addplot[green, dash dot] file{../data/zad6/zad6_input_N_70_Nu_1_lambda_10_D_jump_184_Dz_53D_1.csv};
+    \addlegendentry{$D_{\mathrm{z}} = \num{0}$},
+    \addlegendentry{$D_{\mathrm{z}} = \num{55}$},
+    \addlegendentry{$D_{\mathrm{z}} = \num{147}$},
+    \addlegendimage{no markers, blue}
+    \addlegendimage{no markers, red}
+    \addlegendimage{no markers, green}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie generowanego sterowania}
+    \label{zad5_sine_disturbance_comp_u}
+\end{figure}
+

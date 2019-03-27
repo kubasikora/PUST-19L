@@ -193,6 +193,6 @@ for Dz=1:MAX_Dz
     Errors(Dz) = error_sum;
 end
 
-to_save = [(1:MAX_Dz)' Errors];
-[a, b] = min(Errors);
-dlmwrite(strcat('../data/zad5/find_Dz_step_min_idx_', num2str(b), '.csv'), to_save, '\t');
+%to_save = [(1:MAX_Dz)' Errors];
+%[a, b] = min(Errors);
+%dlmwrite(strcat('../data/zad5/find_Dz_step_min_idx_', num2str(b), '.csv'), to_save, '\t');
