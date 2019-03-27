@@ -1,7 +1,6 @@
 \section{Aproksymacja odpowiedzi skokowych}
 \label{zad3_lab_opis}
-\subsection{Zestaw liczb \texorpdfstring{$s_{1}, s_{2}, ...$ }{TEXT} }
-Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi skokowej dla zestawu liczb $s_{1}, s_{2}, ...$ . Postawionym przed nami zadaniem było przeprowadzenie aproksymacji odpowiedzi skokowej dowolnym narzędziem. W kolejnych punktach opisujemy jak tego dokonaliśmy i jakie uzyskaliśmy rezultaty. 
+Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi skokowej dla zestawu liczb wejście - wyjście. Postawionym przed nami zadaniem było przeprowadzenie aproksymacji odpowiedzi skokowej dowolnym narzędziem. W kolejnych punktach opisujemy jak tego dokonaliśmy i jakie uzyskaliśmy rezultaty. 
 \begin{figure}[b]
     \centering
     \begin{tikzpicture}
@@ -24,7 +23,7 @@ Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi sko
 \end{figure}
 \FloatBarrier
 
-\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu liczb \texorpdfstring{$s_{1}, s_{2}, ...$ }{TEXT}}
+\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu wejście - wyjście}
 W celu dokładnego zamodelowania badanego obiektu posłużylismy
 się zaawansowanym toolboxem pakietu MATLAB System Identification.
 Pakiet ten pozwala na znalezienie parametrów różnych modeli. Po załadowaniu
@@ -109,6 +108,107 @@ z rzeczywista odpowiedzia skokowa}
 	\addlegendimage{no markers,green}
     \addplot[red, semithick, thick] file{../data/lab/zad3/zad3_norm_s.csv};
     \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_9_s.csv};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzia skokowa}
+    \label{lab3__apro_3}
+\end{figure}
+\FloatBarrier
+
+\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu zakłócenie - wyjście}
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=8,xmax=500,ymin=-3,ymax=0.2,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=south west,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+	\addlegendimage{no markers,green}
+    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Postać znormalizowanej odpowiedzi skokowej rzeczywistego procesu}
+    \label{lab3_odp_skok_s}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=8,xmax=500,ymin=-3,ymax=0.2,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{Obiekt}
+    \addlegendentry{Model}
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+	\addlegendimage{no markers,green}
+    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_1_sz.csv};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzia skokowa}
+    \label{lab3_apro_1}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=8,xmax=500,ymin=-22,ymax=0.2,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=south west,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]     
+    \addlegendentry{Obiekt}
+    \addlegendentry{Model}
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+	\addlegendimage{no markers,green}
+    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_2_sz.csv};
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzia skokowa}
+    \label{lab3__apro_2}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=8,xmax=500,ymin=-3,ymax=0.2,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]     
+    \addlegendentry{Obiekt}
+    \addlegendentry{Model}
+	\addlegendimage{no markers,red}
+	\addlegendimage{no markers,blue}
+	\addlegendimage{no markers,green}
+    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_3_sz.csv};
     \end{axis}
     \end{tikzpicture}
     \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
