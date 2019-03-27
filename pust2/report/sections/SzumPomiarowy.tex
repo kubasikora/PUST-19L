@@ -1,0 +1,331 @@
+\chapter{Badanie wpływu błędu pomiarowego zakłócenia na algorytm regulacji}
+\label{zad7}
+
+Ostatnie zadanie projektowe polegało na zbadaniu wpływu błędu pomiarowego 
+zakłócenia (zwanego szumem pomiarowym) na algorytm regulacji DMC.
+
+\section{Pomiar a niepewność pomiarowa}
+\label{zad7_pomiar}
+\textbf{Pomiarem} nazywamy czynności, po wykonaniu których możemy 
+stwierdzić, że w chwili pomiaru dokonanego w określonych warunkach, 
+przy zastosowaniu określonych środków i wykonaniu odpowiednich czynności 
+wielkość mierzona $x$ miała wartość $a \leq x \leq b$.
+\\
+
+\textbf{Niepewnością pomiarową} nazywamy parametr związany z wartościami (serią) 
+pomiaru danej wielkości fizycznej w stałych warunkach, które można w uzasadniony 
+sposób przypisać wartości mierzonej i charakteryzujący ich rozrzut w przedziale, 
+wewnątrz którego można z zadowalającym prawdopodobieństwem usytuować wartość 
+wielkości mierzonej.\\
+
+Żródłami niepewności pomiarowej a co za tym idzie błędów pomiaru są:
+\begin{itemize}
+    \item niepełna znajomość wpływu otoczenia
+    \item niedoskonały pomiar warunków otoczenia 
+    \item klasa przyrządów pomiarowych (dokładność) 
+    \item niedokładne wartości otrzymywane z zewnątrz, przykładowo stałe przyjmowane do obliczeń
+\end{itemize}
+
+Szum pomiarowy można zamodelować addytywnym gaussowskim szumem białym, w skrócie nazywanym AWGN.
+Jest to rodzaj sygnału o całkowicie płaskim widmie, czyli jest mieszaniną wszystkich możliwych
+częstotliwości. Pozwala to na zamodelowanie losowego błędu pomiaru w każdej chwili dyskretnej.
+
+\section{Realizacja szumu pomiarowego w projekcie}
+\label{zad7_szum_w_matlabie}
+
+W środowisku \textsc{Matlab} istnieje polecenie \verb+awgn+, które pozwala na naniesienie AWGN 
+na zadany sygnał, specyfikując przy tym stosunek sygnał-szum $SNR$. Im większy jest ten stosunek, tym 
+mocniejszy jest sygnał względem szumu. Wartość $SNR$ podaje się w $dB$. Przykład działania 
+polecenia \verb+awgn+ został przedstawiony na rysunku \ref{zad7_awgn_example}.
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=2 by 2,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        legend style={at={(.5,0.9)},anchor=north east},
+        xmin=0, xmax=100,
+        width=0.55\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$y(x)$}
+        \addplot[semithick,blue] file{../data/zad7/awgn20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$y(x)$}
+        \addplot[semithick,blue]file{../data/zad7/awgn10.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$y(x)$}
+        \addplot[semithick,blue] file{../data/zad7/awgn0.csv};
+
+        \nextgroupplot
+        \addlegendentry{$y(x)$}
+        \addplot[semithick,blue]file{../data/zad7/awgn-10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegu funkcji zaszumionej funkcji $y = \num{0,002}x^{2}$ dla czterech wartości SNR  
+        \mbox{\emph{a)} $SNR = \num{20}dB$, \emph{b)} $SNR = \num{10}dB$, 
+        \emph{c)} $SNR = \num{0}dB$, \emph{d)} $SNR = \num{-10}dB$}}
+        \label{zad7_awgn_example}
+\end{figure}
+
+\section{Badanie wpływu szumu na algorytm regulacji}
+\label{zad7_realizacja}
+
+Badanie wpływu szumu pomiarowego na algorytm regulacji zrealizowaliśmy 
+za pomocą skryptu \verb+zad7_test.m+. Za pomocą parametru \verb+SNR+ manipulowaliśmy
+wartościami błędów. Im większy parametr \verb+SNR+ tym mniejsze wartości błędów pomiarowych. Rysunki 
+\ref{zad7_step_y}, \ref{zad7_step_u} i \ref{zad7_step_z} pokazują zachowanie przy skokowej zmianie zakłócenia
+a \ref{zad7_sin_y}, \ref{zad7_sin_u} i \ref{zad7_sin_z} ukazują zachowanie układu przy zakłóceniu sinusoidalnym.
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=1 by 4,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        xmin=0, xmax=500, ymin=0, ymax=2,
+        width=1.05\linewidth,
+        height=0.5\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_output_snr_40.csv};
+
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue]file{../data/zad7/step_output_snr_30.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_output_snr_20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_output_snr_10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegów wyjściowych procesu sterowanego przez regulator DMC przy:  
+        \mbox{\emph{a)} $SNR = \num{40}dB$, \emph{b)} $SNR = \num{30}dB$, 
+        \emph{c)} $SNR = \num{20}dB$, \emph{d)} $SNR = \num{10}dB$}}
+        \label{zad7_step_y}
+\end{figure}
+
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=1 by 4,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        xmin=0, xmax=500, ymin=-1, ymax=1,
+        width=1.05\linewidth,
+        height=0.5\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_input_snr_40.csv};
+
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue]file{../data/zad7/step_input_snr_30.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_input_snr_20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_input_snr_10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegów wejściowych procesu sterowanego przez regulator DMC przy:  
+        \mbox{\emph{a)} $SNR = \num{40}dB$, \emph{b)} $SNR = \num{30}dB$, 
+        \emph{c)} $SNR = \num{20}dB$, \emph{d)} $SNR = \num{10}dB$}}
+        \label{zad7_step_u}
+\end{figure}
+
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=1 by 4,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        xmin=0, xmax=500, ymin=0, ymax=2,
+        width=1.05\linewidth,
+        height=0.5\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_disturbance_snr_40.csv};
+
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_disturbance_snr_30.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_disturbance_snr_20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/step_disturbance_snr_10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegów mierzonego zakłócenia przy sterowaniu przez regulator DMC przy:  
+        \mbox{\emph{a)} $SNR = \num{40}dB$, \emph{b)} $SNR = \num{30}dB$, 
+        \emph{c)} $SNR = \num{20}dB$, \emph{d)} $SNR = \num{10}dB$}}
+        \label{zad7_step_z}
+\end{figure}
+
+%%% 
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=1 by 4,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        xmin=0, xmax=500, ymin=0, ymax=2,
+        width=1.05\linewidth,
+        height=0.5\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_output_snr_40.csv};
+
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue]file{../data/zad7/sin_output_snr_30.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_output_snr_20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$y[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_output_snr_10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegów wyjściowych procesu sterowanego przez regulator DMC przy:  
+        \mbox{\emph{a)} $SNR = \num{40}dB$, \emph{b)} $SNR = \num{30}dB$, 
+        \emph{c)} $SNR = \num{20}dB$, \emph{d)} $SNR = \num{10}dB$}}
+        \label{zad7_sin_y}
+\end{figure}
+
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=1 by 4,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        xmin=0, xmax=500, ymin=-1, ymax=1.5,
+        width=1.05\linewidth,
+        height=0.5\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_input_snr_40.csv};
+
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue]file{../data/zad7/sin_input_snr_30.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_input_snr_20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$u[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_input_snr_10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegów wejściowych procesu sterowanego przez regulator DMC przy:  
+        \mbox{\emph{a)} $SNR = \num{40}dB$, \emph{b)} $SNR = \num{30}dB$, 
+        \emph{c)} $SNR = \num{20}dB$, \emph{d)} $SNR = \num{10}dB$}}
+        \label{zad7_sin_u}
+\end{figure}
+
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{groupplot}[
+        group style={
+        group name=my plots,
+        group size=1 by 4,
+        xlabels at=edge bottom,
+        ylabels at=edge left,
+        horizontal sep=1cm, vertical sep=1cm,
+        },
+        xmin=0, xmax=500, ymin=-1.5, ymax=1.5,
+        width=1.05\linewidth,
+        height=0.5\linewidth
+        ]
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_disturbance_snr_40.csv};
+
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_disturbance_snr_30.csv};
+        
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_disturbance_snr_20.csv};
+
+        \nextgroupplot
+        \addlegendentry{$z[k]$}
+        \addplot[semithick,blue] file{../data/zad7/sin_disturbance_snr_10.csv};
+        
+        \end{groupplot}
+        \end{tikzpicture}
+        \caption{Porównanie przebiegów mierzonego zakłócenia przy sterowaniu przez regulator DMC przy:  
+        \mbox{\emph{a)} $SNR = \num{40}dB$, \emph{b)} $SNR = \num{30}dB$, 
+        \emph{c)} $SNR = \num{20}dB$, \emph{d)} $SNR = \num{10}dB$}}
+        \label{zad7_sin_z}
+\end{figure}
+\FloatBarrier
+
+Powyżej przedstawione rysunki dowodzą że im mniejszy jest stosunek użytecznego sygnału do szumu, tym 
+gorsza jest jakość regulacji. Przy braku możliwości dokładnego zmierzenia zakłócenia, warto rozważyć
+zignorowanie tego sygnału i potraktowanie go jako zakłócenia niemierzalnego.\\
+
+Dla zaprojektowanego przez nas regulatora, stosunek sygnał-szum powinien wynosić co najmniej $SNR = \num{30}dB$. 
+W przypadku bardziej zaszumionego sygnału zakłócenia, jakość regulacji znacznie pogarsza się. 
+
+
+
