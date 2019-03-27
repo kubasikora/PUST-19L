@@ -24,6 +24,21 @@ Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi sko
 \end{figure}
 \FloatBarrier
 
+\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu liczb \texorpdfstring{$s_{1}, s_{2}, ...$ }{TEXT}}
+W celu dokładnego zamodelowania badanego obiektu posłużylismy
+się zaawansowanym toolboxem pakietu MATLAB System Identification.
+Pakiet ten pozwala na znalezienie parametrów różnych modeli. Po załadowaniu
+odpowiedzi skokowej, wybraliśmy Transfer Function Model jako rodzaj zadanego
+modelu a następnie po chwili mieliśmy gotowy obiekt typu idtf. Kryterium, które braliśmy pod uwagę podczas oceny była wartość dopasowania modelu do obiektu wyrażona w procentach (fit to estimation data). \\
+\indent Parametry, którymi manipulowaliśmy to ilość zakładanych biegunów i zer w transmitancji. Podczas eksperymentów w trakcie laboratorium zaobserwowaliśmy, że obiekt charakteryzuje się małym opóźnieniem, dlatego ustawiliśmy wartość czasu opóźnienia na $T_{\mathrm{d}}=5$ dla wszystkich aproksymacji. 
+\\
+\subsubsection{1. }
+Dla pierwszego przypadku wybraliśmy ilość biegunów oraz zer równą dwa. Parametry te pozwoliły na uzyskanie dopasowania o wartości $ \num{95.91} $ \text{\%}. Na rysunku \ref{lab3_apro_1} możemy zobaczyć jak przebiega dopasowanie modelu do obiektu. Widzimy, że charakterystyki praktycznie się pokrywają. 
+
+\subsubsection{2. }
+Szukając jeszcze lepszego dopasowania postanowiliśmy zmniejszyć ilość zer do jednego, a liczbę biegunów pozostawić na tym samym poziomie. Dzięki temu udało nam sie uzyskać minimalnie lepszy model ponieważ wielkość dopasowania wzrosła o $\num{0.03}$ przez co po sumowaniu wartość dopasowania wynosi $\num{95.94}$. Wyniki w postaci wykresu możemy zaobserwować możemy na rysunku \ref{lab3__apro_2}. Po dłuższej analizie, możemy zauważyć że model jest minimalnie lepiej dopasowany. 
+\subsubsection{3. }
+DO SPRAWDZENIA 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -35,8 +50,8 @@ Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi sko
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ] 
-    \addlegendentry{Model}
     \addlegendentry{Obiekt}
+    \addlegendentry{Model}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
@@ -61,8 +76,8 @@ z rzeczywista odpowiedzia skokowa}
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]     
-    \addlegendentry{Model}
     \addlegendentry{Obiekt}
+    \addlegendentry{Model}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
@@ -87,13 +102,13 @@ z rzeczywista odpowiedzia skokowa}
     legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]     
-    \addlegendentry{Model}
     \addlegendentry{Obiekt}
+    \addlegendentry{Model}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
     \addplot[red, semithick, thick] file{../data/lab/zad3/zad3_norm_s.csv};
-    \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_3_s.csv};
+    \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_9_s.csv};
     \end{axis}
     \end{tikzpicture}
     \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
