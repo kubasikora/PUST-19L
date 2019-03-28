@@ -117,6 +117,15 @@ z rzeczywista odpowiedzia skokowa}
 \FloatBarrier
 
 \subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu zakłócenie - wyjście}
+!!!FRAGMENT DO OPISANIA!!!
+\\I rysunek to znormalizowana odpowiedź skokowa
+\\ II rysunek to 2 bieguny, jedno zero (P:2 i Z:1) - tf1
+\\ III rysunek to 2 bieguny, 2 zera (P:2 i Z:2) - tf6
+\\ IV rysunek to 3 bieguny, 2 zera (P:2 i Z:1) - tf11
+
+\\ tf3 to dodatkowe dane
+
+
 \begin{figure}[b]
     \centering
     \begin{tikzpicture}
@@ -147,7 +156,7 @@ z rzeczywista odpowiedzia skokowa}
     xmin=8,xmax=500,ymin=-3,ymax=0.2,
     xlabel={$k$},
     ylabel={$s_{k}$},
-    legend pos=south east,
+    legend pos=north east,
     y tick label style={/pgf/number format/1000 sep=},
     ] 
     \addlegendentry{Obiekt}
@@ -199,7 +208,7 @@ z rzeczywista odpowiedzia skokowa}
     xmin=8,xmax=500,ymin=-3,ymax=0.2,
     xlabel={$k$},
     ylabel={$s_{k}$},
-    legend pos=south east,
+    legend pos=north east,
     y tick label style={/pgf/number format/1000 sep=},
     ]     
     \addlegendentry{Obiekt}
