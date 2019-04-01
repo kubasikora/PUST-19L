@@ -15,7 +15,7 @@ T = 1;
 y=[];
 
 disturb = 1;
-Dz = 200;
+Dz = 250;
 
 SIM_LEN = 1000;
 sim_time = (1:SIM_LEN)';
