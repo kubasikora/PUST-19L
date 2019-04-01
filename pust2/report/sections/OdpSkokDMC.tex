@@ -1,5 +1,6 @@
 \section{Aproksymacja odpowiedzi skokowych}
 \label{zad3_lab_opis}
+\subsection{Normalizacja odpowiedzi skokowej dla zestawu wejście - wyjście}
 Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi skokowej dla zestawu liczb wejście - wyjście. Postawionym przed nami zadaniem było przeprowadzenie aproksymacji odpowiedzi skokowej dowolnym narzędziem. W kolejnych punktach opisujemy jak tego dokonaliśmy i jakie uzyskaliśmy rezultaty. 
 \begin{figure}[b]
     \centering
@@ -24,7 +25,7 @@ Rysunek \ref{lab3_odp_skok_s} prezentuje przebieg znormalizowanej odpowiedzi sko
 \FloatBarrier
 
 \subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu wejście - wyjście}
-W celu dokładnego zamodelowania badanego obiektu posłużylismy
+W celu dokładnego zamodelowania badanego obiektu posłużyliśmy
 się zaawansowanym toolboxem pakietu MATLAB System Identification.
 Pakiet ten pozwala na znalezienie parametrów różnych modeli. Po załadowaniu
 odpowiedzi skokowej, wybraliśmy Transfer Function Model jako rodzaj zadanego
@@ -35,7 +36,7 @@ modelu a następnie po chwili mieliśmy gotowy obiekt typu idtf. Kryterium, któ
 Dla pierwszego przypadku wybraliśmy ilość biegunów oraz zer równą dwa. Parametry te pozwoliły na uzyskanie dopasowania o wartości $ \num{95.91} $ \text{\%}. Na rysunku \ref{lab3_apro_1} możemy zobaczyć jak przebiega dopasowanie modelu do obiektu. Widzimy, że charakterystyki praktycznie się pokrywają. 
 
 \subsubsection{2. }
-Szukając jeszcze lepszego dopasowania postanowiliśmy zmniejszyć ilość zer do jednego, a liczbę biegunów pozostawić na tym samym poziomie. Dzięki temu udało nam sie uzyskać minimalnie lepszy model ponieważ wielkość dopasowania wzrosła o $\num{0.03}$ przez co po sumowaniu wartość dopasowania wynosi $\num{95.94}$. Wyniki w postaci wykresu możemy zaobserwować możemy na rysunku \ref{lab3__apro_2}. Po dłuższej analizie, możemy zauważyć że model jest minimalnie lepiej dopasowany. 
+Szukając jeszcze lepszego dopasowania postanowiliśmy zmniejszyć ilość zer do jednego, a liczbę biegunów pozostawić na tym samym poziomie. Dzięki temu udało nam sie uzyskać minimalnie lepszy model ponieważ wielkość dopasowania wzrosła o $\num{0.03}$ \text{\%} przez co po sumowaniu wartość dopasowania wynosi $\num{95.94}$ \text{\%}. Wyniki w postaci wykresu możemy zaobserwować możemy na rysunku \ref{lab3__apro_2}. Po dłuższej analizie, możemy zauważyć że model jest minimalnie lepiej dopasowany. 
 \subsubsection{3. }
 DO SPRAWDZENIA 
 \begin{figure}[t]
@@ -116,15 +117,8 @@ z rzeczywista odpowiedzia skokowa}
 \end{figure}
 \FloatBarrier
 
-\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu zakłócenie - wyjście}
-!!!FRAGMENT DO OPISANIA!!!
-\\I rysunek to znormalizowana odpowiedź skokowa
-\\ II rysunek to 2 bieguny, jedno zero (P:2 i Z:1) - tf1
-\\ III rysunek to 2 bieguny, 2 zera (P:2 i Z:2) - tf6
-\\ IV rysunek to 3 bieguny, 2 zera (P:2 i Z:1) - tf11
-
-\\ tf3 to dodatkowe dane
-
+\subsection{Normalizacja odpowiedzi skokowej dla zestawu zakłócenie - wyjście}
+Na rysunku \ref{lab3_odp_skok_sz} możemy zobaczyć przebieg znormalizowanej odpowiedzi skokowej dla zestawu zakłócenie - wyjście. Tak samo jak dla zestawu wejścia - wyjście dokonaliśmy aproksymacji odpowiedzi skokowej narzędziem Transfer Function Model z programu MATLAB. Wyniki naszej pracy prezentujemy w dalszych punktach. 
 
 \begin{figure}[b]
     \centering
@@ -144,9 +138,21 @@ z rzeczywista odpowiedzia skokowa}
     \end{axis}
     \end{tikzpicture}
     \caption{Postać znormalizowanej odpowiedzi skokowej rzeczywistego procesu}
-    \label{lab3_odp_skok_s}
+    \label{lab3_odp_skok_sz}
 \end{figure}
 \FloatBarrier
+
+\subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu zakłócenie - wyjście}
+Tak jak dla poprzedniego przykładu parametrami, którymi manipulowaliśmy to ilość zakładanych biegunów i zer w transmitancji. Wartość opóźnienia była ustawiona na poziomie $T_{\mathrm{d}}=5$ dla wszystkich aproksymacji. 
+
+\subsubsection{1.}
+Rysunek \ref{lab3_apro_1_sz} prezentuje aproksymację dla przypadku z dwoma biegunami i jednym zerem. Możemy zauważyć, że przebieg modelu odbiega miejscami od rzeczywistego obiektu. Mimo to model zachowuje się w miarę poprawnie, ponieważ dąży do wartości osiąganych przez obiekt rzeczywisty i z pewną niepewnością odzwierciedla jego zachowanie. Wartość dopasowania dla tego przypadku wyniosła $\num{90,93}$ \text{\%}.
+
+\subsection{2. }
+Kolejny wykres \ref{lab3__apro_2_sz} prezentuje sytuację w której model zachowuje się podobnie do obiektu rzeczywistego (maleje zarówno sygnał obiektu i modelu). Jednak jego wartości sygnałów charakteryzują się dużą różnicą w stosunku do wartości obiektu. Jest to o tyle zaskakujące bo dla tych samych wartości parametrów, czyli dwa bieguny i dwa zera, w pierwszym przypadku aproksymacja przebiegała zadowalająco. Wartość dopasowania osiągnęła poziom $\num{83,91}$ \text{\%}, ale nie możemy opierać się w pełni na tym wskaźniku, bo jak widzimy na rysunku \ref{lab3__apro_2_sz} przebieg modelu obiektu jest kompletnie nie akceptowalny. 
+
+\subsection{3. }
+Najlepszy wskaźnik dopasowania, udało nam się uzyskać dla przypadku z trzema biegunami i dwoma zerami. Jego wartość ostatecznie wyniosła $\num{92,23}$ \text{\%}. Model obiektu praktycznie identycznie odwzorowuje zachowanie obiektu rzeczywistego. Przebiegi zostały zaprezentowane na rysunku \ref{lab3__apro_3_sz}. Widać na nich jak momentami model niczym się nie różni od obiektu. Jest to zdecydowanie najlepszy model jaki nam się udało uzyskać dla zestawu zakłócenie - wyjście. 
 
 \begin{figure}[t]
     \centering
@@ -170,7 +176,7 @@ z rzeczywista odpowiedzia skokowa}
     \end{tikzpicture}
     \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
 z rzeczywista odpowiedzia skokowa}
-    \label{lab3_apro_1}
+    \label{lab3_apro_1_sz}
 \end{figure}
 
 \begin{figure}[b]
@@ -196,7 +202,7 @@ z rzeczywista odpowiedzia skokowa}
     \end{tikzpicture}
     \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
 z rzeczywista odpowiedzia skokowa}
-    \label{lab3__apro_2}
+    \label{lab3__apro_2_sz}
 \end{figure}
 
 \begin{figure}[t]
@@ -222,6 +228,6 @@ z rzeczywista odpowiedzia skokowa}
     \end{tikzpicture}
     \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
 z rzeczywista odpowiedzia skokowa}
-    \label{lab3__apro_3}
+    \label{lab3__apro_3_sz}
 \end{figure}
 \FloatBarrier
