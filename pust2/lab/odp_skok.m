@@ -9,7 +9,7 @@ disturbance_value = 0;
 while(1)
     k=k+1;
     if(k > 30)
-        disturbance_value = -20;
+        disturbance_value = -10;
     end
     %% obtaining measurements
     measurements = readMeasurements(1:7); % read measurements from 1 to 7
