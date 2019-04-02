@@ -14,9 +14,6 @@ Umax = 100;
 T = 1;
 y=[];
 
-disturb = 1;
-Dz = 250;
-
 SIM_LEN = 1000;
 sim_time = (1:SIM_LEN)';
 
@@ -106,14 +103,13 @@ error_sum = 0;
 Ke = sum(K(1,:));
 Ku = K(1,:) * Mp;
 
-disturb_value = 0;
-disturbance = [0 0 0];
+disturbance = 0;
+
 for k=3:SIM_LEN
-    if(k > 250) disturb_value = 30; end
-    if(k > 600) disturb_value = 10; end
+    if(k > 250) disturbance = 30; end
+    if(k > 600) disturbance = 10; end
     %% read measurements from 1 to 7 
     measurements = readMeasurements(1:7);
-    disturbance = [disturbance disturb_value];
     
     %% plot 
     y=[y measurements(1)];
@@ -162,11 +158,12 @@ for k=3:SIM_LEN
             end             
             dDp(i) = dd1 - dd2;
         end           
-        rescaled_input(k) = Ke * error(k) - K(1,:) * (Mp * dUp + Mzp * dDp');
+        rescaled_input(k) = Ke * error(k) - K(1,:) * (Mp * dUp + Mzp * dDp);
     else
         rescaled_input(k) = Ke * error(k) - K(1,:) * Mp * dUp;
     end
     
+   
     rescaled_input(k) = rescaled_input(k-1) + rescaled_input(k);
     
     
@@ -189,7 +186,7 @@ for k=3:SIM_LEN
     end 
      
     %% sending new values of control signals
-    sendControlsToG1AndDisturbance(input(k), disturb_value);
+    sendControlsToG1AndDisturbance(input(k), disturbance);
     
     %% synchronising with the control process
     waitForNewIteration(); % wait for new batch of measurements to be ready
