@@ -49,6 +49,7 @@ output = Ypp*ones(sim_len, 1);
 
 % zaklocenia
 disturbance = Dpp*ones(sim_len,1);
+realdisturbance = Dpp*ones(sim_len,1);
 
 % przeskalowane sygnaly
 rescaled_output = 0;
@@ -141,7 +142,7 @@ for k=8:sim_len
         dUp(i) = du1 - du2;
     end    
     
-    output(k) = symulacja_obiektu1y(input(k-6), input(k-7), disturbance(k-2), disturbance(k-3), output(k-1), output(k-2));
+    output(k) = symulacja_obiektu1y(input(k-6), input(k-7), realdisturbance(k-2), realdisturbance(k-3), output(k-1), output(k-2));
     rescaled_output = output(k) - Ypp;                                                    
     stpt = setpoint(k) - Ypp;                                                             
     error(k) = stpt - rescaled_output;  
@@ -152,9 +153,11 @@ for k=8:sim_len
             n = length(disturbance(k:end));
             x = 0:pi/n:2*pi;
             x = x(1:n);            
+            realdisturbance = disturbance;
             disturbance(k:end) = awgn(sin(4*x),SNR);
         else
             disturbance(k:end) = 1;
+            realdisturbance = disturbance;
             disturbance(k:end) = awgn(disturbance(k:end), SNR);
         end
         jump = k;
