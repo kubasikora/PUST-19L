@@ -32,13 +32,12 @@ odpowiedzi skokowej, wybraliśmy Transfer Function Model jako rodzaj zadanego
 modelu a następnie po chwili mieliśmy gotowy obiekt typu idtf. Kryterium, które braliśmy pod uwagę podczas oceny była wartość dopasowania modelu do obiektu wyrażona w procentach (fit to estimation data). \\
 \indent Parametry, którymi manipulowaliśmy to ilość zakładanych biegunów i zer w transmitancji. Podczas eksperymentów w trakcie laboratorium zaobserwowaliśmy, że obiekt charakteryzuje się małym opóźnieniem, dlatego ustawiliśmy wartość czasu opóźnienia na $T_{\mathrm{d}}=5$ dla wszystkich aproksymacji. 
 \\
-\subsubsection{1. }
+\subsubsection{Wyniki symulacji dla modelu z dwoma biegunami i dwoma zerami}
 Dla pierwszego przypadku wybraliśmy ilość biegunów oraz zer równą dwa. Parametry te pozwoliły na uzyskanie dopasowania o wartości $ \num{95.91} $ \text{\%}. Na rysunku \ref{lab3_apro_1} możemy zobaczyć jak przebiega dopasowanie modelu do obiektu. Widzimy, że charakterystyki praktycznie się pokrywają. 
 
-\subsubsection{2. }
+\subsubsection{Wyniki symulacji dla modelu z dwoma biegunami i jednym zerem}
 Szukając jeszcze lepszego dopasowania postanowiliśmy zmniejszyć ilość zer do jednego, a liczbę biegunów pozostawić na tym samym poziomie. Dzięki temu udało nam sie uzyskać minimalnie lepszy model ponieważ wielkość dopasowania wzrosła o $\num{0.03}$ \text{\%} przez co po sumowaniu wartość dopasowania wynosi $\num{95.94}$ \text{\%}. Wyniki w postaci wykresu możemy zaobserwować możemy na rysunku \ref{lab3__apro_2}. Po dłuższej analizie, możemy zauważyć że model jest minimalnie lepiej dopasowany. 
-\subsubsection{3. }
-DO SPRAWDZENIA 
+
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -89,32 +88,6 @@ z rzeczywista odpowiedzia skokowa}
 z rzeczywista odpowiedzia skokowa}
     \label{lab3__apro_2}
 \end{figure}
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=8,xmax=500,ymin=0.0,ymax=0.35,
-    xlabel={$k$},
-    ylabel={$s_{k}$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ]     
-    \addlegendentry{Obiekt}
-    \addlegendentry{Model}
-	\addlegendimage{no markers,red}
-	\addlegendimage{no markers,blue}
-	\addlegendimage{no markers,green}
-    \addplot[red, semithick, thick] file{../data/lab/zad3/zad3_norm_s.csv};
-    \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_9_s.csv};
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
-z rzeczywista odpowiedzia skokowa}
-    \label{lab3__apro_3}
-\end{figure}
 \FloatBarrier
 
 \subsection{Normalizacja odpowiedzi skokowej dla zestawu zakłócenie - wyjście}
@@ -125,7 +98,7 @@ Na rysunku \ref{lab3_odp_skok_sz} możemy zobaczyć przebieg znormalizowanej odp
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=8,xmax=500,ymin=-3,ymax=0.2,
+    xmin=0,xmax=400,ymin=-0.01,ymax=0.15,
     xlabel={$k$},
     ylabel={$s_{k}$},
     legend pos=south west,
@@ -134,7 +107,7 @@ Na rysunku \ref{lab3_odp_skok_sz} możemy zobaczyć przebieg znormalizowanej odp
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
-    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[red, semithick, thick] file{../data/lab/zad3/normDoWykresuSZ.csv};
     \end{axis}
     \end{tikzpicture}
     \caption{Postać znormalizowanej odpowiedzi skokowej rzeczywistego procesu}
@@ -143,26 +116,28 @@ Na rysunku \ref{lab3_odp_skok_sz} możemy zobaczyć przebieg znormalizowanej odp
 \FloatBarrier
 
 \subsection{Wykorzystanie zaawansowanych narzędzi pakietu MATLAB do aproksymacji odpowiedzi skokowych dla zestawu zakłócenie - wyjście}
-Tak jak dla poprzedniego przykładu parametrami, którymi manipulowaliśmy to ilość zakładanych biegunów i zer w transmitancji. Wartość opóźnienia była ustawiona na poziomie $T_{\mathrm{d}}=5$ dla wszystkich aproksymacji. 
+Tak jak dla poprzedniego przykładu parametrami, którymi manipulowaliśmy to ilość zakładanych biegunów i zer w transmitancji. Wartość opóźnienia była ustawiona na poziomie $T_{\mathrm{d}}=29$ dla wszystkich aproksymacji. 
 
-\subsubsection{1.}
-Rysunek \ref{lab3_apro_1_sz} prezentuje aproksymację dla przypadku z dwoma biegunami i jednym zerem. Możemy zauważyć, że przebieg modelu odbiega miejscami od rzeczywistego obiektu. Mimo to model zachowuje się w miarę poprawnie, ponieważ dąży do wartości osiąganych przez obiekt rzeczywisty i z pewną niepewnością odzwierciedla jego zachowanie. Wartość dopasowania dla tego przypadku wyniosła $\num{90,93}$ \text{\%}.
+\subsubsection{Wyniki symulacji dla modelu z dwoma biegunami i jednym zerem}
+Rysunek \ref{lab3_apro_1_sz} prezentuje aproksymację dla przypadku z dwoma biegunami i jednym zerem. Możemy zauważyć, że przebieg modelu poprawnie naśladuje zachowanie rzeczywistego obiektu. Prawidłowo reaguje na zachowanie grzałki, czyli od razu po zmianie wartości zadanej (próbka 30) zaczyna rosnąć. Wartość dopasowania dla tego przypadku wyniosła $\num{91,52}$ \text{\%}.
 
-\subsection{2. }
-Kolejny wykres \ref{lab3__apro_2_sz} prezentuje sytuację w której model zachowuje się podobnie do obiektu rzeczywistego (maleje zarówno sygnał obiektu i modelu). Jednak jego wartości sygnałów charakteryzują się dużą różnicą w stosunku do wartości obiektu. Jest to o tyle zaskakujące bo dla tych samych wartości parametrów, czyli dwa bieguny i dwa zera, w pierwszym przypadku aproksymacja przebiegała zadowalająco. Wartość dopasowania osiągnęła poziom $\num{83,91}$ \text{\%}, ale nie możemy opierać się w pełni na tym wskaźniku, bo jak widzimy na rysunku \ref{lab3__apro_2_sz} przebieg modelu obiektu jest kompletnie nie akceptowalny. 
+\subsubsection{Wyniki symulacji dla modelu z dwoma biegunami i dwoma zerami}
+Najlepszy wskaźnik dopasowania, udało nam się uzyskać dla przypadku z dwoma biegunami i dwoma zerami. Jego wartość ostatecznie wyniosła $\num{92,92}$ \text{\%}. Model obiektu praktycznie identycznie odwzorowuje zachowanie obiektu rzeczywistego. Przebiegi zostały zaprezentowane na rysunku \ref{lab3__apro_2_sz}. Widać na nich jak momentami model niczym się nie różni od obiektu. Niestety model zachował się nie do końca poprawnie na początku pomiaru. Gdy zakładamy zwiększenie temperatury na grzałce, tak jak to się dzieje w tej symulacji, jego wartość powinna wzrastać, nawet gdy obiekt chwilowo maleje. Z tego powodu nie możemy uznać tego modelu za najlepszy. 
 
-\subsection{3. }
-Najlepszy wskaźnik dopasowania, udało nam się uzyskać dla przypadku z trzema biegunami i dwoma zerami. Jego wartość ostatecznie wyniosła $\num{92,23}$ \text{\%}. Model obiektu praktycznie identycznie odwzorowuje zachowanie obiektu rzeczywistego. Przebiegi zostały zaprezentowane na rysunku \ref{lab3__apro_3_sz}. Widać na nich jak momentami model niczym się nie różni od obiektu. Jest to zdecydowanie najlepszy model jaki nam się udało uzyskać dla zestawu zakłócenie - wyjście. 
+\subsubsection{Wyniki symulacji dla modelu z jednym biegunem i dwoma zerami}
+Kolejny wykres \ref{lab3__apro_3_sz} prezentuje model w którym zastosowaliśmy jeden biegu i dwa zera. Wartość dopasowania osiągnęła poziom $\num{91,34}$ \text{\%}, ale nie możemy opierać się w pełni na tym wskaźniku, bo jak widzimy na rysunku \ref{lab3__apro_3_sz} przebieg modelu obiektu nie jest poprawny. Na początku reaguje on zbyt gwałtownie na zmniejszenie wartość rzeczywistego obiektu. W tym przypadku powtórzyło się niepoprawne zachowanie modelu podobne do tego z poprzedniej symulacji. 
+
+~\\\\Za najlepszy model zestawu zakłócenie - wyjście uznaliśmy model z pierwszej symulacji, który posiadał dwa bieguny i jedno zero. 
 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=8,xmax=500,ymin=-3,ymax=0.2,
+    xmin=0,xmax=400,ymin=-0.01,ymax=0.15,
     xlabel={$k$},
     ylabel={$s_{k}$},
-    legend pos=north east,
+    legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ] 
     \addlegendentry{Obiekt}
@@ -170,7 +145,7 @@ Najlepszy wskaźnik dopasowania, udało nam się uzyskać dla przypadku z trzema
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
-    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[red, semithick, thick] file{../data/lab/zad3/normDoWykresuSZ.csv};
     \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_1_sz.csv};
     \end{axis}
     \end{tikzpicture}
@@ -185,10 +160,10 @@ z rzeczywista odpowiedzia skokowa}
     
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=8,xmax=500,ymin=-22,ymax=0.2,
+    xmin=0,xmax=400,ymin=-0.01,ymax=0.15,
     xlabel={$k$},
     ylabel={$s_{k}$},
-    legend pos=south west,
+    legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]     
     \addlegendentry{Obiekt}
@@ -196,7 +171,7 @@ z rzeczywista odpowiedzia skokowa}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
-    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[red, semithick, thick] file{../data/lab/zad3/normDoWykresuSZ.csv};
     \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_2_sz.csv};
     \end{axis}
     \end{tikzpicture}
@@ -211,10 +186,10 @@ z rzeczywista odpowiedzia skokowa}
     
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=8,xmax=500,ymin=-3,ymax=0.2,
+    xmin=0,xmax=400,ymin=-0.05,ymax=0.15,
     xlabel={$k$},
     ylabel={$s_{k}$},
-    legend pos=north east,
+    legend pos=south east,
     y tick label style={/pgf/number format/1000 sep=},
     ]     
     \addlegendentry{Obiekt}
@@ -222,7 +197,7 @@ z rzeczywista odpowiedzia skokowa}
 	\addlegendimage{no markers,red}
 	\addlegendimage{no markers,blue}
 	\addlegendimage{no markers,green}
-    \addplot[red, semithick, thick] file{../data/lab/zad3/norm_zakl_sz.csv};
+    \addplot[red, semithick, thick] file{../data/lab/zad3/normDoWykresuSZ.csv};
     \addplot[blue, semithick, thick] file{../data/lab/zad3/apro_3_sz.csv};
     \end{axis}
     \end{tikzpicture}
