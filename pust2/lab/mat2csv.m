@@ -1,23 +1,48 @@
-load('skok_o_-10.mat')
+load('zad5_DMC_Dz_200.mat')
 output_ts = [(1:length(y))' y'];
-dlmwrite(strcat('../data/lab/zad2_skok_o_-10.csv'), output_ts, '\t');
-
-load('skok_o_-5.mat')
-output_ts = [(1:length(y))' y'];
-dlmwrite(strcat('../data/lab/zad2_skok_o_-5.csv'), output_ts, '\t');
-
-load('skok_o_4.mat')
-output_ts = [(1:length(y))' y'];
-dlmwrite(strcat('../data/lab/zad2_skok_o_4.csv'), output_ts, '\t');
-
-load('skok_o_10.mat')
-output_ts = [(1:length(y))' y'];
-dlmwrite(strcat('../data/lab/zad2_skok_o_10.csv'), output_ts, '\t');
-
-load('pidK=1.mat')
-input_ts = [(1:length(input))' input];
-ouptut_ts = [(1:length(y))' y'];
+input_ts = [(1:length(rescaled_input))' rescaled_input];
+disturb_ts = [(1:length(disturbance))' disturbance'];
 stpt_ts = [(1:length(setpoint))' setpoint'];
-dlmwrite(strcat('../data/lab/pid/input_k=1.csv'), input_ts, '\t');
-dlmwrite(strcat('../data/lab/pid/output_k=1.csv'), output_ts, '\t');
-dlmwrite(strcat('../data/lab/pid/stpt_k=1.csv'), stpt_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/output_Dz_200.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/input_Dz_200.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/disturb_Dz_200.csv'), disturb_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/stpt_Dz_200.csv'), stpt_ts, '\t');
+
+load('zad5_DMC_Dz_250.mat')
+output_ts = [(1:length(y))' y'];
+input_ts = [(1:length(rescaled_input))' rescaled_input];
+disturb_ts = [(1:length(disturbance))' disturbance'];
+stpt_ts = [(1:length(setpoint))' setpoint'];
+dlmwrite(strcat('../data/lab/zad5/output_Dz_250.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/input_Dz_250.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/disturb_Dz_250.csv'), disturb_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/stpt_Dz_250.csv'), stpt_ts, '\t');
+
+load('zad5_DMC_Dz_300.mat')
+output_ts = [(1:length(y))' y'];
+input_ts = [(1:length(rescaled_input))' rescaled_input];
+disturb_ts = [(1:length(disturbance))' disturbance'];
+stpt_ts = [(1:length(setpoint))' setpoint'];
+dlmwrite(strcat('../data/lab/zad5/output_Dz_300.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/input_Dz_300.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/disturb_Dz_300.csv'), disturb_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/stpt_Dz_300.csv'), stpt_ts, '\t');
+
+load('zad5_DMC_Dz_350.mat')
+output_ts = [(1:length(y))' y'];
+input_ts = [(1:length(rescaled_input))' rescaled_input];
+disturb_ts = [(1:length(disturbance))' disturbance'];
+stpt_ts = [(1:length(setpoint))' setpoint'];
+dlmwrite(strcat('../data/lab/zad5/output_Dz_350.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/input_Dz_350.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/disturb_Dz_350.csv'), disturb_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/stpt_Dz_350.csv'), stpt_ts, '\t');
+
+load('zad5_DMC_Dz_400.mat')
+output_ts = [(1:length(y))' y'];
+input_ts = [(1:length(rescaled_input))' rescaled_input];
+disturb_ts = [(1:length(disturbance))' disturbance'];
+dlmwrite(strcat('../data/lab/zad5/output_Dz_400.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/input_Dz_400.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/disturb_Dz_400.csv'), disturb_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/stpt_Dz_400.csv'), stpt_ts, '\t');

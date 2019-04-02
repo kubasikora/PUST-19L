@@ -1,0 +1,85 @@
+\chapter{Regulacja procesem rzeczywistym przy użyciu alogrytmu DMC z uwzględnieniem zakłóceń mierzalnych}
+\label{lab5}
+
+\section{Dobór parametru $Dz$}
+\label{lab5_dobor_Dz}
+Aby jak najlepiej dobrać parametr $Dz$, zdecydowaliśmy się eksperymentalne 
+zbadanie dziedziny parametru, rozpoczynając od bazowej wartości parametru równej
+horyzontowi dynamiki toru zakłócenie-wyjście $Dz = \num{400}$. 
+
+\subsection{Opis eksperymentu}
+\label{lab5_opis}
+Dla każdej przeprowadzonej próby, zmierzyliśmy 1000 próbek sygnału wejściowego. Proces był
+regulowany w otoczeniu skokowo zmiennych zakłóceń. W $\num{250}$ próbce eksperymentu, następowała
+skokowa zmiana zakłócenia z $z_{0} = \num{0}$ na $z_{1} = \num{30}$. Drugi skok zakłócenia następował
+w $\num{600}$ próbce, z wartości $z_{1} = \num{30}$ do wartości $z_{2} = \num{10}$. Dodatni i ujemny skok
+zakłócenia pozwolił nam na lepsze zbadanie charakterystyk algorytmu regulacji.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=1,xmax=1000,ymin=0,ymax=35,
+    xlabel={$k$},
+    ylabel={$z[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/disturb_Dz_400.csv};
+    \legend{$z[k]$, }
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Jednolity przebieg sygnału zakłócenia w przeprowadzanych przez nas eksperymentach}
+    \label{zad5_lab_zaklocenia}
+\end{figure}
+
+\subsection{Wyniki eksperymentów}
+\label{zad5_wyniki}
+\subsubsection{Parametr $D_{z} = \num{400}$}
+Dobranie bazowej wartości parametru, pozwoliło nam na zaskakująco
+zadowalającą regulację procesem przy skokowo zmieniającym się 
+mierzalnym zakłóceniu.  
+
+\begin{figure}[t]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=30,ymax=43,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/output_Dz_400.csv};
+	\addplot[blue, semithick] file{../data/lab/zad5/stpt_Dz_400.csv};    
+    \legend{$y[k]$, $y^{\mathrm{zad}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $Dz = \num{400}$}
+    \label{lab_zad4_lab_proces_wykres}
+\end{figure}
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=0,ymax=35,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/input_Dz_400.csv};   
+    \legend{$u[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $Dz = \num{400}$}
+    \label{lab_zad4_lab_proces_wykres}
+\end{figure}

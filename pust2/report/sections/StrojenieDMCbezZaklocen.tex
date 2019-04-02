@@ -18,9 +18,9 @@
     %emph=[2]{word1,word2}, emphstyle=[2]{style},    
 }
 
-\section{Strojenie regulatora DMC na stanowisku laboratoryjnym bez zakłóceń}
+\chapter{Strojenie regulatora DMC na stanowisku laboratoryjnym bez zakłóceń}
 \label{zad4_lab_opis}
-\subsection{Omówienie implementacji algorytmu DMC}
+\section{Omówienie implementacji algorytmu DMC}
 Na początku skryptu następowało wczytanie modelu (znormalizowanej odpowiedzi skokowej obiektu) wykorzystywanego do regulacji algorytmem DMC.\\
 \indent{} Następnie, tak jak poprzednio, zdefiniowane zostały stałe wykorzystywane w programie jak i parametry wykorzystywanego algorytmu. Horyzont dynamiki równał się długości wektora z odpowiedzią skokową. Horyzonty predykcji oraz sterowania, a także współczynnik kary $\lambda$ były odpowiednio modyfikowane w późniejszym procesie strojenia regulatora. \\
 \indent{} Kolejnym krokiem, również powtórzonym była deklaracja wektorów wykorzystywanych do przechowywania wartości sygnałów.
@@ -203,11 +203,8 @@ for k=12:sim_len
 end
 \end{lstlisting}
 
-Pętla jest zbudowana w taki podobny sposób co pętla do symulacji algorytmu PID. Różnicą na początku jest obliczenie wektora $\Delta U^{\mathrm{P}}(k)$. Następnie następuje pomiar wyjścia i przeskalowanie sygnałów: wyjściowego oraz wartości zadanej. Po obliczeniu uchybu oraz wskaźnika jakości następuje obliczenie wartości przyrostu sterowania zgodnie ze wzorem (\ref{du(k)}). Ostatnią częścią jest uwzględnienie ograniczeń sygnału sterującego, po którym następuje kolejna iteracja.\\
-\indent{} W skrypcie \verb+zad4_DMC.m+ po zakończeniu symulacji również następuje wyświetlenie wyników, krótka obróbka danych oraz generowanie plików z danymi.
 
-
-\subsection{Przebieg strojenia regulatora DMC}
+\section{Przebieg strojenia regulatora DMC}
 Strojąc algorytm DMC na obiekcie laboratoryjnym bez zakłóceń skorzystaliśmy z doświadczenia zebranego na poprzednim laboratorium. Dla naszego regulatora wybraliśmy wartości parametrów D, N, $N_\mathrm{u}$, $\lambda$ dla których regulacja na poprzednim laboratorium przebiegała najlepiej.
 
 Po dokonaniu eksperymentu dla $D = 500$, $N = 140$, $N_\mathrm{u} = 1$, 
