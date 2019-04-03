@@ -1,19 +1,20 @@
 \chapter{Regulacja procesem rzeczywistym przy użyciu alogrytmu DMC z uwzględnieniem zakłóceń mierzalnych}
 \label{lab5}
 
-\section{Dobór parametru $Dz$}
+\section{Dobór parametru $D_{\mathrm{z}}$}
 \label{lab5_dobor_Dz}
-Aby jak najlepiej dobrać parametr $Dz$, zdecydowaliśmy się eksperymentalne 
+Aby jak najlepiej dobrać parametr $D_{\mathrm{z}}$, zdecydowaliśmy się eksperymentalne 
 zbadanie dziedziny parametru, rozpoczynając od bazowej wartości parametru równej
-horyzontowi dynamiki toru zakłócenie-wyjście $Dz = \num{400}$. 
+horyzontowi dynamiki toru zakłócenie-wyjście $D_{\mathrm{z}} = \num{400}$. 
 
 \subsection{Opis eksperymentu}
-\label{lab5_opis}
+\label{lab5_opis} 
 Dla każdej przeprowadzonej próby, zmierzyliśmy 1000 próbek sygnału wejściowego. Proces był
 regulowany w otoczeniu skokowo zmiennych zakłóceń. W $\num{250}$ próbce eksperymentu, następowała
 skokowa zmiana zakłócenia z $z_{0} = \num{0}$ na $z_{1} = \num{30}$. Drugi skok zakłócenia następował
 w $\num{600}$ próbce, z wartości $z_{1} = \num{30}$ do wartości $z_{2} = \num{10}$. Dodatni i ujemny skok
-zakłócenia pozwolił nam na lepsze zbadanie charakterystyk algorytmu regulacji.
+zakłócenia pozwolił nam na lepsze zbadanie charakterystyk algorytmu regulacji. Chwile skoków dobraliśmy
+analizując przebiegi regulatora strojonego na laboratorium pierwszym oraz wcześniej przeprowadzanych prób.
 
 \begin{figure}[b]
     \centering
@@ -36,12 +37,64 @@ zakłócenia pozwolił nam na lepsze zbadanie charakterystyk algorytmu regulacji
     \label{zad5_lab_zaklocenia}
 \end{figure}
 
+
 \subsection{Wyniki eksperymentów}
 \label{zad5_wyniki}
-\subsubsection{Parametr $D_{z} = \num{400}$}
+
+\subsubsection{Parametr $D_{\mathrm{z}} = \num{400}$}
 Dobranie bazowej wartości parametru, pozwoliło nam na zaskakująco
 zadowalającą regulację procesem przy skokowo zmieniającym się 
-mierzalnym zakłóceniu.  
+mierzalnym zakłóceniu. Skokowa zmiana zakłócenia jest szybko kompensowana 
+przez gwałtowną zmianę sygnału sterującego, dzięki czemu wyjście procesu zmienia się
+maksymalnie o $\num{1}$ stopień Celcjusza. Drugi skok zakłócenia, z racji mniejszej 
+wartości bezwgzlędnej skoku, jest jeszcze lepiej skompensowany. Uzyskane przebiegi zostały przedstawione
+na rysunkach \ref{lab5_dz_400_y} i \ref{lab5_dz_400_u}. Liczony na bieżąco w trakcie 
+eksperymentu wskaźnik jakości opisany jako suma kwadratów uchybu uzyskał wartość 
+$E = \num{4668.2}$. Aby ocenić czy jest to wartość duża czy mała, porównamy ją z wartościami
+uzyskanymi w ramach kolejnych czterech eksperymentów z innym parametrem $D_{\mathrm{z}}$.
+
+
+\subsubsection{Parametr $D_{\mathrm{z}} = \num{350}$}
+W kolejnym eksperymencie sprawdziliśmy zachowanie regulatora z parametrem $D_{\mathrm{z}} = \num{350}$.
+Jakościowo, przebiegi przedstawione na rysunkach \ref{lab5_dz_350_y} i \ref{lab5_dz_350_u} nie różnią
+się znacznie od tych przedstawionych w poprzednim punkcie. Ilościowo, wskaźnik jakości poprawił się 
+znacznie i wyniósł $E = \num{3583.7}$. 
+
+
+\subsubsection{Parametr $D_{\mathrm{z}} = \num{300}$}
+Następną próbę wykonaliśmy dla algorytmu DMC z paramtrem $D_{\mathrm{z}} = \num{300}$. Oczekując
+poprawy, okazało się że wskaźnik jakości nieznacznie pogorszył się do wartości 
+$E = \num{3707.5}$. Przebiegi jakościowo nie odbiegają od pożądanych, może martwić jedynie 
+niewielki uchyb po kompensacji pierwszego zakłócenia ukazany na rysunku \ref{lab5_dz_300_y}. Przebieg
+sterujący generowany przez ten regulator został przedstawiony na rysunku \ref{lab5_dz_300_u}.
+
+\subsubsection{Parametr $D_{\mathrm{z}} = \num{250}$}
+Dla parametru $D_{\mathrm{z}} = \num{250}$ udało nam się uzyskać najlepszy jak dotąd wskaźnik jakości
+wynoszący $E = \num{3515.3}$. Skoki zakłócenia są szybko kompensowane przez regulator, który szybko
+dopasowywuje sygnał sterujący ukazany na rysunku \ref{lab5_dz_250_u}. Wynikowy sygnał wyjściowy procesu
+został przedstawiony na rysunku \ref{lab5_dz_250_y}.
+
+\subsubsection{Parametr $D_{\mathrm{z}} = \num{200}$}
+Przy jeszcze bardziej zmniejszonym parametrze $D_{\mathrm{z}}$ uwydatniły się problemy związane z za małą
+jego wartością. Na przebiegu \ref{lab5_dz_200_y} widać jak po początkowej kompensacji zakłócenia, proces zostaje
+wytrącony z wartości zadanej. Przebieg sterujący \ref{lab5_dz_200_u} oo pierwszym skoku, zamiast ustalić się na 
+pewnej wartości zaczyna rosnąć, co powoduje wzrost uchybu. Spowodowane jest to za krótkim horyzontem dynamiki zakłóceń.
+Niepełny model toru zakłócenie-wyjście sprawia że regulator źle reaguje na zmiany zakłócenia mierzalnego i sam wybija się 
+z położenia równowagi. Dalsze zmniejszanie parametru $D_{\mathrm{z}}$ spowoduje tylko i wyłącznie pogłębienie tego efektu.
+
+
+\subsection{Ostateczna wartość parametru $D_{\mathrm{z}}$}
+Biorąc pod uwagę wyniki poprzednich eksperymentów, zdecydowaliśmy się na wartość parametru $D_{\mathrm{z}} = \num{250}$.
+Dla tej wartości uzyskaliśmy najniższy wskaźnik jakości, jak i również przebiegi sygnałów procesowych wyglądaja 
+w naszych oczach na bardzo zadowalające.
+
+
+
+
+
+
+
+
 
 \begin{figure}[t]    
     \centering
@@ -61,8 +114,8 @@ mierzalnym zakłóceniu.
     \legend{$y[k]$, $y^{\mathrm{zad}}[k]$}
     \end{axis} 
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $Dz = \num{400}$}
-    \label{lab_zad4_lab_proces_wykres}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{400}$}
+    \label{lab5_dz_400_y}
 \end{figure}
 
 \begin{figure}[b]    
@@ -80,6 +133,261 @@ mierzalnym zakłóceniu.
     \legend{$u[k]$}
     \end{axis} 
     \end{tikzpicture}
-    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $Dz = \num{400}$}
-    \label{lab_zad4_lab_proces_wykres}
+    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{400}$}
+    \label{lab5_dz_400_u}
+\end{figure}
+
+
+
+
+
+\begin{figure}[t]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=30,ymax=43,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/output_Dz_350.csv};
+	\addplot[blue, semithick] file{../data/lab/zad5/stpt_Dz_350.csv};    
+    \legend{$y[k]$, $y^{\mathrm{zad}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{350}$}
+    \label{lab5_dz_350_y}
+\end{figure}
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=0,ymax=35,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/input_Dz_350.csv};   
+    \legend{$u[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{350}$}
+    \label{lab5_dz_350_u}
+\end{figure}
+
+
+
+
+
+\begin{figure}[t]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=30,ymax=43,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/output_Dz_300.csv};
+	\addplot[blue, semithick] file{../data/lab/zad5/stpt_Dz_300.csv};    
+    \legend{$y[k]$, $y^{\mathrm{zad}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{300}$}
+    \label{lab5_dz_300_y}
+\end{figure}
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=0,ymax=35,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/input_Dz_300.csv};   
+    \legend{$u[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{300}$}
+    \label{lab5_dz_300_u}
+\end{figure}
+
+
+
+
+
+\begin{figure}[t]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=30,ymax=43,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/output_Dz_250.csv};
+	\addplot[blue, semithick] file{../data/lab/zad5/stpt_Dz_250.csv};    
+    \legend{$y[k]$, $y^{\mathrm{zad}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{250}$}
+    \label{lab5_dz_250_y}
+\end{figure}
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=0,ymax=35,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/input_Dz_250.csv};   
+    \legend{$u[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{250}$}
+    \label{lab5_dz_250_u}
+\end{figure}
+
+
+\begin{figure}[t]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=30,ymax=43,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/output_Dz_200.csv};
+	\addplot[blue, semithick] file{../data/lab/zad5/stpt_Dz_200.csv};    
+    \legend{$y[k]$, $y^{\mathrm{zad}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{200}$}
+    \label{lab5_dz_200_y}
+\end{figure}
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=0,ymax=35,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/input_Dz_200.csv};   
+    \legend{$u[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg generowanego sterowania z dostrojonego regulatora DMC z parametrem $D_{\mathrm{z}} = \num{200}$}
+    \label{lab5_dz_200_u}
+\end{figure}
+
+\FloatBarrier
+
+\section{Porównanie działania algorytmu DMC bez i z uwzględnieniem zakłóceń mierzalnych}
+\label{lab5_porownanie}
+
+\subsection{Porównanie przebiegów wyjściowych}
+Na rysunku \ref{lab5_porownanie_y} porównano wyjście procesu sterowanego przez regulator z i bez 
+uwzględnienia zakłócenia. Jasno widać że przebieg wyjściowy przy uwzględnieniu zakłóceń, lepiej 
+trzyma się wartości zadanej. Brak uwzględnienia zakłoceń powoduje że uchyb przy skokowej 
+zmianie sygnału zakłócajacego jest prawie dwa razy większy niż w przypadku regulacji z uwzględnieniem zakłóceń.
+Proces sterowany w klasyczny sposób potrzebuje również więcej czasu aby zniwelować wpływ zakłóceń na obiekt.
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=32,ymax=44,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/output_Dz_250.csv};
+    \addplot[blue, semithick] file{../data/lab/zad5/output_Dz_0.csv}; 
+    \addplot[green, dashed] file{../data/lab/zad5/stpt_Dz_0.csv};     
+    \legend{$y^{\mathrm{z}}[k]$, $y^{\mathrm{bez}}[k]$, $y^{\mathrm{zad}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Porównanie przebiegów wyjściowych procesu sterowanego przez regulator z i bez uwzględnienia zakłóceń}
+    \label{lab5_porownanie_y}
+\end{figure}
+\FloatBarrier
+
+\subsection{Porównanie przebiegów sygnału sterującego}
+
+Uwzględnienie zakłoceń pozwala na szybszą reakcje w momencie skokowej zmiany zakłócenia. Na rysunku \ref{lab5_porownanie_u}
+przedstawiono przebiegi sygnału sterującego generowanego przez regulator. Do momentu pierwszego skoku,
+przebiegi powinny być porównywalne w wartościach ale jednak nie są. Spowodowane jest to faktem tygodniowej różnicy
+w czasie pomiędzy zebraniem obu sygnałów, sygnał bez uwzględniania zakłóceń zebraliśmy na pierwszym spotkaniu 
+laboratoryjnym a sygnał z uwzględnieniem zakłocenia na drugim, na którym w laboratorium panowały inne warunki.
+Bardziej interesujące wydają się być przebiegi sterowania po pierwszym skoku zakłócenia. Widać jak regulator
+z uwzględnieniem zakłóceń szybko zmienia sterowanie aby nadążyć za zakłóceniem i po około stu próbkach
+ustalaswoją wartośc na stałym poziomie. Regulator bez uwzględnienia zakłóceń nie ma informacji jak powinien
+się zachować w obliczu zakłócenia dlatego też zdecydowanie wolniej zmienia się generowany przez niego sygnał
+sterujący. Sytuacja powtarza się przy drugim skoku.
+
+\subsection{Wnioski}
+\label{lab5_wnioski}
+Na podstawie przeprowadzonego eksperymentu możemy jednoznacznie stwierdzić że uwzględnienie zakłóceń w regulatorze DMC,
+prowadzi do znacznej poprawy jakości regulacji w otoczeniu zakłóceń które można zmierzyć. Nie jest to jednak tak proste,
+ponieważ zwykle nie mamy możliwości tak dokładnego wyznaczenia modelu zakłócenia, które jest niezwykle potrzebne do 
+poprawnej regulacji procesem rzeczywistym.
+
+\begin{figure}[b]    
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=1000,ymin=0 ,ymax=30,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 50, 100, 150, 200},
+    %ytick={0, 2, 4, 6, 8},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/lab/zad5/input_Dz_250.csv};
+    \addplot[blue, semithick] file{../data/lab/zad5/input_Dz_0.csv};     
+    \legend{$u^{\mathrm{z}}[k]$, $u^{\mathrm{bez}}[k]$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Porównanie przebiegów sygnału sterującego generowanego przez regulator z i bez uwzględnienia zakłóceń}
+    \label{lab5_porownanie_u}
 \end{figure}

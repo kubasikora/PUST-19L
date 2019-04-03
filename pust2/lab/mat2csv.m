@@ -46,3 +46,14 @@ dlmwrite(strcat('../data/lab/zad5/output_Dz_400.csv'), output_ts, '\t');
 dlmwrite(strcat('../data/lab/zad5/input_Dz_400.csv'), input_ts, '\t');
 dlmwrite(strcat('../data/lab/zad5/disturb_Dz_400.csv'), disturb_ts, '\t');
 dlmwrite(strcat('../data/lab/zad5/stpt_Dz_400.csv'), stpt_ts, '\t');
+
+
+load('dmc_bez_pomiaru_proba_2_lambda100.mat')
+output_ts = [(1:length(y))' y'];
+input_ts = [(1:length(rescaled_input))' rescaled_input];
+disturb_ts = [(1:length(disturbance))' disturbance'];
+dlmwrite(strcat('../data/lab/zad5/output_Dz_0.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/input_Dz_0.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/disturb_Dz_0.csv'), disturb_ts, '\t');
+dlmwrite(strcat('../data/lab/zad5/stpt_Dz_0.csv'), stpt_ts, '\t');
+
