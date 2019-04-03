@@ -18,9 +18,8 @@
     %emph=[2]{word1,word2}, emphstyle=[2]{style},    
 }
 
-\chapter{Strojenie regulatora DMC na stanowisku laboratoryjnym bez zakłóceń}
+\chapter{Omówienie implementacji algorytmu DMC}
 \label{zad4_lab_opis}
-\section{Omówienie implementacji algorytmu DMC}
 Na początku skryptu następowało wczytanie modelu (znormalizowanej odpowiedzi skokowej obiektu) wykorzystywanego do regulacji algorytmem DMC.\\
 \indent{} Następnie, tak jak poprzednio, zdefiniowane zostały stałe wykorzystywane w programie jak i parametry wykorzystywanego algorytmu. Horyzont dynamiki równał się długości wektora z odpowiedzią skokową. Horyzonty predykcji oraz sterowania, a także współczynnik kary $\lambda$ były odpowiednio modyfikowane w późniejszym procesie strojenia regulatora. \\
 \indent{} Kolejnym krokiem, również powtórzonym była deklaracja wektorów wykorzystywanych do przechowywania wartości sygnałów.
@@ -61,7 +60,8 @@ Mp = zeros(N, D-1);
 K = zeros(Nu, N);
 \end{lstlisting}
 
-Następnie przystąpiliśmy do wyliczenia macierzy, których postać była niezmienna podczas działania programu. Kolejno obliczona została macierz $M$, $M_\mathrm{p}$ oraz $K$ zgodnie ze wzorami:
+Następnie przystąpiliśmy do wyliczenia macierzy, których postać była niezmienna podczas działania programu.
+Kolejno obliczona została macierz $M$, $M_\mathrm{p}$, $M^{\mathrm{z}_{\mathrm{p}}}$ oraz $K$ zgodnie ze wzorami:
 \\
 
 \begin{equation}
@@ -87,11 +87,24 @@ s_{\mathrm{N+1}} - s_{1} & s_{\mathrm{N+2}} - s_{\mathrm{2}} & \ldots &  s_{N + 
 \end{array}
 \right]
 \end{equation}
-\\
+
+\begin{equation}
+    M^{\mathrm{z}_{\mathrm{p}}}=\left[
+    \begin{array}
+    {cccc}
+    s^{\mathrm{z}}_{\mathrm{1}}  & s^{\mathrm{z}}_{\mathrm{2}} - s^{\mathrm{z}}_{\mathrm{1}} & \ldots & s^{\mathrm{z}}_{\mathrm{D^{\mathrm{z}}}} - s^{\mathrm{z}}_{\mathrm{D^{\mathrm{z}}-1}}\\
+    s^{\mathrm{z}}_{\mathrm{2}}  & s^{\mathrm{z}}_{\mathrm{3}} - s^{\mathrm{z}}_{\mathrm{1}} & \ldots & s^{\mathrm{z}}_{\mathrm{D^{\mathrm{z}}+1}} - s^{\mathrm{z}}_{\mathrm{D^{\mathrm{z}}-1}}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    s^{\mathrm{z}}_{\mathrm{N}} & s^{\mathrm{z}}_{\mathrm{N+1}} - s^{\mathrm{z}}_{\mathrm{1}} & \ldots &  s^{\mathrm{z}}_{N + \mathrm{D^{\mathrm{z}}} - 1} - s^{\mathrm{z}}_{{\mathrm{D^{\mathrm{z}}-1}}}
+    \end{array}
+    \right]
+\end{equation}\\
+
 \begin{equation}
 K = (M^{\mathrm{T}} M + \lambda I_{\mathrm{N_{\mathrm{u}}} \times \mathrm{N_{\mathrm{u}}}})^{\mathrm{-1}} M^{\mathrm{T}}
 \end{equation}
 \\
+
 Implementację powyższych wzorów przedstawiono na listingu \ref{zad4_matrices_lst}.\\
 
 \begin{lstlisting}[style=custommatlab,frame=single,label={zad4_matrices_lst},caption={Wyliczenie macierzy stałych algorytmu DMC},captionpos=b]
@@ -120,6 +133,31 @@ for i = 1:N
     end
 end
 
+% macierz Mzp
+if disturb == 1
+    do_disturb = 1;
+    for i = 1:Dz
+        if i == 1            
+            for j = 1:N
+                k = j;
+                if k > Dz
+                    k = Dz;
+                end
+                Mzp(j, i) = step_d(k);
+            end
+        else
+            for j = 1:N
+                k = i + j - 1;
+                if k > Dz
+                    Mzp(j,i) = step_d(Dz) - step_d(i-1);
+                else
+                    Mzp(j,i) = step_d(k) - step_d(i-1);
+                end
+            end
+        end
+    end
+end
+
 % macierz K
 K = inv((M' * M + lambda * eye(Nu)))*M';
 %\end{lstlisting}
@@ -127,10 +165,18 @@ Wersja algorytmu DMC użyta w programie jest wersją oszczędną to znaczy podcz
 
 \begin{equation}
 \label{du(k)}
-\Delta u(k) = K_{\mathrm{e}} e(k) - K_{\mathrm{u}} \Delta U^{\mathrm{P}}(k)
+\Delta u(k) = K_{\mathrm{e}} e(k) - \overline{K_{1}} \Big( M^{\mathrm{P}} \Delta U^{\mathrm{P}}(k) - M^{\mathrm{P_{\mathrm{z}}}} \Delta z(k) \Big)
 \end{equation}
 
-gdzie $K_{\mathrm{e}}$ jest wyrażonym wzorem (\ref{eq_Ke}), $K_{\mathrm{u}}$ jest wektorem powstałym z pomnożenia pierwszego wiersza macierzy $K$ oraz macierzy $M^{\mathrm{P}}$ co przedstawia wzór (\ref{eq_Ku}). Wektor $\Delta U^{\mathrm{P}}(k)$ jest wektorem różnic sterowania między kolejnymi jego wartościami z przeszłości danym wzorem:
+gdzie $K_{\mathrm{e}}$ jest wyrażonym wzorem (\ref{eq_Ke}) a $\overline{K_{1}}$ jest 
+pierwszym wierszem macierzy $K$. 
+
+\begin{equation}
+    \label{eq_Ke}
+    K_{\mathrm{e}} = \sum_{i=1}^{N} K_{1,i}
+\end{equation}
+    
+Wektor $\Delta U^{\mathrm{P}}(k)$ jest wektorem różnic sterowania między kolejnymi jego wartościami z przeszłości danym wzorem:
 
 \begin{equation}
 \Delta U^{\mathrm{P}}(k)=\left[
@@ -143,17 +189,22 @@ u(k-\mathrm{D}+1) - u(k-\mathrm{D})
 \right]
 \end{equation}
 
+Wektor $\Delta z(k)$ jest wektorem zmian mierzalnego zakłócenia:
 \begin{equation}
-\label{eq_Ke}
-K_{\mathrm{e}} = \sum_{i=1}^{N} K_{1,i}
+    \Delta z(k)=\left[
+    \begin{array}{c}
+    z(k) - z(k-1)\\
+    z(k-1) - z(k-2)\\
+    \vdots\\
+    z(k-D^{\mathrm{z}}+1) - u(k-D^{\mathrm{z}})
+    \end{array}
+    \right]
 \end{equation}
 
-\begin{equation}
-\label{eq_Ku}
-K_{\mathrm{u}} = \overline{K_{1}} M^{\mathrm{P}}
-\end{equation}
 
-Wektor $\Delta U^{\mathrm{P}}(k)$ jest obliczany w każdej iteracji pętli symulacyjnej w celu uniknięcia niepotrzebnych komplikacji związanych z przesuwaniem jego wartości. Przed wejściem do pętli obliczane są wartości $K_{\mathrm{e}}$ oraz $K_{\mathrm{e}}$. Symulacja działania algorytmu za pomocą pętli została przedstawiona na listingu \ref{zad4_dmc_sim_lst}.\\
+
+Wektory $\Delta U^{\mathrm{P}}(k)$ i $\Delta z(k)$ są obliczane w każdej iteracji pętli symulacyjnej w celu uniknięcia niepotrzebnych komplikacji związanych z przesuwaniem jego wartości. 
+Przed wejściem do pętli obliczane są wartości $K_{\mathrm{e}}$ oraz $K_{\mathrm{e}}$. Symulacja działania algorytmu za pomocą pętli została przedstawiona na listingu \ref{zad4_dmc_sim_lst}.\\
 
 \begin{lstlisting}[style=custommatlab,frame=single,label={zad4_dmc_sim_lst},caption={Pętla symulująca działanie regulatora DMC},captionpos=b]
 Ke = sum(K(1,:));
@@ -174,7 +225,21 @@ for k=12:sim_len
         end 
         dUp(i) = du1 - du2;
     end
-    
+
+    for i = 1:Dz            
+        if (k-i+1) <= 0
+            dd1 = 0;
+        else
+            dd1 = disturbance(k - i + 1);
+        end
+        if (k-i) <= 0
+            dd2 = 0;
+        else
+            dd2 = disturbance(k - i);
+        end             
+            dDp(i) = dd1 - dd2;
+    end           
+
     output(k) = symulacja_obiektu1Y(input(k-10), input(k-11),
     			output(k-1), output(k-2));    % pomiar wyjscia
     rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
@@ -183,7 +248,7 @@ for k=12:sim_len
     
     error_sum = error_sum + error(k)^2; % wskaznik jakosci
     
-    rescaled_input(k) = Ke * error(k) - Ku * dUp;
+    rescaled_input(k) = Ke * error(k) - K(1,:) * (Mp * dUp + Mzp * dDp');
     rescaled_input(k) = rescaled_input(k-1) + rescaled_input(k);
     
     % ograniczenia  
@@ -203,9 +268,8 @@ for k=12:sim_len
 end
 \end{lstlisting}
 
-
+\iffalse
 \section{Przebieg strojenia regulatora DMC}
-Strojąc algorytm DMC na obiekcie laboratoryjnym bez zakłóceń skorzystaliśmy z doświadczenia zebranego na poprzednim laboratorium. Dla naszego regulatora wybraliśmy wartości parametrów D, N, $N_\mathrm{u}$, $\lambda$ dla których regulacja na poprzednim laboratorium przebiegała najlepiej.
 
 Po dokonaniu eksperymentu dla $D = 500$, $N = 140$, $N_\mathrm{u} = 1$, 
 $\lambda = 100$ otrzymaliśmy przebiegi zaprezentowane na rysunkach 
@@ -262,3 +326,8 @@ zadań podczas laboratorium.
     \label{lab_zad4_lab_ster}
 \end{figure}
 \FloatBarrier
+\fi 
+
+
+
+

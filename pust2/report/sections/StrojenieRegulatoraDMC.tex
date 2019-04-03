@@ -1,0 +1,456 @@
+\chapter{Strojenie regulatora DMC na obiekcie rzeczywistym}
+\label{lab5_dmc}
+Strojąc algorytm DMC na obiekcie laboratoryjnym bez zakłóceń skorzystaliśmy z doświadczenia 
+zebranego na poprzednim laboratorium. Dla naszego regulatora wybraliśmy wartości parametrów
+ D, N, $N_\mathrm{u}$, $\lambda$ dla których regulacja na poprzednim laboratorium przebiegała 
+ najlepiej. W tym rozdziale przypomnimy proces dobierania parametrów regulatora metodą eksperymentalną.
+\indent{} Eksperymenty wykonywane były dla dwóch skoków wartości zadanej o różnej amplitudzie. 
+Pojedyncza próba odbywała się w czasie 400 sekund.
+
+\section{Dobór horyzontu predykcji N}
+\subsubsection{Horyzontu predykcji N = 200}
+Podczas skracania horyzontu predykcji zauważalne zmiany zauważyliśmy przy wartości $N = 200$, przy której wskaźnik jakości regulacji $E$ nieznacznie zmalał. Na rysunkach \ref{dmc_N_200_y} oraz \ref{dmc_N_200_u} widzimy, że regulator działa bardzo wolno. Słabe działanie potwierdza również wskaźnk jakości wynoszący $\num{12774}$.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=200Nu=200l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=200Nu=200l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 200$, $N_{\mathrm{u}} = 200$, $\lambda = 100$}
+    \label{dmc_N_200_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=200Nu=200l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 200$, $N_{\mathrm{u}} = 200$, $\lambda = 100$}
+    \label{dmc_N_200_u}
+\end{figure}
+
+\subsubsection{Horyzontu predykcji N = 140}
+W kolejnej próbie zauważyliśmy nieznaczną poprawę jeśli chodzi o błąd regulacji. Na wykresach możemy zobaczyć niewielkie przeregulowanie, ale podczas eksperymentu otrzymaliśmy wartość $E = 12694$ co, choć nie jest wielką zmianą, daje podstawy do zakwalifikowania próby jako lepszej. Mimo to, regulator wciąż pracuje bardzo wolno. Sygnał sterujący przebiega łagodnie, nie zbliżając się do ograniczeń. Wynik ekperymentu przedstawiają rysunki \ref{dmc_N_140_y} i \ref{dmc_N_140_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=140l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=140l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 140$, $\lambda = 100$}
+    \label{dmc_N_140_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=140l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 140$, $\lambda = 100$}
+    \label{dmc_N_140_u}
+\end{figure}
+
+\subsubsection{Horyzontu predykcji N = 100}
+Dalsze zmniejszanie horyzontu $N$ skutkuje większym przeregulowaniem i dużo wolniejszą pracą regulatora, zwłaszcza po drugim skoku wartości zadanej. Ma to swoje odzwierciedlenie we wskaźniku $E$, który drastycznie zwiększył swoją wartość i wyniósł $E = 14023$. Wykresy przebiegów zawierają rysunki \ref{dmc_N_100_y} oraz \ref{dmc_N_100_u}.\\
+\indent{} Jako najlepszą wartość horyzontu predykcji uznaliśmy $N = 140$ i dla tej wartości kontynuowaliśmy eksperymenty.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=100Nu=100l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=100Nu=100l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
+    \label{dmc_N_100_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=100Nu=100l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 100$, $N_{\mathrm{u}} = 100$, $\lambda = 100$}
+    \label{dmc_N_100_u}
+\end{figure}
+\FloatBarrier
+
+\section{Dobór horyzontu sterowania $N_{\mathrm{u}}$}
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 40$}
+Kolejnym krokiem było zbadanie efektu skracania horyzontu sterowania na jakość regulacji. Zmiana z wartości $N_{\mathrm{u}} = 100$ do wartości $N_{\mathrm{u}} = 40$ przyniosła zadowalające rezultaty w postaci zmniejszenia wskaźnika jakości regulacji do wartości $E = \num{12209}$ i choć rysunki \ref{dmc_Nu_40_y} oraz \ref{dmc_Nu_40_u} na pierwszy rzut oka nie pokazują wielkich zmian, możemy wnioskować, że regulator działa nieco szybciej.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=40l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=40l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 40$, $\lambda = 100$}
+    \label{dmc_Nu_40_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=40l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 40$, $\lambda = 100$}
+    \label{dmc_Nu_40_u}
+\end{figure}
+
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 10$}
+Następna wartość horyzontu sterowania przyniosła jeszcze lepsze wyniki. Na wykresie można zauważyć brak przeregulowania przy dojściu do wartości zadanej po pierwszym skoku. Patrząc uważnie, można również zaobserwować szybszą reakcję na drugą zmianę wartości zadanej. Zmniejszył się również wskaźnik jakości, który wyniósł $E = \num{10897}$. Wyniki zamieszczono na rysunkach \ref{dmc_Nu_10_y} oraz \ref{dmc_Nu_10_u_lab}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=10l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=10l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 10$, $\lambda = 100$}
+    \label{dmc_Nu_10_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=10l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 10$, $\lambda = 100$}
+    \label{dmc_Nu_10_u_lab}
+\end{figure}
+
+\subsubsection{Horyzont sterowania $N_{\mathrm{u}} = 1$}
+Wartość horyzontu predykcji $N_{\mathrm{u}} = 1$ uznaliśmy za najlepsze rozwiązanie. Po pierwsze wskaźnik jakości ponownie się zmniejszył i przyjął wartość $E = \num{10519}$. Po drugie zauważyliśmy, że wyjście szybciej zbiega do wartości zadanej oraz utrzymuje ten pułap przez dłuższą niż w poprzednim przypadku chwilę. Nie występuje przeregulowanie, a sygnał sterujący wciąż przebiega gładko. Dalsze strojenie regulatora przeprowadzaliśmy przy $N_{\mathrm{u}} = 1$. Wynik eksperymentu przedstawiony został na rysunkach \ref{dmc_Nu_1_y_lab} i \ref{dmc_Nu_1_u_pro}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=100.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=100.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
+    \label{dmc_Nu_1_y_lab}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=100.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 100$}
+    \label{dmc_Nu_1_u_pro}
+\end{figure}
+\FloatBarrier
+
+\section{Dobór współczynnika $\lambda$}
+\subsubsection{Współczynnik $\lambda = 80$}
+Zmniejszenie współczynnika $\lambda$ zaowocowało przyspieszeniem regulacji oraz zmniejszeniem jej błędu. W stosunku do poprzednich prób zmiana była wyraźna, a wskaźnik wynosił $E = \num{8610,3}$. Niepokojącym może być fakt, że sygnał wyjścia nie osiągnął zadanego punktu pracy, jednak po jego trajektorii można stwierdzić, że po upływie większej ilości próbek mógłby się ustabilizować na żądanym poziomie. Zmiana współczynnika kary, poza szybszym narastaniem, nie wpłynęła znacząco na sygnał sterujący, którego przebieg był niemalże gładki. Wyniki przedstawiono na rysunkach \ref{dmc_lam_80_y} i \ref{dmc_lam_80_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=80.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=80.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 80$}
+    \label{dmc_lam_80_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=80.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 80$}
+    \label{dmc_lam_80_u}
+\end{figure}
+
+\subsubsection{Współczynnik $\lambda = 50$}
+Kolejne zmniejszenie badanego parametru skutkuje względnie niewielkim zmniejszeniem błędu: $E = \num{8527,0}$. Wpływ współczynnika $\lambda$ widać za to wyraźniej, gdy spojrzymy na wykres sterowania, który stał się bardziej pofalowany. Zastanawiający jest również fakt wystąpienia niewielkiego uchybu ustalonego. Na podstawie wykresu wyjścia nie możemy jasno powiedzieć, że wyjście osiągnęłoby wartość zadaną, dlatego stwierdziliśmy pogorszenie w stosunku do poprzedniego eksperymentu. Wykresy zamieściliśmy na rysunkach \ref{dmc_lam_50_y} oraz \ref{dmc_lam_50_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=50.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=50.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{dmc_lam_50_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=50.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 50$}
+    \label{dmc_lam_50_u}
+\end{figure}
+
+\subsubsection{Współczynnik $\lambda = 10$}
+Dalsze zmniejszanie współczynnika kary poskutkowało ponownym zmniejszeniem błędu. Wskaźnik jakości wyniósł $E = \num{7359,2}$. Mogłoby się wydawać, że to bardzo dobry wynik i faktycznie regulator pracuje bardzo szybko, ale wykres sygnału sterowania przy takiej wartości $\lambda$ przedstawia zdecydowanie bardziej niestabilny przebieg. Kolejną rzeczą jest uchyb ustalony w pierwszej fazie eksperymentu, mimo szybkiego działania sygnał wyjścia nie osiąga wartości zadanej. Przebiegi sygnałów przedstawiono na rysunkach \ref{dmc_lam_10_y_lab} oraz \ref{dmc_lam_10_u_lab}. 
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=28, ymax=42,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    %xtick={0, 100, 200, 300, 400, 500},
+    %ytick={3.9, 4, 4.1, 4.2, 4.3, 4.4},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/lab/dmc/stpt_N=140Nu=1l=10.csv};
+    \addplot[red, semithick] file{../data/lab/dmc/output_N=140Nu=1l=10.csv};
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers, blue}
+	\addlegendimage{no markers, red}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
+    \label{dmc_lam_10_y_lab}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0,xmax=400,ymin=0, ymax=100,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    %xtick={0, 0.4, 0.5, 0.6, 0.7},
+    %ytick={3.5, 3.75, 4, 4.25, 4.5},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[const plot, blue, semithick] file{../data/lab/dmc/input_N=140Nu=1l=10.csv};
+    \legend{$u[k]$}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach parametrach: $D = 500$, $N = 140$, $N_{\mathrm{u}} = 1$, $\lambda = 10$}
+    \label{dmc_lam_10_u_lab}
+\end{figure}
+\FloatBarrier
