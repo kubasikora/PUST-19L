@@ -13,5 +13,7 @@ for u_zad = dU
        y(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));
     end
     output_ts = [time-1 y];
+    output_norm_ts = [time-1 (y-Ypp)./u_zad];
     dlmwrite(strcat('../data/project/zad2/odp_skok_u=', num2str(u_zad), '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/project/zad2/odp_skok_norm_u=', num2str(u_zad), '.csv'), output_norm_ts, '\t');
 end
