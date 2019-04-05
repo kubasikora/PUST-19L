@@ -1,9 +1,10 @@
 \chapter{Sprawdzenie poprawności punktu pracy}
+\label{pro1}
 
 Aby sprawdzić poprawność podanego punktu pracy wykonaliśmy ekspe-
 ryment polegający na pobudzeniu wejścia obiektu stałym sygnałem wejściowym o wartości
-$U_{\mathrm{pp}} = 0$ i sprawdzeniu czy sygnał wyjściowy stabilizuje się 
-na wartości $Y_{\mathrm{pp}} = 0$. Symulację obiektu przeprowadziliśmy
+$U_{\mathrm{pp}} = \num{0}$ i sprawdzeniu czy sygnał wyjściowy stabilizuje się 
+na wartości $Y_{\mathrm{pp}} = \num{0}$. Symulację obiektu przeprowadziliśmy
 za pomocą funkcji \verb+symulacja_obiektu1y+. 
 
 Eksperyment przeprowadziliśmy uruchamiając dostarczoną funkcję z następującymi parametrami:
@@ -12,6 +13,26 @@ Eksperyment przeprowadziliśmy uruchamiając dostarczoną funkcję z następują
 \verb+symulacja_obiektu1y(Upp, Upp, Ypp, Ypp)+ 
 \end{center}
 
-Uzyskany wynik \verb+ans+ $= 0$ jest równy co do wartości $Y_{\mathrm{pp}}$ co potwierdza poprawność podanego
+Uzyskany wynik \verb+ans+ $= \num{0}$ jest równy co do wartości $Y_{\mathrm{pp}}$ co potwierdza poprawność podanego
 punktu pracy.
 
+\vskip3cm
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=0,xmax=200,ymin=-2,ymax=2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[red, semithick] file{../data/project/zad1/zad1_output.csv};
+    \legend{$y[k]$, }
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Przebieg wyjścia obiektu sterowanego sygnałem stałym o wartości \mbox{$U_{\mathrm{pp}} = \num{0}$}}
+    \label{pro1}
+\end{figure}
