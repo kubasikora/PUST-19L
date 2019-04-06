@@ -12,7 +12,7 @@ Umin = -1;
 Umax = 1;
 
 T = 0.5;   
-SIM_LEN = 3000;
+SIM_LEN = 10000;
 
 %% Inicjalizacja wektorow
 % czas symulacji
@@ -36,9 +36,9 @@ error = zeros(SIM_LEN, 1);
 
 % Definicja parametrow ciaglych regulatora PID
 
-K = 0.01;
-Ti = 84;
-Td = 0.01;
+K = 0.05;
+Ti = 13*0.5;
+Td = 12*0.12;
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
@@ -65,12 +65,6 @@ for k = 12:SIM_LEN
         input(k) = Umin;
     end 
 end
-figure(2)
-plot(sim_time, setpoint);
-hold on
-plot(sim_time, output);
-title(['Wyjscie, E = ' num2str(error_sum)]);
-hold off
 
 %% wykresy sterowania oraz wyjscia
 figure(1)
@@ -79,3 +73,9 @@ hold on
 title('Sterowanie');
 hold off
 
+figure(2)
+plot(sim_time, setpoint);
+hold on
+plot(sim_time, output);
+title(['Wyjscie, E = ' num2str(error_sum)]);
+hold off
