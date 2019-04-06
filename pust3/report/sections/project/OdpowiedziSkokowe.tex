@@ -1,2 +1,142 @@
-\chapter{Odpowiedzi skokowe badanego obiektu nieliniowego}
+\chapter{Badanie odpowiedzi skokowych omawianego obiektu nieliniowego}
 \label{pro2}
+
+
+\section{Odpowiedzi skokowe}
+Za pomocą skryptu \verb+zad2.m+ zebralismy dziesięć odpowiedzi skokowych, 
+równomiernie badając dziedzinę dopuszczalnego sterowania. Zostały one 
+przedstawione na rysunku \ref{pro2_skoki_nieznormalizowane}.
+Już na podstawie tego wykresu można stwierdzić że obiekt nie jest liniowy. 
+O wiele więcej możemy wynieść po normalizacji każdej z odpowiedzi. Porównanie 
+znormalizowanych odpowiedzi znajduje się na rysunku \ref{pro2_skoki_znormalizowane}.
+Na podstawie przebiegów odpowiedzi skokowych można stwierdzić że właściowści statyczne 
+obiektu są nieliniowe. Wzmocnienie statyczne obiektu różni się w zależności punktu pracy.
+Mimo to, właściowści dynamiczne obiektu są liniowe. Czas narastania nie zależy od punktu 
+pracy i jest stały w każdym przypadku.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=200,ymin=-1.5,ymax=12,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$\Delta u = \num{-1}$},
+    \addlegendentry{$\Delta u = \num{-0.8}$},
+    \addlegendentry{$\Delta u = \num{-0.6}$},
+    \addlegendentry{$\Delta u = \num{-0.4}$},
+    \addlegendentry{$\Delta u = \num{-0.2}$},
+    \addlegendentry{$\Delta u = \num{0.2}$},
+    \addlegendentry{$\Delta u = \num{0.4}$},
+    \addlegendentry{$\Delta u = \num{0.6}$},
+    \addlegendentry{$\Delta u = \num{0.8}$},
+    \addlegendentry{$\Delta u = \num{1}$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,brown}
+    \addlegendimage{no markers,blue}
+    \addlegendimage{no markers,cyan}
+    \addlegendimage{no markers,magenta}
+    \addlegendimage{no markers,yellow}
+    \addlegendimage{no markers,gray}
+    \addlegendimage{no markers,green}
+    \addlegendimage{no markers,lime}
+    \addlegendimage{no markers,orange}
+
+    \addplot[red, semithick] file{../data/project/zad2/odp_skok_u=-1.csv}; 
+    \addplot[brown, semithick] file{../data/project/zad2/odp_skok_u=-0.8.csv}; 
+    \addplot[blue, semithick] file{../data/project/zad2/odp_skok_u=-0.6.csv}; 
+    \addplot[cyan, semithick] file{../data/project/zad2/odp_skok_u=-0.4.csv}; 
+    \addplot[magenta, semithick] file{../data/project/zad2/odp_skok_u=-0.2.csv}; 
+    \addplot[yellow, semithick] file{../data/project/zad2/odp_skok_u=0.2.csv}; 
+    \addplot[gray, semithick] file{../data/project/zad2/odp_skok_u=0.4.csv}; 
+    \addplot[green, semithick] file{../data/project/zad2/odp_skok_u=0.6.csv}; 
+    \addplot[lime, semithick] file{../data/project/zad2/odp_skok_u=0.8.csv}; 
+    \addplot[orange, semithick] file{../data/project/zad2/odp_skok_u=1.csv}; 
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{pro2_skoki_nieznormalizowane}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=200,ymin=0,ymax=12,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$\Delta u = \num{-1}$},
+    \addlegendentry{$\Delta u = \num{-0.8}$},
+    \addlegendentry{$\Delta u = \num{-0.6}$},
+    \addlegendentry{$\Delta u = \num{-0.4}$},
+    \addlegendentry{$\Delta u = \num{-0.2}$},
+    \addlegendentry{$\Delta u = \num{0.2}$},
+    \addlegendentry{$\Delta u = \num{0.4}$},
+    \addlegendentry{$\Delta u = \num{0.6}$},
+    \addlegendentry{$\Delta u = \num{0.8}$},
+    \addlegendentry{$\Delta u = \num{1}$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,brown}
+    \addlegendimage{no markers,blue}
+    \addlegendimage{no markers,cyan}
+    \addlegendimage{no markers,magenta}
+    \addlegendimage{no markers,yellow}
+    \addlegendimage{no markers,gray}
+    \addlegendimage{no markers,green}
+    \addlegendimage{no markers,lime}
+    \addlegendimage{no markers,orange}
+
+    \addplot[red, semithick] file{../data/project/zad2/odp_skok_norm_u=-1.csv}; 
+    \addplot[brown, semithick] file{../data/project/zad2/odp_skok_norm_u=-0.8.csv}; 
+    \addplot[blue, semithick] file{../data/project/zad2/odp_skok_norm_u=-0.6.csv}; 
+    \addplot[cyan, semithick] file{../data/project/zad2/odp_skok_norm_u=-0.4.csv}; 
+    \addplot[magenta, semithick] file{../data/project/zad2/odp_skok_norm_u=-0.2.csv}; 
+    \addplot[yellow, semithick] file{../data/project/zad2/odp_skok_norm_u=0.2.csv}; 
+    \addplot[gray, semithick] file{../data/project/zad2/odp_skok_norm_u=0.4.csv}; 
+    \addplot[green, semithick] file{../data/project/zad2/odp_skok_norm_u=0.6.csv}; 
+    \addplot[lime, semithick] file{../data/project/zad2/odp_skok_norm_u=0.8.csv}; 
+    \addplot[orange, semithick] file{../data/project/zad2/odp_skok_norm_u=1.csv}; 
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Znormalizowane odpowiedzi skokowe badanego procesu}
+    \label{pro2_skoki_znormalizowane}
+\end{figure}
+
+\section{Charakterystyka statyczna badanego obiektu}
+\label{pro2_zebranie_char_stat}
+
+Druga część skryptu \verb+zad.m+ wyznaczała charakterystykę statyczną na całym dopuszczalnym
+przedziale. Kształt tej charakterystyki, przedstawionej na \ref{pro2_char_stat}, jednoznacznie
+potwierdza nieliniowość badanego procesu.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=\textwidth,
+    xmin=-1,xmax=1,ymin=-2,ymax=12,
+    xlabel={$u$},
+    ylabel={$y(u)$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ]
+    \addplot[blue, semithick] file{../data/project/zad2/char_stat_long.csv};
+    \legend{$y(u)$}
+    \end{axis} 
+    \end{tikzpicture}
+    \caption{Charakterystyka statyczna badanego obiektu}
+    \label{pro2_char_stat}
+\end{figure}

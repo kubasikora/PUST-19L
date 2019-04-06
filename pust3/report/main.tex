@@ -11,6 +11,7 @@
 \usepackage{pgfplots}
 \usepackage{siunitx}
 \usepackage{paracol}
+\usepackage{gensymb}
 
 % Pływające obrazki
 \usepackage{float}
@@ -22,15 +23,70 @@
 \usepackage{cleveref}
 \usepackage{booktabs}
 \usepackage{listings}
+\usepackage{placeins}
+\usepackage{xcolor}
 
-\usepackage{subfiles}
+\usetikzlibrary{pgfplots.groupplots}
+\sisetup{detect-weight,exponent-product=\cdot,output-decimal-marker={,},per-mode=symbol,binary-units=true,range-phrase={-},range-units=single}
+\definecolor{szary}{rgb}{0.95,0.95,0.95}
+%konfiguracje pakietu listings
+\lstset{
+	backgroundcolor=\color{szary},
+	frame=single,
+	breaklines=true,
+}
+\lstdefinestyle{customlatex}{
+	basicstyle=\footnotesize\ttfamily,
+	%basicstyle=\small\ttfamily,
+}
+\lstdefinestyle{customc}{
+	breaklines=true,
+	frame=tb,
+	language=C,
+	xleftmargin=0pt,
+	showstringspaces=false,
+	basicstyle=\small\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+\lstdefinestyle{custommatlab}{
+	captionpos=t,
+	breaklines=true,
+	frame=tb,
+	xleftmargin=0pt,
+	language=matlab,
+	showstringspaces=false,
+	%basicstyle=\footnotesize\ttfamily,
+	basicstyle=\scriptsize\ttfamily,
+	keywordstyle=\bfseries\color{green!40!black},
+	commentstyle=\itshape\color{purple!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+}
+
+%wymiar tekstu
+\def\figurename{Rys.}
+\def\tablename{Tab.}
+
+%konfiguracja liczby p�ywaj�cych element�w
+\setcounter{topnumber}{0}%2
+\setcounter{bottomnumber}{3}%1
+\setcounter{totalnumber}{5}%3
+\renewcommand{\textfraction}{0.01}%0.2
+\renewcommand{\topfraction}{0.95}%0.7
+\renewcommand{\bottomfraction}{0.95}%0.3
+\renewcommand{\floatpagefraction}{0.35}%0.5
 
 \SendSettingsToPgf
-\title{\bf Sprawozdanie z projektu i ćwiczenia laboratoryjnego 3, zadanie nr 1 \vskip 0.1cm}
+\title{\bf Sprawozdanie z projektu i ćwiczenia laboratoryjnego nr 3, zadanie nr 1 \vskip 0.1cm}
 \author{Marcin Dolicher \\ Jakub Sikora \\ Robert Wojtaś}
 \date{\today}
 \pgfplotsset{compat=1.15}	
 \begin{document}
+\frenchspacing
+\pagestyle{uheadings}
 
 \makeatletter
 \renewcommand{\maketitle}{\begin{titlepage}
@@ -52,7 +108,7 @@
 			{\bf \LARGE \@title}
 		\end{center}
 
-		\vspace{10cm}
+		\vspace{9cm}
 		\begin{paracol}{2}
 			\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 			\subsection*{Zespół:}
