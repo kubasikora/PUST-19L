@@ -1,3 +1,4 @@
+clear 
 addpath ../
 SIM_LEN = 200;
 Ypp = 0;
