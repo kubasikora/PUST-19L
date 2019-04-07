@@ -3,4 +3,210 @@
 
 
 \section{Przebieg strojenia regulatora PID.}
-Nasze strojenie rozpoczęliśmy od wykorzystania metody Zieglera - Nicholsa. Parametry regulatora dobraliśmy według reguł stosowanych w tej metodzie. Niestety nie przyniosła ona zadowalających efektów. (tu podać rysunki na których są przebiegi) Dla końcowych parametrów uzyskiwaliśmy zawsze niegasnące oscylacje. Zostawały one nawet po ręcznym skorygowaniu przez nas wartości członów regulatora (wartości obliczone za pomocą metody Zieglera - Nicholsa były wtedy traktowane jako dobry punkt wyjścia do dalszego strojenia). 
+\subsection{Próba dostrojenia regulatora metoda Zieglera - Nicholsa}
+Nasze strojenie rozpoczęliśmy od wykorzystania metody Zieglera - Nicholsa. Parametry regulatora dobraliśmy według reguł stosowanych w tej metodzie. Niestety nie przyniosła ona zadowalających efektów. Dla końcowych parametrów uzyskiwaliśmy zawsze niegasnące oscylacje. Zostawały one nawet po ręcznym skorygowaniu przez nas wartości członów regulatora (wartości obliczone za pomocą metody Zieglera - Nicholsa były wtedy traktowane jako dobry punkt wyjścia do dalszego strojenia).
+
+~\\\\Na rysunkach \ref{pro_zad4_niegasnace_oscylacje_out} i \ref{pro_zad4_niegasnace_oscylacje_inp} zaprezentowaliśmy przebiegi sygnałów dla niegasnących oscylacji. Otrzymane przez nas wzmocnienie krytyczne wyniosło $K_{\mathrm{Kr}} = 2.2$, a okres oscylacji był równy $T_{\mathrm{Kr}} = \num{13.5}$ s. 
+
+~\\\\ Następnie wartości $K_{\mathrm{Kr}}$ i $T_{\mathrm{Kr}}$ podstawiliśmy do tabeli z wzorami na $K$, $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ wykorzystywanej w metodzie Zieglera - Nicholsa, dzięki temu uzyskaliśmy wartości liczbowe tych parametrów równe $K = \num{2.2}$, $T_{\mathrm{i}} = \num{6.75}$ i $T_{\mathrm{d}} = \num{1.62}$. Wskaźnik jakości regulacji wynosił $E = 50084.0886$. Wykresy dla tych ustawień to \ref{pro_zad4_ziegler_out} i \ref{pro_zad4_ziegler_inp}. Widzimy na nich niegasnące oscylacje, które są niepożądane podczas regulacji. Podjęliśmy próbę lekkiej zmiany parametrów regulatora, jednak nie poprawiły one w żaden sposób jakości regulacji. 
+
+~\\\\ Z powodu niezadowalających rezultatów po użyciu metody Zieglera - Nicholsa postanowiliśmy, że podczas szukania najlepszych nastawów oprzemy się w dużej mierze o nasze doświadczenie zdobyte na poprzednich laboratoriach i innych przedmiotach, których tematyką była regulacja. Zastosowaliśmy metodę inżynierską w której oceniamy jakościowo regulację i zmieniamy parametry tak, żeby nowe nastawy były lepsze od poprzednich. 
+
+\subsection{Dobór nastawów regulatora metodą inżynierską}
+Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zmniejszaliśmy K, a pozostałe człony wyłączyliśmy. Najlepsze rezultaty dostaliśmy dla $ K = \num{0.03} $ i $ K = \num{0.05} $. Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro_zad4_k_0.03_out}, \ref{pro_zad4_k_0.03_inp} oraz \ref{pro_zad4_k_0.05_out}, \ref{pro_zad4_k_0.05_inp}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_2.2_Ti_100000000000_Td_0.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_2.2_Ti_100000000000_Td_0.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora}
+    \label{pro_zad4_niegasnace_oscylacje_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_2.2_Ti_100000000000_Td_0.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora}
+    \label{pro_zad4_niegasnace_oscylacje_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_2.2_Ti_6.75_Td_1.62.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_2.2_Ti_6.75_Td_1.62.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
+    \label{pro_zad4_ziegler_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_2.2_Ti_6.75_Td_1.62.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
+    \label{pro_zad4_ziegler_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.03_Ti_10000000_Td_0.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.03_Ti_10000000_Td_0.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{pro_zad4_k_0.03_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.03_Ti_10000000_Td_0.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{pro_zad4_k_0.03_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.05_Ti_10000000_Td_0.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.05_Ti_10000000_Td_0.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{pro_zad4_k_0.05_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.05_Ti_10000000_Td_0.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego}
+    \label{pro_zad4_k_0.05_inp}
+\end{figure}

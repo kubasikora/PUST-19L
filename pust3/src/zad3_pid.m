@@ -12,7 +12,7 @@ Umin = -1;
 Umax = 1;
 
 T = 0.5;   
-SIM_LEN = 10000;
+SIM_LEN = 5000;
 
 %% Inicjalizacja wektorow
 % czas symulacji
@@ -36,9 +36,10 @@ error = zeros(SIM_LEN, 1);
 
 % Definicja parametrow ciaglych regulatora PID
 
-K = 0.05;
-Ti = 13*0.5;
-Td = 12*0.12;
+K = 0.03;
+Ti = 10000000%13.5*0.5;
+Td = 0%13.5*0.12;
+zapis_do_pliku = 1;
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
@@ -79,3 +80,16 @@ hold on
 plot(sim_time, output);
 title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
+
+%% zapis do plikow
+% wypisanie wartosci wspolczynnikow 
+if zapis_do_pliku == 1
+    str = strcat('K_', num2str(K), '_Ti_', num2str(Ti), '_Td_', num2str(Td));
+    disp(str)
+    input_ts = [sim_time-1 input];
+    output_ts = [sim_time-1 output];
+    setpoint_ts = [sim_time-1 setpoint];
+    dlmwrite(strcat('../data/project/zad4/zad3PID_input_', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/project/zad4/zad3PID_output_', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/project/zad4/zad3PID_setpoint_', str, '.csv'), setpoint_ts, '\t');
+end
