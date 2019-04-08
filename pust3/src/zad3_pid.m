@@ -37,9 +37,9 @@ error = zeros(SIM_LEN, 1);
 % Definicja parametrow ciaglych regulatora PID
 
 K = 0.03;
-Ti = 10000000%13.5*0.5;
-Td = 0%13.5*0.12;
-zapis_do_pliku = 1;
+Ti = 5.5%11*0.5;
+Td = 1.32%11*0.12;
+zapis_do_pliku = 0;
 
 %% Definicja wspolczynnikow regulatora cyfrowego
 
