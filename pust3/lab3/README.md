@@ -1,0 +1,1 @@
+wyniki pomiarów z laboratorium
