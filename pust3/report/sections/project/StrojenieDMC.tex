@@ -1,2 +1,100 @@
 \section{Przebieg strojenia regulatora DMC.}
 \label{pro4_DMC}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_303_Nu_303_lam_1_E_35395.6.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_303_Nu_303_lam_1_E_35395.6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{303}$ i $N_{\mathrm{u}} = \num{303}$}
+    \label{pro_zad4_d_303_n_303_nu_303_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_303_Nu_303_lam_1_E_35395.6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{303}$ i $N_{\mathrm{u}} = \num{303}$}
+    \label{pro_zad4_d_303_n_303_nu_303_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_220_Nu_220_lam_1_E_35395.6.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_220_Nu_220_lam_1_E_35395.6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{220}$ i $N_{\mathrm{u}} = \num{220}$}
+    \label{pro_zad4_d_303_n_220_nu_220_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_220_Nu_220_lam_1_E_35395.6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{220}$ i $N_{\mathrm{u}} = \num{220}$}
+    \label{pro_zad4_d_303_n_220_nu_220_inp}
+\end{figure}

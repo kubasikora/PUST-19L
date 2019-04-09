@@ -9,7 +9,7 @@ Umin = -1;
 Umax = 1;
 
 T = 0.5;   
-SIM_LEN = 3000;
+SIM_LEN = 5000;
 U_SKOK = 1;
 
 %% wyznaczenie odpowiedzi skokowej
@@ -29,10 +29,11 @@ step = step(1:cut_time);
 
 
 %% parametry regulatora 
-D = cut_time;
-N = D;
-Nu = N;
+D = 303;
+N = 303;
+Nu = 303;
 lambda = 1;
+zapis_do_pliku = 1;
 
 
 %% inicjalizacja potrzebnych zmiennych
@@ -144,3 +145,14 @@ hold on
 plot(sim_time, output);
 title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
+
+if zapis_do_pliku == 1
+    str = strcat('D_', num2str(D), '_N_', num2str(N), '_Nu_', num2str(Nu), '_lam_', num2str(lambda), '_E_', num2str(error_sum));
+    disp(str)
+    input_ts = [sim_time-1 input];
+    output_ts = [sim_time-1 output];
+    setpoint_ts = [sim_time-1 setpoint];
+    dlmwrite(strcat('../data/project/zad4/zad4DMC_input_', str, '.csv'), input_ts, '\t');
+    dlmwrite(strcat('../data/project/zad4/zad4DMC_output_', str, '.csv'), output_ts, '\t');
+    dlmwrite(strcat('../data/project/zad4/zad4DMC_setpoint_', str, '.csv'), setpoint_ts, '\t');
+end
