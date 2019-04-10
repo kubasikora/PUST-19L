@@ -147,7 +147,7 @@ title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
 
 if zapis_do_pliku == 1
-    str = strcat('D_', num2str(D), '_N_', num2str(N), '_Nu_', num2str(Nu), '_lam_', num2str(lambda), '_E_', num2str(error_sum));
+    str = strcat('D_', num2str(D), '_N_', num2str(N), '_Nu_', num2str(Nu), '_lam_', num2str(lambda));
     disp(str)
     input_ts = [sim_time-1 input];
     output_ts = [sim_time-1 output];
