@@ -1,12 +1,13 @@
 \section{Przebieg strojenia regulatora DMC}
 \label{pro4_DMC}
+Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ były równe horyzontowi dynamiki i wynosiły $303$. Wartość lambdy była ustawiona na poziomie $\lambda = 1$. Możemy zauważyć, że regulatora miał problemy z osiągnięciem wartości zadanej, a także charakteryzował się niegasnącymi oscylacjami (rysunki \ref{pro_zad4_d_303_n_303_nu_303_out} i \ref{pro_zad4_d_303_n_303_nu_303_inp}). W następnym kroku zmniejszaliśmy wartości parametrów $N$ i $N_{\mathrm{u}}$ do $220$, a potem do $50$. Nie wpłynęło to na poprawę przebiegów sygnałów. Wartość $N$ pozostawiliśmy równą $50$ i przeszliśmy do doboru wartości $N_{u}$. Horyzont sterowania zmniejszyliśmy do $10$ i potem przeszliśmy do doboru parametru $\lambda$, który miał zmniejszyć oscylacje występujące w naszym regulatorze. Na rysunkach \ref{pro_zad4_d_303_n_50_nu_10_lam_10out}, \ref{pro_zad4_d_303_n_50_nu_10_lam_50out} i \ref{pro_zad4_d_303_n_50_nu_10_lam_120out} możemy zobaczyć jak zmniejszają się oscylacje wraz z zwiększeniem wartości parametru $\lambda$. Przy odpowiednio długim czasie regulacji oscylacje gasną i osiągają wartość zadaną. Niestety niektóre ujemne wielkości zadane nadal nie są osiągane. Nasz najlepiej dostrojony regulator DMC został zaprezentowany na wykresach \ref{pro_zad4_d_303_n_50_nu_10_lam_120out} i \ref{pro_zad4_d_303_n_50_nu_10_lam_120inp}. Możemy zauważyć, że pojedynczy regulator DMC ma problemy z  regulacją tak złożonego obiektu. 
 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=3000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=3000,ymin=-4.2,ymax=11,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -23,7 +24,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_303_nu_303_out}
 \end{figure}
 
@@ -46,7 +47,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_303_nu_303_inp}
 \end{figure}
 
@@ -55,7 +56,7 @@
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=11,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -72,7 +73,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_220_nu_220_out}
 \end{figure}
 
@@ -95,7 +96,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_220_nu_220_inp}
 \end{figure}
 
@@ -104,7 +105,7 @@
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=11,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -121,7 +122,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50}$ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_50_nu_50_out}
 \end{figure}
 
@@ -144,7 +145,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50} $ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50} $ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_50_nu_50_inp}
 \end{figure}
 
@@ -153,7 +154,7 @@
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=11,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -170,7 +171,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_50_nu_10_out}
 \end{figure}
 
@@ -193,7 +194,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 1$}
     \label{pro_zad4_d_303_n_50_nu_10_inp}
 \end{figure}
 
@@ -203,7 +204,7 @@
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=12,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -220,7 +221,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 10$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 10$}
     \label{pro_zad4_d_303_n_50_nu_10_lam_10out}
 \end{figure}
 
@@ -243,7 +244,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 10$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 10$}
     \label{pro_zad4_d_303_n_50_nu_10_lam_10inp}
 \end{figure}
 
@@ -252,7 +253,7 @@
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=12,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -269,7 +270,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 50$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 50$}
     \label{pro_zad4_d_303_n_50_nu_10_lam_50out}
 \end{figure}
 
@@ -292,7 +293,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 50$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 50$}
     \label{pro_zad4_d_303_n_50_nu_10_lam_50inp}
 \end{figure}
 
@@ -301,7 +302,7 @@
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=10,
+    xmin=0.0,xmax=5000,ymin=-4.2,ymax=12,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -318,7 +319,7 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 120$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 120$}
     \label{pro_zad4_d_303_n_50_nu_10_lam_120out}
 \end{figure}
 
@@ -341,6 +342,6 @@
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Odpowiedzi procesu na skokową zmianę sygnału sterującego dla $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 120$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 120$}
     \label{pro_zad4_d_303_n_50_nu_10_lam_120inp}
 \end{figure}
