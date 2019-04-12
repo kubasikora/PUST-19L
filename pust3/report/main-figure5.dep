@@ -1,1 +1,1 @@
-main-figure5.pdf: ../data/project/zad4/zad3PID_input_K_0.03_Ti_10000000_Td_0.csv
+main-figure5.pdf: ../data/project/zad4/zad3PID_input_K_2.2_Ti_100000000000_Td_0.csv

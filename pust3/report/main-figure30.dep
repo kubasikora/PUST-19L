@@ -1,0 +1,2 @@
+main-figure30.pdf: ../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_10_lam_120_E_32189.1237.csv
+main-figure30.pdf: ../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_10_lam_120_E_32189.1237.csv

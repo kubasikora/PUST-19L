@@ -9,7 +9,7 @@ Umin = -1;
 Umax = 1;
 
 T = 0.5;   
-SIM_LEN = 5000;
+SIM_LEN = 1000;
 U_SKOK = 1;
 
 %% wyznaczenie odpowiedzi skokowej
@@ -30,9 +30,9 @@ step = step(1:cut_time);
 
 %% parametry regulatora 
 D = 303;
-N = 303;
-Nu = 303;
-lambda = 1;
+N = 50;
+Nu = 10;
+lambda = 10000;
 zapis_do_pliku = 1;
 
 

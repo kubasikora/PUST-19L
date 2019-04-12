@@ -5,18 +5,18 @@
 \subsection{Próba dostrojenia regulatora metoda Zieglera - Nicholsa}
 Nasze strojenie rozpoczęliśmy od wykorzystania metody Zieglera - Nicholsa. Parametry regulatora dobraliśmy według reguł stosowanych w tej metodzie. Niestety nie przyniosła ona zadowalających efektów. Dla końcowych parametrów uzyskiwaliśmy zawsze niegasnące oscylacje. Zostawały one nawet po ręcznym skorygowaniu przez nas wartości członów regulatora (wartości obliczone za pomocą metody Zieglera - Nicholsa były wtedy traktowane jako dobry punkt wyjścia do dalszego strojenia).
 
-~\\\\Na rysunkach \ref{pro_zad4_niegasnace_oscylacje_out} i \ref{pro_zad4_niegasnace_oscylacje_inp} zaprezentowaliśmy przebiegi sygnałów dla niegasnących oscylacji. Otrzymane przez nas wzmocnienie krytyczne wyniosło $K_{\mathrm{Kr}} = 2.2$, a okres oscylacji był równy $T_{\mathrm{Kr}} = \num{13.5}$ s. 
+~\\\\Na rysunkach \ref{pro_zad4_niegasnace_oscylacje_out} i \ref{pro_zad4_niegasnace_oscylacje_inp} zaprezentowaliśmy przebiegi sygnałów dla niegasnących oscylacji. Otrzymane przez nas wzmocnienie krytyczne wyniosło $K_{\mathrm{Kr}} = 0.25$, a okres oscylacji był równy $T_{\mathrm{Kr}} = \num{14.5}$ s. 
 
-~\\\\ Następnie wartości $K_{\mathrm{Kr}}$ i $T_{\mathrm{Kr}}$ podstawiliśmy do tabeli z wzorami na $K$, $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ wykorzystywanej w metodzie Zieglera - Nicholsa, dzięki temu uzyskaliśmy wartości liczbowe tych parametrów równe $K = \num{2.2}$, $T_{\mathrm{i}} = \num{6.75}$ i $T_{\mathrm{d}} = \num{1.62}$. Wskaźnik jakości regulacji wynosił $E = 50084.0886$. Wykresy dla tych ustawień to \ref{pro_zad4_ziegler_out} i \ref{pro_zad4_ziegler_inp}. Widzimy na nich niegasnące oscylacje, które są niepożądane podczas regulacji. Podjęliśmy próbę lekkiej zmiany parametrów regulatora, jednak nie poprawiły one w żaden sposób jakości regulacji. 
+~\\\\ Następnie wartości $K_{\mathrm{Kr}}$ i $T_{\mathrm{Kr}}$ podstawiliśmy do tabeli z wzorami na $K$, $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ wykorzystywanej w metodzie Zieglera - Nicholsa, dzięki temu uzyskaliśmy wartości liczbowe tych parametrów równe $K = \num{0.15}$, $T_{\mathrm{i}} = \num{7.25}$ i $T_{\mathrm{d}} = \num{1.74}$. Wskaźnik jakości regulacji wynosił $E = \num{3486.41}$. Wykresy dla tych ustawień to \ref{pro_zad4_ziegler_out} i \ref{pro_zad4_ziegler_inp}. Widzimy na nich niegasnące oscylacje, które są niepożądane podczas regulacji. Podjęliśmy próbę lekkiej zmiany parametrów regulatora, jednak nie poprawiły one w żaden sposób jakości regulacji. 
 
 ~\\\\ Z powodu niezadowalających rezultatów po użyciu metody Zieglera - Nicholsa postanowiliśmy, że podczas szukania najlepszych nastawów oprzemy się w dużej mierze o nasze doświadczenie zdobyte na poprzednich laboratoriach i innych przedmiotach, których tematyką była regulacja. Zastosowaliśmy metodę inżynierską w której oceniamy jakościowo regulację i zmieniamy parametry tak, żeby nowe nastawy były lepsze od poprzednich. 
 
 \subsection{Dobór nastawów regulatora metodą inżynierską}
 Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zmniejszaliśmy K, a pozostałe człony wyłączyliśmy. Najlepsze rezultaty dostaliśmy dla $ K = \num{0.03} $ i $ K = \num{0.05} $. Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro_zad4_k_0.03_out}, \ref{pro_zad4_k_0.03_inp} oraz \ref{pro_zad4_k_0.05_out}, \ref{pro_zad4_k_0.05_inp}.
 
-~\\\\ W następnym etapie włączyliśmy człon całkujący i różniczkujący. Ich wartości początkowe przyjęliśmy takie jak w metodzie Zieglera - Nicholsa $T_{\mathrm{i}} = \num{6.75}$ i $T_{\mathrm{d}} = \num{1.62}$. Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro_zad4_k_0.03_6.75_1.62_out} i \ref{pro_zad4_k_0.03_6.75_1.62_inp}. Możemy zauważyć, że regulator nie był w stanie osiągnąć pierwszych zmian wartości zadanej. Poprawna regulacja rozpoczęła się od około 2000 próbki, wtedy większość wartości zadanych została osiągnięta. Wskaźnik jakości regulacji wyniósł $E = 344443.9$. 
+~\\\\ W następnym etapie włączyliśmy człon całkujący i różniczkujący. Ich wartości początkowe przyjęliśmy trochę mniejsze niż w metodzie Zieglera - Nicholsa $T_{\mathrm{i}} = \num{6.75}$ i $T_{\mathrm{d}} = \num{1.62}$. Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro_zad4_k_0.03_6.75_1.62_out} i \ref{pro_zad4_k_0.03_6.75_1.62_inp}. Wskaźnik jakości regulacji wyniósł $E = \num{3571.24}$. 
 
-~\\\\ Postanowiliśmy jeszcze bardziej zmniejszyć wartości $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ w celu uzyskania jeszcze lepszej regulacji. Wykresy \ref{pro_zad4_k_0.03_6.5_1.56_out} i \ref{pro_zad4_k_0.03_6.5_1.56_inp} prezentują przebiegi dla parametrów $K = \num{0,03}$, $T_{\mathrm{i}} = \num{6.5}$ i $T_{\mathrm{d}} = \num{1.56}$, a rysunki \ref{pro_zad4_k_0.03_5.5_1.32_out} i \ref{pro_zad4_k_0.03_5.5_1.32_inp} dla $K = \num{0,03}$, $T_{\mathrm{i}} = \num{5.5}$ i $T_{\mathrm{d}} = \num{1.32}$. Dla ostatnich nastawów uzyskaliśmy najmniejszy wskaźnik jakości regulacji równy $E = \num{33955,70}$. Przebiegi sygnałów nie zmieniły się znacząco, ale po uważnej analizie możemy zauważyć, że dla ostatnich wartości parametrów niektóre wielkości zadane są szybciej osiągane. 
+~\\\\ Postanowiliśmy jeszcze bardziej zmniejszyć wartości $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ w celu uzyskania jeszcze lepszej regulacji. Wykresy \ref{pro_zad4_k_0.03_6.5_1.56_out} i \ref{pro_zad4_k_0.03_6.5_1.56_inp} prezentują przebiegi dla parametrów $K = \num{0,03}$, $T_{\mathrm{i}} = \num{6.5}$ i $T_{\mathrm{d}} = \num{1.56}$, a rysunki \ref{pro_zad4_k_0.03_5.5_1.32_out} i \ref{pro_zad4_k_0.03_5.5_1.32_inp} dla $K = \num{0,03}$, $T_{\mathrm{i}} = \num{5.5}$ i $T_{\mathrm{d}} = \num{1.32}$. Dla ostatnich nastawów uzyskaliśmy najmniejszy wskaźnik jakości regulacji równy $E = \num{3242.08}$. Przebiegi sygnałów nie zmieniły się znacząco, ale po uważnej analizie możemy zauważyć, że dla ostatnich wartości parametrów niektóre wielkości zadane są szybciej osiągane. 
 
 
 \begin{figure}[t]
@@ -24,7 +24,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-0.5,ymax=9,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -36,8 +36,8 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
 
-    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_2.2_Ti_100000000000_Td_0.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_2.2_Ti_100000000000_Td_0.csv};
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.25_Ti_100000000000_Td_0.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.25_Ti_100000000000_Td_0.csv};
     
     \end{axis}
     \end{tikzpicture}
@@ -50,7 +50,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=1.2,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -60,7 +60,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_2.2_Ti_100000000000_Td_0.csv};
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.25_Ti_100000000000_Td_0.csv};
     
     \end{axis}
     \end{tikzpicture}
@@ -73,7 +73,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -85,8 +85,8 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
 
-    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_2.2_Ti_6.75_Td_1.62.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_2.2_Ti_6.75_Td_1.62.csv};
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.15_Ti_7.25_Td_1.74.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.15_Ti_7.25_Td_1.74.csv};
     
     \end{axis}
     \end{tikzpicture}
@@ -99,7 +99,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-1.1,ymax=1.1,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -109,7 +109,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_2.2_Ti_6.75_Td_1.62.csv};
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.15_Ti_7.25_Td_1.74.csv};
     
     \end{axis}
     \end{tikzpicture}
@@ -122,7 +122,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -139,7 +139,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora dla $K=\num{0.03}$}
     \label{pro_zad4_k_0.03_out}
 \end{figure}
 
@@ -148,7 +148,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.2,ymax=0.4,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -162,7 +162,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach}
+    \caption{Przebieg sygnału sterującego przy parametrach $K=\num{0.03}$}
     \label{pro_zad4_k_0.03_inp}
 \end{figure}
 
@@ -171,7 +171,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -188,7 +188,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora dla $K=\num{0.05}$}
     \label{pro_zad4_k_0.05_out}
 \end{figure}
 
@@ -197,7 +197,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.2,ymax=0.6,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -211,7 +211,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego}
+    \caption{Przebieg sygnału sterującego dla $K=\num{0.05}$}
     \label{pro_zad4_k_0.05_inp}
 \end{figure}
 
@@ -220,7 +220,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -246,7 +246,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.1,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -269,7 +269,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -295,7 +295,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.1,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -318,7 +318,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.5,ymax=11.5,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -344,7 +344,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.5,ymax=1.1,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,

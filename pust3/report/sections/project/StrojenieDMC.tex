@@ -1,13 +1,19 @@
 \section{Przebieg strojenia regulatora DMC}
 \label{pro4_DMC}
-Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ były równe horyzontowi dynamiki i wynosiły $303$. Wartość lambdy była ustawiona na poziomie $\lambda = 1$. Możemy zauważyć, że regulatora miał problemy z osiągnięciem wartości zadanej, a także charakteryzował się niegasnącymi oscylacjami (rysunki \ref{pro_zad4_d_303_n_303_nu_303_out} i \ref{pro_zad4_d_303_n_303_nu_303_inp}). W następnym kroku zmniejszaliśmy wartości parametrów $N$ i $N_{\mathrm{u}}$ do $220$, a potem do $50$. Nie wpłynęło to na poprawę przebiegów sygnałów. Wartość $N$ pozostawiliśmy równą $50$ i przeszliśmy do doboru wartości $N_{u}$. Horyzont sterowania zmniejszyliśmy do $10$ i potem przeszliśmy do doboru parametru $\lambda$, który miał zmniejszyć oscylacje występujące w naszym regulatorze. Na rysunkach \ref{pro_zad4_d_303_n_50_nu_10_lam_10out}, \ref{pro_zad4_d_303_n_50_nu_10_lam_50out} i \ref{pro_zad4_d_303_n_50_nu_10_lam_120out} możemy zobaczyć jak zmniejszają się oscylacje wraz z zwiększeniem wartości parametru $\lambda$. Przy odpowiednio długim czasie regulacji oscylacje gasną i osiągają wartość zadaną. Niestety niektóre ujemne wielkości zadane nadal nie są osiągane. Nasz najlepiej dostrojony regulator DMC został zaprezentowany na wykresach \ref{pro_zad4_d_303_n_50_nu_10_lam_120out} i \ref{pro_zad4_d_303_n_50_nu_10_lam_120inp}. Możemy zauważyć, że pojedynczy regulator DMC ma problemy z  regulacją tak złożonego obiektu. 
+Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ były równe horyzontowi dynamiki i wynosiły $303$. Wartość parametru kary była ustawiona na poziomie $\lambda = 1$. Możemy zauważyć, że regulatora miał problemy z osiągnięciem wartości zadanej, a także charakteryzował się niegasnącymi oscylacjami (rysunki \ref{pro_zad4_d_303_n_303_nu_303_out} i \ref{pro_zad4_d_303_n_303_nu_303_inp}). Po kilku próbach zmian parametrów $ N, N_{\mathrm{u}}$ nie zaobserwowaliśmy zmiany. Z tego powodu zdecydowaliśmy się podnieść wartość współczynnika kary $\lambda$. Zrobiliśmy to trzykrotnie, najpierw do wartości $100$, potem $1000$ i skończyliśmy na wielkości $\lambda = 1000)$ (wykresy \ref{pro_zad4_d_303_n_303_nu_303_lam_10000out} i \ref{pro_zad4_d_303_n_303_nu_303_lam_10000inp}). Dla niej przebiegi sygnałów prezentowały się najlepiej, ponieważ udało się wyeliminować oscylacje i osiągnąć wartości zadane. Następnie przeszliśmy do doboru parametrów $ N, N_{\mathrm{u}}$.
+
+
+Zaczęliśmy od zmniejszenia wartości parametrów $N$ i $N_{\mathrm{u}}$ do $220$, a potem do $50$. Nie wpłynęło to na poprawę przebiegów sygnałów. Możemy to zauważyć na rysunku \ref{pro_zad4_d_303_n_220_nu_220_out} i \ref{pro_zad4_d_303_n_220_nu_220_inp}. Wartość $N$ pozostawiliśmy równą $50$ i przeszliśmy do doboru wartości $N_{u}$. Horyzont sterowania zmniejszyliśmy do $10$, co nie spowodowało znaczących zmian w przebiegu regulacji. Po bardzo dokładnym porównaniu wykresów dla wartości $N_{u} = 50$ i $N_{u} = 10$ zobaczymy, że dla tej drugiej wartości zmiany są trochę dynamiczniejsze. 
+
+
+Podczas strojenia regulatora DMC doszliśmy do wniosku, że największy wpływ na przebieg regulacji miała wartość współczynnika kary. Zwiększenie parametru $\lambda$ pozwoliło na znaczącą poprawę regulacji. 
 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=3000,ymin=-4.2,ymax=11,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -33,7 +39,7 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=3000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-1.2,ymax=1.2,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -51,12 +57,13 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \label{pro_zad4_d_303_n_303_nu_303_inp}
 \end{figure}
 
+
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=11,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -68,12 +75,159 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
 
-    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_220_Nu_220_lam_1_E_35395.6.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_220_Nu_220_lam_1_E_35395.6.csv};
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_303_Nu_303_lam_100.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_303_Nu_303_lam_100.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 100$}
+    \label{pro_zad4_d_303_n_303_nu_303_lam_100out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1.2,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_303_Nu_303_lam_100.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303} $ i $\lambda = 100$}
+    \label{pro_zad4_d_303_n_303_nu_303_lam_100inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_303_Nu_303_lam_1000.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_303_Nu_303_lam_1000.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 1000$}
+    \label{pro_zad4_d_303_n_303_nu_303_lam_1000out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_303_Nu_303_lam_1000.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303} $ i $\lambda = 1000$}
+    \label{pro_zad4_d_303_n_303_nu_303_lam_1000inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_303_Nu_303_lam_10000.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_303_Nu_303_lam_10000.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303}$ i $\lambda = 10000$}
+    \label{pro_zad4_d_303_n_303_nu_303_lam_1000out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.8,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_303_Nu_303_lam_10000.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{303}$, $N_{\mathrm{u}} = \num{303} $ i $\lambda = 10000$}
+    \label{pro_zad4_d_303_n_303_nu_303_lam_10000inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_220_Nu_220_lam_10000.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_220_Nu_220_lam_10000.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 10000$}
     \label{pro_zad4_d_303_n_220_nu_220_out}
 \end{figure}
 
@@ -82,7 +236,7 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.6,ymax=1.2,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -92,11 +246,11 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_220_Nu_220_lam_1_E_35395.6.csv};
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_220_Nu_220_lam_10000.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{220}$, $N_{\mathrm{u}} = \num{220}$ i $\lambda = 10000$}
     \label{pro_zad4_d_303_n_220_nu_220_inp}
 \end{figure}
 
@@ -105,7 +259,7 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=11,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -117,12 +271,12 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
 
-    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_50_lam_1_E_35395.6.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_50_lam_1_E_35395.6.csv};
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_50_lam_10000.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_50_lam_10000.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50}$ i $\lambda = 10000$}
     \label{pro_zad4_d_303_n_50_nu_50_out}
 \end{figure}
 
@@ -131,7 +285,7 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.6,ymax=1.2,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -141,11 +295,11 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_50_lam_1_E_35395.6.csv};
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_50_lam_10000.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50} $ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{50} $ i $\lambda = 10000$}
     \label{pro_zad4_d_303_n_50_nu_50_inp}
 \end{figure}
 
@@ -154,7 +308,7 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=11,
+    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -166,12 +320,12 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
 
-    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_10_lam_1_E_35377.3163.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_10_lam_1_E_35377.3163.csv};
+    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_10_lam_10000.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_10_lam_10000.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 1$}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 10000$}
     \label{pro_zad4_d_303_n_50_nu_10_out}
 \end{figure}
 
@@ -180,7 +334,7 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
+    xmin=0.0,xmax=1000,ymin=-0.8,ymax=1.2,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -190,158 +344,10 @@ Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ b
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_10_lam_1_E_35377.3163.csv};
+    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_10_lam_10000.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 1$}
+    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 10000$}
     \label{pro_zad4_d_303_n_50_nu_10_inp}
-\end{figure}
-
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=12,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y[k]$},
-    \addlegendentry{$y^{\mathrm{zad}}[k]$},
-
-    \addlegendimage{no markers,red}
-    \addlegendimage{no markers,blue}
-
-    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_10_lam_10_E_32550.4148.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_10_lam_10_E_32550.4148.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 10$}
-    \label{pro_zad4_d_303_n_50_nu_10_lam_10out}
-\end{figure}
-
-\begin{figure}[b]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$u[k]$},
-    
-    \addlegendimage{no markers,blue}
-
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_10_lam_10_E_32550.4148.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 10$}
-    \label{pro_zad4_d_303_n_50_nu_10_lam_10inp}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=12,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y[k]$},
-    \addlegendentry{$y^{\mathrm{zad}}[k]$},
-
-    \addlegendimage{no markers,red}
-    \addlegendimage{no markers,blue}
-
-    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_10_lam_50_E_32109.6505.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_10_lam_50_E_32109.6505.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 50$}
-    \label{pro_zad4_d_303_n_50_nu_10_lam_50out}
-\end{figure}
-
-\begin{figure}[b]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$u[k]$},
-    
-    \addlegendimage{no markers,blue}
-
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_10_lam_50_E_32109.6505.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 50$}
-    \label{pro_zad4_d_303_n_50_nu_10_lam_50inp}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-4.2,ymax=12,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y[k]$},
-    \addlegendentry{$y^{\mathrm{zad}}[k]$},
-
-    \addlegendimage{no markers,red}
-    \addlegendimage{no markers,blue}
-
-    \addplot[red, semithick] file{../data/project/zad4/zad4DMC_output_D_303_N_50_Nu_10_lam_120_E_32189.1237.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_setpoint_D_303_N_50_Nu_10_lam_120_E_32189.1237.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10}$ i $\lambda = 120$}
-    \label{pro_zad4_d_303_n_50_nu_10_lam_120out}
-\end{figure}
-
-\begin{figure}[b]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=5000,ymin=-1.2,ymax=1.2,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$u[k]$},
-    
-    \addlegendimage{no markers,blue}
-
-    \addplot[blue, semithick] file{../data/project/zad4/zad4DMC_input_D_303_N_50_Nu_10_lam_120_E_32189.1237.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $D = \num{303}$, $N = \num{50}$, $N_{\mathrm{u}} = \num{10} $ i $\lambda = 120$}
-    \label{pro_zad4_d_303_n_50_nu_10_lam_120inp}
 \end{figure}

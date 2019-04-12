@@ -12,7 +12,7 @@ Umin = -1;
 Umax = 1;
 
 T = 0.5;   
-SIM_LEN = 5000;
+SIM_LEN = 1000;
 
 %% Inicjalizacja wektorow
 % czas symulacji
@@ -37,8 +37,8 @@ error = zeros(SIM_LEN, 1);
 % Definicja parametrow ciaglych regulatora PID
 
 K = 0.03;
-Ti = 5.5%11*0.5;
-Td = 1.32%11*0.12;
+Ti = 5.5%5.5%11*0.5;
+Td = 1.32%1.32%11*0.12;
 zapis_do_pliku = 0;
 
 %% Definicja wspolczynnikow regulatora cyfrowego

@@ -1,2 +1,10 @@
-main-figure2.pdf: ../data/project/zad4/zad3PID_output_K_2.2_Ti_6.75_Td_1.62.csv
-main-figure2.pdf: ../data/project/zad4/zad3PID_setpoint_K_2.2_Ti_6.75_Td_1.62.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=-1.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=-0.8.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=-0.6.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=-0.4.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=-0.2.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=0.2.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=0.4.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=0.6.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=0.8.csv
+main-figure2.pdf: ../data/project/zad2/odp_skok_norm_u=1.csv

@@ -1,2 +1,2 @@
-main-figure14.pdf: ../data/project/zad4/zad4DMC_output_D_303_N_303_Nu_303_lam_1.csv
-main-figure14.pdf: ../data/project/zad4/zad4DMC_setpoint_D_303_N_303_Nu_303_lam_1.csv
+main-figure14.pdf: ../data/project/zad4/zad3PID_output_K_0.03_Ti_6.5_Td_1.56.csv
+main-figure14.pdf: ../data/project/zad4/zad3PID_setpoint_K_0.03_Ti_6.5_Td_1.56.csv
