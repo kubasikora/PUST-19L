@@ -12,7 +12,7 @@ Umin = -1;
 Umax = 1;
 
 T = 0.5;   
-SIM_LEN = 5000;
+SIM_LEN = 1000;
 
 %% Inicjalizacja wektorow
 % czas symulacji
