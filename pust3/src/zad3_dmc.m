@@ -33,7 +33,7 @@ D = 303;
 N = 50;
 Nu = 10;
 lambda = 10000;
-zapis_do_pliku = 1;
+zapis_do_pliku = 0;
 
 
 %% inicjalizacja potrzebnych zmiennych
