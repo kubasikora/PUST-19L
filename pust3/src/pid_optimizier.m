@@ -67,7 +67,7 @@ stpt = [((Ypp+1)*ones(SIM_LEN/4,1))' ((Ypp)*ones(SIM_LEN/4,1))' ((Ypp-1)*ones(SI
 
 
 %% symulacja obiektu
-for k = 12:SIM_LEN
+for k = 7:SIM_LEN
     output(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));    % pomiar wyjscia
     error(k) = stpt(k) - output(k);   % obliczenie uchyby
     
