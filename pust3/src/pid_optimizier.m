@@ -68,7 +68,7 @@ stpt = [((Ypp+1)*ones(SIM_LEN/4,1))' ((Ypp)*ones(SIM_LEN/4,1))' ((Ypp-1)*ones(SI
 
 %% symulacja obiektu
 for k = 12:SIM_LEN
-    output(k) = symulacja_obiektu1y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+    output(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));    % pomiar wyjscia
     error(k) = stpt(k) - output(k);   % obliczenie uchyby
     
     input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + input(k-1);  % wyliczenie sterowania
