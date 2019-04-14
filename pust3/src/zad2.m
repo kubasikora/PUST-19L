@@ -17,14 +17,14 @@ for u_zad = dU
     end
     output_ts = [time-1 y];
     output_norm_ts = [time-1 (y-Ypp)./u_zad];
-    dlmwrite(strcat('../data/project/zad2/odp_skok_u=', num2str(u_zad), '.csv'), output_ts, '\t');
-    dlmwrite(strcat('../data/project/zad2/odp_skok_norm_u=', num2str(u_zad), '.csv'), output_norm_ts, '\t');
+%     dlmwrite(strcat('../data/project/zad2/odp_skok_u=', num2str(u_zad), '.csv'), output_ts, '\t');
+%     dlmwrite(strcat('../data/project/zad2/odp_skok_norm_u=', num2str(u_zad), '.csv'), output_norm_ts, '\t');
     i = i +1;
     yS(i) = y(SIM_LEN);
 end
 
 char_stat_short = [dU' yS];
-dlmwrite('../data/project/zad2/char_stat_short.csv', char_stat_short, '\t');
+% dlmwrite('../data/project/zad2/char_stat_short.csv', char_stat_short, '\t');
 
 %% szersza charakterystyka statyczna
 
@@ -41,6 +41,7 @@ for u_zad= u_stat
     i = i + 1;
     y_stat(i) = y(SIM_LEN);
 end
-
+figure(3)
+plot(u_stat, y_stat);
 char_stat_long = [u_stat' y_stat];
-dlmwrite('../data/project/zad2/char_stat_long.csv', char_stat_long, '\t');
+% dlmwrite('../data/project/zad2/char_stat_long.csv', char_stat_long, '\t');

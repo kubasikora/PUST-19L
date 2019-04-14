@@ -84,3 +84,49 @@ for i = 1:REGULATOR_NUM
     Ku(:,i) = K(1,:) * Mp;
 end    
     
+%% inicjalizacja potrzebnych zmiennych
+error_sum = 0;
+
+% czas symulacji
+sim_time = 1:SIM_LEN; % do plotowania
+sim_time = sim_time';
+
+% wartosc zadana
+setpoint = createSetpointTrajectory(SIM_LEN);
+
+% wektor sygnalu sterujacego
+input = Upp*ones(SIM_LEN, 1);
+
+% wektor wyjscia
+output = Ypp*ones(SIM_LEN, 1);
+
+rescaled_output = 0;
+rescaled_input = zeros(SIM_LEN, 1);
+
+% wektor uchybu
+error = zeros(SIM_LEN, 1);
+
+
+%% symulacja procesu regulacji
+for k=7:SIM_LEN    
+    % wektor dUp
+    for i = 1:(D-1)
+        if (k-i) <= 0
+            du1 = 0;
+        else
+            du1 = rescaled_input(k - i);
+        end
+        if (k-i-1) <= 0
+            du2 = 0;
+        else
+            du2 = rescaled_input(k - i - 1);
+        end 
+        dUp(i) = du1 - du2;
+    end
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2)); 
+    rescaled_output = output(k) - Ypp;                                                     
+    stpt = setpoint(k) - Ypp;                                                               
+    error(k) = stpt - rescaled_output;   
+    error_sum = error_sum + error(k)^2; 
+    
+end

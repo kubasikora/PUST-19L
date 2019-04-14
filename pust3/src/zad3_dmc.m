@@ -98,7 +98,7 @@ K = inv((M' * M + lambda * eye(Nu)))*M';
 Ke = sum(K(1,:));
 Ku = K(1,:) * Mp;
 
-for k=12:SIM_LEN    
+for k=7:SIM_LEN    
     % wektor dUp
     for i = 1:(D-1)
         if (k-i) <= 0
@@ -114,7 +114,7 @@ for k=12:SIM_LEN
         dUp(i) = du1 - du2;
     end
     
-    output(k) = symulacja_obiektu1y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2));  % pomiar wyjscia
     rescaled_output = output(k) - Ypp;                                                      % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;                                                               % przeskalowany setpoint
     error(k) = stpt - rescaled_output;                                                      % obliczenie uchyby   
