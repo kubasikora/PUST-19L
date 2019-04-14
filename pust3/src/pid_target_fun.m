@@ -22,8 +22,8 @@ r2 = (K*Td)/T;
 
 
 %% wektory i/o
-output = Ypp*zeros(SIM_LEN,1);
-input = Upp*zeros(SIM_LEN,1);
+y = Ypp*zeros(SIM_LEN,1);
+u = Upp*zeros(SIM_LEN,1);
 error = zeros(SIM_LEN,1);
 
 
@@ -33,15 +33,15 @@ stpt = [((Ypp)*ones(SIM_LEN/4,1))' ((Ypp+1)*ones(SIM_LEN/4,1))' ((Ypp)*ones(SIM_
 
 %% symulacja obiektu
 for k = 7:SIM_LEN
-    output(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));    % pomiar wyjscia
-    error(k) = stpt(k) - output(k);   % obliczenie uchyby
+    y(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));    % pomiar wyjscia
+    error(k) = stpt(k) - y(k);   % obliczenie uchyby
     
-    input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + input(k-1);  % wyliczenie sterowania
+    u(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + u(k-1);  % wyliczenie sterowania
     
-    if input(k) >= Umax
-        input(k) = Umax;
-    elseif input(k) <= Umin
-        input(k) = Umin;
+    if u(k) >= Umax
+        u(k) = Umax;
+    elseif u(k) <= Umin
+        u(k) = Umin;
     end
     
     error_sum = error_sum + error(k)^2;

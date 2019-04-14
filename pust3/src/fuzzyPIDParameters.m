@@ -1,6 +1,5 @@
-clear all
+function FUZZY_PID_PARAMETERS = fuzzyPIDParameters(REGULATOR_NUM)
 options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 600);
-REGULATOR_NUM = 2;
 
 Y_MIN = -0.31546;
 Y_MAX = 11.839;
@@ -33,7 +32,7 @@ Ypp = FUZZY_YPPs(i);
 Upp = FUZZY_UPPs(i);
 
 base_values = [0.5 7.25 1.62];
-options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter');
+options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 600);
 
 parameters = fmincon(@(parameters)pid_target_fun(parameters, Upp, Ypp), base_values, [], [], [], [], [K_min Ti_min Td_min], [K_max Ti_max Td_max], [], options);
 
@@ -41,7 +40,7 @@ parameters = fmincon(@(parameters)pid_target_fun(parameters, Upp, Ypp), base_val
 Umin = -1;
 Umax = 1;
 T = 0.5;
-SIM_LEN = 2000;
+SIM_LEN = 800;
 
 
 %% parametry ciagle
@@ -67,8 +66,8 @@ stpt = [((Ypp+1)*ones(SIM_LEN/4,1))' ((Ypp)*ones(SIM_LEN/4,1))' ((Ypp-1)*ones(SI
 
 
 %% symulacja obiektu
-for k = 7:SIM_LEN
-    output(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));    % pomiar wyjscia
+for k = 12:SIM_LEN
+    output(k) = symulacja_obiektu1y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
     error(k) = stpt(k) - output(k);   % obliczenie uchyby
     
     input(k) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) + input(k-1);  % wyliczenie sterowania
@@ -80,16 +79,9 @@ for k = 7:SIM_LEN
     end   
 end
 
-figure(1)
-hold on
-plot(stpt);
-plot(output);
-hold off
-
-figure(2)
-plot(input)
-
 FUZZY_PID_PARAMETERS(i,1:3) = parameters;
 FUZZY_PID_PARAMETERS(i,4) = FUZZY_UPPs(i);
 FUZZY_PID_PARAMETERS(i,5) = FUZZY_YPPs(i);
+end
+
 end
