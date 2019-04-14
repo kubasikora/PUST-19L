@@ -49,8 +49,8 @@ r2 = (K*Td)/T;
 
 %% Petla symulujaca dzialanie cyfrowego algorytmu PID
 error_sum = 0;
-for k = 12:SIM_LEN     
-    output(k) = symulacja_obiektu1y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+for k = 7:SIM_LEN     
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2));    % pomiar wyjscia
     rescaled_output = output(k) - Ypp;  % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;   % przeskalowany setpoint
     error(k) = stpt - rescaled_output;   % obliczenie uchyby   
