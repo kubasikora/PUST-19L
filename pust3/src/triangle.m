@@ -1,7 +1,21 @@
-function [outputArg1,outputArg2] = triangle(inputArg1,inputArg2)
-%TRIANGLE Summary of this function goes here
-%   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+function y = triangle(x, ypp)
+    a = ypp - 4.5;
+    b = ypp + 4.5;
+    
+    if x <= a
+        y = 0;
+    end
+    
+    if x > a && x <= ypp
+       y = (x-a)/(ypp-a);
+    end
+    
+    if x > ypp && x <= b
+        y = (b-x)/(b-ypp);
+    end
+    
+    if x > b
+        y = 0;
+    end
 end
 
