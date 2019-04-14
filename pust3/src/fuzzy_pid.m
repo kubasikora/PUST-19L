@@ -1,5 +1,5 @@
-LOCAL_REGS = 2;
-evalFuzzyMatrix = 0;
+LOCAL_REGS = 5;
+evalFuzzyMatrix = 1;
 
 if evalFuzzyMatrix == 1
     fuzzyMatrix = fuzzyPIDParameters(LOCAL_REGS);
@@ -29,8 +29,8 @@ stpt = createSetpointTrajectory(SIM_LEN);
 local_inputs = zeros(LOCAL_REGS,1);
 memberships = zeros(LOCAL_REGS,1);
 %% symulacja obiektu
-for k = 12:SIM_LEN
-    output(k) = symulacja_obiektu1y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+for k = 7:SIM_LEN
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2));    % pomiar wyjscia
     error(k) = stpt(k) - output(k);   % obliczenie uchyby
     
     for i=1:LOCAL_REGS
