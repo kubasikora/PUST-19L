@@ -1,4 +1,5 @@
 %%%%%%%%%% REGULATOR ROZMYTY PID
+addpath ../src
 LOCAL_REGS = 3;
 
 %%%%%% postac macierzy Kp Ti Td Upp Ypp

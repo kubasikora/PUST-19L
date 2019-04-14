@@ -1,7 +1,7 @@
-LOCAL_REGS = 2;
-evalFuzzyMatrix = 0;
+LOCAL_REGS = 12;
+membershipFunction = 'triangle'; % trapezoid, bell, triangle
 
-if evalFuzzyMatrix == 1
+if exist('fuzzyMatrix', 'var') == 0 || size(fuzzyMatrix,1) ~= LOCAL_REGS
     fuzzyMatrix = fuzzyPIDParameters(LOCAL_REGS);
 end
 
@@ -12,7 +12,7 @@ error_sum = 0;
 Umin = -1;  
 Umax = 1;
 T = 0.5;
-SIM_LEN = 3000;
+SIM_LEN = 1000;
 
 Ypp = 0;
 Upp = 0;
@@ -29,8 +29,8 @@ stpt = createSetpointTrajectory(SIM_LEN);
 local_inputs = zeros(LOCAL_REGS,1);
 memberships = zeros(LOCAL_REGS,1);
 %% symulacja obiektu
-for k = 12:SIM_LEN
-    output(k) = symulacja_obiektu1y(input(k-10), input(k-11), output(k-1), output(k-2));    % pomiar wyjscia
+for k = 7:SIM_LEN
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2));    % pomiar wyjscia
     error(k) = stpt(k) - output(k);   % obliczenie uchyby
     
     for i=1:LOCAL_REGS
@@ -46,7 +46,7 @@ for k = 12:SIM_LEN
     end
     
     for i=1:LOCAL_REGS
-        memberships(i) = trapezoid(local_inputs(i), fuzzyMatrix(i,5));
+        memberships(i) = eval(strcat(membershipFunction, '(output(k), fuzzyMatrix(i,5));'));
     end
     
     for i=1:LOCAL_REGS
@@ -89,9 +89,18 @@ for i=1:LOCAL_REGS
     x = linspace(-2, 12);
     memb = zeros(length(x),1);
     for j=1:length(x)
-        memb(j) = trapezoid(x(j), fuzzyMatrix(i,5));
+        memb(j) = eval(strcat(membershipFunction, '(x(j), fuzzyMatrix(i,5));'));
     end
+    memb_ts = [x' memb];
+    dlmwrite(strcat('../data/project/zad5/membership_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), memb_ts, '\t');
     plot(x, memb);
 end
 hold off
 
+input_ts = [(1:length(input))' input];
+output_ts = [(1:length(output))' output];
+stpt_ts = [(1:length(stpt))' stpt];
+
+dlmwrite(strcat('../data/project/zad5/input_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/project/zad5/output_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/project/zad5/stpt_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), stpt_ts, '\t');

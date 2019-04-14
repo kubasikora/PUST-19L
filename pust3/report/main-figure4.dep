@@ -1,2 +1,0 @@
-main-figure4.pdf: ../data/project/zad4/zad3PID_output_K_2.2_Ti_100000000000_Td_0.csv
-main-figure4.pdf: ../data/project/zad4/zad3PID_setpoint_K_2.2_Ti_100000000000_Td_0.csv
