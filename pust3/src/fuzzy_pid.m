@@ -1,5 +1,5 @@
-LOCAL_REGS = 12;
-membershipFunction = 'triangle'; % trapezoid, bell, triangle
+LOCAL_REGS = 2;
+membershipFunction = 'trapezoid'; % trapezoid, bell, triangle
 
 if exist('fuzzyMatrix', 'var') == 0 || size(fuzzyMatrix,1) ~= LOCAL_REGS
     fuzzyMatrix = fuzzyPIDParameters(LOCAL_REGS);
@@ -101,6 +101,6 @@ input_ts = [(1:length(input))' input];
 output_ts = [(1:length(output))' output];
 stpt_ts = [(1:length(stpt))' stpt];
 
-dlmwrite(strcat('../data/project/zad5/input_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), input_ts, '\t');
-dlmwrite(strcat('../data/project/zad5/output_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), output_ts, '\t');
-dlmwrite(strcat('../data/project/zad5/stpt_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), stpt_ts, '\t');
+dlmwrite(strcat('../data/project/zad5/loc_ogr_input_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/project/zad5/loc_ogr_output_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/project/zad5/loc_ogr_stpt_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), stpt_ts, '\t');
