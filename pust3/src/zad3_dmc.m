@@ -29,9 +29,9 @@ step = step(1:cut_time);
 
 
 %% parametry regulatora 
-D = 303;
-N = 50;
-Nu = 10;
+D = 150;
+N = 20;
+Nu = 6;
 lambda = 10000;
 zapis_do_pliku = 0;
 
