@@ -8,23 +8,20 @@ Ypp = 0;
 Umin = -1;
 Umax = 1;
 T = 0.5;   
-SIM_LEN = 3000;
+SIM_LEN = 600;
 
 REGULATOR_NUM = 3;
 
 %% wyliczenie offsetu kolejnych punktow pracy
-Y_MIN = -0.31546;
-Y_MAX = 11.839;
-DY = Y_MAX - Y_MIN;
-OFFSET = DY/(REGULATOR_NUM+1);
+U = linspace(-1,1,200);
+offset = floor(length(U) / (REGULATOR_NUM+1));
 
 %% punkty pracy dla regulatorow 
 FUZZY_YPPs = zeros(REGULATOR_NUM,1);
 FUZZY_UPPs = zeros(REGULATOR_NUM,1);
-options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 600);
-for i=1:REGULATOR_NUM
-    FUZZY_YPPs(i) = Y_MIN + (i*OFFSET);
-    FUZZY_UPPs(i) = fmincon(@(Upp)upp_target(Upp, FUZZY_YPPs(i)), 0, [], [], [], [], -1, 1, [], options);
+for i=1:REGULATOR_NUM    
+    FUZZY_UPPs(i) = U(i*offset);
+    FUZZY_YPPs(i) = get_ypp(FUZZY_UPPs(i));
 end
 
 %% parametry regulatorow DMC
