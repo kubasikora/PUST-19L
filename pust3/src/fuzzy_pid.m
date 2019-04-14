@@ -92,7 +92,7 @@ for i=1:LOCAL_REGS
         memb(j) = eval(strcat(membershipFunction, '(x(j), fuzzyMatrix(i,5));'));
     end
     memb_ts = [x' memb];
-    dlmwrite(strcat('../data/project/zad5/membership_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), memb_ts, '\t');
+%     dlmwrite(strcat('../data/project/zad5/membership_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), memb_ts, '\t');
     plot(x, memb);
 end
 hold off
@@ -101,6 +101,6 @@ input_ts = [(1:length(input))' input];
 output_ts = [(1:length(output))' output];
 stpt_ts = [(1:length(stpt))' stpt];
 
-dlmwrite(strcat('../data/project/zad5/loc_ogr_input_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), input_ts, '\t');
-dlmwrite(strcat('../data/project/zad5/loc_ogr_output_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), output_ts, '\t');
-dlmwrite(strcat('../data/project/zad5/loc_ogr_stpt_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), stpt_ts, '\t');
+% dlmwrite(strcat('../data/project/zad5/loc_ogr_input_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), input_ts, '\t');
+% dlmwrite(strcat('../data/project/zad5/loc_ogr_output_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), output_ts, '\t');
+% dlmwrite(strcat('../data/project/zad5/loc_ogr_stpt_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), stpt_ts, '\t');
