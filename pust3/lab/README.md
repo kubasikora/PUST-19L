@@ -7,3 +7,7 @@ wyniki pomiarów z laboratorium
 - u = 60 === y = 47.06 -> plik lab2_60.mat
 - u = 70 === y = 49.31 -> plik lab2_70.mat
 - u = 80 === y = 51.62 -> plik lab2_80.mat
+
+wskaźniki jakości regulacji 
+- pid zwykly - e = 12794.09
+- dmc zwykyl - e = 24071.15
