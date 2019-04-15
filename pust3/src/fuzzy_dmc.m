@@ -8,7 +8,11 @@ Ypp = 0;
 Umin = -1;
 Umax = 1;
 T = 0.5;   
+<<<<<<< HEAD
 SIM_LEN = 1000;
+=======
+SIM_LEN = 3000;
+>>>>>>> 2719228f20721a90be6ed778ca10ab72ec6ce5cb
 
 REGULATOR_NUM = 2;
 
@@ -47,7 +51,11 @@ end
 D = 500;
 N = D;
 Nu = N;
+<<<<<<< HEAD
 lambda = 10000*ones(REGULATOR_NUM, 1);
+=======
+lambda = 20 * ones(REGULATOR_NUM, 1);
+>>>>>>> 2719228f20721a90be6ed778ca10ab72ec6ce5cb
 
 %% macierze regulatorow
 dUp = zeros(D-1, 1);
@@ -63,7 +71,6 @@ STEPS = zeros(D,REGULATOR_NUM);
 for i = 1:REGULATOR_NUM
     M = zeros(N, Nu);
     Mp = zeros(N, D-1);
-    K = zeros(Nu, N);
 
 %% symulacja obiektu w celu otrzymania odp skokowej dla danego pkt pracy    
     step = simulate_steps(FUZZY_UPPs(i), FUZZY_YPPs(i));
@@ -139,6 +146,7 @@ for k=7:SIM_LEN
         end 
         dUp(i) = du1 - du2;
     end
+    
     
     output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2)); 
     error(k) = stpt(k) - output(k);   

@@ -5,20 +5,25 @@ addpath ../src
 %initSerialControl COM21 % initialise com port
 
 LOCAL_REGS = 3;
-FUZZY_YPPS = [35 50 65];
+FUZZY_YPPS = [30 45 48];
 Upp = 26;
 Ypp = 34.5; % do ogarniecia
 Umin = 0;
 Umax = 100;
 T = 1;
 y = [];
-
+SIM_LEN = 1000;
 step_names = {'lab5_skokz35do40_norm.mat'  'lab5_skokz50do55_norm.mat' 'lab5_skokz65do70_norm.mat'};
 
-SIM_LEN = 1000;
 sim_time = (1:SIM_LEN)';
 
-setpoint = createSetpointTrajectory(SIM_LEN);
+stpt_value_1 = 34.93;
+stpt_value_2 = 39.93;
+stpt_value_3 = 49.93;
+stpt_value_4 = 34.93;
+
+stpt = [stpt_value_1*ones(SIM_LEN/4, 1)' stpt_value_2*ones(SIM_LEN/4, 1)' stpt_value_3*ones(SIM_LEN/4, 1)' stpt_value_4*ones(SIM_LEN/4, 1)'];
+
 input = Upp*ones(SIM_LEN, 1);
 output = Ypp*ones(SIM_LEN, 1);
 rescaled_input = zeros(SIM_LEN, 1);
@@ -28,7 +33,7 @@ error = zeros(SIM_LEN, 1);
 D = 300;
 N = 300;
 Nu = 300;
-lambda = [100; 100; 100];
+lambda = [1; 0.1; 0.01];
 
 
 
@@ -113,13 +118,13 @@ for k=3:SIM_LEN
     
     output(k) = act_output;                                                                 % pomiar wyjscia
     rescaled_output = output(k) - Ypp;                                                      % skalowanie wyjscia   
-    stpt = setpoint(k) - Ypp;                                                               % przeskalowany setpoint
-    error(k) = stpt - rescaled_output;                                                      % obliczenie uchyby   
+    setpoint = stpt(k) - Ypp;                                                               % przeskalowany setpoint
+    error(k) = setpoint - rescaled_output;                                                      % obliczenie uchyby   
     error_sum = error_sum + error(k)^2;   % wskaznik jakosci
     
     for r=1:LOCAL_REGS
         local_inputs(r) = Ke(r) * error(k) - Ku(r, :) * dUp;       
-        memberships(r) = trapezoid(local_inputs(r), FUZZY_YPPS(r));
+        memberships(r) = trapezoid(stpt(k), FUZZY_YPPS(r));
         rescaled_input(k) = rescaled_input(k) + local_inputs(r)*memberships(r);
     end
     
@@ -137,7 +142,7 @@ for k=3:SIM_LEN
      
     %% sending new values of control signals
     sendNonlinearControls(input(k));
-    disp([k setpoint(k) measurements(1) input(k)]); % process measurements
+    disp([k stpt(k) measurements(1) input(k) memberships(1) memberships(2) memberships(3)]); % process measurements
     
     %% synchronising with the control process
     waitForNewIteration(); % wait for new batch of measurements to be ready

@@ -1,16 +1,17 @@
 %%%%%%%%%% REGULATOR ROZMYTY PID
-addpath ../src
 LOCAL_REGS = 3;
 
 %%%%%% postac macierzy Kp Ti Td Upp Ypp
-fuzzyMatrix = [1 999999 0 30 36.87;
-               1 999999 0 50 45.18;
-               1 999999 0 70 49.31];
+fuzzyMatrix = [18 300 1 30 36.87;
+               19 250 1 50 45.18;
+               20 200 1 70 49.31];
            
-
 error_sum = 0;
 
 %% parametry symulacji
+addpath('F:\SerialCommunication'); % add a path to the functions
+initSerialControl COM21 % initialise com port
+
 Umin = 0;  
 Umax = 100;
 T = 1;
@@ -18,6 +19,7 @@ SIM_LEN = 1000;
 
 Ypp = 34.93;
 Upp = 26;
+y = [];
 
 %% wektory i/o
 output = Ypp*zeros(SIM_LEN,1);
@@ -42,7 +44,6 @@ for k = 12:SIM_LEN
     measurements = readMeasurements(1:7);
     
     y=[y measurements(1)];
-    disp([k measurements(1) input(k-1)]); % process measurements
     plot(y)
     drawnow
     
@@ -62,7 +63,7 @@ for k = 12:SIM_LEN
     end
     
     for i=1:LOCAL_REGS
-        memberships(i) = trapezoid(local_inputs(i), fuzzyMatrix(i,5));
+        memberships(i) = trapezoid(stpt(k), fuzzyMatrix(i,5));
     end
     
     for i=1:LOCAL_REGS
@@ -80,4 +81,10 @@ for k = 12:SIM_LEN
     end
     
     error_sum = error_sum + error(k)^2;
+    sendNonlinearControls(input(k));
+    disp([k stpt(k) measurements(1) input(k) memberships(1) memberships(2) memberships(3)]); % process measurements
+    
+    %% synchronising with the control process
+    waitForNewIteration(); % wait for new batch of measurements to be ready
+
 end
