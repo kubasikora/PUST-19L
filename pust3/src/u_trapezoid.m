@@ -1,7 +1,7 @@
-function y = trapezoid(x, ypp)
-    a = ypp - 5;
-    b = ypp - 0.5;
-    c = ypp + 0.5;
+function y = u_trapezoid(x, ypp)
+    a = ypp - 1;
+    b = ypp - 5;
+    c = ypp + 1;
     d = ypp + 5;
     y = 0;
     if x <= a

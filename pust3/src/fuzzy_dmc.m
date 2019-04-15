@@ -8,27 +8,46 @@ Ypp = 0;
 Umin = -1;
 Umax = 1;
 T = 0.5;   
-SIM_LEN = 600;
+SIM_LEN = 1000;
 
-REGULATOR_NUM = 3;
+REGULATOR_NUM = 2;
 
 %% wyliczenie offsetu kolejnych punktow pracy
-U = linspace(-1,1,200);
-offset = floor(length(U) / (REGULATOR_NUM+1));
+%U = linspace(-1,1,200);
+%offset = floor(length(U) / (REGULATOR_NUM+1));
 
 %% punkty pracy dla regulatorow 
+%FUZZY_YPPs = zeros(REGULATOR_NUM,1);
+%FUZZY_UPPs = zeros(REGULATOR_NUM,1);
+
+%for i=1:REGULATOR_NUM    
+%   FUZZY_UPPs(i) = U(i*offset);
+%    FUZZY_YPPs(i) = get_ypp(FUZZY_UPPs(i));
+%end
+
+options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 600);
+addpath ../ 
+Y_MIN = -0.31546;
+Y_MAX = 11.839;
+DY = Y_MAX - Y_MIN;
+ 
+OFFSET = DY/(REGULATOR_NUM+1);
+
 FUZZY_YPPs = zeros(REGULATOR_NUM,1);
 FUZZY_UPPs = zeros(REGULATOR_NUM,1);
-for i=1:REGULATOR_NUM    
-    FUZZY_UPPs(i) = U(i*offset);
-    FUZZY_YPPs(i) = get_ypp(FUZZY_UPPs(i));
+
+for i=1:REGULATOR_NUM
+    FUZZY_YPPs(i) = Y_MIN + (i*OFFSET);
+    FUZZY_UPPs(i) = fmincon(@(Upp)upp_target(Upp, FUZZY_YPPs(i)), 0, [], [], [], [], -1, 1, [], options);
+
 end
 
+
 %% parametry regulatorow DMC
-D = 250;
+D = 500;
 N = D;
 Nu = N;
-lambda = ones(REGULATOR_NUM, 1);
+lambda = 10000*ones(REGULATOR_NUM, 1);
 
 %% macierze regulatorow
 dUp = zeros(D-1, 1);
@@ -101,8 +120,8 @@ output = Ypp*ones(SIM_LEN, 1);
 % wektor uchybu
 error = zeros(SIM_LEN, 1);
 
-local_inputs = zeros(REGULATOR_NUM,1);
-memberships = zeros(REGULATOR_NUM,1);
+local_inputs = zeros(REGULATOR_NUM,SIM_LEN);
+memberships = zeros(REGULATOR_NUM,SIM_LEN);
 
 %% symulacja procesu regulacji
 for k=7:SIM_LEN    
@@ -126,20 +145,38 @@ for k=7:SIM_LEN
     error_sum = error_sum + error(k)^2;
     
     for i=1:REGULATOR_NUM        
-        local_inputs(i) = Ke(i) * error(k) - Ku(i, :) * dUp; 
+        local_inputs(i,k) = Ke(i) * error(k) - Ku(i, :) * dUp; 
+        if local_inputs(i,k) >= Umax
+            local_inputs(i,k) = Umax;
+        elseif local_inputs(i,k) <= Umin
+            local_inputs(i,k) = Umin;
+        end
+    end
+    
+    for i=1:REGULATOR_NUM      
+        local_inputs(i,k) = Ke(i) * error(k) - Ku(i, :) * dUp; 
+        if local_inputs(i,k) >= Umax
+            local_inputs(i,k) = Umax;
+        elseif local_inputs(i,k) <= Umin
+            local_inputs(i,k) = Umin;
+        end
     end
     
     for i=1:REGULATOR_NUM
-        memberships(i) = trapezoid(output(k), FUZZY_YPPs(i));
+        memberships(i, k) = trapezoid(stpt(k), FUZZY_YPPs(i));
     end
     
+    input(k) = 0;
     for i=1:REGULATOR_NUM
-        input(k) = input(k) + local_inputs(i) * memberships(i);
+        input(k) = input(k) + (local_inputs(i,k) * memberships(i,k));
+        
     end
     
-    if sum(memberships) ~= 0
-        input(k) = input(k)/sum(memberships);
+    if sum(memberships(:,k)) ~= 0
+        input(k) = input(k)/sum(memberships(:,k));
     end
+    
+    input(k) = input(k) + input(k-1);
     
     if input(k) >= Umax
         input(k) = Umax;
@@ -164,3 +201,24 @@ plot(input)
 legend('u')
 title('Przebieg sterowania')
 hold off
+
+figure(3)
+hold on 
+for i=1:REGULATOR_NUM
+    x = linspace(-1, 12);
+    memb = zeros(length(x),1);
+    for j=1:length(x)
+        memb(j) = trapezoid(x(j), FUZZY_YPPs(i));
+    end
+    memb_ts = [x' memb];
+%     dlmwrite(strcat('../data/project/zad5/membership_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), memb_ts, '\t');
+    plot(x, memb);
+end
+hold off
+
+figure(4)
+hold on
+plot(memberships(1,:));
+plot(memberships(2,:));
+hold off
+
