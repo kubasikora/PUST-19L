@@ -8,11 +8,7 @@ Ypp = 0;
 Umin = -1;
 Umax = 1;
 T = 0.5;   
-<<<<<<< HEAD
-SIM_LEN = 1000;
-=======
 SIM_LEN = 3000;
->>>>>>> 2719228f20721a90be6ed778ca10ab72ec6ce5cb
 
 REGULATOR_NUM = 2;
 
@@ -51,11 +47,7 @@ end
 D = 500;
 N = D;
 Nu = N;
-<<<<<<< HEAD
 lambda = 10000*ones(REGULATOR_NUM, 1);
-=======
-lambda = 20 * ones(REGULATOR_NUM, 1);
->>>>>>> 2719228f20721a90be6ed778ca10ab72ec6ce5cb
 
 %% macierze regulatorow
 dUp = zeros(D-1, 1);
