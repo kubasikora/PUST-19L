@@ -1,0 +1,253 @@
+\chapter{Implementacja rozmytych regulatorów PID i DMC}
+\label{pro5}
+
+\section{Rozmyty regulator PID}
+\subsection{Implementacja}
+Program zawierający rozmyty algorytm PID rozpoczyna się przypisaniem zadanej przez użytkownika ilości lokalnych regulatorów oraz wyboru funkcji przynależności jako jednej z dostępnych: \verb+trapezoid+, \verb+bell+, \verb+triangle+.
+
+\begin{lstlisting}[style=custommatlab,frame=single]
+LOCAL_REGS = 2;
+membershipFunction = 'trapezoid'; 
+\end{lstlisting}
+
+Następnie w programie tworzona jest macierz parametrów dla lokalnych regulatorów PID - \verb+fuzzyMatrix+ (pod warunkiem, że nie istnieje już macierz o odpowiednim rozmiarze).
+
+\begin{lstlisting}[style=custommatlab,frame=single]
+if exist('fuzzyMatrix', 'var') == 0 || size(fuzzyMatrix,1) ~= LOCAL_REGS
+    fuzzyMatrix = fuzzyPIDParameters(LOCAL_REGS);
+end
+\end{lstlisting}
+
+Funkcja \verb+fuzzyPIDParameters+ dobiera odpowiednie parametry dla każdego regulatora lokalnego: $K, T_{\mathrm{i}}, T_{\mathrm{d}}$  poprzez wykorzystanie optymalizacji gradientowej w funkcji \verb+fmincon+. Funkcja rozpoczyna się doborem punktu pracy dla każdego regulatora. Wykorzystujemy do tego optymalizację gradientową i funkcję \verb+upp_target.m+, która dopasowuje sterowanie do wyliczonego wcześniej wyjścia na podstawie błędu zwracanego przez funkcję. Wyznaczenie punktów pracy przedstawia listing \ref{PID_pkt_pracy}. 
+\\
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={PID_pkt_pracy},caption={Funkcja dobierająca punktów pracy},captionpos=b]
+function FUZZY_PID_PARAMETERS = fuzzyPIDParameters(REGULATOR_NUM)
+options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 
+			'MaxFunctionEvaluations', 600);
+addpath ../ 
+Y_MIN = -0.31546;
+Y_MAX = 11.839;
+DY = Y_MAX - Y_MIN;
+
+OFFSET = DY/(REGULATOR_NUM+1);
+
+FUZZY_YPPs = zeros(REGULATOR_NUM,1);
+FUZZY_UPPs = zeros(REGULATOR_NUM,1);
+
+for i=1:REGULATOR_NUM
+    FUZZY_YPPs(i) = Y_MIN + (i*OFFSET);
+    FUZZY_UPPs(i) = fmincon(@(Upp)upp_target(Upp, FUZZY_YPPs(i)), 0, [], [], 
+    			[], [], -1, 1, [], options);
+
+end
+\end{lstlisting}
+
+Po zdefiniowaniu ograniczeń dla parametrów regulatorów następuje symulacja dla każdego regulatora w odpowiadającym mu punkcie pracy. Do tego również wykorzystywana jest funkcja \verb+fmincon+, która z kolei wywołuje funkcje \verb+pid_target_fun+ będącą faktycznie symulacją regulatora PID i zwracającą wartość wskaźnika jakości. Dobór parametrów przedstawia listing \ref{PID_param}. Po wyliczeniu parametrów następuje symulacja dla danego regulatora i zapisanie parametrów oraz punktów pracy do zwracanej przez funkcję macierzy \verb+FUZZY_PID_PARAMETERS+. 
+\\
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={PID_param},caption={Funkcja dobierająca parametry regulatorów lokalnych},captionpos=b]
+for i=1:REGULATOR_NUM
+
+Ypp = FUZZY_YPPs(i);
+Upp = FUZZY_UPPs(i);
+
+base_values = [0.5 7.25 1.62];
+
+parameters = fmincon(@(parameters)pid_target_fun(parameters, Upp, Ypp), 
+			base_values, [], [], [], [], [K_min Ti_min Td_min], 
+					[K_max Ti_max Td_max], [], options);
+
+% ...
+
+FUZZY_PID_PARAMETERS(i,1:3) = parameters;
+FUZZY_PID_PARAMETERS(i,4) = FUZZY_UPPs(i);
+FUZZY_PID_PARAMETERS(i,5) = FUZZY_YPPs(i);
+end
+
+end
+\end{lstlisting}
+
+Następnym krokiem w implementacji rozmytego algorytmu PID była inicjalizacja wektorów przechowujących zmienne procesowe. Kolejno zaimplementowana została pętla symulująca działanie regulatora rozmytego. W programie zostały utworzone dodatkowe wektory \verb+local_inputs+ i \verb+memberships+ przechowujące kolejno wartości sterowań generowanych przez regulatory lokalne i wagi z jakimi będą one uwzględniane. Pętla składa się z kilku etapów:
+\begin{enumerate}
+\item Pomiar wyjścia obiektu oraz obliczenie uchybu,
+\item Pętla, która dla każdego regulatora pobiera parametry oraz oblicza sterowanie zapisywane w wektorze \verb+local_inputs+,
+\item Pętla obliczająca wartości funkcji przynależnośći dla każdego regulatora lokalnego,
+\item Pętla sumująca sterowania regulatorów przemnożone przez ich wagi,
+\item Dzielenie sterowania przez sumę wszystkich wag,
+\item Uwzględnienie ograniczeń i obliczenie wskaźnika jakości.
+\end{enumerate}
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={FPID_sim},caption={Symulacja rozmytego algorytmu PID},captionpos=b]
+local_inputs = zeros(LOCAL_REGS,1);
+memberships = zeros(LOCAL_REGS,1);
+%% symulacja obiektu
+for k = 7:SIM_LEN
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6),
+    	 output(k-1), output(k-2));    % pomiar wyjscia
+    error(k) = stpt(k) - output(k);   % obliczenie uchyby
+    
+    for i=1:LOCAL_REGS
+        parameters = fuzzyMatrix(i, 1:3);
+        K = parameters(1);
+        Ti = parameters(2);
+        Td = parameters(3);
+        r0 = K*(1 + T/(2*Ti) + Td/T);
+        r1 = K*(T/(2*Ti) - (2*Td)/T - 1);
+        r2 = (K*Td)/T;
+        
+        local_inputs(i) = r2 * error(k-2) + r1 * error(k-1) + r0 * error(k) 
+        		+ input(k-1);  % wyliczenie lokalnego sterowania
+    end
+    
+    for i=1:LOCAL_REGS
+        memberships(i) = eval(strcat(membershipFunction, 
+        		'(output(k), fuzzyMatrix(i,5));'));
+    end
+    
+    for i=1:LOCAL_REGS
+        input(k) = input(k) + local_inputs(i)*memberships(i);
+    end
+    
+    if sum(memberships) ~= 0
+        input(k) = input(k)/sum(memberships);
+    end
+    
+    if input(k) >= Umax
+        input(k) = Umax;
+    elseif input(k) <= Umin
+        input(k) = Umin;
+    end
+    
+    error_sum = error_sum + error(k)^2;
+end
+\end{lstlisting}
+\subsection{Zmienna wybierająca}
+Jako zmienną wybierającą przyjęliśmy sygnał wyjściowy w chwili $k$.
+
+\section{Rozmyty regulator DMC}
+Implementacja rozmytego algorytmu DMC była zadaniem o wiele prostszym, ze względu na jednakowe parametry każdego regulatora lokalnego.\\
+\indent{} Dobór punktów pracy przebiegał podobnie jak w przypadku regulatora PID - z wykorzysaniem funkcji \verb+fmincon+ oraz funkcji \verb+upp_target+. Po inicjalizacji potrzebnych zmiennych takich jak parametry algorytmu oraz macierze nastąpiło wyliczenie poszczególnych elementów każdego z regulatorów lokalnych.\\
+\indent{} W pętli wykonywane były eksperymenty mające na celu pozyskanie odpowiedzi skokowych dla każdego, wcześniej wyliczonego punktu pracy. Następnie wyliczane były macierze: $M, M^{\mathrm{P}}, K$ oraz wartości $k_{e}$ i wektory $k_{u}$. Wyliczenie macierzy algorytmu dla każdego regulatora lokalnego przedstawia listing \ref{DMC_matrices}.\\
+
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={DMC_matrices},caption={Wyliczenie macierzy algorytmu DMC dla regulatorów lokalnych},captionpos=b]
+for i = 1:REGULATOR_NUM
+    M = zeros(N, Nu);
+    Mp = zeros(N, D-1);
+
+%% symulacja obiektu w celu otrzymania odp skokowej dla danego pkt pracy    
+    step = simulate_steps(FUZZY_UPPs(i), FUZZY_YPPs(i));
+    STEPS(:,i) = step(1:D);
+    
+%% wyliczenie macierzy 
+    % macierz M
+    for p = 1:Nu
+        k = 1;
+        for q = 1:N
+            if q < p
+                M(q, p) = 0;
+            else
+                M(q, p) = step(k);
+                k = k + 1;
+            end
+        end
+    end
+
+    % macierz Mp
+    for p = 1:N
+        for q = 1:(D-1)
+            k = p + q;
+            if k > D
+                Mp(p,q) = step(D) - step(q);
+            else
+                Mp(p,q) = step(k) - step(q);
+            end
+        end
+    end
+
+    % macierz K
+    K = inv((M' * M + lambda(i) * eye(Nu)))*M';
+    Ke(i) = sum(K(1,:));
+    Ku(i,:) = K(1,:) * Mp;
+end    
+\end{lstlisting}
+
+Pętla symulująca proces regulacji ponownie podzielona była na kilka etapów:
+
+\begin{enumerate}
+\item Wyliczenie wektora $\Delta U^{\mathrm{p}}$,
+\item Pomiar wyjścia obiektu i obliczenie uchybu,
+\item Obliczenie sterowań lokalnych regulatorów z wykorzystaniem wcześniej obliczonych $k_{e}$ i $k_{u}$,
+\item Wyliczenie wag dla poszczególnych sterowań,
+\item Pętla sumująca sterowania regulatorów przemnożone przez ich wagi,
+\item Dzielenie sterowania przez sumę wszystkich wag,
+\item Uwzględnienie ograniczeń i obliczenie wskaźnika jakości.
+\end{enumerate}
+
+Pętlę symulującą proces regulacji zawiera listing \ref{DMC_sim}.
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={DMC_sim},caption={Pętla symulująca proces regulacji z wykorzystaniem rozmytego algorytmu DMC.},captionpos=b]
+for k=7:SIM_LEN    
+    % wektor dUp
+    for i = 1:(D-1)
+        if (k-i) <= 0
+            du1 = 0;
+        else
+            du1 = input(k - i);
+        end
+        if (k-i-1) <= 0
+            du2 = 0;
+        else
+            du2 = input(k - i - 1);
+        end 
+        dUp(i) = du1 - du2;
+    end
+    
+    
+    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), 
+    	output(k-1), output(k-2)); 
+    error(k) = stpt(k) - output(k);   
+    error_sum = error_sum + error(k)^2;
+    
+    for i=1:REGULATOR_NUM        
+        local_inputs(i,k) = Ke(i) * error(k) - Ku(i, :) * dUp; 
+        if local_inputs(i,k) >= Umax
+            local_inputs(i,k) = Umax;
+        elseif local_inputs(i,k) <= Umin
+            local_inputs(i,k) = Umin;
+        end
+    end
+    
+    for i=1:REGULATOR_NUM      
+        local_inputs(i,k) = Ke(i) * error(k) - Ku(i, :) * dUp; 
+        if local_inputs(i,k) >= Umax
+            local_inputs(i,k) = Umax;
+        elseif local_inputs(i,k) <= Umin
+            local_inputs(i,k) = Umin;
+        end
+    end
+    
+    for i=1:REGULATOR_NUM
+        memberships(i, k) = trapezoid(stpt(k), FUZZY_YPPs(i));
+    end
+    
+    input(k) = 0;
+    for i=1:REGULATOR_NUM
+        input(k) = input(k) + (local_inputs(i,k) * memberships(i,k));
+        
+    end
+    
+    if sum(memberships(:,k)) ~= 0
+        input(k) = input(k)/sum(memberships(:,k));
+    end
+    
+    input(k) = input(k) + input(k-1);
+    
+    if input(k) >= Umax
+        input(k) = Umax;
+    elseif input(k) <= Umin
+        input(k) = Umin;
+    end
+end
+\end{lstlisting}
