@@ -1,12 +1,65 @@
 \section{Przebieg strojenia regulatora DMC}
 \label{pro4_DMC}
-Na początku strojenia naszego regulatora DMC parametry $D, N, N_{\mathrm{u}}$ były równe horyzontowi dynamiki i wynosiły $303$. Wartość parametru kary była ustawiona na poziomie $\lambda = 1$. Możemy zauważyć, że regulatora miał problemy z osiągnięciem wartości zadanej, a także charakteryzował się niegasnącymi oscylacjami (rysunki \ref{pro_zad4_d_303_n_303_nu_303_out} i \ref{pro_zad4_d_303_n_303_nu_303_inp}). Po kilku próbach zmian parametrów $ N, N_{\mathrm{u}}$ nie zaobserwowaliśmy zmiany. Z tego powodu zdecydowaliśmy się podnieść wartość współczynnika kary $\lambda$. Zrobiliśmy to trzykrotnie, najpierw do wartości $100$, potem $1000$ i skończyliśmy na wielkości $\lambda = 1000)$ (wykresy \ref{pro_zad4_d_303_n_303_nu_303_lam_10000out} i \ref{pro_zad4_d_303_n_303_nu_303_lam_10000inp}). Dla niej przebiegi sygnałów prezentowały się najlepiej, ponieważ udało się wyeliminować oscylacje i osiągnąć wartości zadane. Następnie przeszliśmy do doboru parametrów $ N, N_{\mathrm{u}}$.
+Dla badanego obiektu, spróbowaliśmy dobrać parametry regulatora predykcyjnego DMC, który 
+sterując danym procesem minimalizowałby uchyby wyjścia. 
+W pierwszej kolejności założyliśmy że wszystkie horyzonty
+$D, N, N_{\mathrm{u}}$ są równe i wynoszą $D = N = N_{\mathrm{u}} = \num{303}$. 
+Dodatkowo, założylismy że wartość parametru kary będzie równa $\lambda = 1$.
+Tak zaprojektowany regulator miał problemy z osiągnięciem wartości zadanej, 
+a także charakteryzował się niegasnącymi oscylacjami. Przebiegi wyjściowe procesu 
+i generowane sterowanie przez regulator zostały przedstawione na rysunkach  
+\ref{pro_zad4_d_303_n_303_nu_303_out} i \ref{pro_zad4_d_303_n_303_nu_303_inp}). Dla 
+przeprowadzonego eksperymentu uzyskaliśmy wskaźnik jakości równy $E = \num{1829.6}$.
 
+Oscylacyjny charaketer przebiegu wyjściowego obiektu był dla nas alarmujący.
+Stwierdziliśmy że charakter wynika z szybkozmiennego przebiegu sygnału sterującego.
+Z tego powodu zdecydowaliśmy się podnieść wartość współczynnika kary $\lambda$. 
+Zrobiliśmy to trzykrotnie, najpierw do wartości $\num{100}$, potem $\num{1000}$ i 
+skończyliśmy na wielkości $\lambda = \num{10000})$. 
+Dla ostatniej próby przebiegi sygnałów prezentowały się w naszych oczach najlepiej.
 
-Zaczęliśmy od zmniejszenia wartości parametrów $N$ i $N_{\mathrm{u}}$ do $220$, a potem do $50$. Nie wpłynęło to na poprawę przebiegów sygnałów. Możemy to zauważyć na rysunku \ref{pro_zad4_d_303_n_220_nu_220_out} i \ref{pro_zad4_d_303_n_220_nu_220_inp}. Wartość $N$ pozostawiliśmy równą $50$ i przeszliśmy do doboru wartości $N_{u}$. Horyzont sterowania zmniejszyliśmy do $10$, co nie spowodowało znaczących zmian w przebiegu regulacji. Po bardzo dokładnym porównaniu wykresów dla wartości $N_{u} = 50$ i $N_{u} = 10$ zobaczymy, że dla tej drugiej wartości zmiany są trochę dynamiczniejsze. 
+Wskaźnik jakości zaskakująco rośnie wraz z zwiększaniem parametru $\lambda$. Dzieje się
+tak ponieważ całkowany błąd rośnie z powodu wolniejszego nadążania wyjścia do wartości zadanej.
+Wskaźnik jakości zdefiniowany jako całka z kwadratów uchybów faworyzuje oscylujące regulatory,
+ponieważ suma kwadratów małych uchybów pozostających przez długi czas i tak będzie mniejsza niż 
+suma kwadratów dużych uchybów występujących przez znacznie krótszy okres czasu. W tym przypadku 
+większy nacisk kładlismy na czas regulacji, czyli okres po którym wyjście procesu stabilizuje się na 
+wartości zadanej, dlatego tez naturalnym jest fakt że ilościowy wskaźnik jakości pogarsza się, mimo iż rzeczywista
+niemierzalna jakość regulacji oceniania w sposób jakościowy polepsza się.  
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Wartość parametru $\lambda$& $K$ \\ \hline
+    $\num{100}$ & $\num{1033.9}$ \\
+    $\num{1000}$ & $\num{1212.8}$ \\
+    $\num{10000}$& $\num{1660.8}$  \\ \hline
+    \end{tabular}
+    \caption{Wartości wskaźnika jakości przy strojeniu parametru kary $\lambda$}
+    \label{pro4_dmc_lambdy}
+\end{table}
 
-Podczas strojenia regulatora DMC doszliśmy do wniosku, że największy wpływ na przebieg regulacji miała wartość współczynnika kary. Zwiększenie parametru $\lambda$ pozwoliło na znaczącą poprawę regulacji. 
+W kolejnym kroku przeszliśmy do dobrania wartości parametrów $ N, N_{\mathrm{u}}$.
+Zaczęliśmy od zmniejszenia wartości parametrów $N$ i $N_{\mathrm{u}}$ do $\num{220}$, 
+a potem do $\num{50}$. Nie wpłynęło to w sposób znaczny na poprawę przebiegów sygnałów. 
+Możemy to zauważyć na rysunkach \ref{pro_zad4_d_303_n_220_nu_220_out} i 
+\ref{pro_zad4_d_303_n_220_nu_220_inp}. Wskaźnik jakości regulacji dla takiej samej trajektorii zadanej wyniósł 
+$E = \num{1680,8}$. Ostatecznie zdecydowaliśmy się na pozostawienie
+horyzontu predykcji równego $N = \num{50}$ i 
+przeszliśmy do doboru wartości $N_{u}$. Horyzont sterowania zmniejszyliśmy do $\num{10}$, 
+o nie spowodowało znaczących zmian w przebiegu regulacji. 
+Po porównaniu wykresów dla wartości $N_{u} = 50$ i $N_{u} = 10$ 
+zobaczymy, że wyjście procesu przy skróconym horyzoncie sterowaniu szybciej osiąga wartość zadaną, co potwierdza
+lepszy wskaźnik jakości regulacji $E = \num{1633,6}$.
+
+Podczas strojenia regulatora DMC doszliśmy do wniosku, że największy wpływ na przebieg regulacji miała wartość 
+współczynnika kary. Zwiększenie parametru $\lambda$ pozwoliło na znaczącą poprawę regulacji. Mimo to, regulator w
+każdym badanym przypadku słabo radził sobie z ujemnymi wartościami zadanymi. Wynika to z faktu, iż tak jak regulator
+PID, regulator DMC jest liniowym algorytmem regulacji i nie reguluje nieliniowych obiektów w zadowalający sposób. 
+Warto jednak wspomnieć że regulator DMC jest odporny na zmianę modelu dlatego jeżeli nie jest to znaczna zmiana 
+charakterystyki obiektu, to algorytm DMC powinien dać sobie radę z regulacją takiego procesu. W tym przypadku nieliniowość
+obiektu była zbyt duża aby regulator w sensowny sposób obsługiwał ujemne wartości zadane. 
 
 \begin{figure}[t]
     \centering
