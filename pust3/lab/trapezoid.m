@@ -1,8 +1,8 @@
 function y = trapezoid(x, ypp)
-    a = ypp - 5;
-    b = ypp - 0.5;
-    c = ypp + 0.5;
-    d = ypp + 5;
+    a = ypp - 6;
+    b = ypp - 1;
+    c = ypp + 1;
+    d = ypp + 6;
     y = 0;
     if x <= a
         y = 0;

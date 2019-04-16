@@ -1,6 +1,6 @@
 function FUZZY_PID_PARAMETERS = fuzzyPIDParameters(REGULATOR_NUM)
 options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 600);
-
+addpath ../ 
 Y_MIN = -0.31546;
 Y_MAX = 11.839;
 DY = Y_MAX - Y_MIN;
@@ -15,6 +15,29 @@ for i=1:REGULATOR_NUM
     FUZZY_UPPs(i) = fmincon(@(Upp)upp_target(Upp, FUZZY_YPPs(i)), 0, [], [], [], [], -1, 1, [], options);
 
 end
+
+% U_MIN = -1;
+% U_MAX = 1;
+% DY = U_MAX - U_MIN;
+% OFFSET = DY/(REGULATOR_NUM+1);
+% 
+% FUZZY_YPPs = zeros(REGULATOR_NUM,1);
+% FUZZY_UPPs = zeros(REGULATOR_NUM,1);
+% 
+% SIM_LEN = 1000;    
+% 
+% 
+% 
+% for i = 1:REGULATOR_NUM
+%     FUZZY_UPPs(i) = U_MIN + (i*OFFSET);
+%     y = zeros(SIM_LEN,1);
+%     u = FUZZY_UPPs(i)*ones(SIM_LEN,1);  
+%     
+%     for k=7:SIM_LEN
+%         y(k) = symulacja_obiektu1y(u(k-5), u(k-6), y(k-1), y(k-2));    % pomiar wyjscia
+%     end
+%     FUZZY_YPPs(i) = y(end);
+% end
 
 %% ograniczenia
 K_min = 0.01;
@@ -32,7 +55,6 @@ Ypp = FUZZY_YPPs(i);
 Upp = FUZZY_UPPs(i);
 
 base_values = [0.5 7.25 1.62];
-options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 600);
 
 parameters = fmincon(@(parameters)pid_target_fun(parameters, Upp, Ypp), base_values, [], [], [], [], [K_min Ti_min Td_min], [K_max Ti_max Td_max], [], options);
 
