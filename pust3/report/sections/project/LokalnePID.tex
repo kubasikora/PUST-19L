@@ -1,0 +1,902 @@
+\section{Strojenie regulatorów lokalnych PID}
+
+\subsection{Przebieg strojenia dla dwóch lokalnych regulatorów PID}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_trapezoid_2.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_trapezoid_2.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dwóch regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_2_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_trapezoid_2.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla dwóch regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_2_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_bell_2.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_bell_2.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dwóch regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_2_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_bell_2.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla dwóch regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_2_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_triangle_2.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_triangle_2.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dwóch regulatorów lokalnych PID z trójkątną funkcją przynależności}
+    \label{pro_zad5_triangle_2_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_triangle_2.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla dwóch regulatorów lokalnych PID z trójkątną  funkcją przynależności}
+    \label{pro_zad5_triangle_2_inp}
+\end{figure}
+
+\subsection{Przebieg strojenia dla trzech lokalnych regulatorów PID}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_trapezoid_3.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_trapezoid_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu trzech regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_3_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_trapezoid_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla trzech regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_3_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_bell_3.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_bell_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu trzech regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_3_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_bell_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla trzech regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_3_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_triangle_3.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_triangle_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu trzech regulatorów lokalnych PID z trójkątną funkcją przynależności}
+    \label{pro_zad5_triangle_3_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_triangle_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla trzech regulatorów lokalnych PID z trójkątną  funkcją przynależności}
+    \label{pro_zad5_triangle_3_inp}
+\end{figure}
+
+\subsection{Przebieg strojenia dla czterech lokalnych regulatorów PID}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_trapezoid_4.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_trapezoid_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu czterech regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_4_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_trapezoid_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla czterech regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_4_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_bell_4.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_bell_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu czterech regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_4_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_bell_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla czterech regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_4_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_triangle_4.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_triangle_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu czterech regulatorów lokalnych PID z trójkątną funkcją przynależności}
+    \label{pro_zad5_triangle_4_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_triangle_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla czterech regulatorów lokalnych PID z trójkątną  funkcją przynależności}
+    \label{pro_zad5_triangle_4_inp}
+\end{figure}
+
+\subsection{Przebieg strojenia dla pięciu lokalnych regulatorów PID}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_trapezoid_5.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_trapezoid_5.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu pięciu regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_5_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_trapezoid_5.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla pięciu regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_5_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_bell_5.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_bell_5.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dla pięciu regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_5_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_bell_5.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla pięciu regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_5_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_triangle_5.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_triangle_5.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dla pięciu regulatorów lokalnych PID z trójkątną funkcją przynależności}
+    \label{pro_zad5_triangle_5_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_triangle_5.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla pięciu regulatorów lokalnych PID z trójkątną  funkcją przynależności}
+    \label{pro_zad5_triangle_5_inp}
+\end{figure}
+
+\subsection{Przebieg strojenia dla sześciu lokalnych regulatorów PID}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_trapezoid_6.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_trapezoid_6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu sześciu regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_6_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_trapezoid_6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla sześciu regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_6_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_bell_6.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_bell_6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dla sześciu regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_6_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_bell_6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla sześciu regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_6_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_triangle_6.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_triangle_6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dla sześciu regulatorów lokalnych PID z trójkątną funkcją przynależności}
+    \label{pro_zad5_triangle_6_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_triangle_6.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla sześciu regulatorów lokalnych PID z trójkątną  funkcją przynależności}
+    \label{pro_zad5_triangle_6_inp}
+\end{figure}
+
+\subsection{Przebieg strojenia dla dwunastu lokalnych regulatorów PID}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_trapezoid_12.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_trapezoid_12.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dwunastu regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_12_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_trapezoid_12.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla dwunastu regulatorów lokalnych PID z trapezową funkcją przynależności}
+    \label{pro_zad5_trapezoid_12_inp}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_bell_12.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_bell_12.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dla dwunastu regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_12_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_bell_12.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla dwunastu regulatorów lokalnych PID z dzwoniącą funkcją przynależności}
+    \label{pro_zad5_bell_12_inp}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-1,ymax=11.5,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}[k]$},
+
+    \addlegendimage{no markers,red}
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/project/zad5/output_triangle_12.csv};  
+    \addplot[blue, semithick] file{../data/project/zad5/stpt_triangle_12.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Wyjście procesu dla dwunastu regulatorów lokalnych PID z trójkątną funkcją przynależności}
+    \label{pro_zad5_triangle_12_out}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.2,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u[k]$},
+    
+    \addlegendimage{no markers,blue}
+
+    \addplot[const plot, blue, semithick] file{../data/project/zad5/input_triangle_12.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego dla dwunastu regulatorów lokalnych PID z trójkątną  funkcją przynależności}
+    \label{pro_zad5_triangle_12_inp}
+\end{figure}
