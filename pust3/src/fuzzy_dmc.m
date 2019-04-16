@@ -51,11 +51,7 @@ end
 D = 500;
 N = D;
 Nu = N;
-<<<<<<< HEAD
-lambda = 10000*ones(REGULATOR_NUM, 1);
-=======
 lambda = 20 * ones(REGULATOR_NUM, 1);
->>>>>>> 2719228f20721a90be6ed778ca10ab72ec6ce5cb
 
 %% macierze regulatorow
 dUp = zeros(D-1, 1);
