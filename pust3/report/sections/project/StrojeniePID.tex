@@ -1,23 +1,47 @@
-\chapter{Dobór nastaw regulatora PID i DMC.}
+\chapter{Dobór nastaw regulatora PID i DMC}
+\label{pro4}
+
+\section{Przebieg strojenia regulatora PID}
 \label{pro4_PID}
 
-\section{Przebieg strojenia regulatora PID.}
-\subsection{Próba dostrojenia regulatora metoda Zieglera - Nicholsa}
-Nasze strojenie rozpoczęliśmy od wykorzystania metody Zieglera - Nicholsa. Parametry regulatora dobraliśmy według reguł stosowanych w tej metodzie. Niestety nie przyniosła ona zadowalających efektów. Dla końcowych parametrów uzyskiwaliśmy zawsze niegasnące oscylacje. Zostawały one nawet po ręcznym skorygowaniu przez nas wartości członów regulatora (wartości obliczone za pomocą metody Zieglera - Nicholsa były wtedy traktowane jako dobry punkt wyjścia do dalszego strojenia).
+\subsection{Próba dostrojenia regulatora metodą Zieglera - Nicholsa}
+\label{pro4_PID_ZN}
+W pierwszej kolejności spróbowaliśmy nastroić regulator PID klasyczną metodą Zieglera-Nicholsa.
+W tym celu wykonaliśmy eksperyment polegający na pobudzeniu procesu sterowanego regulatorem 
+proporcjonalnym, skokową zmianą sterowania. Poszukiwaliśmy takiego wzmocnienia krytycznego
+$K_{\mathrm{Kr}}$ dla którego odpowiedź obiektu cechowała się niegasnącymi oscylacjami o 
+okresie $T_{\mathrm{Kr}}$. Przebiegi eksperymentu zostały przedstawione na rysunkach 
+\ref{pro_zad4_niegasnace_oscylacje_out} i \ref{pro_zad4_niegasnace_oscylacje_inp}.\\
+\\
+\indent Na podstawie przebiegów uzyskanych z eksperymentu udało nam się ustalić wartość wzmocnienia 
+krytycznego $K_{\mathrm{Kr}} = \num{0,25}$ oraz okres oscylacji krytycznych $T_{\mathrm{Kr}} =
+\num{14.5}s$. Na podstawie tabeli \ref{pro4_tabela_ZN} określiliśmy parametry regulatora PID:
+$K = \num{0.15}$, $T_{\mathrm{i}} = \num{7.25}$ i $T_{\mathrm{d}} = \num{1.74}$
 
-~\\\\Na rysunkach \ref{pro_zad4_niegasnace_oscylacje_out} i \ref{pro_zad4_niegasnace_oscylacje_inp} zaprezentowaliśmy przebiegi sygnałów dla niegasnących oscylacji. Otrzymane przez nas wzmocnienie krytyczne wyniosło $K_{\mathrm{Kr}} = 0.25$, a okres oscylacji był równy $T_{\mathrm{Kr}} = \num{14.5}$ s. 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|c|}
+    \hline
+    Typ & $K$ & $T_{\mathrm{i}}$ & $T_{\mathrm{d}}$ \\ \hline
+    P   & $\num{0.5}K_{\mathrm{Kr}}$ & --- & --- \\
+    PI  & $\num{0.45}K_{\mathrm{Kr}}$ & $\frac{T_{\mathrm{Kr}}}{\num{1.2}}$ & --- \\
+    PID & $\num{0.6}K_{\mathrm{Kr}}$ & $\frac{T_{\mathrm{Kr}}}{\num{2}}$ & $\frac{T_{\mathrm{Kr}}}{\num{8}}$ \\ \hline
+    \end{tabular}
+    \caption{Tabela z proponowanymi nastawami regulatorów P, PI i PID zgodna z metodą Zieglera-Nicholsa}
+    \label{pro4_tabela_ZN}
+\end{table}
 
-~\\\\ Następnie wartości $K_{\mathrm{Kr}}$ i $T_{\mathrm{Kr}}$ podstawiliśmy do tabeli z wzorami na $K$, $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ wykorzystywanej w metodzie Zieglera - Nicholsa, dzięki temu uzyskaliśmy wartości liczbowe tych parametrów równe $K = \num{0.15}$, $T_{\mathrm{i}} = \num{7.25}$ i $T_{\mathrm{d}} = \num{1.74}$. Wskaźnik jakości regulacji wynosił $E = \num{3486.41}$. Wykresy dla tych ustawień to \ref{pro_zad4_ziegler_out} i \ref{pro_zad4_ziegler_inp}. Widzimy na nich niegasnące oscylacje, które są niepożądane podczas regulacji. Podjęliśmy próbę lekkiej zmiany parametrów regulatora, jednak nie poprawiły one w żaden sposób jakości regulacji. 
-
-~\\\\ Z powodu niezadowalających rezultatów po użyciu metody Zieglera - Nicholsa postanowiliśmy, że podczas szukania najlepszych nastawów oprzemy się w dużej mierze o nasze doświadczenie zdobyte na poprzednich laboratoriach i innych przedmiotach, których tematyką była regulacja. Zastosowaliśmy metodę inżynierską w której oceniamy jakościowo regulację i zmieniamy parametry tak, żeby nowe nastawy były lepsze od poprzednich. 
-
-\subsection{Dobór nastawów regulatora metodą inżynierską}
-Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zmniejszaliśmy K, a pozostałe człony wyłączyliśmy. Najlepsze rezultaty dostaliśmy dla $ K = \num{0.03} $ i $ K = \num{0.05} $. Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro_zad4_k_0.03_out}, \ref{pro_zad4_k_0.03_inp} oraz \ref{pro_zad4_k_0.05_out}, \ref{pro_zad4_k_0.05_inp}.
-
-~\\\\ W następnym etapie włączyliśmy człon całkujący i różniczkujący. Ich wartości początkowe przyjęliśmy trochę mniejsze niż w metodzie Zieglera - Nicholsa $T_{\mathrm{i}} = \num{6.75}$ i $T_{\mathrm{d}} = \num{1.62}$. Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro_zad4_k_0.03_6.75_1.62_out} i \ref{pro_zad4_k_0.03_6.75_1.62_inp}. Wskaźnik jakości regulacji wyniósł $E = \num{3571.24}$. 
-
-~\\\\ Postanowiliśmy jeszcze bardziej zmniejszyć wartości $T_{\mathrm{i}}$ i $T_{\mathrm{d}}$ w celu uzyskania jeszcze lepszej regulacji. Wykresy \ref{pro_zad4_k_0.03_6.5_1.56_out} i \ref{pro_zad4_k_0.03_6.5_1.56_inp} prezentują przebiegi dla parametrów $K = \num{0,03}$, $T_{\mathrm{i}} = \num{6.5}$ i $T_{\mathrm{d}} = \num{1.56}$, a rysunki \ref{pro_zad4_k_0.03_5.5_1.32_out} i \ref{pro_zad4_k_0.03_5.5_1.32_inp} dla $K = \num{0,03}$, $T_{\mathrm{i}} = \num{5.5}$ i $T_{\mathrm{d}} = \num{1.32}$. Dla ostatnich nastawów uzyskaliśmy najmniejszy wskaźnik jakości regulacji równy $E = \num{3242.08}$. Przebiegi sygnałów nie zmieniły się znacząco, ale po uważnej analizie możemy zauważyć, że dla ostatnich wartości parametrów niektóre wielkości zadane są szybciej osiągane. 
-
+Mając obliczone parametry regulatora, przystąpiliśmy do zbadania jakości regulacji.
+Badania przeprowadziliśmy dla jednolitej trajektorii zadanej.
+Wskaźnik jakości regulacji wynosił $E = \num{3486.41}$. Przebiegi wyjściowe i 
+sterowania dla tego zestawu parametrów zostały przedstawione na wykresach
+\ref{pro_zad4_ziegler_out} i \ref{pro_zad4_ziegler_inp}. 
+Widzimy na nich niegasnące oscylacje, niepożądane podczas regulacji. \\
+\\
+\indent Jednogłośnie stwierdziliśmy że metoda ta, nie przyniosła zadowalających 
+efektów. Uzyskiwane przebiegi charakteryzowały się niepożądanymi oscylacjami.
+Z powodu niezadowalających rezultatów, postanowiliśmy ręcznie poprawić 
+wartości parametrów.
 
 \begin{figure}[t]
     \centering
@@ -41,7 +65,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora}
+    \caption{Wyjście procesu podczas przeprowadzania eksperymentu Zieglera-Nicholsa}
     \label{pro_zad4_niegasnace_oscylacje_out}
 \end{figure}
 
@@ -60,11 +84,11 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.25_Ti_100000000000_Td_0.csv};
+    \addplot[const plot, blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.25_Ti_100000000000_Td_0.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego regulatora}
+    \caption{Przebieg sygnału sterującego podczas przeprowadzania eksperymentu Zieglera-Nicholsa}
     \label{pro_zad4_niegasnace_oscylacje_inp}
 \end{figure}
 
@@ -81,13 +105,10 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     ] 
     \addlegendentry{$y[k]$},
     \addlegendentry{$y^{\mathrm{zad}}[k]$},
-
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
-
     \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.15_Ti_4.5_Td_1.08.csv};  
     \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.15_Ti_4.5_Td_1.08.csv};
-    
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
@@ -106,16 +127,35 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     y tick label style={/pgf/number format/1000 sep=},
     ] 
     \addlegendentry{$u[k]$},
-    
     \addlegendimage{no markers,blue}
-
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.15_Ti_4.5_Td_1.08.csv};
-    
+    \addplot[const plot, blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.15_Ti_4.5_Td_1.08.csv};
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego regulatora z parametrami wyznaczonymi za pomocą metody Zieglera-Nicholsa}
     \label{pro_zad4_ziegler_inp}
 \end{figure}
+\FloatBarrier
+
+\subsection{Ręczna poprawa nastawów regulatora PID}
+\label{pro4_PID_metoda_inz}
+
+\indent Próbując poprawić jakość regulacji zdecydowalismy się na zmniejszenie wszystkich 
+parametrów regulatora badanego procesu.
+Wartości początkowe parametrów przyjęliśmy mniejsze niż przy regulatorze uzyskanym w \ref{pro4_PID_ZN}
+mianowicie $K = \num{0,05}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$. 
+Przebiegi sygnałów dla tych wartości zaprezentowaliśmy na rysunkach \ref{pro4_pidinz_2out} i 
+\ref{pro4_pidinz_2inp}. Wskaźnik jakości regulacji 
+wyniósł $E = \num{3571.24}$. \\
+\\
+\indent Postanowiliśmy jeszcze bardziej zmniejszyć wartość
+wzmocnienia  $K$ w celu zmniejszenia przeregulowania przy dużej wartości wyjścia procesu.. 
+Wykresy \ref{pro4_pidinz_3out} i \ref{pro4_pidinz_3inp} 
+prezentują przebiegi dla parametrów $K = \num{0,03}$, $T_{\mathrm{i}} = \num{4.5}$ 
+i $T_{\mathrm{d}} = \num{1.08}$ Dla ostatnich nastawów uzyskaliśmy najmniejszy 
+wskaźnik jakości regulacji równy $E = \num{3242.08}$. Udało się zniwelować 
+niechciane przeregulowanie a wartości wyjścia dla dodatnich wartości zadanych osiągane są 
+w zadowalającym czasie. Regulator ma spore problemy dla ujemnych wartości zadanych. W tym przypadku
+liniowy regulator PID nie jest w stanie skutecznie regulować nieliniowym procesem w szybki sposób.
 
 \begin{figure}[t]
     \centering
@@ -134,13 +174,13 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \addlegendimage{no markers,red}
     \addlegendimage{no markers,blue}
 
-    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.03_Ti_10000000_Td_0.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.03_Ti_10000000_Td_0.csv};
+    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.05_Ti_4.5_Td_1.08.csv};  
+    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.05_Ti_4.5_Td_1.08.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora dla $K=\num{0.03}$}
-    \label{pro_zad4_k_0.03_out}
+    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{0,05}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$}
+    \label{pro4_pidinz_2out}
 \end{figure}
 
 \begin{figure}[b]
@@ -148,7 +188,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=1000,ymin=-0.2,ymax=0.4,
+    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.1,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -158,61 +198,12 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.03_Ti_10000000_Td_0.csv};
+    \addplot[const plot, blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.05_Ti_4.5_Td_1.08.csv};
     
     \end{axis}
     \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $K=\num{0.03}$}
-    \label{pro_zad4_k_0.03_inp}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y[k]$},
-    \addlegendentry{$y^{\mathrm{zad}}[k]$},
-
-    \addlegendimage{no markers,red}
-    \addlegendimage{no markers,blue}
-
-    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.05_Ti_10000000_Td_0.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.05_Ti_10000000_Td_0.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora dla $K=\num{0.05}$}
-    \label{pro_zad4_k_0.05_out}
-\end{figure}
-
-\begin{figure}[b]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=1000,ymin=-0.2,ymax=0.6,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$u[k]$},
-    
-    \addlegendimage{no markers,blue}
-
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.05_Ti_10000000_Td_0.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego dla $K=\num{0.05}$}
-    \label{pro_zad4_k_0.05_inp}
+    \caption{Przebieg sygnału sterującego przy parametrach $K = \num{0,05}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$}
+    \label{pro4_pidinz_2inp}
 \end{figure}
 
 \begin{figure}[t]
@@ -238,7 +229,7 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{0,03}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$}
-    \label{pro_zad4_k_0.03_4.5_1.08_out}
+    \label{pro4_pidinz_3out}
 \end{figure}
 
 \begin{figure}[b]
@@ -256,60 +247,11 @@ Wiedzieliśmy, że musimy zlikwidować niegasnące oscylacje, aby to uzyskać zm
     
     \addlegendimage{no markers,blue}
 
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.03_Ti_4.5_Td_1.08.csv};
+    \addplot[const plot, blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.03_Ti_4.5_Td_1.08.csv};
     
     \end{axis}
     \end{tikzpicture}
     \caption{Przebieg sygnału sterującego przy parametrach $K = \num{0,03}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$}
-    \label{pro_zad4_k_0.03_4.5_1.08_inp}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=1000,ymin=-2,ymax=12.5,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$y[k]$},
-    \addlegendentry{$y^{\mathrm{zad}}[k]$},
-
-    \addlegendimage{no markers,red}
-    \addlegendimage{no markers,blue}
-
-    \addplot[red, semithick] file{../data/project/zad4/zad3PID_output_K_0.05_Ti_4.5_Td_1.08.csv};  
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_setpoint_K_0.05_Ti_4.5_Td_1.08.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg procesu sterowanego za pomocą regulatora z parametrami $K = \num{0,05}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$}
-    \label{pro_zad4_k_0.05_4.5_1.08_out}
-\end{figure}
-
-\begin{figure}[b]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    width=0.98\textwidth,
-    xmin=0.0,xmax=1000,ymin=-0.4,ymax=1.1,
-    xlabel={$k$},
-    ylabel={$y[k]$},
-    legend pos=south east,
-    y tick label style={/pgf/number format/1000 sep=},
-    ] 
-    \addlegendentry{$u[k]$},
-    
-    \addlegendimage{no markers,blue}
-
-    \addplot[blue, semithick] file{../data/project/zad4/zad3PID_input_K_0.05_Ti_4.5_Td_1.08.csv};
-    
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Przebieg sygnału sterującego przy parametrach $K = \num{0,05}$, $T_{\mathrm{i}} = \num{4.5}$ i $T_{\mathrm{d}} = \num{1.08}$}
-    \label{pro_zad4_k_0.05_4.5_1.08_inp}
+    \label{pro4_pidinz_3inp}
 \end{figure}
 \FloatBarrier
