@@ -1,4 +1,4 @@
-LOCAL_REGS = 2;
+LOCAL_REGS = 4;
 membershipFunction = 'trapezoid'; % trapezoid, bell, triangle
 
 if exist('fuzzyMatrix', 'var') == 0 || size(fuzzyMatrix,1) ~= LOCAL_REGS
