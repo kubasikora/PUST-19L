@@ -10,7 +10,7 @@ Umax = 1;
 T = 0.5;   
 SIM_LEN = 1000;
 
-REGULATOR_NUM = 6;
+REGULATOR_NUM = 3;
 
 %% wyliczenie offsetu kolejnych punktow pracy
 Y_MIN = -0.31546;
@@ -123,7 +123,8 @@ for k=7:SIM_LEN
         end 
         dUp(i) = du1 - du2;
     end
-    output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2)); 
+    %output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2)); 
+    output(k) = 1.995*output(k-1)-0.9949*output(k-2)+0.002709*input(k-3);
     rescaled_output = output(k) - Ypp;                                                     
     stpt = setpoint(k) - Ypp;                                                               
     error(k) = stpt - rescaled_output;   
