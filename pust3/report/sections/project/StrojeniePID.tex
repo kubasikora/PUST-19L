@@ -6,7 +6,7 @@
 
 \subsection{Próba dostrojenia regulatora metodą Zieglera - Nicholsa}
 \label{pro4_PID_ZN}
-W pierwszej kolejności spróbowaliśmy nastroić regulator PID klasyczną metodą Zieglera-Nicholsa.
+W pierwszej kolejności spróbowaliśmy nastroić regulator PID klasyczną metodą Zieglera-Nicholsa.
 W tym celu wykonaliśmy eksperyment polegający na pobudzeniu procesu sterowanego regulatorem 
 proporcjonalnym, skokową zmianą sterowania. Poszukiwaliśmy takiego wzmocnienia krytycznego
 $K_{\mathrm{Kr}}$ dla którego odpowiedź obiektu cechowała się niegasnącymi oscylacjami o 
@@ -33,7 +33,7 @@ $K = \num{0.15}$, $T_{\mathrm{i}} = \num{7.25}$ i $T_{\mathrm{d}} = \num{1.74}$
 
 Mając obliczone parametry regulatora, przystąpiliśmy do zbadania jakości regulacji.
 Badania przeprowadziliśmy dla jednolitej trajektorii zadanej.
-Wskaźnik jakości regulacji wynosił $E = \num{3486.41}$. Przebiegi wyjściowe i 
+Wskaźnik jakości regulacji wynosił $E = \num{980.75}$. Przebiegi wyjściowe i 
 sterowania dla tego zestawu parametrów zostały przedstawione na wykresach
 \ref{pro_zad4_ziegler_out} i \ref{pro_zad4_ziegler_inp}. 
 Widzimy na nich niegasnące oscylacje, niepożądane podczas regulacji. \\
@@ -152,7 +152,7 @@ wzmocnienia  $K$ w celu zmniejszenia przeregulowania przy dużej wartości wyjś
 Wykresy \ref{pro4_pidinz_3out} i \ref{pro4_pidinz_3inp} 
 prezentują przebiegi dla parametrów $K = \num{0,03}$, $T_{\mathrm{i}} = \num{4.5}$ 
 i $T_{\mathrm{d}} = \num{1.08}$ Dla ostatnich nastawów uzyskaliśmy najmniejszy 
-wskaźnik jakości regulacji równy $E = \num{3242.08}$. Udało się zniwelować 
+wskaźnik jakości regulacji równy $E = \num{1665.82}$. Udało się zniwelować 
 niechciane przeregulowanie a wartości wyjścia dla dodatnich wartości zadanych osiągane są 
 w zadowalającym czasie. Regulator ma spore problemy dla ujemnych wartości zadanych. W tym przypadku
 liniowy regulator PID nie jest w stanie skutecznie regulować nieliniowym procesem w szybki sposób.

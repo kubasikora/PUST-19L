@@ -17,6 +17,7 @@ u = (Upp + U_SKOK)*ones(SIM_LEN,1);
 step = Ypp*ones(SIM_LEN,1);
 for k = 7:SIM_LEN
     step(k) = symulacja_obiektu1y(u(k-5), u(k-6), step(k-1), step(k-2));
+    %step(k) = 1.927*step(k-1)-0.9283*step(k-2)+0.04583*u(k-6);
 end
 cut_time = 0;
 for i=2:SIM_LEN
@@ -25,7 +26,7 @@ for i=2:SIM_LEN
         break
     end
 end
-step = step(1:cut_time);
+%step = step(1:cut_time);
 
 
 %% parametry regulatora 
@@ -115,6 +116,7 @@ for k=7:SIM_LEN
     end
     
     output(k) = symulacja_obiektu1y(input(k-5), input(k-6), output(k-1), output(k-2));  % pomiar wyjscia
+    %output(k) = 1.927*output(k-1)-0.9283*output(k-2)+0.04583*input(k-6);
     rescaled_output = output(k) - Ypp;                                                      % skalowanie wyjscia   
     stpt = setpoint(k) - Ypp;                                                               % przeskalowany setpoint
     error(k) = stpt - rescaled_output;                                                      % obliczenie uchyby   

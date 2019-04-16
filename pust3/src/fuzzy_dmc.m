@@ -10,7 +10,7 @@ Umax = 1;
 T = 0.5;   
 SIM_LEN = 3000;
 
-REGULATOR_NUM = 2;
+REGULATOR_NUM = 6;
 
 %% wyliczenie offsetu kolejnych punktow pracy
 %U = linspace(-1,1,200);
