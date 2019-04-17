@@ -1,6 +1,7 @@
 clear all
 %% Dodanie sciezki ze skryptem symulujacym dzialanie obiektu
 addpath ../
+membershipFunction = 'triangle'; % trapezoid, bell, triangle
 
 %% Definicja stalych
 Upp = 0;
@@ -8,9 +9,9 @@ Ypp = 0;
 Umin = -1;
 Umax = 1;
 T = 0.5;   
-SIM_LEN = 3000;
+SIM_LEN = 1000;
 
-REGULATOR_NUM = 6;
+REGULATOR_NUM = 12;
 
 %% wyliczenie offsetu kolejnych punktow pracy
 %U = linspace(-1,1,200);
@@ -163,7 +164,8 @@ for k=7:SIM_LEN
     end
     
     for i=1:REGULATOR_NUM
-        memberships(i, k) = trapezoid(stpt(k), FUZZY_YPPs(i));
+        memberships(i, k) = eval(strcat(membershipFunction, '(stpt(k), FUZZY_YPPs(i));'));
+        %memberships(i, k) = trapezoid(stpt(k), FUZZY_YPPs(i));
     end
     
     input(k) = 0;
@@ -208,7 +210,8 @@ for i=1:REGULATOR_NUM
     x = linspace(-1, 12);
     memb = zeros(length(x),1);
     for j=1:length(x)
-        memb(j) = trapezoid(x(j), FUZZY_YPPs(i));
+        memb(j) = eval(strcat(membershipFunction, '(x(j), FUZZY_YPPs(i));'));
+        %memb(j) = trapezoid(x(j), FUZZY_YPPs(i));
     end
     memb_ts = [x' memb];
 %     dlmwrite(strcat('../data/project/zad5/membership_', membershipFunction, '_', num2str(LOCAL_REGS), '.csv'), memb_ts, '\t');
@@ -222,3 +225,10 @@ plot(memberships(1,:));
 plot(memberships(2,:));
 hold off
 
+input_ts = [(1:length(input))' input];
+output_ts = [(1:length(output))' output];
+stpt_ts = [(1:length(stpt))' stpt];
+
+dlmwrite(strcat('../data/project/zad5_DMC/input_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), input_ts, '\t');
+dlmwrite(strcat('../data/project/zad5_DMC/output_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), output_ts, '\t');
+dlmwrite(strcat('../data/project/zad5_DMC/stpt_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), stpt_ts, '\t');
