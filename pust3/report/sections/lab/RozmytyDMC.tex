@@ -1,0 +1,164 @@
+\chapter{Regulacja z wykorzystaniem rozmytego regulatora DMC}
+\label{lab5i6}
+
+W ramach laboratorium przeprowadziliśmy próbę regulacji badanym 
+nieliniowym obiektem za pomocą algorytmu predykcyjnego DMC. Podobnie jak w przypadku 
+regulatora PID zdecydowaliśmy się na trapezową funkcję przynależności, jednak jako zmienną 
+decyzjną wybraliśmy wartość zadaną a nie aktualną wartość wyjściową. 
+
+Zgodnie z poleceniem, założyliśmy $D = N = N_{\mathrm{u}} = 300$ i $\lambda = 1$.
+Wyniki eksperymentu zostały przedstawione na rysunkach \ref{dr_1_y} i \ref{dr_1_u}.
+Zgodnie z naszymi oczekiwaniami,
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad5/proba2_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad5/proba2_stpt.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem DMC}
+    \label{dr_1_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=1000,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad5/proba2_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem DMC}
+    \label{dr_1_u}
+\end{figure}
+\FloatBarrier
+
+\section{Rózne parametry kary}
+
+W kolejnej próbie postanowiliśmy każdemu regulatorowi lokalnemu przypisać wartość parametru kary $\lambda_{i}$,
+taką jak w poprzednio omawianym regulatorze liniowym $\lambda = \num{100}$ Wyniki tej próby wyszły jeszcze gorsze niż się spodziewaliśmy.
+Z biegiem czasu, możemy stwierdzić że ten pomysł był bez sensu ponieważ dla mniejszych wartości tego parametru pojawiały się 
+uchyby ustalone, dlatego też w tym przypadku powinniśmy zmniejszyć ten parametr a nie go zwiększać.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad5/proba1_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad5/proba1_stpt.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem DMC}
+    \label{dr_21_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=1000,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad5/proba1_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem DMC}
+    \label{dr_2_u}
+\end{figure}
+
+\indent{}
+W ostatniej próbie zdecydowaliśmy się zróżnicować wartości parametrów $\lambda_{i}$ pomiędzy regulatorami 
+lokalnymi. Uznaliśmy że zastosujemy następujący zestaw parametrów: $\lambda_{1} = \num{1}$, $\lambda_{2} = \num{100}$,
+$\lambda_{1} = \num{0.01}$. Wybraliśmy taki zestaw ponieważ uznaliśmy że regulacja w okolicy punktu pracy regulatora
+pierwszego jest solidna a w okolicy większych wartości zadanych regulator niedomaga. Wartość środkowego
+regulatora zostawiliśmy na poziomie z poprzedniej próby tak aby nie wprowadzała niepotrzebynch zakłóceń 
+na przełamaniu charakterystyki obiektu.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad5/proba3_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad5/proba3_stpt.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem DMC}
+    \label{dr_3_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=1,xmax=1000,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad5/proba3_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem DMC}
+    \label{dr_3_u}
+\end{figure}
+
+\subsubsection{Wnioski}
+Podobnie jak w przypadku rozmytego regulatora PID, proces doboru parametrów regulatora DMC jest długi i złożony.
+W trakcie laboratorium nie zdążyliśmy przetestować innych zestawów parametrów $\lambda$, a także działania
+regulatora dla innych zmiennych decyzyjnych i funkcji przynależności.
