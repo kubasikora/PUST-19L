@@ -4,7 +4,19 @@
 Zadanie polegało na wypróbowaniu zwykłych regulatorów, wykorzystywanych przy obiektach liniowych, do regulacji obiektu nieliniowego.
 
 \section{Regulator PID}
-Jako pierwszy testowany był algorytm PID. Na wykresach obserwujemy przebiegi sygnałów przy kilku skokach wartości zadanej. Patrząc na wykres można stwierdzić, że regulator radzi sobie przyzwoicie. Osiągane są wszystkie wartości zadane w niedługim czasie po skoku. Występują jednak niewielkie oscylacje sygnału wyjściowego oraz spore oscylacje sterowania. Wskaźnik jakości wyniósł $E = \num{12794.09}$. Wyniki testu przedstawione zostały na wykresach \ref{reg_PID} oraz \ref{reg_PID_u}.
+Jako pierwszy testowany był algorytm PID. 
+Na wykresach obserwujemy przebiegi sygnałów przy kilku skokach wartości zadanej. 
+Patrząc na wykres można stwierdzić, że regulator radzi sobie przyzwoicie. 
+Osiągane są wszystkie wartości zadane w niedługim czasie po skoku. 
+Niestety występują niewielkie oscylacje sygnału wyjściowego oraz spore oscylacje sterowania, szczególnie
+przy mniejszych wartościach wyjściowych procesu. Spowodowane jest to faktem że rzeczywiste wzmocnienie
+obiektu w tej części charakterystyki jest większe niż w przypadku obiektu nieliniowego. W takim przypadku,
+regulator dostrojony dla wolniejszego obiektu, będzie bardziej agresywnie próbował zmniejszać uchyby, co 
+w ostatecznym rozrachunku powoduje oscylacje przebiegu wyjściowego. Efekt ten nie występuje przy większych
+wartościach obiektu, ponieważ w tej części proces ma mniejsze wzmocnienie niż omawiany na laboratorium pierwszym obiekt 
+liniowy. 
+Wskaźnik jakości wyniósł $E = \num{12794.09}$. 
+Wyniki testu przedstawione zostały na wykresach \ref{reg_PID} oraz \ref{reg_PID_u}.
 
 \begin{figure}[t]
     \centering
@@ -51,7 +63,15 @@ Jako pierwszy testowany był algorytm PID. Na wykresach obserwujemy przebiegi sy
 \end{figure}
 
 \section{Regulator DMC}
-Następnie nastąpił test regulatora DMC. W tym przypadku wyniki nie były już tak zadowalające jak przy regulatorze PID. Wykresy przedstawiają wolne działanie regulatora. Co więcej, wyjście nie osiąga wartości zadanej przy największym skoku. Sygnały przebiegają spokojnie jednak podczas regulacji pożądana byłaby lepsza jakość regulacji. Wskaźnik jakości osiągnął niemalże dwukrotnie większą wartość niż przy eksperymencie z regulatorem PID - $E = \num{24071.15}$. Przebiegi sygnałów można zobaczyć na wykresach \ref{reg_DMC} oraz \ref{reg_DMC_u}. 
+Następnie nastąpił test regulatora DMC. 
+W tym przypadku wyniki nie były już tak zadowalające jak przy regulatorze PID. 
+Wykresy przedstawiają wolne działanie regulatora. 
+Co więcej, wyjście nie osiąga wartości zadanej przy największym skoku. Niedoskonałości wynikają
+ze zmiany modelu procesu, leżącego u podstaw algorytmu predykcyjnego.
+Sygnały przebiegają spokojnie jednak podczas regulacji pożądana byłaby lepsza jakość regulacji. 
+Wskaźnik jakości osiągnął niemalże dwukrotnie większą wartość niż przy eksperymencie z regulatorem 
+PID - $E = \num{24071.15}$. 
+Przebiegi sygnałów można zobaczyć na wykresach \ref{reg_DMC} oraz \ref{reg_DMC_u}. 
 
 \begin{figure}[t]
     \centering

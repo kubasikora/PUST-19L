@@ -18,7 +18,7 @@ Dla pierwszej próby wskaźnik jakości wyniósł $E = \num{67034}$ co jest wyni
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -42,7 +42,7 @@ Dla pierwszej próby wskaźnik jakości wyniósł $E = \num{67034}$ co jest wyni
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xmin=1,xmax=1000,ymin=0,ymax=100,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -72,7 +72,7 @@ Przy próbie drugiej możemy zaobserwować, że jakość regulacji uległa niezn
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -96,7 +96,7 @@ Przy próbie drugiej możemy zaobserwować, że jakość regulacji uległa niezn
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xmin=1, xmax=1000,ymin=0,ymax=100,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -126,7 +126,7 @@ Próba trzecia różniła się od drugiej jedynie gładszym przebiegiem sygnału
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -150,7 +150,7 @@ Próba trzecia różniła się od drugiej jedynie gładszym przebiegiem sygnału
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xmin=1,xmax=1000,ymin=0,ymax=100,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -173,14 +173,18 @@ Parametry regulatorów lokalnych:
 \item $K = 19, T_{\mathrm{i}} = 250,  T_{\mathrm{d}} = 1$
 \item $K = 20, T_{\mathrm{i}} = 200,  T_{\mathrm{d}} = 1$
 \end{enumerate}
-Próba czwarta również wypadła rozczarowująco. Wskaźnik jakości zwiększył się znacznie - $E = \num{49693}$. Obserwujemy powolne działanie i reakcje regulatora. Niepożądanym zjawiskiem są również oscylacje oraz ostre piki sygnału sterującego. Wyniki dla próby czwartej przedstawione na wykresach \ref{pr_4_y} i \ref{pr_4_u}.
+Próba czwarta również wypadła rozczarowująco. 
+Wskaźnik jakości zwiększył się znacznie - $E = \num{49693}$. 
+Obserwujemy powolne działanie i reakcje regulatora. 
+Niepożądanym zjawiskiem są również oscylacje oraz ostre piki sygnału sterującego. 
+Wyniki dla próby czwartej przedstawione na wykresach \ref{pr_4_y} i \ref{pr_4_u}.
 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xmin=1,xmax=1000,ymin=30,ymax=55,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -204,7 +208,7 @@ Próba czwarta również wypadła rozczarowująco. Wskaźnik jakości zwiększy�
     \begin{tikzpicture}
     \begin{axis}[
     width=0.98\textwidth,
-    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xmin=1,xmax=1000,ymin=0,ymax=100,
     xlabel={$k$},
     ylabel={$y[k]$},
     legend pos=south east,
@@ -220,4 +224,13 @@ Próba czwarta również wypadła rozczarowująco. Wskaźnik jakości zwiększy�
 \end{figure}
 
 \subsubsection{Wnioski}
-Strojenie rozmytego regulatora PID nie należy do zadań prostych. Podczas czterech wykonanych prób udało nam się poprawić jakość regulacji jedynie w niewielkim stopniu. Zadanie to wymaga wielu eksperymentów i prób dla różnych parametrów każdego z regulatorów lokalnych. Podczas strojenia należy obserwować działanie regulatorów lokalnych w zależności od punktu pracy i dobieranie nastaw na podstawie obserwacji działania. Podczas strojenia konieczne jest dobre przemyślenie kolejnych kroków doboru parametrów. Warto uzbroić się również w cierpliwość.
+Strojenie rozmytego regulatora PID nie należy do zadań prostych.
+Podczas czterech wykonanych prób udało nam się poprawić jakość regulacji jedynie w niewielkim stopniu. 
+Zadanie to wymaga wielu eksperymentów i prób dla różnych parametrów każdego z regulatorów lokalnych. 
+Podczas strojenia należy obserwować działanie regulatorów lokalnych w zależności od punktu pracy i 
+dobieranie nastaw na podstawie obserwacji działania. 
+Konieczne jest również dobre przemyślenie kolejnych kroków doboru parametrów. 
+Warto uzbroić się również w cierpliwość. Najlepszym sposobem na dostrojenie regulatora PID jest 
+pojedyncze strojenie każdego z regulatorów lokalnych w okolicy jego punktu pracy. Niestety, długi horyzont 
+dynamiki obiektu wymusił na nas strojenie wszystkich regulatorów lokalnych równocześnie co sprawiło że 
+żaden z badanych regulatorów nie spisał się choćby dostatecznie.
