@@ -1,7 +1,8 @@
 \section{Strojenie regulatorów lokalnych DMC}
 
-\subsection{Przebieg strojenia dla dwóch lokalnych regulatorów DMC} 
-\begin{figure}[h]
+\subsection{Przebieg strojenia dla dwóch lokalnych regulatorów DMC}
+Jak możemy zauważyć na rysunkach \ref{pro_zad5_DMC_bell_2_inp}, \ref{pro_zad5_DMC_bell_2_out}, \ref{pro_zad5_DMC_triangle_2_inp}, \ref{pro_zad5_DMC_triangle_2_out} i \ref{pro_zad5_DMC_trapezoid_2_inp}, \ref{pro_zad5_DMC_trapezoid_2_out} możemy zobaczyć jak przebiega proces regulacji w przypadku dwóch lokalnych regulatorów DMC. Do 700 próbki regulacja przebiega pomyślnie, po tym czasie zaczynają się pojawiać oscylacje przy osiąganiu wartości zadanej. Najprawdopodobniej wynika to z tego, że nastawy jednego z lokalnych regulatorów nie są wystarczająco dobre, aby zapewnić satysfakcjonującą regulację w okolicach tego punktu pacy. 
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -152,6 +153,7 @@
 \FloatBarrier
 
 \subsection{Przebieg strojenia dla trzech lokalnych regulatorów DMC}
+Na rysunkach \ref{pro_zad5_DMC_bell_3_inp}, \ref{pro_zad5_DMC_bell_3_out}, \ref{pro_zad5_DMC_triangle_3_inp}, \ref{pro_zad5_DMC_triangle_3_out} i \ref{pro_zad5_DMC_trapezoid_3_inp}, \ref{pro_zad5_DMC_trapezoid_3_out} możemy zobaczyć jak przebiega proces regulacji w przypadku trzech lokalnych regulatorów DMC. Jest on gorszy niż dla dwóch regulatorów bo dla pewnych wartości zadanych sygnał ten charakteryzuje się niegasnącymi oscylacjami. Sytuacja ta występuje dla wszystkich rodzajów funkcji przynależności. 
 \begin{figure}[t]
     \centering
     \begin{tikzpicture}
@@ -302,7 +304,9 @@
 \FloatBarrier
 
 \subsection{Przebieg strojenia dla czterech lokalnych regulatorów DMC}
-\begin{figure}[h]
+Dla czterech regulatorów lokalnych regulacja przebiega najlepiej w porównaniu do poprzednich przypadków. Jedynym minusem jest fakt, że tak dobrany regulator rozmyty ma tendencję do generowania krótkich przeregulowań podczas zmiany wartości zadanej. Jednak nie są one na tyle duże, żeby dyskwalifikowały taki regulator rozmyty. Przebiegi sygnałów zostały zaprezentowane na rysunkach \ref{pro_zad5_DMC_bell_4_inp}, \ref{pro_zad5_DMC_bell_4_out}, \ref{pro_zad5_DMC_triangle_4_inp}, \ref{pro_zad5_DMC_triangle_4_out} i \ref{pro_zad5_DMC_trapezoid_4_inp}, \ref{pro_zad5_DMC_trapezoid_4_out}.  
+
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -452,7 +456,8 @@
 \FloatBarrier
 
 \subsection{Przebieg strojenia dla pięciu lokalnych regulatorów DMC}
-\begin{figure}[h]
+Dla pięciu regulatorów lokalnych regulacja przebiega zadowalająco tylko dla wartości zadanej równej 11. W przypadku innych wielkości pojawiają się oscylacje i duże przeregulowania. Po analizie wyników doszliśmy do wniosku, że regulacja dla pięciu lokalnych regulatorów DMC nie jest poprawna. Przebiegi sygnałów zostały zaprezentowane na rysunkach \ref{pro_zad5_DMC_bell_5_inp}, \ref{pro_zad5_DMC_bell_5_out}, \ref{pro_zad5_DMC_triangle_5_inp}, \ref{pro_zad5_DMC_triangle_5_out} i \ref{pro_zad5_DMC_trapezoid_5_inp}, \ref{pro_zad5_DMC_trapezoid_5_out}.
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -602,7 +607,8 @@
 \FloatBarrier
 
 \subsection{Przebieg strojenia dla sześciu lokalnych regulatorów DMC}
-\begin{figure}[h]
+Jak możemy zauważyć na rysunkach \ref{pro_zad5_DMC_bell_6_inp}, \ref{pro_zad5_DMC_bell_6_out}, \ref{pro_zad5_DMC_triangle_6_inp}, \ref{pro_zad5_DMC_triangle_6_out} i \ref{pro_zad5_DMC_trapezoid_6_inp}, \ref{pro_zad5_DMC_trapezoid_6_out} możemy zobaczyć jak przebiega proces regulacji w przypadku sześciu lokalnych regulatorów DMC. Wyniki oraz przebiegi sygnałów regulacji są zbliżone do tych otrzymanych dla pięciu lokalnych regulatorów. Pojawiają się te same problemy czyli oscylacje i zbyt duże przeregulowanie. 
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -752,7 +758,8 @@
 \FloatBarrier
 
 \subsection{Przebieg strojenia dla dwunastu lokalnych regulatorów DMC}
-\begin{figure}[h]
+Na rysunkach \ref{pro_zad5_DMC_bell_12_inp}, \ref{pro_zad5_DMC_bell_12_out}, \ref{pro_zad5_DMC_triangle_12_inp}, \ref{pro_zad5_DMC_triangle_12_out} i \ref{pro_zad5_DMC_trapezoid_12_inp}, \ref{pro_zad5_DMC_trapezoid_12_out} możemy zobaczyć jak przebiega proces regulacji w przypadku dwunastu lokalnych regulatorów DMC. W czasie całej symulacji pojawiają się bardzo duże niegasnące oscylacje. Doszliśmy do wniosku, że dla tego obiektu liczba dwunastu lokalnych regulatorów DMC jest wyraźnie za duża, a zwiększanie liczebności regulatorów lokalnych nie prowadzi do poprawy regulacji.  
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
@@ -900,3 +907,5 @@
     \label{pro_zad5_DMC_triangle_12_inp}
 \end{figure}
 \FloatBarrier
+
+Jednogłośnie całym zespołem podjęliśmy decyzję, że najlepsze przebiegi sygnałów, a co za tym idzie najlepsza jakość regulacji występuje dla 4 regulatorów lokalnych DMC.  
