@@ -1,7 +1,7 @@
 clear all
 %% Dodanie sciezki ze skryptem symulujacym dzialanie obiektu
 addpath ../
-membershipFunction = 'triangle'; % trapezoid, bell, triangle
+membershipFunction = 'bell'; % trapezoid, bell, triangle
 
 %% Definicja stalych
 Upp = 0;
@@ -11,7 +11,7 @@ Umax = 1;
 T = 0.5;   
 SIM_LEN = 1000;
 
-REGULATOR_NUM = 12;
+REGULATOR_NUM = 5;
 
 %% wyliczenie offsetu kolejnych punktow pracy
 %U = linspace(-1,1,200);
@@ -49,6 +49,12 @@ D = 500;
 N = D;
 Nu = N;
 lambda = 1*ones(REGULATOR_NUM, 1);
+lambda(1,1) = 7000;
+lambda(2,1) = 10000;
+lambda(3,1) = 8000;
+lambda(4,1) = 6000;
+lambda(5,1) = 4000;
+% lambda(6,1) = 10;
 
 %% macierze regulatorow
 dUp = zeros(D-1, 1);
@@ -229,6 +235,6 @@ input_ts = [(1:length(input))' input];
 output_ts = [(1:length(output))' output];
 stpt_ts = [(1:length(stpt))' stpt];
 
-dlmwrite(strcat('../data/project/zad5_DMC/input_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), input_ts, '\t');
-dlmwrite(strcat('../data/project/zad5_DMC/output_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), output_ts, '\t');
-dlmwrite(strcat('../data/project/zad5_DMC/stpt_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), stpt_ts, '\t');
+% dlmwrite(strcat('../data/project/zad7/input_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), input_ts, '\t');
+% dlmwrite(strcat('../data/project/zad7/output_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), output_ts, '\t');
+% dlmwrite(strcat('../data/project/zad7/stpt_', membershipFunction, '_', num2str(REGULATOR_NUM), '.csv'), stpt_ts, '\t');
