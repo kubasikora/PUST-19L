@@ -1,0 +1,223 @@
+\chapter{Regulacja z wykorzystaniem rozmytego regulatora PID}
+\label{lab4}
+
+Eksperymenty przeprowadzane były dla regulatora wykorzystującego trzy regulatory lokalne. Do każdego regulatora lokalnego staraliśmy się dobrać parametry minimalizujące wartość wskaźnika jakośći.
+
+\subsubsection{Próba 1.}
+Parametry regulatorów lokalnych:
+\begin{enumerate}
+\item $K = 15, T_{\mathrm{i}} = 300,  T_{\mathrm{d}} = 1$
+\item $K = 17,5, T_{\mathrm{i}} = 250,  T_{\mathrm{d}} = 1$
+\item $K = 20, T_{\mathrm{i}} = 200,  T_{\mathrm{d}} = 1$
+\end{enumerate}
+
+Dla pierwszej próby wskaźnik jakości wyniósł $E = \num{67034}$ co jest wynikiem znacznie gorszym od wyniku dla regulatora PID z rozdziału \ref{lab3}. Na wykresach również obserwujemy bardzo słabą jakość regulacji, brak jakiegokolwiek nadążania za wartością zadaną i duży błąd. Wyniki przedstawione na wykresach \ref{pr_1_y} i \ref{pr_1_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad4/proba_1_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_1_stpt.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 1.: Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_1_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_1_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 1.: Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_1_u}
+\end{figure}
+
+
+\subsubsection{Próba 2.}
+Parametry regulatorów lokalnych:
+\begin{enumerate}
+\item $K = 17, T_{\mathrm{i}} = 300,  T_{\mathrm{d}} = 1$
+\item $K = 19, T_{\mathrm{i}} = 250,  T_{\mathrm{d}} = 1$
+\item $K = 22, T_{\mathrm{i}} = 200,  T_{\mathrm{d}} = 1$
+\end{enumerate}
+Przy próbie drugiej możemy zaobserwować, że jakość regulacji uległa nieznacznej poprawie. Znajduje to potwierdzenie we wskaźniku jakości - $E = \num{37713}$. Jest to jednak wartość o rząd wielkości większa niż uzyskana w zadaniu poprzednim. Sygnały nie dążą do wartości zadanej, obserwujemy oscylacje i niestabilny sygnał sterujący. Wyniki przedstawione na wykresach \ref{pr_2_y} oraz \ref{pr_2_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad4/proba_2_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_2_stpt.csv}; 
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 2.: Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_2_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+   \addplot[blue, semithick] file{../data/lab/zad4/proba_2_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 2.: Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_2_u}
+\end{figure}
+
+
+\subsubsection{Próba 3.}
+Parametry regulatorów lokalnych:
+\begin{enumerate}
+\item $K = 17, T_{\mathrm{i}} = 250,  T_{\mathrm{d}} = 18$
+\item $K = 19, T_{\mathrm{i}} = 200,  T_{\mathrm{d}} = 20$
+\item $K = 22, T_{\mathrm{i}} = 180,  T_{\mathrm{d}} = 15$
+\end{enumerate}
+Próba trzecia różniła się od drugiej jedynie gładszym przebiegiem sygnału wyjściowego. Zdecydowanie ostrzejszy przebieg możemy zaobserwować na wykresie sterowania, które oscyluje z krótkim okresem. Wskaźnik jakości nieznacznie się zmniejszył - $E = \num{33717}$. Przebiegi przedstawione na wykresach \ref{pr_3_y} i \ref{pr_3_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad4/proba_3_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_3_stpt.csv}; 
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 3.: Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_3_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_3_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 3.: Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_3_u}
+\end{figure}
+
+
+\subsubsection{Próba 4.}
+Parametry regulatorów lokalnych:
+\begin{enumerate}
+\item $K = 18, T_{\mathrm{i}} = 300,  T_{\mathrm{d}} = 1$
+\item $K = 19, T_{\mathrm{i}} = 250,  T_{\mathrm{d}} = 1$
+\item $K = 20, T_{\mathrm{i}} = 200,  T_{\mathrm{d}} = 1$
+\end{enumerate}
+Próba czwarta również wypadła rozczarowująco. Wskaźnik jakości zwiększył się znacznie - $E = \num{49693}$. Obserwujemy powolne działanie i reakcje regulatora. Niepożądanym zjawiskiem są również oscylacje oraz ostre piki sygnału sterującego. Wyniki dla próby czwartej przedstawione na wykresach \ref{pr_4_y} i \ref{pr_4_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad4/proba_4_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_4_stpt.csv}; 
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 4.: Przebieg procesu regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_4_y}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad4/proba_4_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Próba 4.: Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego rozmytym regulatorem PID.}
+    \label{pr_4_u}
+\end{figure}
+
+\subsubsection{Wnioski}
+Strojenie rozmytego regulatora PID nie należy do zadań prostych. Podczas czterech wykonanych prób udało nam się poprawić jakość regulacji jedynie w niewielkim stopniu. Zadanie to wymaga wielu eksperymentów i prób dla różnych parametrów każdego z regulatorów lokalnych. Podczas strojenia należy obserwować działanie regulatorów lokalnych w zależności od punktu pracy i dobieranie nastaw na podstawie obserwacji działania. Podczas strojenia konieczne jest dobre przemyślenie kolejnych kroków doboru parametrów. Warto uzbroić się również w cierpliwość.

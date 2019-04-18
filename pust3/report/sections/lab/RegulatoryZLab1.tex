@@ -1,0 +1,98 @@
+\chapter{Regulacja liniowa obiektu nieliniowego}
+\label{lab3}
+
+Zadanie polegało na wypróbowaniu zwykłych regulatorów, wykorzystywanych przy obiektach liniowych, do regulacji obiektu nieliniowego.
+
+\section{Regulator PID}
+Jako pierwszy testowany był algorytm PID. Na wykresach obserwujemy przebiegi sygnałów przy kilku skokach wartości zadanej. Patrząc na wykres można stwierdzić, że regulator radzi sobie przyzwoicie. Osiągane są wszystkie wartości zadane w niedługim czasie po skoku. Występują jednak niewielkie oscylacje sygnału wyjściowego oraz spore oscylacje sterowania. Wskaźnik jakości wyniósł $E = \num{12794.09}$. Wyniki testu przedstawione zostały na wykresach \ref{reg_PID} oraz \ref{reg_PID_u}.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad3/pid_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad3/pid_stpt.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu regulacji obiektu nieliniowego zwykłym regulatorem PID.}
+    \label{reg_PID}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad3/pid_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego zwykłym regulatorem PID.}
+    \label{reg_PID_u}
+\end{figure}
+
+\section{Regulator DMC}
+Następnie nastąpił test regulatora DMC. W tym przypadku wyniki nie były już tak zadowalające jak przy regulatorze PID. Wykresy przedstawiają wolne działanie regulatora. Co więcej, wyjście nie osiąga wartości zadanej przy największym skoku. Sygnały przebiegają spokojnie jednak podczas regulacji pożądana byłaby lepsza jakość regulacji. Wskaźnik jakości osiągnął niemalże dwukrotnie większą wartość niż przy eksperymencie z regulatorem PID - $E = \num{24071.15}$. Przebiegi sygnałów można zobaczyć na wykresach \ref{reg_DMC} oraz \ref{reg_DMC_u}. 
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendentry{$y^{\mathrm{zad}}$},
+    \addlegendimage{no markers,red},
+    \addlegendimage{no markers,blue}
+
+    \addplot[red, semithick] file{../data/lab/zad3/dmc_output.csv};
+    \addplot[blue, semithick] file{../data/lab/zad3/dmc_stpt.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg procesu regulacji obiektu nieliniowego zwykłym regulatorem DMC.}
+    \label{reg_DMC}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=800,ymin=0,ymax=100,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u$},
+    \addlegendimage{no markers,blue}
+    \addplot[blue, semithick] file{../data/lab/zad3/dmc_input.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg sygnału sterującego podczas regulacji obiektu nieliniowego zwykłym regulatorem DMC.}
+    \label{reg_DMC_u}
+\end{figure}

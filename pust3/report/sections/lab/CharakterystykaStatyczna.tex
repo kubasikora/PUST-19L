@@ -1,0 +1,47 @@
+\chapter{Wyznaczenie charakterystyki statycznej obiektu}
+\label{lab2}
+
+Aby wyznaczyć charakterystykę statyczną wykonaliśmy eksperyment mający na celu zbadanie wzmocnienia w zależności od sterowania. Dla kolejnych wartości sygnału sterującego: $20, 30, 40...$ oczekiwaliśmy stabilizacji sygnału wyjściowego obiektu. Wynik eksperymentu przedstawia wykres \ref{eksperyment}. Na wykresie możemy zauważyć, że przyrost wartości sygnału wyjściowego zmniejsza się wraz ze zwiększaniem wartości sterowania. Punkty stabilizacji sygnału posłużyły do wyznacznia charakterystyki statycznej obiektu. Wynik aproksymacji przedstawia wykrest \ref{char_stat}.\\
+\indent{} Przegięcie wykresu wskazuje na to, że mamy do czynienia z obiektem nieliniowym dlatego niemożliwe jest wyznaczenie wzmocnienia statycznego procesu.
+
+\begin{figure}[t]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=0.0,xmax=2040,ymin=30,ymax=55,
+    xlabel={$k$},
+    ylabel={$y[k]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[k]$},
+    \addlegendimage{no markers,red}
+
+    \addplot[red, semithick] file{../data/lab/zad2/eksperyment.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg eksperymentu przy wartościach sterowania: $20, 30, 40, 50, 60, 70, 80$.}
+    \label{eksperyment}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.98\textwidth,
+    xmin=20.0,xmax=80,ymin=32,ymax=52,
+    xlabel={$u$},
+    ylabel={$y[u]$},
+    legend pos=south east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y[u]$},
+    \addlegendimage{no markers,red}
+
+    \addplot[red, semithick] file{../data/lab/zad2/char_stat.csv};  
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Charakterystyka statyczna obiektu.}
+    \label{char_stat}
+\end{figure}
