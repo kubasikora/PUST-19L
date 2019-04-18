@@ -152,7 +152,18 @@ Tak jak wspominaliśmy wcześniej, w tym rozdziale dodatkowo pokażemy przebiegi
 \end{figure}
 \FloatBarrier
 
+\subsection{Przebieg i wnioski z doboru współczynnika kary $\lambda$ dla regulatorów lokalnych DMC}
+Na podstawie oceny wskaźnika jakości regulacji E i jakościowej oceny regulacji dobieraliśmy wielkość współczynnika kary $\lambda$ dla poszczególnych regulatorów lokalnych DMC. Naszą analizę dokonaliśmy dla trzech różnych funkcji przynależności tj. gaussowskiej, trapezowej i trójkątnej. Jak się później okazało rodzaj funkcji przynależności nie miał dużego wpływu na przebiegi sygnałów. Możemy to wywnioskować porównując wykresy z podpunktów \ref{zad7_3_reg}, \ref{zad7_4_reg} i \ref{zad7_5_reg} (dla różnych funkcji przynależności wyjścia procesu i sygnału sterującego są praktycznie identyczne dla tych samych parametrów $\lambda$). 
+
+~\\ Wartości współczynników $\lambda$, które pozwoliły na satysfakcjonującą regulację dla trzech regulatorów lokalnych wynoszą odpowiednio $\lambda_{\mathrm{1}} = 7000$, $\lambda_{\mathrm{2}} = 10000$ i $\lambda_{\mathrm{3}} = 8000$. Przebiegi sygnałów dla tych nastawów zaprezentowaliśmy w podpunkcie \ref{zad7_3_reg}. Możemy zauważyć, że przebiegi te może nie są idealnie gładkie, czasami pojawiają się bardzo małe schodki, jednak zawsze prowadzą one do wartości zadanej i nie powstają oscylacje. 
+
+~\\ Następnie przeprowadziliśmy symulację dla czterech regulatorów lokalnych i jej wyniki zaprezentowaliśmy w podpunkcie \ref{zad7_4_reg}. Przyjęliśmy zasadę, że zostawiamy poprzednie nastawy regulatorów lokalnych DMC i traktujemy je jako dobry punkt wyjściowy do dobierania odpowiednich nastawów dla większej ilości regulatorów lokalnych DMC. W ten sposób współczynniki kary wyniosły $\lambda_{\mathrm{1}} = 7000$, $\lambda_{\mathrm{2}} = 10000$, $\lambda_{\mathrm{3}} = 8000$ i $\lambda_{\mathrm{4}} = 6000$. Wyniki regulacji i wnioski są zbliżone do symulacji dla trzech regulatorów lokalnych. 
+
+~\\ Na końcu dobieraliśmy wartości parametrów dla pięciu regulatorów lokalnych. Wartości liczbowe prezentują się następująco $\lambda_{\mathrm{1}} = 7000$, $\lambda_{\mathrm{2}} = 10000$, $\lambda_{\mathrm{3}} = 8000$, $\lambda_{\mathrm{4}} = 6000$ i $\lambda_{\mathrm{4000}} = 4000$. Jak możemy zobaczyć w podpunkcie \ref{zad7_5_reg} regulacja przebiega poprawnie. Jedynym małym mankamentem może być fakt, że wyjście procesu nie narasta tak jednostajnie dla dużych zmian wartości zadanej. W naszym zespole doszliśmy do wspólnego wniosku, że przy trochę lepszym doborze parametru $\lambda$ udałoby się wyeliminować to zjawisko.
+
+~\newpage 
 \subsection{Dobór parametru $\lambda$ dla trzech regulatorów lokalnych DMC}
+\label{zad7_3_reg}
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
@@ -303,6 +314,7 @@ Tak jak wspominaliśmy wcześniej, w tym rozdziale dodatkowo pokażemy przebiegi
 \FloatBarrier
 
 \subsection{Dobór parametru $\lambda$ dla czterech regulatorów lokalnych DMC}
+\label{zad7_4_reg}
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
@@ -453,6 +465,7 @@ Tak jak wspominaliśmy wcześniej, w tym rozdziale dodatkowo pokażemy przebiegi
 \FloatBarrier
 
 \subsection{Dobór parametru $\lambda$ dla pięciu regulatorów lokalnych DMC}
+\label{zad7_5_reg}
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
