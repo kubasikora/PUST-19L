@@ -1,5 +1,5 @@
 \section{Strojenie regulatorów lokalnych DMC}
-Podczas strojenia i poszukiwania najlepszych nastawów regulatorów lokalnych DMC zmienialiśmy te same parametry co w przypadku PID. Jako funkcje przynależności posłużyły nam funkcja gaussowska, trójkątna i trapezowa. Wybór wartości współczynników D, N i $N_{u}$ był optymalizowany przez matlabową funkcję \textit{fmincon} tak aby wskaźnik jakości regulacji E był jak najmniejszy. Symulacje przeprowadziliśmy dla różnych liczb regulatorów lokalnych (2, 3, 4, 5, 6 i 12). Wartość współczynnika kary dla wszystkich przeprowadzonych eksperymentów była taka sama i wynosiła $\lambda = 1$.
+Podczas strojenia i poszukiwania najlepszych nastawów regulatorów lokalnych DMC zmienialiśmy parametry D, N i $N_{u}$ . Jako funkcje przynależności posłużyły nam funkcja gaussowska, trójkątna i trapezowa. Wybór wartości współczynników D, N i $N_{u}$ był optymalizowany przez matlabową funkcję \textit{fmincon} tak aby wskaźnik jakości regulacji E był jak najmniejszy. Symulacje przeprowadziliśmy dla różnych liczb regulatorów lokalnych (2, 3, 4, 5, 6 i 12). Wartość współczynnika kary dla wszystkich przeprowadzonych eksperymentów była taka sama i wynosiła $\lambda = 1$.
 
 \section{Podsumowanie strojenia regulatorów lokalnych DMC}
 Poniżej prezentujemy przebiegi sygnałów na których możemy zobaczyć jak przebiega proces regulacji dla różnej ilości regulatorów lokalnych DMC. Gdy porównamy ze sobą wszystkie wykresy bardzo szybko dojdziemy do wniosku, że wyjścia procesu i przebiegi sygnału sterującego dla różnych nastawów są bardzo zbliżone do siebie. Wspólnie w zespole doszliśmy do wniosku, że różnice są praktycznie niezauważalne i nie mają znaczącego wpływu na cały proces regulacji. Identyczne wnioski wyciągnęliśmy dla wartości wskaźnika jakości regulacji E. Jego średnia wartość dla wszystkich eksperymentów wynosiła $E = 2030$. W zależności od ilości regulatorów lokalnych wskaźnik ten zmieniał się o $\Delta E = \pm 5$. Gdy weźmiemy pod uwagę długość symulacji wynoszącą 1000 próbek okazuje się, że zmiana ta jest bardzo mała. Regulatory DMC zachowują się na tyle elastycznie, że dla badanego obiektu ilość regulatorów lokalnych nie ma tak dużego wpływu. W tym przypadku nie zauważymy znaczących różnic pomiędzy użyciem dwóch, czy też dwunastu regulatorów rozmytych. 
@@ -157,7 +157,7 @@ Poniższe symulacje zostały wykonane dla wartości parametru $\lambda = 10000$,
 \FloatBarrier
 
 \subsection{Przebieg strojenia dla trzech lokalnych regulatorów DMC}
-\begin{figure}[t]
+\begin{figure}[h]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
