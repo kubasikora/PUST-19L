@@ -1,0 +1,267 @@
+\chapter{Badanie odpowiedzi skokowych obiektu}
+\label{pro2}
+
+W przypadku obiektu o wielu wejściach i wielu wyjściach, nie istnieje tylko jedna
+odpowiedź skokowa opisująca obiekt. W badanych obiekcie, są trzy wyjścia i cztery wyjścia,
+co daje dwanaście różnych odpowiedzi skokowych, z czego każda opisuje jeden tor procesu:
+$$u_{i} \longleftrightarrow y_{j},  i = 1, 2, 3; j = 1, 2, 3, 4$$
+
+Badania zautomatyzowaliśmy, wykorzystując przy tym autorski skrypt \verb+zad2.m+, który sam
+wykonuje eksperymenty i zapisuje zebrane dane. Dodatkowo, zapisuje wszystkie odpowiedzi w postaci
+jednej złożonej macierzy komórkowej. Ta postać będzie przydatna w dalszej części projektu, przy 
+implementacji algorytmu regulacji DMC w wersji MIMO.
+\newpage
+
+\section{Odpowiedź obiektu na skokową zmianę pierwszego wejścia}
+Na podstawie odpowiedzi skokowych obiektu określiliśmy wzmocnienia \\ \mbox{$K_{\mathrm{1},\mathrm{1}} = \num{2.5},
+K_{\mathrm{2},\mathrm{1}} = \num{1.9}, K_{\mathrm{3},\mathrm{1}} = \num{0.25}$.}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=-0.5,ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u_{\mathrm{1}}[k]$},
+    \addlegendentry{$u_{\mathrm{2}}[k]$},
+    \addlegendentry{$u_{\mathrm{3}}[k]$},
+    \addlegendentry{$u_{\mathrm{4}}[k]$},
+
+    \addlegendimage{no markers, blue}
+    \addlegendimage{no markers, red}    
+    \addlegendimage{no markers, green}  
+    \addlegendimage{no markers, orange}  
+    \addplot[const plot, blue, semithick] file{../data/project/zad2/skok_wejscia_1_przebieg_wejscia_1.csv};
+    \addplot[const plot, red, semithick] file{../data/project/zad2/skok_wejscia_1_przebieg_wejscia_2.csv};
+    \addplot[const plot, green, semithick] file{../data/project/zad2/skok_wejscia_1_przebieg_wejscia_3.csv};
+    \addplot[const plot, orange, semithick] file{../data/project/zad2/skok_wejscia_1_przebieg_wejscia_4.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebiegi wejściowe procesu podczas drugiego eksperymentu badania odpowiedzi skokowej}
+    \label{pro2_odp_wej_1}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y_{\mathrm{1}}[k]$},
+    \addlegendentry{$y_{\mathrm{2}}[k]$},
+    \addlegendentry{$y_{\mathrm{3}}[k]$},
+    \addlegendimage{no markers, blue} 
+    \addlegendimage{no markers, red}
+    \addlegendimage{no markers, green}
+    \addplot[blue, thick] file{../data/project/zad2/skok_wejscia_1_przebieg_wyjscia_1.csv};
+    \addplot[red, thick] file{../data/project/zad2/skok_wejscia_1_przebieg_wyjscia_2.csv};
+    \addplot[green, thick] file{../data/project/zad2/skok_wejscia_1_przebieg_wyjscia_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjść procesu podczas skokowej zmiany pierwszego wejścia}
+    \label{pro2_odp_wyj_1}
+\end{figure}
+\FloatBarrier
+
+\section{Odpowiedź obiektu na skokową zmianę drugiego wejścia}
+Na podstawie odpowiedzi skokowych obiektu określiliśmy wzmocnienia \\ \mbox{$K_{\mathrm{1},\mathrm{2}} = \num{1.5},
+K_{\mathrm{2},\mathrm{2}} = \num{0.8}, K_{\mathrm{3},\mathrm{2}} = \num{1.1}$.}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=-0.5,ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u_{\mathrm{1}}[k]$},
+    \addlegendentry{$u_{\mathrm{2}}[k]$},
+    \addlegendentry{$u_{\mathrm{3}}[k]$},
+    \addlegendentry{$u_{\mathrm{4}}[k]$},
+
+    \addlegendimage{no markers, blue}
+    \addlegendimage{no markers, red}    
+    \addlegendimage{no markers, green}  
+    \addlegendimage{no markers, orange}  
+    \addplot[const plot, blue, semithick] file{../data/project/zad2/skok_wejscia_2_przebieg_wejscia_1.csv};
+    \addplot[const plot, red, semithick] file{../data/project/zad2/skok_wejscia_2_przebieg_wejscia_2.csv};
+    \addplot[const plot, green, semithick] file{../data/project/zad2/skok_wejscia_2_przebieg_wejscia_3.csv};
+    \addplot[const plot, orange, semithick] file{../data/project/zad2/skok_wejscia_2_przebieg_wejscia_4.csv};
+
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebiegi wejściowe procesu podczas drugiego eksperymentu badania odpowiedzi skokowej}
+    \label{pro2_odp_wej_2}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y_{\mathrm{1}}[k]$},
+    \addlegendentry{$y_{\mathrm{2}}[k]$},
+    \addlegendentry{$y_{\mathrm{3}}[k]$},
+    \addlegendimage{no markers, blue} 
+    \addlegendimage{no markers, red}
+    \addlegendimage{no markers, green}
+    \addplot[blue, thick] file{../data/project/zad2/skok_wejscia_2_przebieg_wyjscia_1.csv};
+    \addplot[red, thick] file{../data/project/zad2/skok_wejscia_2_przebieg_wyjscia_2.csv};
+    \addplot[green, thick] file{../data/project/zad2/skok_wejscia_2_przebieg_wyjscia_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjść procesu podczas skokowej zmiany drugiego wejścia}
+    \label{pro2_odp_wyj_2}
+\end{figure}
+\FloatBarrier
+
+
+\section{Odpowiedź obiektu na skokową zmianę trzeciego wejścia}
+Na podstawie odpowiedzi skokowych obiektu określiliśmy wzmocnienia \\ \mbox{$K_{\mathrm{1},\mathrm{3}} = \num{0.1},
+K_{\mathrm{2},\mathrm{3}} = \num{1.2}, K_{\mathrm{3},\mathrm{3}} = \num{1.7}$.}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=-0.5,ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u_{\mathrm{1}}[k]$},
+    \addlegendentry{$u_{\mathrm{2}}[k]$},
+    \addlegendentry{$u_{\mathrm{3}}[k]$},
+    \addlegendentry{$u_{\mathrm{4}}[k]$},
+
+    \addlegendimage{no markers, blue}
+    \addlegendimage{no markers, red}    
+    \addlegendimage{no markers, green}  
+    \addlegendimage{no markers, orange}  
+    \addplot[const plot, blue, semithick] file{../data/project/zad2/skok_wejscia_3_przebieg_wejscia_1.csv};
+    \addplot[const plot, red, semithick] file{../data/project/zad2/skok_wejscia_3_przebieg_wejscia_2.csv};
+    \addplot[const plot, green, semithick] file{../data/project/zad2/skok_wejscia_3_przebieg_wejscia_3.csv};
+    \addplot[const plot, orange, semithick] file{../data/project/zad2/skok_wejscia_3_przebieg_wejscia_4.csv};
+
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebiegi wejściowe procesu podczas trzeciego eksperymentu badania odpowiedzi skokowej}
+    \label{pro2_odp_wej_3}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y_{\mathrm{1}}[k]$},
+    \addlegendentry{$y_{\mathrm{2}}[k]$},
+    \addlegendentry{$y_{\mathrm{3}}[k]$},
+    \addlegendimage{no markers, blue} 
+    \addlegendimage{no markers, red}
+    \addlegendimage{no markers, green}
+    \addplot[blue, thick] file{../data/project/zad2/skok_wejscia_3_przebieg_wyjscia_1.csv};
+    \addplot[red, thick] file{../data/project/zad2/skok_wejscia_3_przebieg_wyjscia_2.csv};
+    \addplot[green, thick] file{../data/project/zad2/skok_wejscia_3_przebieg_wyjscia_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjść procesu podczas skokowej zmiany trzeciego wejścia}
+    \label{pro2_odp_wyj_3}
+\end{figure}
+\FloatBarrier
+
+
+\section{Odpowiedź obiektu na skokową zmianę czwartego wejścia}
+Na podstawie odpowiedzi skokowych obiektu określiliśmy wzmocnienia \\ \mbox{$K_{\mathrm{1},\mathrm{2}} = \num{0.9},
+K_{\mathrm{2},\mathrm{2}} = \num{0.25}, K_{\mathrm{3},\mathrm{2}} = \num{0.85}$.}
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=-0.5,ymax=1.5,
+    xlabel={$k$},
+    ylabel={$u[k]$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$u_{\mathrm{1}}[k]$},
+    \addlegendentry{$u_{\mathrm{2}}[k]$},
+    \addlegendentry{$u_{\mathrm{3}}[k]$},
+    \addlegendentry{$u_{\mathrm{4}}[k]$},
+
+    \addlegendimage{no markers, blue}
+    \addlegendimage{no markers, red}    
+    \addlegendimage{no markers, green}  
+    \addlegendimage{no markers, orange}  
+    \addplot[const plot, blue, semithick] file{../data/project/zad2/skok_wejscia_4_przebieg_wejscia_1.csv};
+    \addplot[const plot, red, semithick] file{../data/project/zad2/skok_wejscia_4_przebieg_wejscia_2.csv};
+    \addplot[const plot, green, semithick] file{../data/project/zad2/skok_wejscia_4_przebieg_wejscia_3.csv};
+    \addplot[const plot, orange, semithick] file{../data/project/zad2/skok_wejscia_4_przebieg_wejscia_4.csv};
+
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebiegi wejściowe procesu podczas czwartego eksperymentu badania odpowiedzi skokowej}
+    \label{pro2_odp_wej_4}
+\end{figure}
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+    width=0.95\textwidth,
+    xmin=0.0,xmax=500,ymin=0,ymax=3,
+    xlabel={$k$},
+    ylabel={$s_{k}$},
+    legend pos=north east,
+    y tick label style={/pgf/number format/1000 sep=},
+    ] 
+    \addlegendentry{$y_{\mathrm{1}}[k]$},
+    \addlegendentry{$y_{\mathrm{2}}[k]$},
+    \addlegendentry{$y_{\mathrm{3}}[k]$},
+    \addlegendimage{no markers, blue} 
+    \addlegendimage{no markers, red}
+    \addlegendimage{no markers, green}
+    \addplot[blue, thick] file{../data/project/zad2/skok_wejscia_4_przebieg_wyjscia_1.csv};
+    \addplot[red, thick] file{../data/project/zad2/skok_wejscia_4_przebieg_wyjscia_2.csv};
+    \addplot[green, thick] file{../data/project/zad2/skok_wejscia_4_przebieg_wyjscia_3.csv};
+    
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Przebieg wyjść procesu podczas skokowej zmiany czwartego wejścia}
+    \label{pro2_odp_wyj_4}
+\end{figure}
+\FloatBarrier

@@ -66,7 +66,7 @@ for i=1:N
             dlmwrite(file_name, to_save, '\t');
         end
         for output_num=1:M
-            file_name = strcat(base_name, 'przebieg_wyjscia_', num2str(output_num), '.csv');
+            file_name = strcat(base_name, '_przebieg_wyjscia_', num2str(output_num), '.csv');
             to_save = [(0:SIM_LEN-delay)' outputs(delay:end, output_num)];
             dlmwrite(file_name, to_save, '\t');
         end
