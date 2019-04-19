@@ -1,0 +1,48 @@
+\chapter{Zbadanie poprawności podanego punktu pracy}
+\label{pro1}
+
+W pierwszej kolejności sprawdziliśmy poprawność podanego w projekcie 
+punktu pracy. W stanie ustalonym spodziewamy się $u_{\mathrm{1}} = u_{\mathrm{2}} 
+= u_{\mathrm{3}} = u_{\mathrm{4}} = y_{\mathrm{1}} = y_{\mathrm{2}} = 
+y_{\mathrm{3}} = 0$. Za pomocą skryptu \verb+zad1.m+ dokonaliśmy sprawdzenia
+czy podane wartości są poprawne. Skrypt ten wywołuje funkcję
+\verb+symulacja_obiektu1+ z następującymi parametrami.
+
+\lstset{language=Matlab,%
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    stringstyle=\color{magenta},
+    commentstyle=\color{green},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={pro1},caption={Sprawdzenie poprawności podanego punktu pracy},captionpos=b]
+    Upp1 = 0;
+    Upp2 = 0;
+    Upp3 = 0;
+    Upp4 = 0;
+
+    Ypp1 = 0;
+    Ypp2 = 0;
+    Ypp3 = 0;
+
+    [y1, y2, y3] = symulacja_obiektu1(Upp1, Upp1, Upp1, Upp1, ...
+                                      Upp2, Upp2, Upp2, Upp2, ...
+                                      Upp3, Upp3, Upp3, Upp3, ...
+                                      Upp4, Upp4, Upp4, Upp4, ...
+                                      Ypp1, Ypp1, Ypp1, Ypp1, ...
+                                      Ypp2, Ypp2, Ypp2, Ypp2, ...
+                                      Ypp3, Ypp3, Ypp3, Ypp3);
+\end{lstlisting}
+
+W wyniku działania funkcji uzyskaliśmy wektor samych zer, które równe są wartościom wszystkich wyjść w punkcie pracy.
+Jednoznacznie potwierdza to poprawność podanego punktu pracy.
