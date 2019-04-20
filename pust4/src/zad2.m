@@ -6,8 +6,6 @@ SAVE = 1;
 SIM_LEN = 500;
 
 %% parametry obiektu i symulacji
-delay = 5;
-SIM_LEN = SIM_LEN + delay;
 M = 3;
 N = 4;
 
@@ -20,6 +18,9 @@ for i=1:SIM_LEN
     s{i} = zeros(M,N);
 end
 
+
+SIM_DELAY = 5;
+SIM_LEN = SIM_LEN + SIM_DELAY;
 %% symulacja dla kazdego toru
 for i=1:N
     inputs = ones(SIM_LEN, N);
@@ -34,9 +35,9 @@ for i=1:N
     outputs(:, 3) = YPPs(3)*ones(SIM_LEN, 1);
     
     inputs(:, i) = (UPPs(i) + 1)*ones(SIM_LEN, 1);
-    inputs(1:delay, i) = 0;
+    inputs(1:SIM_DELAY, i) = 0;
     
-    for k=delay:SIM_LEN
+    for k=SIM_DELAY:SIM_LEN
         [y1, y2, y3] = symulacja_obiektu1(inputs(k-1, 1), inputs(k-2, 1), inputs(k-3, 1), inputs(k-4, 1), ...
                                           inputs(k-1, 2), inputs(k-2, 2), inputs(k-3, 2), inputs(k-4, 2), ...
                                           inputs(k-1, 3), inputs(k-2, 3), inputs(k-3, 3), inputs(k-4, 3), ...
@@ -47,14 +48,14 @@ for i=1:N
         outputs(k, 1) = y1;
         outputs(k, 2) = y2;
         outputs(k, 3) = y3;
-        s{k-delay+1}(:, i) = [y1; y2; y3];
+        s{k-SIM_DELAY+1}(:, i) = [y1; y2; y3];
     end
         
     figure(i)
     hold on
-    plot(0:SIM_LEN-delay, outputs(delay:end,1));
-    plot(0:SIM_LEN-delay, outputs(delay:end,2));
-    plot(0:SIM_LEN-delay, outputs(delay:end,3));
+    plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,1));
+    plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,2));
+    plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,3));
     hold off
     
     %% ewentualny zapis pojedynczej odpowiedzi do pliku
@@ -62,12 +63,12 @@ for i=1:N
         base_name = strcat('../data/project/zad2/skok_wejscia_', num2str(i));
         for input_num=1:N
             file_name = strcat(base_name, '_przebieg_wejscia_', num2str(input_num), '.csv');
-            to_save = [(0:SIM_LEN-delay)' inputs(delay:end, input_num)];
+            to_save = [(0:SIM_LEN-SIM_DELAY)' inputs(SIM_DELAY:end, input_num)];
             dlmwrite(file_name, to_save, '\t');
         end
         for output_num=1:M
             file_name = strcat(base_name, '_przebieg_wyjscia_', num2str(output_num), '.csv');
-            to_save = [(0:SIM_LEN-delay)' outputs(delay:end, output_num)];
+            to_save = [(0:SIM_LEN-SIM_DELAY)' outputs(SIM_DELAY:end, output_num)];
             dlmwrite(file_name, to_save, '\t');
         end
     end
@@ -75,5 +76,9 @@ end
 
 %% zapis zlozonej odpowiedzi skokowej do pliku jako cell array
 if SAVE == 1
+    for i=1:SIM_LEN-SIM_DELAY
+        s{i} = s{i+1};
+    end
+    s=s(1:SIM_LEN-SIM_DELAY);
     save('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
 end
