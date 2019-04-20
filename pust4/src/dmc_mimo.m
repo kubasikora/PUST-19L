@@ -1,63 +1,77 @@
 close all
+clear all
 addpath ../
 addpath functions/
 
-%% parametry skryptu
+%% Parametry skryptu
 SAVE = 1;
 SIM_LEN = 500;
 
+%% Parametry regulatora
+D = 500;
+N = 150;
+Nu = 2;
+lambda = [100 100 100 100];
+mi = [1 1 1];
+
+load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
+
 %% Definicja stalych
 T = 0.5;   
-M = 3;
-N = 4;
+ny = 3;
+nu = 4;
 
 UPPs = [0; 0; 0; 0];
 YPPs = [0; 0; 0];
-
-% macierz polaczen, okresla z jaka waga jest brany dany uchyb do regulatora
-CONNECTION_MATRIX = [1 0 0;
-                     0 0 0;
-                     0 1 0;
-                     0 0 1];
-
-%% Parametry regulatorow ciaglych
-K = [1 0 1 1];
-Ti = [3 99999 99999 100];
-Td = [0.05 0 0 0];
-
-%% Parametry regulatorow dyskretnych
-r0 = zeros(N,1);
-r1 = zeros(N,1);
-r2 = zeros(N,1);
-
-for i=1:N
-    r0(i) = K(i)*(1 + T/(2*Ti(i)) + Td(i)/T);
-    r1(i) = K(i)*(T/(2*Ti(i)) - (2*Td(i))/T - 1);
-    r2(i) = (K(i)*Td(i))/T;
-end
-                 
+  
 %% Inicjalizacja wektorow
 % sterowania
-inputs = ones(SIM_LEN, N);
-for i=1:N
+inputs = ones(SIM_LEN, nu);
+for i=1:nu
    inputs(:, i) = UPPs(i)*ones(SIM_LEN, 1); 
 end
     
 % wyjscia
-outputs = ones(SIM_LEN, M);
-for i=1:M
+outputs = ones(SIM_LEN, ny);
+for i=1:ny
     outputs(:, i) = YPPs(i)*ones(SIM_LEN, 1);
 end
 
 % uchyby
-errors = zeros(SIM_LEN, M);
+errors = zeros(SIM_LEN, ny);
 
 % wartosci zadane
 setpoints = createSetpointTrajectory(SIM_LEN);
 
+%% Generacja macierzy algorytmu DMC
+M = createMMatrix(N, Nu, s);
+Mp = createMpMatrix(N, D, s);
+Lambda = createLambdaMatrix(Nu, lambda);
+Psi = createPsiMatrix(N, mi);
+dUp = zeros((D-1)*nu, 1);
+
+K = inv(M'*Psi*M + Lambda)*((M')*Psi);
+ke = evalKe(K, N, nu, ny);
+ku = K(1,:)*Mp;
+
 %% Petla symulujaca dzialanie cyfrowego algorytmu PID w wersji MIMO
-for k = 5:SIM_LEN  
-     [y1, y2, y3] = symulacja_obiektu1(inputs(k-1, 1), inputs(k-2, 1), inputs(k-3, 1), inputs(k-4, 1), ...
+for k = 5:SIM_LEN
+    % wektor dUp
+    for i = 1:(D-1)
+        if (k-i) <= 0
+            du1 = zeros(nu,1);
+        else
+            du1 = (inputs(k-i, :))';
+        end
+        if (k-i-1) <= 0
+            du2 = zeros(nu,1);
+        else
+            du2 = (inputs(k-i-1, :))';
+        end 
+        dUp(1+(i-1)*nu:1+(i-1)*nu + (nu-1)) = du1 - du2;
+    end
+    
+    [y1, y2, y3] = symulacja_obiektu1(inputs(k-1, 1), inputs(k-2, 1), inputs(k-3, 1), inputs(k-4, 1), ...
                                        inputs(k-1, 2), inputs(k-2, 2), inputs(k-3, 2), inputs(k-4, 2), ...
                                        inputs(k-1, 3), inputs(k-2, 3), inputs(k-3, 3), inputs(k-4, 3), ...
                                        inputs(k-1, 4), inputs(k-2, 4), inputs(k-3, 4), inputs(k-4, 4), ...
@@ -68,30 +82,28 @@ for k = 5:SIM_LEN
     errors(k, :) = setpoints(k, :) - outputs(k, :);   % obliczenie uchybów  
 
     % obliczenie nowych sterowan
-    for i=1:N
-        error = CONNECTION_MATRIX(i,:)*(errors(k-2:k, :)');
-        inputs(k,i) = r2(i)*error(1) + r1(i)*error(2) + r0(i)*error(3) + inputs(k-1, i); 
-    end
+    inputs(k, :) = ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp;
+    
 end
 
-error_sum = zeros(M,1);
-for i=1:M
+error_sum = zeros(ny,1);
+for i=1:ny
     error_sum(i) = sum(errors(:, i).^2);
 end
 
-%% wykresy sterowania oraz wyjscia
+%% Wykresy sterowania oraz wyjscia
 figure(1)
 hold on
-for i=1:M
-    subplot(M,1,i), plot(1:SIM_LEN, setpoints(:, i), '--r', 1:SIM_LEN, outputs(:, i));
+for i=1:ny
+    subplot(ny,1,i), plot(1:SIM_LEN, setpoints(:, i), '--r', 1:SIM_LEN, outputs(:, i));
     title(strcat('Wyjście m=', num2str(i)));
 end
 hold off
 
 figure(2)
 hold on 
-for i=1:N
-    subplot(N,1, i), stairs(1:SIM_LEN, inputs(:, i));
+for i=1:nu
+    subplot(nu,1, i), stairs(1:SIM_LEN, inputs(:, i));
     title(strcat('Sterowanie regulatora n=', num2str(i)));
 end
 hold off
@@ -100,7 +112,7 @@ if SAVE == 1
     while(1)
         dir_name = input('Podaj nazwę: ', 's');
         dir_name = strcat(dir_name, '/');
-        base_name = strcat('../data/project/zad4/pid/', dir_name);
+        base_name = strcat('../data/project/zad4/dmc/', dir_name);
         if exist(base_name, 'file')
             disp('Folder juz istnieje!');
             continue;
@@ -108,10 +120,11 @@ if SAVE == 1
         break;
     end
     
-    PID_PARAMS = [K; Ti; Td];
+    DMC_PARAMS = [N; Nu];
     mkdir(base_name);
-    dlmwrite(strcat(base_name, 'CONNECTION_MATRIX.csv'), CONNECTION_MATRIX, '\t');
-    dlmwrite(strcat(base_name, 'PID_PARAMS.csv'), PID_PARAMS, '\t');
+    dlmwrite(strcat(base_name, 'DMC_PARAMS.csv'), DMC_PARAMS, '\t');
+    dlmwrite(strcat(base_name, 'LAMBDA.csv'), lambda, '\t');
+    dlmwrite(strcat(base_name, 'MI.csv'), mi, '\t');
     dlmwrite(strcat(base_name, 'ERRORS.csv'), error_sum, '\t');
-    dumpSimulation(base_name, N, M, outputs, inputs, setpoints, errors);
+    dumpSimulation(base_name, nu, ny, outputs, inputs, setpoints, errors);
 end

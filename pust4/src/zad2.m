@@ -21,7 +21,10 @@ end
 
 SIM_DELAY = 5;
 SIM_LEN = SIM_LEN + SIM_DELAY;
+
 %% symulacja dla kazdego toru
+figure(1)
+hold on
 for i=1:N
     inputs = ones(SIM_LEN, N);
     inputs(:, 1) = UPPs(1)*ones(SIM_LEN, 1);
@@ -51,12 +54,13 @@ for i=1:N
         s{k-SIM_DELAY+1}(:, i) = [y1; y2; y3];
     end
         
-    figure(i)
-    hold on
-    plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,1));
-    plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,2));
-    plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,3));
-    hold off
+    subplot(N, M, (i-1)*M+1), plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,1));
+    title(strcat('input=', num2str(i),',output=1'));
+    subplot(N, M, (i-1)*M+2), plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,2));
+    title(strcat('input=', num2str(i),',output=2'));
+    subplot(N, M, (i-1)*M+3), plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,3));
+    title(strcat('input=', num2str(i),',output=3'));
+
     
     %% ewentualny zapis pojedynczej odpowiedzi do pliku
     if SAVE == 1
@@ -73,6 +77,7 @@ for i=1:N
         end
     end
 end
+hold off
 
 %% zapis zlozonej odpowiedzi skokowej do pliku jako cell array
 if SAVE == 1
