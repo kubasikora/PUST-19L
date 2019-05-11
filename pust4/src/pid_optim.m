@@ -1,7 +1,7 @@
 clear all
 addpath ./functions
 
-SAVE = 1;
+SAVE = 0;
 SIM_LEN = 1000;
 
 %% parametry symulacji
