@@ -159,8 +159,8 @@ plot(sim_time, output);
 title(['Wyjscie, E = ' num2str(error_sum)]);
 hold off
 
-%% zapis do plikow
-% wypisanie wartosci wspolczynnikow 
+% zapis do plikow
+wypisanie wartosci wspolczynnikow 
 str = strcat('N_', num2str(N), '_Nu_', num2str(Nu), '_lambda_', num2str(lambda));
 disp(str)
 input_ts = [sim_time-1 input];
