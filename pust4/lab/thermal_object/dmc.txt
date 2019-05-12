@@ -1,0 +1,36 @@
+// DMC
+dU1 := DMC_K11 *( Yzad_1 - T1_odczyt ) + DMC_K12 *( Yzad_2 - T3_odczyt ) ;
+dU2 := DMC_K21 *( Yzad_1 - T1_odczyt ) + DMC_K22 *( Yzad_2 - T3_odczyt ) ;
+dU1 := dU1 /100.0;
+dU2 := dU2 /100.0;
+temp_1 := dU1 ;
+temp_2 := dU2 ;
+FOR licznik := 0 TO 180 BY 1 DO
+dU1 := dU1 - tablica_MP [0]. wiersz [ licznik ]* tablica_MP [2]. wiersz [ licznik ];
+dU2 := dU2 - tablica_MP [1]. wiersz [ licznik ]* tablica_MP [2]. wiersz [ licznik ];
+END_FOR ;
+FOR licznik := 180 TO 2 BY -1 DO
+tablica_MP [2]. wiersz [ licznik ]:= tablica_MP [2]. wiersz [ licznik -2];
+END_FOR ;
+tablica_MP [2]. wiersz [0]:= dU1 ;
+tablica_MP [2]. wiersz [1]:= dU2 ;
+U_1 := ( U1_A / 10 + dU1 ) * 10;
+U_2 := ( U2_A / 10 + dU2 ) * 10;
+U1_A := U_1 ;
+U2_A := U_2 ;
+D114 := REAL_TO_INT ( U1_A ) ;
+D115 := REAL_TO_INT ( U2_A ) ;
+IF ( T1_odczyt > 15000) THEN
+D114 := 0;
+ELSIF ( D114 > 1000) THEN
+D114 := 1000;
+ELSIF ( D114 < 1) THEN
+D114 := 0;
+END_IF ;
+IF ( T3_odczyt > 15000) THEN
+D115 := 0;
+ELSIF ( D115 > 1000) THEN
+D115 := 1000;
+ELSIF ( D115 < 1) THEN
+D115 := 0;
+END_IF ;
