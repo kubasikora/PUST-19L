@@ -24,11 +24,11 @@ clc
 licznik = 0;
 for i = 1:length(ku)
     if rem(i,2)==0
-        str = ['tablica_MP[' num2str(1) '].wiersz[' num2str(licznik) '] = ' num2str(ku(i)) ';'];
+        str = ['tablica_MP[' num2str(1) '].wiersz[' num2str(licznik) '] := ' num2str(ku(i)) ';'];
         disp(str);
         licznik = licznik+1;
     else
-        str = ['tablica_MP[' num2str(0) '].wiersz[' num2str(licznik) '] = ' num2str(ku(i)) ';'];
+        str = ['tablica_MP[' num2str(0) '].wiersz[' num2str(licznik) '] := ' num2str(ku(i)) ';'];
         disp(str);
     end
 end      
