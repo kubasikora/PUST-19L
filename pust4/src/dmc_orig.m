@@ -1,44 +1,30 @@
-clear all
 close all
+clear all
 addpath ../
-addpath ./functions
+addpath functions/
 
+%% Parametry skryptu
 SAVE = 0;
 SIM_LEN = 1000;
 
-%% parametry symulacji
-T = 0.5;   
-nu = 4;
-ny = 3;
+%% Parametry regulatora
+D = 400;
+N = 400;
+Nu = 400;
+lambda = [1 1 1 1];
+mi = [1 1 1];
 
-D = 40;
-N = 20;
-Nu = 5;
-load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');                 
+load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
 s = s(1:D);
 
-M = createMMatrix(N, Nu, s);
-Mp = createMpMatrix(N, D, s);
-
-% parametry optymalizacji
-options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 2000);
-
-lambda_min = 0.001*ones(1,nu);
-lambda_max = 100000*ones(1,nu);
-
-mi_min = 0.01*ones(1,ny);
-mi_max = 10000*ones(1,ny);
-
-base_values = [1000 100 100 100 100 100 100];
-
-parameters = fmincon(@(parameters)dmcOptimTargetFun(parameters, D, N, Nu, M, Mp), base_values, [], [], [], [], [lambda_min mi_min], [lambda_max mi_max], [], options);
+%% Definicja stalych
+T = 0.5;   
+ny = 3;
+nu = 4;
 
 UPPs = [0; 0; 0; 0];
 YPPs = [0; 0; 0];
-
-lambda = parameters(1:4);
-mi = parameters(5:7);
-
+  
 %% Inicjalizacja wektorow
 % sterowania
 inputs = ones(SIM_LEN, nu);
@@ -65,9 +51,13 @@ Lambda = createLambdaMatrix(Nu, lambda);
 Psi = createPsiMatrix(N, mi);
 dUp = zeros((D-1)*nu, 1);
 
-K = inv(M'*Psi*M + Lambda)*((M')*Psi);
-ke = evalKe(K, N, nu, ny);
-ku = K(1,:)*Mp;
+K = inv( (M') * Psi * M + Lambda )* ( (M') * Psi );
+K1 = K(1:nu, :);
+
+Mp_cell = cell(1, D-1);
+for j=1:(D-1)
+    Mp_cell{j} = Mp(:,1 +(j-1)*nu: j*nu); 
+end
 
 %% Petla symulujaca dzialanie cyfrowego algorytmu DMC w wersji MIMO
 for k = 5:SIM_LEN
@@ -83,22 +73,23 @@ for k = 5:SIM_LEN
         else
             du2 = (inputs(k-i-1, :))';
         end 
-        dUp(1+(i-1)*nu:1+(i-1)*nu + (nu-1)) = du1 - du2;
+        dUp(1+(i-1)*nu: 1+(i-1)*nu + (nu-1)) = du1 - du2;
     end
     
     [y1, y2, y3] = symulacja_obiektu1(inputs(k-1, 1), inputs(k-2, 1), inputs(k-3, 1), inputs(k-4, 1), ...
-                                       inputs(k-1, 2), inputs(k-2, 2), inputs(k-3, 2), inputs(k-4, 2), ...
-                                       inputs(k-1, 3), inputs(k-2, 3), inputs(k-3, 3), inputs(k-4, 3), ...
-                                       inputs(k-1, 4), inputs(k-2, 4), inputs(k-3, 4), inputs(k-4, 4), ...
-                                       outputs(k-1, 1), outputs(k-2, 1), outputs(k-3, 1), outputs(k-4, 1), ...
-                                       outputs(k-1, 2), outputs(k-2, 2), outputs(k-3, 2), outputs(k-4, 2), ...
-                                       outputs(k-1, 3), outputs(k-2, 3), outputs(k-3, 3), outputs(k-4, 3));
+                                      inputs(k-1, 2), inputs(k-2, 2), inputs(k-3, 2), inputs(k-4, 2), ...
+                                      inputs(k-1, 3), inputs(k-2, 3), inputs(k-3, 3), inputs(k-4, 3), ...
+                                      inputs(k-1, 4), inputs(k-2, 4), inputs(k-3, 4), inputs(k-4, 4), ...
+                                      outputs(k-1, 1), outputs(k-2, 1), outputs(k-3, 1), outputs(k-4, 1), ...
+                                      outputs(k-1, 2), outputs(k-2, 2), outputs(k-3, 2), outputs(k-4, 2), ...
+                                      outputs(k-1, 3), outputs(k-2, 3), outputs(k-3, 3), outputs(k-4, 3));
     outputs(k, :) = [y1 y2 y3];                        
-    errors(k, :) = setpoints(k, :) - outputs(k, :);   % obliczenie uchybów  
-
-    % obliczenie nowych sterowan
-    inputs(k, :) = (inputs(k-1, :)' +  ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp)';
+    errors(k, :) = setpoints(k, :) - outputs(k, :);   % obliczenie uchybów 
+    Y_ZAD = duplicateVector(setpoints(k, :)', N*ny);
+    Y = duplicateVector(outputs(k, :)', N*ny);
+    dUK = K*(Y_ZAD - Y - Mp*dUp);
     
+    inputs(k, :) = (inputs(k-1, :))' +  dUK(1:nu); 
 end
 
 error_sum = zeros(ny,1);
@@ -127,7 +118,7 @@ if SAVE == 1
     while(1)
         dir_name = input('Podaj nazwę: ', 's');
         dir_name = strcat(dir_name, '/');
-        base_name = strcat('../data/project/zad5/dmc/', dir_name);
+        base_name = strcat('../data/project/zad6/dmc/', dir_name);
         if exist(base_name, 'file')
             disp('Folder juz istnieje!');
             continue;

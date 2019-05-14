@@ -141,5 +141,6 @@ if SAVE == 1
     dlmwrite(strcat(base_name, 'LAMBDA.csv'), lambda, '\t');
     dlmwrite(strcat(base_name, 'MI.csv'), mi, '\t');
     dlmwrite(strcat(base_name, 'ERRORS.csv'), error_sum, '\t');
+    dlmwrite(strcat(base_name, 'ERROR_SUM.csv'), sum(error_sum), '\t');
     dumpSimulation(base_name, nu, ny, outputs, inputs, setpoints, errors);
 end
