@@ -69,7 +69,7 @@ K = inv(M'*Psi*M + Lambda)*((M')*Psi);
 ke = evalKe(K, N, nu, ny);
 ku = K(1,:)*Mp;
 
-%% Petla symulujaca dzialanie cyfrowego algorytmu PID w wersji MIMO
+%% Petla symulujaca dzialanie cyfrowego algorytmu DMC w wersji MIMO
 for k = 5:SIM_LEN
     % wektor dUp
     for i = 1:(D-1)
@@ -97,7 +97,7 @@ for k = 5:SIM_LEN
     errors(k, :) = setpoints(k, :) - outputs(k, :);   % obliczenie uchybów  
 
     % obliczenie nowych sterowan
-    inputs(k, :) = ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp;
+    inputs(k, :) = (inputs(k-1, :)' +  ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp)';
     
 end
 

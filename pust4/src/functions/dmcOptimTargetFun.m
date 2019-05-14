@@ -67,7 +67,7 @@ function E = dmcOptimTargetFun(parameters, D, N, Nu, M, Mp)
         errors(k, :) = setpoints(k, :) - outputs(k, :);   % obliczenie uchybów  
 
         % obliczenie nowych sterowan
-        inputs(k, :) = ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp;
+        inputs(k, :) = (inputs(k-1, :)' +  ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp)';
 
     end
 

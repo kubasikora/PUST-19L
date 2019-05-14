@@ -11,8 +11,8 @@ SIM_LEN = 1000;
 D = 400;
 N = 400;
 Nu = 400;
-lambda = [100 100 100 100];
-mi = [1 0 0];
+lambda = [1 1 1 1];
+mi = [1 1 1];
 
 load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
 s = s(1:D);
@@ -66,7 +66,7 @@ for j=1:(D-1)
 end
 
 
-%% Petla symulujaca dzialanie cyfrowego algorytmu PID w wersji MIMO
+%% Petla symulujaca dzialanie cyfrowego algorytmu DMC w wersji MIMO
 for k = 5:SIM_LEN
     % wektor dUp
     for i = 1:(D-1)
@@ -98,7 +98,7 @@ for k = 5:SIM_LEN
     for j=1:(D-1)
         second_part = second_part + ku{j}*dUp(1+(j-1)*nu: (j-1)*nu + nu);  
     end
-    inputs(k, :) = ke*((setpoints(k,:))' - (outputs(k,:))') - second_part; %ku*dUp;
+    inputs(k, :) = (inputs(k-1, :))' +  ke*((setpoints(k,:))' - (outputs(k,:))') - second_part; 
 end
 
 error_sum = zeros(ny,1);
