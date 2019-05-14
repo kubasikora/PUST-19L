@@ -4,7 +4,7 @@ addpath functions/
 
 %% parametry skryptu
 SAVE = 1;
-SIM_LEN = 500;
+SIM_LEN = 1000;
 
 %% Definicja stalych
 T = 0.5;   
@@ -21,9 +21,9 @@ CONNECTION_MATRIX = [1 0 0;
                      0 0 1];
 
 %% Parametry regulatorow ciaglych
-K = [1 0 1 1];
-Ti = [3 99999 99999 100];
-Td = [0.05 0 0 0];
+K = [1 0 7 3];
+Ti =[5	9999999	12 4];
+Td = [0	0 0 0.1];
 
 %% Parametry regulatorow dyskretnych
 r0 = zeros(N,1);
@@ -113,5 +113,6 @@ if SAVE == 1
     dlmwrite(strcat(base_name, 'CONNECTION_MATRIX.csv'), CONNECTION_MATRIX, '\t');
     dlmwrite(strcat(base_name, 'PID_PARAMS.csv'), PID_PARAMS, '\t');
     dlmwrite(strcat(base_name, 'ERRORS.csv'), error_sum, '\t');
+    dlmwrite(strcat(base_name, 'ERROR_SUM.csv'), sum(error_sum), '\t');
     dumpSimulation(base_name, N, M, outputs, inputs, setpoints, errors);
 end

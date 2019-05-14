@@ -1,17 +1,18 @@
 clear all
+close all
 addpath ./functions
 
-SAVE = 0;
+SAVE = 1;
 SIM_LEN = 1000;
 
 %% parametry symulacji
 T = 0.5;   
 M = 3;
 N = 4;
-CONNECTION_MATRIX = [0 1 0;
-                     1 0 0;
-                     0 0 1;
-                     0 0 0];
+CONNECTION_MATRIX = [1 0 0;
+                     0 0 0;
+                     0 1 0;
+                     0 0 1];
                  
 %% parametry optymalizacji
 options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 2000);
@@ -23,7 +24,7 @@ Ti_max = 100*ones(1, N);
 Td_min = 0*ones(1, N);
 Td_max = 10*ones(1, N);
 
-base_values = [0.5 0.5 0.5 0.5 7.25 7.25 7.25 7.25 1.62 1.62 1.62 1.62];
+base_values = [0.25 0.25 0.25 0.25 17.25 17.25 17.25 17.25 1.62 1.62 1.62 1.62];
 
 parameters = fmincon(@(parameters)pidOptimTargetFun(parameters, CONNECTION_MATRIX, T), base_values, [], [], [], [], [K_min Ti_min Td_min], [K_max Ti_max Td_max], [], options);
 
@@ -124,5 +125,6 @@ if SAVE == 1
     dlmwrite(strcat(base_name, 'CONNECTION_MATRIX.csv'), CONNECTION_MATRIX, '\t');
     dlmwrite(strcat(base_name, 'PID_PARAMS.csv'), PID_PARAMS, '\t');
     dlmwrite(strcat(base_name, 'ERRORS.csv'), error_sum, '\t');
+    dlmwrite(strcat(base_name, 'ERROR_SUM.csv'), sum(error_sum), '\t');
     dumpSimulation(base_name, N, M, outputs, inputs, setpoints, errors);
 end
