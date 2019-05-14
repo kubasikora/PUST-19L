@@ -38,7 +38,7 @@ function E = pidOptimTargetFun(parameters, CONNECTION_MATRIX, T)
     errors = zeros(SIM_LEN, M);
 
     % wartosci zadane
-    setpoints = createSetpointTrajectory(SIM_LEN);
+    setpoints = createOptimSetpointTrajectory(SIM_LEN);
 
     %% Petla symulujaca dzialanie cyfrowego algorytmu PID w wersji MIMO
     for k = 5:SIM_LEN  

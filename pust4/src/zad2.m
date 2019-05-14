@@ -2,7 +2,7 @@ close all
 addpath ../
 
 %% parametry skryptu
-SAVE = 1;
+SAVE = 0;
 SIM_LEN = 500;
 
 %% parametry obiektu i symulacji
@@ -53,12 +53,19 @@ for i=1:N
         outputs(k, 3) = y3;
         s{k-SIM_DELAY+1}(:, i) = [y1; y2; y3];
     end
-        
+    
+    
     subplot(N, M, (i-1)*M+1), plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,1));
+    grid on;
+    grid minor;
     title(strcat('input=', num2str(i),',output=1'));
     subplot(N, M, (i-1)*M+2), plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,2));
+    grid on;
+    grid minor;
     title(strcat('input=', num2str(i),',output=2'));
     subplot(N, M, (i-1)*M+3), plot(0:SIM_LEN-SIM_DELAY, outputs(SIM_DELAY:end,3));
+    grid on;
+    grid minor;
     title(strcat('input=', num2str(i),',output=3'));
 
     

@@ -19,5 +19,7 @@ function dumpSimulation(base_name, N, M, outputs, inputs, setpoints, errors)
         to_save = [(1:SIM_LEN)' errors(:, i)];
         dlmwrite(strcat(base_name, 'error_', num2str(i), '.csv'), to_save, '\t');
     end
+    
+    save(strcat(base_name, 'workspace.mat'));
 end
 

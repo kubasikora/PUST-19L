@@ -4,17 +4,18 @@ addpath ../
 addpath functions/
 
 %% Parametry skryptu
-SAVE = 1;
-SIM_LEN = 500;
+SAVE = 0;
+SIM_LEN = 1000;
 
 %% Parametry regulatora
-D = 500;
-N = 150;
-Nu = 2;
+D = 400;
+N = 400;
+Nu = 400;
 lambda = [100 100 100 100];
-mi = [1 1 1];
+mi = [1 0 0];
 
 load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
+s = s(1:D);
 
 %% Definicja stalych
 T = 0.5;   
@@ -50,9 +51,20 @@ Lambda = createLambdaMatrix(Nu, lambda);
 Psi = createPsiMatrix(N, mi);
 dUp = zeros((D-1)*nu, 1);
 
-K = inv(M'*Psi*M + Lambda)*((M')*Psi);
+K = inv( (M') * Psi * M + Lambda )* ( (M') * Psi );
+K1 = K(1:nu, :);
 ke = evalKe(K, N, nu, ny);
-ku = K(1,:)*Mp;
+
+Mp_cell = cell(1, D-1);
+for j=1:(D-1)
+    Mp_cell{j} = Mp(:,1 +(j-1)*nu: j*nu); 
+end
+
+ku = cell(1,D-1);
+for j=1:(D-1)
+    ku{j} = K1*Mp_cell{j};
+end
+
 
 %% Petla symulujaca dzialanie cyfrowego algorytmu PID w wersji MIMO
 for k = 5:SIM_LEN
@@ -68,22 +80,25 @@ for k = 5:SIM_LEN
         else
             du2 = (inputs(k-i-1, :))';
         end 
-        dUp(1+(i-1)*nu:1+(i-1)*nu + (nu-1)) = du1 - du2;
+        dUp(1+(i-1)*nu: 1+(i-1)*nu + (nu-1)) = du1 - du2;
     end
     
     [y1, y2, y3] = symulacja_obiektu1(inputs(k-1, 1), inputs(k-2, 1), inputs(k-3, 1), inputs(k-4, 1), ...
-                                       inputs(k-1, 2), inputs(k-2, 2), inputs(k-3, 2), inputs(k-4, 2), ...
-                                       inputs(k-1, 3), inputs(k-2, 3), inputs(k-3, 3), inputs(k-4, 3), ...
-                                       inputs(k-1, 4), inputs(k-2, 4), inputs(k-3, 4), inputs(k-4, 4), ...
-                                       outputs(k-1, 1), outputs(k-2, 1), outputs(k-3, 1), outputs(k-4, 1), ...
-                                       outputs(k-1, 2), outputs(k-2, 2), outputs(k-3, 2), outputs(k-4, 2), ...
-                                       outputs(k-1, 3), outputs(k-2, 3), outputs(k-3, 3), outputs(k-4, 3));
+                                      inputs(k-1, 2), inputs(k-2, 2), inputs(k-3, 2), inputs(k-4, 2), ...
+                                      inputs(k-1, 3), inputs(k-2, 3), inputs(k-3, 3), inputs(k-4, 3), ...
+                                      inputs(k-1, 4), inputs(k-2, 4), inputs(k-3, 4), inputs(k-4, 4), ...
+                                      outputs(k-1, 1), outputs(k-2, 1), outputs(k-3, 1), outputs(k-4, 1), ...
+                                      outputs(k-1, 2), outputs(k-2, 2), outputs(k-3, 2), outputs(k-4, 2), ...
+                                      outputs(k-1, 3), outputs(k-2, 3), outputs(k-3, 3), outputs(k-4, 3));
     outputs(k, :) = [y1 y2 y3];                        
     errors(k, :) = setpoints(k, :) - outputs(k, :);   % obliczenie uchybów  
 
     % obliczenie nowych sterowan
-    inputs(k, :) = ke*((setpoints(k,:))' - (outputs(k,:))') - ku*dUp;
-    
+    second_part = 0;
+    for j=1:(D-1)
+        second_part = second_part + ku{j}*dUp(1+(j-1)*nu: (j-1)*nu + nu);  
+    end
+    inputs(k, :) = ke*((setpoints(k,:))' - (outputs(k,:))') - second_part; %ku*dUp;
 end
 
 error_sum = zeros(ny,1);

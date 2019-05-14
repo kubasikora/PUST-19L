@@ -8,10 +8,10 @@ SIM_LEN = 1000;
 T = 0.5;   
 M = 3;
 N = 4;
-CONNECTION_MATRIX = [1 0 0;
-                     0 0 0;
-                     0 1 0;
-                     0 0 1];
+CONNECTION_MATRIX = [0 1 0;
+                     1 0 0;
+                     0 0 1;
+                     0 0 0];
                  
 %% parametry optymalizacji
 options = optimoptions('fmincon', 'Algorithm', 'sqp', 'Display', 'iter', 'MaxFunctionEvaluations', 2000);
