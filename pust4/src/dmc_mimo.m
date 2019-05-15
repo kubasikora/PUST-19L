@@ -9,8 +9,8 @@ SIM_LEN = 1000;
 
 %% Parametry regulatora
 D = 400;
-N = 400;
-Nu = 400;
+N = 15;
+Nu = 15;
 lambda = [1 1 1 1];
 mi = [1 1 1];
 

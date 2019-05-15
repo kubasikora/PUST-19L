@@ -1,9 +1,48 @@
 \chapter{Wielowymiarowy regulator DMC}
 \label{pro_dmc}
 
+Kolejnym etapem projektu było zaimplementowanie oraz dobranie parametrów
+wielowymiarowego regulatora DMC dla rozważanego obiektu.
+
+
 \section{Implementacja wielowymiarowego regulatora DMC}
 \label{pro_dmc_implementacja}
+Implementacja wielowymiarowego regulatora DMC nie różni się wiele od wersji
+jednowymiarowej. Zmienia się tylko postać macierzy potrzebnych do
+znalezienia parametrów regulatora. 
 
+\subsection{Model w postaci złożonej odpowiedzi skokowej}
+\label{pro_dmc_impl_odp_skok}
+W przypadku jednowymiarowego algorytmu DMC, model w postaci odpowiedzi skokowej
+był postaci:
+
+\begin{equation*}
+    s = s_{\mathrm{1}}, s_{\mathrm{2}}, \hdots, s_{\mathrm{D}}
+\end{equation*}
+
+gdzie $s_{i}$ jest skalarną wartością znormalizowanej odpowiedzi skokowej toru
+wejście-wyjście.\\
+
+W przypadku wersji wielowymiarowej, $s_{i}$ jest macierzą wartości znormalizowanych
+odpowiedzi skokowych wszystkich możliwych torów
+
+\[
+s_{i} =
+\begin{bmatrix}
+    s_{i}^{1,1} & s_{i}^{1,2} & \hdots & s_{i}^{1,n_{u}} \\
+    s_{i}^{2,1} & s_{i}^{2,2} & \hdots & \vdots \\
+    \vdots & \vdots & \ddots & \vdots \\
+    s_{i}^{n_{y},1} & s_{i}^{2,1} & \hdots & s_{i}^{n_{y},n_{u}} 
+\end{bmatrix}
+\]
+
+gdzie $n_{u}$ to liczba wejść obiektu a $n_{y}$ to liczba wyjść.\\
+
+W przypadku rozważanego obiektu zapisaliśmy odpowiedź skokową jako 
+macierz komórkową o $D = \num{400}$ elementach. Macierz komórkowa
+to taka specjalna macierz, której elementami mogą być dowolne elementy:
+liczby, napisy, obiekty oraz macierze. Tak zapisaną odpowiedź skokową zapisaliśmy
+w do pliku \verb+zlozona_odp_skokowa.mat+.
 
 \section{Strojenie wielowymiarowego regulatora DMC metodą eksperymentalną}
 \label{pro_dmc_strojenie}
