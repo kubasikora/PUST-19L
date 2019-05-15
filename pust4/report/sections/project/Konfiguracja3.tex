@@ -1,40 +1,39 @@
-\subsection{Konfiguracja ze zmienionym wejściem niesterowanym}
-\label{pro_pid_konf2}
+\subsection{Konfiguracje z ważoną macierzą połączeń}
+\label{pro_pid_konf3}
 
-Wykonaliśmy kolejną próbę strojenia wielowymiarowego regulatora PID 
-z binarną macierzą połączeń, z tą różnicą że w tej próbie spróbowaliśmy 
-wykorzystać poprzednio niesterowane wejście drugie. Wejście to cechuje się 
-najbardziej porównywalnymi wzmocnieniami, tak jak to widać na \ref{pro2_odp_wyj_2}.
-Ostatecznie zdecydowaliśmy się na następującą strukturę układu regulacji:
+W ramach strojenia postanowiliśmy sprawdzić jak zachowa się wielowymiarowy regulator
+PID, którego struktura będzie opisana za pomocą macierzy o składnikach nie będącymi
+zerem lub jedynką. Oznacza to że na swoim wejściu, regulator będzie otrzymywał nie jeden uchyb
+a sumę ważoną wszystkich uchybów. Istotną zaletą takiego podejścia jest pełne wykorzystanie
+wszystkich wejść procesu, aczkolwiek dobór współczynników macierzy połączeń może być problematyczny
+a czasami wręcz niemożliwy. 
 
-\begin{itemize}
-    \item uchyb wyjścia pierwszego wchodzi na wejście pierwsze
-    \item uchyb wyjścia drugiego wchodzi na wejście trzecie
-    \item uchyb wyjścia trzeciego wchodzi na wejście drugie
-    \item wejście czwarte pozostaje niesterowane
-\end{itemize}
+W przypadku badań nad regulatorami o takiej strukturze, będziemy posługiwać się
+wyłącznie metodami optymalizacyjnymi. Postać macierzy połączeń dobieraliśmy 
+ekseprymentalnie.
 
-\noindent Macierz połączeń w tym przypadku miała postać: \\
+
+\subsubsection{Próba 1}
+W pierwszym podejściu sprawdziliśmy zachowanie wielowymiarowego regulatora opisanego następującą 
+macierzą połączeń:
 
 \[
 C =
 \begin{bmatrix}
-    1 & 0 & 0 \\
-    0 & 0 & 1 \\
-    0 & 1 & 0 \\
-    0 & 0 & 0 
+    0.5 & 0.5 & 0.1 \\
+    0.33 & 0.33 & 0.33 \\
+    0 & 0.5 & 0.5 \\
+    0.45 & 0.1 & 0.45 
 \end{bmatrix}
 \]
 
-W pierwszej kolejności, podobnie jak w poprzednim przypadku, sprawdziliśmy 
-jakość układu regulacji przy sterowaniu regulatorami typu P o wzmocnieniu 
-jednostkowym. 
+W wyniku optymalizacji parametrów otrzymaliśmy:
 
 \begin{center}
-    $K^{\num{1}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{1}}_{\mathrm{i}} = \infty$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{2}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{2}}_{\mathrm{i}} = \infty$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{3}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{3}}_{\mathrm{i}} = \infty$, $T^{\num{3}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{4}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{4}}_{\mathrm{i}} = \infty$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{1}}_{\mathrm{p}} = \num{1.416}$, $T^{\num{1}}_{\mathrm{i}} = \num{1.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{2.819}$, $T^{\num{2}}_{\mathrm{i}} = \num{1.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{3}}_{\mathrm{p}} = \num{4.5388}$, $T^{\num{3}}_{\mathrm{i}} = \num{4.0917}$, $T^{\num{3}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{4}}_{\mathrm{p}} = \num{2.7207}$, $T^{\num{4}}_{\mathrm{i}} = \num{1.0}$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
 \end{center}
 
 W wyniku symulacji otrzymaliśmy następujące wskaźniki jakości:
@@ -47,15 +46,19 @@ W wyniku symulacji otrzymaliśmy następujące wskaźniki jakości:
 \end{bmatrix}
 = 
 \begin{bmatrix}
-    \num{30.151} \\
-    \num{141.56} \\
-    \num{81.328}
+    \num{2.8588} \\
+    \num{2.8639} \\
+    \num{3.8668}
 \end{bmatrix}
 \]
 
 Sumaryczny wskaźnik jakości, liczony jako suma wskaźników składowych, 
-wyniósł $\bar{E} = \num{253.04}$\\
+wyniósł $\bar{E} = \num{9.5894}$\\
 
+Wyniki symulacji można uznać za zadowalające, mimo tego że nie udało się uzyskać
+lepszego wyniku niż w przypadku binarnej macierzy połączeń. Przy takiej trajektorii 
+zadanej, każdy wynik z wskaźnikiem jakości poniżej $\num{10}$ to wynik bardzo optymistyczny.
+ 
 %% wyjscia 
 
 \begin{figure}
@@ -79,8 +82,8 @@ wyniósł $\bar{E} = \num{253.04}$\\
                     \addlegendimage{no markers,red}
                     \addlegendimage{no markers,blue}
                 
-                    \addplot[red, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/output_1.csv};  
-                    \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/stpt_1.csv};
+                    \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_1/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/stpt_1.csv};
                     
                     \end{axis}
             \end{tikzpicture}
@@ -106,8 +109,8 @@ wyniósł $\bar{E} = \num{253.04}$\\
                         \addlegendimage{no markers,red}
                         \addlegendimage{no markers,blue}
                     
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/output_2.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/stpt_2.csv};
+                        \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_1/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/stpt_2.csv};
                         
                         \end{axis}
                 \end{tikzpicture}
@@ -133,15 +136,15 @@ wyniósł $\bar{E} = \num{253.04}$\\
                         \addlegendimage{no markers,red}
                         \addlegendimage{no markers,blue}
                     
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/output_3.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/stpt_3.csv};
+                        \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_1/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/stpt_3.csv};
                         
                         \end{axis}
                 \end{tikzpicture}
             }
         \end{subfigure}
         \caption{Wyjścia procesu wielowymiarowego}
-        \label{pro_pid_konf2_out1}
+        \label{pro_pid_konf3_out1}
 \end{figure}
 
 %% wejscia 
@@ -163,7 +166,7 @@ wyniósł $\bar{E} = \num{253.04}$\\
                     ] 
                     \addlegendentry{$u_{\mathrm{1}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/input_1.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/input_1.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -184,7 +187,7 @@ wyniósł $\bar{E} = \num{253.04}$\\
                     ] 
                     \addlegendentry{$u_{\mathrm{2}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/input_2.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/input_2.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -205,7 +208,7 @@ wyniósł $\bar{E} = \num{253.04}$\\
                     ] 
                     \addlegendentry{$u_{\mathrm{3}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/input_3.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/input_3.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -226,28 +229,43 @@ wyniósł $\bar{E} = \num{253.04}$\\
                     ] 
                     \addlegendentry{$u_{\mathrm{4}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_wzmocnienia_jednostkowe/input_4.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_1/input_4.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
     \end{subfigure}
 
     \caption{Wejścia procesu wielowymiarowego}
-    \label{pro_pid_konf2_in1}
+    \label{pro_pid_konf3_in1}
 \end{figure}
 \FloatBarrier
 
-W następnym kroku spróbowaliśmy dołączyć człon całkujący, równocześnie 
-dobierając wzmocnienie. Ostatecznie otrzymaliśmy następujący zestaw parametrów:
+\subsubsection{Próba 2}
+
+Mając za cel zmniejszenie sumarycznego wskaźnika jakości spróbowaliśmy jeszcze raz
+dobrać parametry macierzy połączeń. W kolejnej próbie zdecydowaliśmy się na następującą
+strukturę regulatora:
+
+\[
+C =
+\begin{bmatrix}
+    0.8 & 0.1 & 0.1 \\
+    0.1 & 0.4 & 0.5 \\
+    0.1 & 0.75 & 0.15 \\
+    0.1 & 0.6 & 0.3 
+\end{bmatrix}
+\]
+
+W wyniku optymalizacji parametrów otrzymaliśmy:
 
 \begin{center}
-    $K^{\num{1}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{1}}_{\mathrm{i}} = \num{10.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{2}}_{\mathrm{p}} = \num{5.0}$, $T^{\num{2}}_{\mathrm{i}} = \num{10.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{3}}_{\mathrm{p}} = \num{8.0}$, $T^{\num{3}}_{\mathrm{i}} = \num{10.0}$, $T^{\num{3}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{4}}_{\mathrm{p}} = \num{0.0}$, $T^{\num{4}}_{\mathrm{i}} = \infty$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{1}}_{\mathrm{p}} = \num{0.97718}$, $T^{\num{1}}_{\mathrm{i}} = \num{2.376}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{5.3702}$, $T^{\num{2}}_{\mathrm{i}} = \num{2.6245}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{3}}_{\mathrm{p}} = \num{7.5156}$, $T^{\num{3}}_{\mathrm{i}} = \num{1.0}$, $T^{\num{3}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{4}}_{\mathrm{p}} = \num{0.01}$, $T^{\num{4}}_{\mathrm{i}} = \num{52.455}$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
 \end{center}
 
-dla których, w wyniku symulacji, uzyksaliśmy następujące wskaźniki jakości:\\
+W wyniku symulacji otrzymaliśmy następujące wskaźniki jakości:
 
 \[
 \begin{bmatrix}
@@ -257,21 +275,18 @@ dla których, w wyniku symulacji, uzyksaliśmy następujące wskaźniki jakości
 \end{bmatrix}
 = 
 \begin{bmatrix}
-    \num{5.6968} \\
-    \num{2.0091} \\
-    \num{2.6499}
+    \num{3.9058} \\
+    \num{2.4811} \\
+    \num{4.087}
 \end{bmatrix}
 \]
 
-Sumaryczny wskaźnik jakości dla tego regulatora wyniósł $\bar{E} = \num{10.356}$\\
+Sumaryczny wskaźnik jakości, liczony jako suma wskaźników składowych, 
+wyniósł $\bar{E} = \num{10.474}$\\
 
-Dodanie członu całkującego znacznie poprawiło jakość regulacji. Już w tym kroku udało się 
-uzyskać jakość regulacji porównywalną z regulatorem uzyskanym w drodze 
-optymalizacji omawianym w \ref{pro_pid_konf1}. Piki sygnałów wyjściowych procesu zostały 
-zminimalizowane, choć widać że istnieje jeszcze możliwość poprawy, szczególnie w przypadku
-wyjścia pierwszego.
-
-%% wyjscia 
+W przypadku tak opisanej struktury połączeń regulatora wielowymiarowego PID, doszło do ciekawego
+zjawiska. W wyniku działania algorytmu optymalizacji regulator sterujący wejściem czwartym 
+został zdegenerowany. Takie działanie jest dla nas niepożądane.
 
 \begin{figure}
     \centering
@@ -294,8 +309,8 @@ wyjścia pierwszego.
                     \addlegendimage{no markers,red}
                     \addlegendimage{no markers,blue}
                 
-                    \addplot[red, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/output_1.csv};  
-                    \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/stpt_1.csv};
+                    \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_2/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/stpt_1.csv};
                     
                     \end{axis}
             \end{tikzpicture}
@@ -321,8 +336,8 @@ wyjścia pierwszego.
                         \addlegendimage{no markers,red}
                         \addlegendimage{no markers,blue}
                     
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/output_2.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/stpt_2.csv};
+                        \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_2/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/stpt_2.csv};
                         
                         \end{axis}
                 \end{tikzpicture}
@@ -348,15 +363,15 @@ wyjścia pierwszego.
                         \addlegendimage{no markers,red}
                         \addlegendimage{no markers,blue}
                     
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/output_3.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/stpt_3.csv};
+                        \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_2/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/stpt_3.csv};
                         
                         \end{axis}
                 \end{tikzpicture}
             }
         \end{subfigure}
         \caption{Wyjścia procesu wielowymiarowego}
-        \label{pro_pid_konf2_out2}
+        \label{pro_pid_konf3_out2}
 \end{figure}
 
 %% wejscia 
@@ -378,7 +393,7 @@ wyjścia pierwszego.
                     ] 
                     \addlegendentry{$u_{\mathrm{1}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/input_1.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/input_1.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -399,7 +414,7 @@ wyjścia pierwszego.
                     ] 
                     \addlegendentry{$u_{\mathrm{2}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/input_2.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/input_2.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -420,7 +435,7 @@ wyjścia pierwszego.
                     ] 
                     \addlegendentry{$u_{\mathrm{3}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/input_3.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/input_3.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -441,32 +456,41 @@ wyjścia pierwszego.
                     ] 
                     \addlegendentry{$u_{\mathrm{4}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Ti/input_4.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_2/input_4.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
     \end{subfigure}
 
     \caption{Wejścia procesu wielowymiarowego}
-    \label{pro_pid_konf2_in2}
+    \label{pro_pid_konf3_in2}
 \end{figure}
 \FloatBarrier
 
-W kolejnej iteracji sprawdziliśmy czy można jeszcze bardziej poprawić jakość
-regulacji poprzez dodanie członu różniczkującego. W przypadku tego obiektu,
-człon różniczkujący miał bardzo duży wpływ destabilizujący, dlatego ostatecznie
-wartość parametrów $T_{\mathrm{d}}$ dla każdego z regulatora była bardzo mała.
+\subsubsection{Próba 3}
 
-Przedstawioną poniżej symulację wykonaliśmy dla następującego zestawu parametrów:
+Ostatnią próbę wykonaliśmy dla następującej macierzy połączeń:
+
+\[
+C =
+\begin{bmatrix}
+    0.8 & 0.15 & 0.05 \\
+    0.1 & 0.3 & 0.6 \\
+    0.05 & 0.8 & 0.15 \\
+    0.1 & 0.2 & 0.7 
+\end{bmatrix}
+\]
+
+W wyniku optymalizacji parametrów otrzymaliśmy:
 
 \begin{center}
-    $K^{\num{1}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{1}}_{\mathrm{i}} = \num{5.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.01}$ \\
-    $K^{\num{2}}_{\mathrm{p}} = \num{5.0}$, $T^{\num{2}}_{\mathrm{i}} = \num{5.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.01}$ \\
-    $K^{\num{3}}_{\mathrm{p}} = \num{8.0}$, $T^{\num{3}}_{\mathrm{i}} = \num{5.0}$, $T^{\num{3}}_{\mathrm{d}} = \num{0.01}$ \\
-    $K^{\num{4}}_{\mathrm{p}} = \num{0.0}$, $T^{\num{4}}_{\mathrm{i}} = \infty$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{1}}_{\mathrm{p}} = \num{0.54945}$, $T^{\num{1}}_{\mathrm{i}} = \num{1.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{4.9163}$, $T^{\num{2}}_{\mathrm{i}} = \num{1.1727}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{3}}_{\mathrm{p}} = \num{6.1998}$, $T^{\num{3}}_{\mathrm{i}} = \num{2.1187}$, $T^{\num{3}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{4}}_{\mathrm{p}} = \num{2.848}$, $T^{\num{4}}_{\mathrm{i}} = \num{1.6849}$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
 \end{center}
 
-dla których, w wyniku symulacji, uzyksaliśmy następujące wskaźniki jakości:\\
+W wyniku symulacji otrzymaliśmy następujące wskaźniki jakości:
 
 \[
 \begin{bmatrix}
@@ -476,19 +500,18 @@ dla których, w wyniku symulacji, uzyksaliśmy następujące wskaźniki jakości
 \end{bmatrix}
 = 
 \begin{bmatrix}
-    \num{3.6161} \\
-    \num{2.1388} \\
-    \num{2.4047}
+    \num{2.2882} \\
+    \num{1.774} \\
+    \num{3.1935}
 \end{bmatrix}
 \]
 
-Sumaryczny wskaźnik jakości dla tego regulatora wyniósł $\bar{E} = \num{8.1595}$\\
+Sumaryczny wskaźnik jakości, liczony jako suma wskaźników składowych, 
+wyniósł $\bar{E} = \num{7.2558}$\\
 
-W wyniku tej symulacji uzyskaliśmy dotychczas najniższy sumaryczny wskaźnik jakości regulacji, 
-mimo to na przebiegach wyjścia pierwszego można zauważyć że postać tego przebiegu nie jest 
-idealna. 
-
-%% wyjscia 
+W przypadku tak zaprojektowanego regulatora udało nam się uzyskać wynik porównywalny z najlepszym.
+Prawdopodobnie jest możliwe aby uzyskać jeszcze lepszy wynik poprzez optymalizowanie samej
+macierzy połączeń, jednak uznaliśmy że wykracza to poza temat projektu.
 
 \begin{figure}
     \centering
@@ -511,8 +534,8 @@ idealna.
                     \addlegendimage{no markers,red}
                     \addlegendimage{no markers,blue}
                 
-                    \addplot[red, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/output_1.csv};  
-                    \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/stpt_1.csv};
+                    \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_3/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/stpt_1.csv};
                     
                     \end{axis}
             \end{tikzpicture}
@@ -538,8 +561,8 @@ idealna.
                         \addlegendimage{no markers,red}
                         \addlegendimage{no markers,blue}
                     
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/output_2.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/stpt_2.csv};
+                        \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_3/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/stpt_2.csv};
                         
                         \end{axis}
                 \end{tikzpicture}
@@ -565,15 +588,15 @@ idealna.
                         \addlegendimage{no markers,red}
                         \addlegendimage{no markers,blue}
                     
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/output_3.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/stpt_3.csv};
+                        \addplot[red, semithick] file{../data/project/zad4/pid/pid_mieszany_3/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/stpt_3.csv};
                         
                         \end{axis}
                 \end{tikzpicture}
             }
         \end{subfigure}
         \caption{Wyjścia procesu wielowymiarowego}
-        \label{pro_pid_konf2_out2}
+        \label{pro_pid_konf3_out3}
 \end{figure}
 
 %% wejscia 
@@ -595,7 +618,7 @@ idealna.
                     ] 
                     \addlegendentry{$u_{\mathrm{1}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/input_1.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/input_1.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -616,7 +639,7 @@ idealna.
                     ] 
                     \addlegendentry{$u_{\mathrm{2}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/input_2.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/input_2.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -637,7 +660,7 @@ idealna.
                     ] 
                     \addlegendentry{$u_{\mathrm{3}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/input_3.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/input_3.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
@@ -658,230 +681,13 @@ idealna.
                     ] 
                     \addlegendentry{$u_{\mathrm{4}}[k]$},
                     \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_dodanie_Td/input_4.csv};  
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/pid_mieszany_3/input_4.csv};  
                 \end{axis}
             \end{tikzpicture}
         }
     \end{subfigure}
 
     \caption{Wejścia procesu wielowymiarowego}
-    \label{pro_pid_konf2_in2}
-\end{figure}
-\FloatBarrier
-
-\subsubsection{Optymalizacja parametrów regulatora}
-
-W ostatniej próbie postanowiliśmy spróbować dobrać parametry wielowymiarowego 
-regulatora metodą optymalizacyjną. Podobnie jak w przypadku poprzedniej konfiguracji,
-wykorzystaliśmy skrypt \verb+pid_optim.m+. W wyniku procesu optymalizacji uzyskaliśmy następujący
-zestaw parametrów:
-
-\begin{center}
-    $K^{\num{1}}_{\mathrm{p}} = \num{1.658}$, $T^{\num{1}}_{\mathrm{i}} = \num{2.2035}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{2}}_{\mathrm{p}} = \num{4.2239}$, $T^{\num{2}}_{\mathrm{i}} = \num{2.9137}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{3}}_{\mathrm{p}} = \num{7.2464}$, $T^{\num{3}}_{\mathrm{i}} = \num{6.802}$, $T^{\num{3}}_{\mathrm{d}} = \num{0.0}$ \\
-    $K^{\num{4}}_{\mathrm{p}} = \num{0.0}$, $T^{\num{4}}_{\mathrm{i}} = \infty$, $T^{\num{4}}_{\mathrm{d}} = \num{0.0}$ \\
-\end{center}
-
-dla których, w wyniku symulacji, uzyksaliśmy następujące wskaźniki jakości:\\
-
-\[
-\begin{bmatrix}
-    E_{\mathrm{1}} \\
-    E_{\mathrm{2}} \\
-    E_{\mathrm{3}} 
-\end{bmatrix}
-= 
-\begin{bmatrix}
-    \num{2.5296} \\
-    \num{2.2543} \\
-    \num{2.1545}
-\end{bmatrix}
-\]
-
-Sumaryczny wskaźnik jakości dla tego regulatora wyniósł $\bar{E} = \num{6.9384}$\\
-
-Zgodnie z oczekiwaniami, regulator otrzymany w wyniku optymalizacji okazał się najlepszy z wszystkich
-rozważanych dla tej struktury. Co więcej, ten regulator jest lepszy od najlepszego regulatora uzyskanego
-dla poprzednio rozważanej struktury.
-
-%% wyjscia 
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=7cm,
-                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
-                    xlabel={$k$},
-                    ylabel={$y_{\mathrm{1}}[k]$},
-                    legend pos=south east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$y_{\mathrm{1}}[k]$},
-                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
-                
-                    \addlegendimage{no markers,red}
-                    \addlegendimage{no markers,blue}
-                
-                    \addplot[red, semithick] file{../data/project/zad4/pid/konf2_pid_optim/output_1.csv};  
-                    \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/stpt_1.csv};
-                    
-                    \end{axis}
-            \end{tikzpicture}
-        }
-        \end{subfigure}
-
-        \begin{subfigure}[b]{\textwidth}
-            \centering
-            \resizebox{\linewidth}{!}{
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=0.98\textwidth,
-                        height=7cm,
-                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
-                        xlabel={$k$},
-                        ylabel={$y_{\mathrm{2}}[k]$},
-                        legend pos=south east,
-                        y tick label style={/pgf/number format/1000 sep=},
-                        ] 
-                        \addlegendentry{$y_{\mathrm{2}}[k]$},
-                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
-                    
-                        \addlegendimage{no markers,red}
-                        \addlegendimage{no markers,blue}
-                    
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_pid_optim/output_2.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/stpt_2.csv};
-                        
-                        \end{axis}
-                \end{tikzpicture}
-            }
-        \end{subfigure}
-
-        \begin{subfigure}[b]{\textwidth}
-            \centering
-            \resizebox{\linewidth}{!}{
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=0.98\textwidth,
-                        height=7cm,
-                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
-                        xlabel={$k$},
-                        ylabel={$y_{\mathrm{3}}[k]$},
-                        legend pos=south east,
-                        y tick label style={/pgf/number format/1000 sep=},
-                        ] 
-                        \addlegendentry{$y_{\mathrm{3}}[k]$},
-                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
-                    
-                        \addlegendimage{no markers,red}
-                        \addlegendimage{no markers,blue}
-                    
-                        \addplot[red, semithick] file{../data/project/zad4/pid/konf2_pid_optim/output_3.csv};  
-                        \addplot[blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/stpt_3.csv};
-                        
-                        \end{axis}
-                \end{tikzpicture}
-            }
-        \end{subfigure}
-        \caption{Wyjścia procesu wielowymiarowego}
-        \label{pro_pid_konf2_out2}
-\end{figure}
-
-%% wejscia 
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=6cm,
-                    xmin=0.0,xmax=1000,ymin=-3,ymax=3,
-                    xlabel={$k$},
-                    ylabel={$u_{\mathrm{1}}[k]$},
-                    legend pos=south east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$u_{\mathrm{1}}[k]$},
-                    \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/input_1.csv};  
-                \end{axis}
-            \end{tikzpicture}
-        }
-    \end{subfigure}
-
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=6cm,
-                    xmin=0.0,xmax=1000,ymin=-3,ymax=3,
-                    xlabel={$k$},
-                    ylabel={$u_{\mathrm{2}}[k]$},
-                    legend pos=south east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$u_{\mathrm{2}}[k]$},
-                    \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/input_2.csv};  
-                \end{axis}
-            \end{tikzpicture}
-        }
-    \end{subfigure}
-
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=6cm,
-                    xmin=0.0,xmax=1000,ymin=-3,ymax=3,
-                    xlabel={$k$},
-                    ylabel={$u_{\mathrm{3}}[k]$},
-                    legend pos=south east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$u_{\mathrm{3}}[k]$},
-                    \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/input_3.csv};  
-                \end{axis}
-            \end{tikzpicture}
-        }
-    \end{subfigure}
-
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=6cm,
-                    xmin=0.0,xmax=1000,ymin=-3,ymax=3,
-                    xlabel={$k$},
-                    ylabel={$u_{\mathrm{4}}[k]$},
-                    legend pos=south east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$u_{\mathrm{4}}[k]$},
-                    \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../data/project/zad4/pid/konf2_pid_optim/input_4.csv};  
-                \end{axis}
-            \end{tikzpicture}
-        }
-    \end{subfigure}
-
-    \caption{Wejścia procesu wielowymiarowego}
-    \label{pro_pid_konf2_in2}
+    \label{pro_pid_konf3_in3}
 \end{figure}
 \FloatBarrier

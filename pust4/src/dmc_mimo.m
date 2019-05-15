@@ -4,7 +4,7 @@ addpath ../
 addpath functions/
 
 %% Parametry skryptu
-SAVE = 0;
+SAVE = 1;
 SIM_LEN = 1000;
 
 %% Parametry regulatora

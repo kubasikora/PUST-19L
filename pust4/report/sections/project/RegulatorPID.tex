@@ -92,8 +92,8 @@ for k = 5:SIM_LEN
 end
 \end{lstlisting}
 
-\section{Strojenie wielowymiarowego regulatora PID z binarną macierzą połączeń}
-\label{pro_pid_bin_conn}
+\section{Strojenie wielowymiarowego regulatora PID}
+\label{pro_pid_strojenie}
 
 Strojenie wielowymiarowego regulatora PID nie należy do spraw prostych.
 W dalszej części tej sekcji opisaliśmy proces eksperymentalnego 
@@ -101,4 +101,20 @@ doboru parametrów regulatora.
 
 \input{sections/project/Konfiguracja1.tex}
 \input{sections/project/Konfiguracja2.tex}
+\input{sections/project/Konfiguracja3.tex}
 
+\section{Wnioski}
+\label{pro_pid_wnioski}
+
+Regulator PID, pomimo swojej prostoty i przeznaczenia do 
+procesów jednowymiarowych, może w zadowalający sposób 
+regulować procesy wielowymiarowe, także te o większej ilości wejść 
+niż wyjść. Najbardziej problematyczne jest dobranie optymalnej struktury
+regulatora, czyli określenie które uchyby wyjść wpływają na jakie wejścia.\\
+
+Brak informacji o stanie innych wejść powoduje w każdym przypadku że 
+zmiana którejkolwiek wartości zadanej zakłóca wszystkie pozostałe wyjścia.
+Efekt ten można próbować minimalizować, jednak nie jest możliwym całkowite
+zniwelowanie tego zjawiska. W następnym rozdziale spróbujemy wykorzystać regulator
+DMC, który oblicza wszystkie sterowania równocześnie co powinno pozwolić na 
+zniwelowanie tego efektu. 
