@@ -16,14 +16,14 @@ YPPs = [0; 0; 0];
 
 % macierz polaczen, okresla z jaka waga jest brany dany uchyb do regulatora
 CONNECTION_MATRIX = [1 0 0;
-                     0 0 0;
+                     0 0 1;
                      0 1 0;
-                     0 0 1];
-
+                     0 0 0];
+                 
 %% Parametry regulatorow ciaglych
-K = [1 0 7 3];
-Ti =[5	9999999	12 4];
-Td = [0	0 0 0.1];
+K = [1 5 8 0];
+Ti =[5 5 5 99999];
+Td = [0.03	0.01 0.01 0];
 
 %% Parametry regulatorow dyskretnych
 r0 = zeros(N,1);
