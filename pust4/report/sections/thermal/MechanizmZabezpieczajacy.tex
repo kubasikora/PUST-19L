@@ -1,2 +1,12 @@
 \chapter{Zabezpieczenie stanowiska chłodząco-grzejącego}
 \label{thermal_zabezpieczenie}
+W programie GX Works 3 zaimplementowaliśmy mechanizm, który ma na celu zabezpieczyć stanowisko przed przegraniem, a w gorszym przypadku spaleniem lub stopieniem grzałki. Po przekroczeniu temperatury $150^{\circ} C$ na grzałce, sterowanie jest ustawiane na $0\%$. W przypadku uszkodzenia czujnika sterowanie również jest zerowane.  
+\begin{lstlisting}[language=C]
+IF ( D100 > 15000) THEN
+	U_DMC1 := 0;
+END_IF;
+
+IF ( D102 > 15000) THEN
+	U_DMC2 := 0;
+END_IF;
+\end{lstlisting}
