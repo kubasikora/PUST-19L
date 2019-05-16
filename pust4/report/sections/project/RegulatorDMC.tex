@@ -146,6 +146,9 @@ czyli horyzontu dynamiki procesu. Ponieważ odpowiedzi skokowe pojedynczych tor
 miały różne horyzonty dynamiki, zdecydowaliśmy się na wybór najdłuższego z wszystkich.
 Dzięki temu ustaliliśmy wartość $D = \num{200}$.\\
 
+
+\subsection{Strojenie horyzontów predykcji i sterowania}
+\label{pro_dmc_strojenie_horyzontow}
 Mając wartość horyzontu dynamiki, ustawiliśmy wartości horyzontu predykcji i horyzontu
 sterowania na tą samą wartość $D = N = N_{\mathrm{u}} = \num{200}$. Wszystkie parametry
 $\lambda_{i}$ oraz $\mu_{j}$ ustawiliśmy na $\num{1}$. \\
@@ -260,7 +263,8 @@ wielowymiarowego regulatora PID, został bardzo mocno zniwelowany.
                 \end{tikzpicture}
             }
         \end{subfigure}
-        \caption{Wyjścia procesu wielowymiarowego}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC o horyzontach $N = \num{200}$ i
+        $N_{\mathrm{u}} = \num{200}$}
         \label{pro_dmc_1_out}
 \end{figure}
 
@@ -351,7 +355,8 @@ wielowymiarowego regulatora PID, został bardzo mocno zniwelowany.
             \end{tikzpicture}
         }
     \end{subfigure}
-    \caption{Wejścia procesu wielowymiarowego}
+    \caption{Wejścia procesu wielowymiarowego sterowane regulatorem DMC o horyzontach $N = \num{200}$ i
+    $N_{\mathrm{u}} = \num{200}$}
     \label{pro_dmc_1_in}
 \end{figure}
 \FloatBarrier
@@ -470,8 +475,9 @@ poprawy.
                 \end{tikzpicture}
             }
         \end{subfigure}
-        \caption{Wyjścia procesu wielowymiarowego}
-        \label{pro_dmc_1_out}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC o horyzontach $N = \num{20}$ i
+        $N_{\mathrm{u}} = \num{10}$}
+        \label{pro_dmc_2_out}
 \end{figure}
 
 %% wejscia 
@@ -561,15 +567,1071 @@ poprawy.
             \end{tikzpicture}
         }
     \end{subfigure}
-    \caption{Wejścia procesu wielowymiarowego}
-    \label{pro_dmc_1_in}
+    \caption{Wejścia procesu wielowymiarowego sterowanego regulatorem DMC o horyzontach $N = \num{20}$ i
+    $N_{\mathrm{u}} = \num{10}$}
+    \label{pro_dmc_2_in}
+\end{figure}
+\FloatBarrier
+
+Najlepsze rezulaty osiągneliśmy dla parametrów: $N = \num{20}$ i
+$N_{\mathrm{u}} = \num{5}$. W przypadku dalszego zmniejszania horyzontu sterowania, sumaryczny błąd
+zaczynał rosnąć, co jest efektem niepożądanym. Dla najlepszej konfiguracji horyzontów uzyskaliśmy 
+następujące wskaźniki jakości:
+
+\[
+\begin{bmatrix}
+    E_{\mathrm{1}} \\
+    E_{\mathrm{2}} \\
+    E_{\mathrm{3}} 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    \num{3.7734} \\
+    \num{2.4821} \\
+    \num{4.4375}
+\end{bmatrix}
+\]
+
+Sumaryczny wskaźnik jakości 
+wyniósł $\bar{E} = \num{10.693}$\\
+
+%% wyjscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$y_{\mathrm{1}}[k]$},
+                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/stpt_1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{2}}[k]$},
+                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/stpt_2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{3}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{3}}[k]$},
+                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/stpt_3.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC o horyzontach $N = \num{20}$ i
+        $N_{\mathrm{u}} = \num{5}$}
+        \label{pro_dmc_2_out}
+\end{figure}
+
+%% wejscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{1}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/input_1.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{2}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/input_2.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{3}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{3}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/input_3.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{4}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{4}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/horyzonty_20_5/input_4.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Wejścia procesu wielowymiarowego sterowanego regulatorem DMC o horyzontach $N = \num{20}$ i
+    $N_{\mathrm{u}} = \num{5}$}
+    \label{pro_dmc_2_in}
 \end{figure}
 \FloatBarrier
 
 
+\subsection{Dobór parametrów $\mu$ i $\lambda$}
+\label{pro_dmc_strojenie_mu_lambda}
+
+Po dobraniu długości horyzontów, rozpoczęliśmy dobieranie parametrów $\mu$ i $\lambda$.
+W pierwszej kolejności postanowiliśmy spróbowaliśmy dobrać wartości parametrów $\mu$. Uznaliśmy że 
+zwiększamy wartość parametru $\mu_{3}$, ponieważ to właśnie błąd trzeciego wyjścia jest największy.
+Rzeczywiście, zwiększenie tego parametru do $\mu_{3} = \num{5}$ pomogło zmniejszyć błąd trzeciego wyjścia oraz
+sumaryczny błąd wszystkich wyjść, powodując jedynie nieznaczy wzrost błędów pozostałych wyjść.
+
+
+\[
+\begin{bmatrix}
+    E_{\mathrm{1}} \\
+    E_{\mathrm{2}} \\
+    E_{\mathrm{3}} 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    \num{3.8972} \\
+    \num{2.4908} \\
+    \num{3.2131}
+\end{bmatrix}
+\]
+
+Sumaryczny błąd wyniósł $\num{9.0068}$.\\
+
+Zwiększenie parametru $\mu_{3}$ pomogło zmniejszyć dysproporcję pomiędzy błędami poszczególnych wyjść.
+W kolejnych iteracjach staraliśmy się tak dobrać pozostałe parametry $\mu$ aby wyrównać błędy
+wszystkich wyjść.
+
+%% wyjscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$y_{\mathrm{1}}[k]$},
+                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/project/zad4/dmc/mu3_na_5/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/stpt_1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{2}}[k]$},
+                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/mu3_na_5/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/stpt_2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{3}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{3}}[k]$},
+                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/mu3_na_5/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/stpt_3.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC}
+        \label{pro_dmc_2_out}
+\end{figure}
+
+%% wejscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{1}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/input_1.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{2}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/input_2.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{3}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{3}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/input_3.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{4}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{4}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/mu3_na_5/input_4.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Wejścia procesu wielowymiarowego sterowanego regulatorem DMC}
+    \label{pro_dmc_2_in}
+\end{figure}
+\FloatBarrier
+
+Po kilkunastu próbach dobrania wektora parametrów $\mu$, metodą prób i błędów uzyskaliśmy następujący zestaw parametrów
+
+\begin{center}
+    $\mu_{1} = \num{3.1}$, $\mu_{2} = \num{1.2}$, $\mu_{3} = \num{11.8}$
+\end{center}
+
+Dla tego zestawu parametrów, udało nam się uzyskać następujące wskaźniki jakości:
+
+
+\[
+\begin{bmatrix}
+    E_{\mathrm{1}} \\
+    E_{\mathrm{2}} \\
+    E_{\mathrm{3}} 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    \num{2.8373} \\
+    \num{2.7830} \\
+    \num{2.8297}
+\end{bmatrix}
+\]
+
+Sumaryczny wskaźnik jakości wyniósł $\num{8.4501}$.\\
+
+%% wyjscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$y_{\mathrm{1}}[k]$},
+                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/project/zad4/dmc/najlepsze_mu/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/stpt_1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{2}}[k]$},
+                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/najlepsze_mu/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/stpt_2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{3}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{3}}[k]$},
+                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/najlepsze_mu/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/stpt_3.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC}
+        \label{pro_dmc_2_out}
+\end{figure}
+
+%% wejscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{1}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/input_1.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{2}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/input_2.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{3}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{3}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/input_3.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{4}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{4}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najlepsze_mu/input_4.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Wejścia procesu wielowymiarowego sterowanego regulatorem DMC}
+    \label{pro_dmc_2_in}
+\end{figure}
+\FloatBarrier
+
+Przebiegi wyjściowe oraz wynikające z nich błędy zostały w naszym mniemaniu,
+doprowadzone do stanu niezwykle zadowalającego. Niestety, tak dobre przebiegi wyjściowe 
+musiały powstać kosztem przebiegów wejściowych. Szczególnie wejście pierwsze i drugie cechują się
+zbyt dużą szybkością zmian sterowania. Dodatkowo pierwsze wejście przy skokach wartości zadanej
+zaczyna lekko oscylować. Dlatego też w ostatnim kroku dokonaliśmy lekkich modyfikacji 
+parametrów $\lambda$. Zdecydowaliśmy się na zwiększenie wartości parametrów $\lambda_{1}$ oraz $\lambda_{2}$.
+
+Ostateczny zestaw wszystkich parametrów regulatora DMC wygląda następująco:
+
+
+\begin{center}
+    $D = \num{200}$, $N = \num{20}$, $N_{\mathrm{u}} = \num{5}$,
+    $\mu_{1} = \num{3.1}$, $\mu_{2} = \num{1.2}$, $\mu_{3} = \num{11.8}$,
+    $\lambda{1} = \num{10}$, $\lambda{2} = \num{5}$, $\lambda{3} = \num{1}$, $\lambda{4} = \num{1}$
+\end{center}
+
+Dla tego zestawu parametrów uzyskaliśmy następujące wskaźniki jakości:
+
+\[
+\begin{bmatrix}
+    E_{\mathrm{1}} \\
+    E_{\mathrm{2}} \\
+    E_{\mathrm{3}} 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    \num{3.5663} \\
+    \num{2.8869} \\
+    \num{3.3173}
+\end{bmatrix}
+\]
+
+Sumaryczny wskaźnik jakości wyniósł $\num{9.7705}$.\\
+
+Wartości wskaźników jakości zwiększyły się nieznacznie, jednak przebiegi omawianych sygnałów 
+wejściowych wygładziły się. W naszym uznaniu jest to dobry kompromis pomiędzy jakością regulacji a 
+postacią przebiegów sterowań. 
+
+%% wyjscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$y_{\mathrm{1}}[k]$},
+                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/project/zad4/dmc/ostateczny/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/dmc/ostateczny/stpt_1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{2}}[k]$},
+                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/ostateczny/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/ostateczny/stpt_2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{3}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{3}}[k]$},
+                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/ostateczny/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/ostateczny/stpt_3.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC}
+        \label{pro_dmc_2_out}
+\end{figure}
+
+%% wejscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{1}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/ostateczny/input_1.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{2}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/ostateczny/input_2.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{3}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{3}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/ostateczny/input_3.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{4}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{4}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/ostateczny/input_4.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Wejścia procesu wielowymiarowego sterowanego regulatorem DMC}
+    \label{pro_dmc_2_in}
+\end{figure}
+\FloatBarrier
+
 \section{Strojenie wielowymiarowego regulatora DMC metodą optymalizacji parametrów}
 \label{pro_dmc_optymalizacja}
 
+Oprócz ręcznego dobierania parametrów wielowymiarowego regulatora DMC, przygotowaliśmy również 
+skrypt \verb+dmc_optim.m+, który dobierał wartości parametrów metodą optymalizacji. Długości horyzontów
+założyliśmy stałe, takie jak przy ręcznym strojeniu tj. $D = \num{200}$, $N = \num{20}$ i $N_{\mathrm{u}} = \num{5}$.
+
+W wyniku działania skryptu otrzymaliśmy następujące parametry:
+
+\begin{center}
+    $\mu_{1} = \num{6.1905}$, $\mu_{2} = \num{1.8593}$, $\mu_{3} = \num{2.1408}$,
+    $\lambda{1} = \num{4.8655}$, $\lambda{2} = \num{0.18078}$, $\lambda{3} = \num{1.4161}$, $\lambda{4} = \num{0.21492}$
+\end{center}
+
+Po przeprowadzeniu symulacji otrzymaliśmy następujące wskaźniki jakości:
+
+\[
+\begin{bmatrix}
+    E_{\mathrm{1}} \\
+    E_{\mathrm{2}} \\
+    E_{\mathrm{3}} 
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    \num{2.9391} \\
+    \num{2.9265} \\
+    \num{5.2855}
+\end{bmatrix}
+\]
+
+Sumaryczny błąd wyniósł $\num{11.151}$.\\
+
+Uzyskane wyniki są porównywalne z tymi uzyskanymi w wyniku ręcznego doboru parametrów.
+
+%% wyjscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$y_{\mathrm{1}}[k]$},
+                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/project/zad5/dmc/dmc_optim/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad5/dmc/dmc_optim/stpt_1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{2}}[k]$},
+                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad5/dmc/dmc_optim/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad5/dmc/dmc_optim/stpt_2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{3}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{3}}[k]$},
+                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad5/dmc/dmc_optim/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad5/dmc/dmc_optim/stpt_3.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC}
+        \label{pro_dmc_2_out}
+\end{figure}
+
+%% wejscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{1}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad5/dmc/dmc_optim/input_1.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{2}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad5/dmc/dmc_optim/input_2.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{3}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{3}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad5/dmc/dmc_optim/input_3.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{4}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{4}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad5/dmc/dmc_optim/input_4.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Wejścia procesu wielowymiarowego sterowanego regulatorem DMC}
+    \label{pro_dmc_2_in}
+\end{figure}
+\FloatBarrier
 
 \section{Wnioski}
 \label{pro_dmc_wnioski}
+
+Regulator DMC bardzo dobrze radzi sobie z regulacją obiektów wielowymiarowych, nawet 
+tych w których liczba wejść jest większa od liczby wyjść. Nawet bez strojenia parametrów,
+regulator bardzo dobrze radzi sobie z nadążaniem za wartością zadaną. Problemem w przypadku
+regulacji obiektów rzeczywistych tą metodą może być brak możliwości zebrania poprawnej 
+odpowiedzi skokowej. Należy pamiętać że model w postaci odpowiedzi skokowej, używany w tym regulatorze
+do predykcji, nadaje się tylko do obiektów stabilnych, w przypadku gdy jeden tor obiektu jest
+niestabilny, tracimy możliwość wykorzystania regulatora DMC.

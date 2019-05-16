@@ -11,8 +11,8 @@ SIM_LEN = 1000;
 D = 200;
 N = 20;
 Nu = 5;
-lambda = [1 1 1 1];
-mi = [1 1 1];
+lambda = [10 5 1 1];
+mi = [3.1 1.2 11.8];
 
 load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
 s = s(1:D);
@@ -122,6 +122,9 @@ for i=1:nu
     title(strcat('Sterowanie regulatora n=', num2str(i)));
 end
 hold off
+
+disp(strcat('E_sum=', num2str(sum(error_sum))));
+disp(error_sum);
 
 if SAVE == 1
     while(1)

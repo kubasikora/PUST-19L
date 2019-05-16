@@ -3,7 +3,7 @@ close all
 addpath ../
 addpath ./functions
 
-SAVE = 0;
+SAVE = 1;
 SIM_LEN = 1000;
 
 %% parametry symulacji
@@ -11,7 +11,7 @@ T = 0.5;
 nu = 4;
 ny = 3;
 
-D = 40;
+D = 200;
 N = 20;
 Nu = 5;
 load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');                 
@@ -29,7 +29,7 @@ lambda_max = 100000*ones(1,nu);
 mi_min = 0.01*ones(1,ny);
 mi_max = 10000*ones(1,ny);
 
-base_values = [1000 100 100 100 100 100 100];
+base_values = [1 1 1 1 1 1 1];
 
 parameters = fmincon(@(parameters)dmcOptimTargetFun(parameters, D, N, Nu, M, Mp), base_values, [], [], [], [], [lambda_min mi_min], [lambda_max mi_max], [], options);
 
