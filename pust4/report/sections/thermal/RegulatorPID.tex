@@ -82,6 +82,8 @@ END_IF ;
 
 \subsection{Pierwsza próba}
 \label{thermal_pid_proba_1}
+Podczas pierwszego eksperymentu skupiliśmy się mocniej na sprawdzeniu działania komunikacji z stanowiskiem, pracy obiektu oraz funkcjonowaniu zaimplementowanego algorytmu regulacji (np. czy sterowania nie przekraczają ograniczeń) niż na dobieraniu wartości nastawów. Z tego powodu zastosowaliśmy regulator P z wzmocnieniem równym 1 dla obu regulatorów jednowymiarowych. Jak możemy zobaczyć na wykresach \ref{lab_pid_1_out} wyjścia procesu wielowymiarowego charakteryzują się bardzo dużym uchybem ustalonym. Przebiegi sygnałów sterujących możemy zaobserwować na rysunkach \ref{lab_pid_1_in} charakteryzują się one oscylacjami. Otrzymane rezultaty oczywiście nas nie satysfakcjonowały, jednak ta próba miała służyć czemuś zupełnie innemu. Chcieliśmy głównie sprawdzić w jaki sposób prawidłowo dokonywać eksperymentów i pomiarów z użyciem sterownika PLC, ponieważ jego zastosowanie było dla nas nowością. W następnych eksperymentach skupiliśmy się już w pełni na dobieraniu nastawów regulatorów. 
+
 %% wyjscia 
 
 \begin{figure}
@@ -198,6 +200,8 @@ END_IF ;
 
 \subsection{Druga próba}
 \label{thermal_pid_proba_2}
+W tej próbie do regulacji obiektu użyliśmy dwupętlowego regulatora PID, którego nastawy regulatorów jednowymiarowych były równe $K_{\mathrm{r}} = 20$, $T_{\mathrm{i}} = 200$, $ T_{\mathrm{d}} = 10$. Przebiegi wyjścia procesu możemy zobaczyć na rysunkach \ref{lab_pid_2_out}. Po ich przeanalizowaniu widzimy, że wartość $40$ została osiągnięta dla obu wyjść w okolicach próbki $k=500$. W tym miejscu również wyraźnie wygasły oscylacje, które na początku regulacji były spore. Po $500$ próbce dokonaliśmy zmiany wartości zadanej dla pierwszego wyjścia. Wielkość ta została osiągnięta całkiem szybko i sygnał z wyjścia procesu zaczął się stabilizować wokół nowej wartości zadanej. Zmiana ta nie miała dużego wpływu na regulację wyjścia drugiego. Wejścia procesu wielowymiarowego w niektórych momentach osiągają ograniczenia i przez pewien czas regulacji charakteryzują się łagodnymi oscylacjami, które z czasem się stabilizują. Wartości nastawów są wielkościami uzyskanymi po dostrojeniu regulatora PID w czasie pierwszych laboratoriów. Wartości te sprawdziły się również procesu wielowymiarowego. Przy ocenie działania regulatora wzięliśmy również pod uwagę fakt, że obiektem regulacji jest rzeczywiste stanowisko, które zawsze wprowadza pewne zakłócenia i jest trudniejsze w dobraniu nastawów dla regulatorów. 
+
 %% wyjscia 
 
 \begin{figure}
@@ -314,6 +318,8 @@ END_IF ;
 
 \subsection{Trzecia próba}
 \label{thermal_pid_proba_3}
+Nastawy regulatorów jednowymiarowych zostawiliśmy w takiej samej konfiguracji jak dla drugiej próby. Tym razem zmieniając wartość zadaną zmniejszyliśmy jej wielkość. Chcieliśmy zobaczyć czy przy osiąganiu mniejszych wartości zadanych regulator również zachowa się poprawnie. Na rysunkach \ref{lab_pid_3_out} możemy zauważyć jak szybko jest osiągana wartość zadana. Jej zmiana nastąpiła na chwilę przed próbką $0$. Otrzymane rezultaty są nawet lepsze niż te osiągane podczas drugiej próby. Wyjścia procesu bardzo szybko stabilizują się wokół wartości zadanej. Przebiegi sygnałów wejścia procesu również są bardzo stabilne, dzięki czemu elementy wykonawcze urządzeń bezpośrednio oddziałujących na obiekt są narażone na mniejsze skoki sterowań. Uznaliśmy, że nastawy te z powodzeniem mogą regulować stanowiskiem chłodząco-grzejącym i przeszliśmy do implementacji regulatora DMC.
+
 %% wyjscia 
 
 \begin{figure}

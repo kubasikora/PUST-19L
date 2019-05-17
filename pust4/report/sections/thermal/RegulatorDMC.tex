@@ -8,7 +8,45 @@
 
 \section{Implementacja algorytmu regulacji DMC na sterowniku PLC}
 \label{thermal_dmc_impl}
+TU OPISAĆ KOD Z MATLABA
+Część algorytmu odpowiadającą za wyliczanie sterowań (wejść procesu) napisaliśmy w języku ST w programie GX Works 3 i umieściliśmy w części Fixed Scan. Plik w którym ten kod się znajduje nosi nazwę \textit{DMC}.
+\begin{lstlisting}[caption={Kod obliczający sterownanie dla regulatora dwuwymiarowego DMC (GX Works)}, language=C]
+DMC_K11 := 0.0935;
+DMC_K12 := 0.004;
+DMC_K21 := 0.0038;
+DMC_K22 := 0.0952;
 
+dU1 := DMC_K11 *( Zadana_DMC1 - D100 ) + DMC_K12 *( Zadana_DMC2 - D102 ) ;
+dU2 := DMC_K21 *( Zadana_DMC1 - D100 ) + DMC_K22 *( Zadana_DMC2 - D102 ) ;
+dU1 := dU1 /100.0;
+dU2 := dU2 /100.0;
+temp_1 := dU1 ;
+temp_2 := dU2 ;
+
+FOR licznik := 0 TO 98 BY 1 DO
+	dU1 := dU1 - tablica_MP[0].wiersz[ licznik ]* tablica_MP[2].wiersz[ licznik ];
+	dU2 := dU2 - tablica_MP[1].wiersz[ licznik ]* tablica_MP[2].wiersz[ licznik ];
+END_FOR ;
+
+FOR licznik := 98 TO 2 BY -1 DO
+	tablica_MP[2].wiersz[ licznik ]:= tablica_MP[2].wiersz[ licznik-2];
+END_FOR ;
+
+tablica_MP[2].wiersz[0]:= dU1 ;
+tablica_MP[2].wiersz[1]:= dU2 ;
+U_DMC1 := ( U_DMC1 / 10 + dU1 ) * 10; 
+U_DMC2 := ( U_DMC2 / 10 + dU2 ) * 10; 
+
+
+
+IF ( D100 > 15000) THEN
+	U_DMC1 := 0;
+END_IF;
+
+IF ( D102 > 15000) THEN
+	U_DMC2 := 0;
+END_IF;
+\end{lstlisting}
 
 \section{Wyniki działania algorytmu regulacji}
 \label{thermal_dmc_wyniki}
@@ -23,7 +61,7 @@
                 \begin{axis}[
                     width=0.98\textwidth,
                     height=7cm,
-                    xmin=0.0,xmax=300,%ymin=25,ymax=41,
+                    xmin=0.0,xmax=284,%ymin=25,ymax=41,
                     xlabel={$k$},
                     ylabel={$y_{\mathrm{1}}[k]$},
                     legend pos=north east,
@@ -50,7 +88,7 @@
                     \begin{axis}[
                         width=0.98\textwidth,
                         height=7cm,
-                        xmin=0.0,xmax=300,%ymin=25,ymax=41,
+                        xmin=0.0,xmax=284,%ymin=25,ymax=41,
                         xlabel={$k$},
                         ylabel={$y_{\mathrm{2}}[k]$},
                         legend pos=south east,
@@ -85,7 +123,7 @@
                 \begin{axis}[
                     width=0.98\textwidth,
                     height=6cm,
-                    xmin=0.0,xmax=300,%ymin=-3,ymax=3,
+                    xmin=0.0,xmax=284,%ymin=-3,ymax=3,
                     xlabel={$k$},
                     ylabel={$u_{\mathrm{1}}[k]$},
                     legend pos=north east,
@@ -106,7 +144,7 @@
                 \begin{axis}[
                     width=0.98\textwidth,
                     height=6cm,
-                    xmin=0.0,xmax=300,%ymin=-3,ymax=3,
+                    xmin=0.0,xmax=284,%ymin=-3,ymax=3,
                     xlabel={$k$},
                     ylabel={$u_{\mathrm{2}}[k]$},
                     legend pos=south east,

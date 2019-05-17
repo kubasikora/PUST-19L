@@ -1,6 +1,6 @@
 clear;
 
-nr_proby = 'DMC\PROBA2';
+nr_proby = 'PID\PROBA3';
 
 load(strcat(nr_proby, '.mat'));
 stpt1 = stpt1./100;
@@ -37,4 +37,4 @@ dlmwrite(strcat( nr_proby, 'input_1.csv'), input_ts_1, '\t');
 dlmwrite(strcat( nr_proby, 'input_2.csv'), input_ts_2, '\t');
 
 dlmwrite(strcat( nr_proby, 'stpt_1.csv'), stpt_ts_1, '\t');
-dlmwrite(strcat( nr_proby, 'stpt_2.csv'), stpt_ts_1, '\t');
+dlmwrite(strcat( nr_proby, 'stpt_2.csv'), stpt_ts_2, '\t');
