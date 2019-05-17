@@ -4,15 +4,15 @@ addpath ../
 addpath functions/
 
 %% Parametry skryptu
-SAVE = 0;
+SAVE = 1;
 SIM_LEN = 1000;
 
 %% Parametry regulatora
-D = 400;
-N = 400;
-Nu = 400;
-lambda = [1 1 1 1];
-mi = [1 1 1];
+D = 200;
+N = 20;
+Nu = 5;
+lambda = [10 5 1 1];
+mi = [3.1 1.2 11.8];
 
 load('../data/project/zad2/zlozona_odp_skokowa.mat', 's');
 s = s(1:D);
