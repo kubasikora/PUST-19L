@@ -1,14 +1,241 @@
 \chapter{Porównanie działania algorytmu DMC w wersji klasycznej i w wersji oszczędnej}
 \label{dmc_porownanie}
 
+W ostatnim już zadaniu projektowym, zaimplementowaliśmy algorytm DMC w wersji
+klasycznej, w której wyznaczane są sterowania na całym horyzoncie sterowania, a 
+następnie porównaliśmy wyniki symulacji oraz czasy wykonania.
 
 \section{Implementacja algorytmu DMC w wersji klasycznej}
 \label{dmc_klasyk}
+Algorytm DMC w wersji klasycznej zaimplementowaliśmy w pliku \verb+dmc_orig.m+.
+Inicjalizacja symulacji nie różni się niczym od wersji oszczędnej.
+W pierwszej kolejności, przy użyciu tych samych funkcji, na bazie odpowiedzi skokowej,
+obliczane są macierze $\bf{} M \/$, $\bf{} M^{P} \/$,  $\bf{} \Lambda \/$ oraz 
+$\bf{} \Psi \/$, aby na ich podstawie obliczyć macierz $\bf{} K \/$.\\
 
+Zasadnicza różnica między wersją klasyczną a oszczędną tkwi w sposobie obliczania
+nowego przyrostu sterowania. W wersji oszczędnej obliczane były tylko przyrosty w chwili 
+następnej. W przypadku wersji klasycznej, zmiany wartości sygnałów sterujących obliczane są na całym
+horyzoncie sterowania. W tym celu skorzystaliśmy ze wzoru:
+
+\begin{center}
+    $\Delta \bf{} U \/$$[k] = \bf{} K \/$$(Y^{zad} - Y - \bf{} M^{P} \/$$ \Delta \bf{}U^{P}\/)$
+\end{center}
+
+Wektory $Y^{zad}$ oraz $Y$ są specjalnie przygotowanymi wektorami o długości $n_{y}N$, w której
+wartość zadana/aktualna wartość wyjścia wszystkich $n_{y}$ wyjść jest powtórzona $N$ razy.\\
+W Matlabie, do generacji tych wektorów, przygotowaliśmy specjalną funkcję \verb+duplicateVector+, 
+która powtarza podany wektor, zadaną liczbę razy.\\
+
+Po wyznaczeniu całego wektora przyrostów sterowań, należy wziąć pierwsze $n_{u}$ elementów i dodać 
+je do aktualnych wartości wyjść. W Matlabie, cała procedura została przedstawiona na poniższym listingu.
+
+\begin{lstlisting}[style=custommatlab,frame=single,label={pro_dmc_class},
+    caption={Obliczenie nowego sterowania w klasycznej implementacji regulatora DMC},captionpos=b]
+outputs(k, :) = [y1 y2 y3];                        
+errors(k, :)=setpoints(k, :)-outputs(k, :); % obliczanie uchybow
+Y_ZAD = duplicateVector(setpoints(k, :)', N*ny);
+Y = duplicateVector(outputs(k, :)', N*ny);
+dUK = K*(Y_ZAD - Y - Mp*dUp); % obliczanie przyrostow
+    
+inputs(k, :) = (inputs(k-1, :))' +  dUK(1:nu); 
+\end{lstlisting}
 
 \section{Porównanie przebiegów}
 \label{dmc_przebiegi}
+W celu porównania działania obu implementacji, przygotowaliśmy skrypt \verb+dmc_comp.m+,
+który symuluje działanie obu algorytmów a następnie porównuje przebiegi. Porównanie przebiegów
+polega na policzeniu sumy wartości bezwzględnych różnic pomiędzy przebiegami każdego z wyjść
+oraz wejść. Po jego uruchomieniu otrzymaliśmy następujące wyniki:
 
+\begin{lstlisting}[frame=single,label={pro_dmc_comp_result},
+    caption={Wynik porównania działania obu algorytmów},captionpos=b]
+>> dmc_comp
+Output error = 0.0000000000911403
+Input error = 0.0000000007286367
+\end{lstlisting}
 
-\section{Porównanie czasu wykonania}
-\label{dmc_czas}
+Róznice pomiędzy przebiegami obu implementacji tego samego algorytmu są rzędu $10^{-11}$.
+Są to róznice wynikające z błędów numerycznych a dokładniej z utraty dokładności przy mnożeniu
+liczb zmiennoprzecinkowych. Błąd na takim poziomie wskazuje że algorytm w wersji klasycznej
+działa poprawnie.
+
+%% wyjscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$y_{\mathrm{1}}[k]$},
+                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/output_1.csv};  
+                    \addplot[blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/stpt_1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{2}}[k]$},
+                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/output_2.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/stpt_2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=1000,ymin=-0.5,ymax=2,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{3}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{$y_{\mathrm{3}}[k]$},
+                        \addlegendentry{$y_{\mathrm{3}}^{\mathrm{zad}}[k]$},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                        \addplot[red, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/output_3.csv};  
+                        \addplot[blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/stpt_3.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+        \end{subfigure}
+        \caption{Wyjścia procesu wielowymiarowego sterowanego regulatorem DMC DMC w wersji klasycznej}
+        \label{pro_dmc_1_out}
+\end{figure}
+
+%% wejscia 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{1}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/input_1.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{2}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/input_2.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{3}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{3}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/input_3.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=6cm,
+                    xmin=0.0,xmax=1000,ymin=-2,ymax=2,
+                    xlabel={$k$},
+                    ylabel={$u_{\mathrm{4}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{$u_{\mathrm{4}}[k]$},
+                    \addlegendimage{no markers,blue}
+                    \addplot[const plot, blue, semithick] file{../data/project/zad4/dmc/najprostszy_dmc/input_4.csv};  
+                \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Wejścia procesu wielowymiarowego sterowane regulatorem DMC w wersji klasycznej}
+    \label{pro_dmc_1_in}
+\end{figure}
+\FloatBarrier
