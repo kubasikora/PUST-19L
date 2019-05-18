@@ -1,3 +1,44 @@
 \chapter{Automat sterujący}
 \label{thermal_automat}
+W programie GX Works 3 zaimplementowaliśmy prosty automat stanu, który miał na celu modyfikować co pewien czas wartości zadane. Czas ten inżynier może dowolnie manipulować w programie zmieniając wartość zmiennej \textit{AUTO\_COUNTER}, która ma zostać osiągnięta, aby automat znalazł się w konkretnym stanie.
 
+\begin{lstlisting}[caption={Implementacja automatu sterującego w programie GX Works 3}, language=C]
+AUTO_COUNTER := AUTO_COUNTER + 1;
+
+IF (AUTO_COUNTER < 30) THEN
+	Zadana_PID1 := 4500.0;
+	Zadana_DMC1 := 4500.0;
+	
+	Zadana_PID2 := 4500.0;
+	Zadana_DMC2 := 4500.0;
+END_IF;
+
+IF (AUTO_COUNTER > 30 AND AUTO_COUNTER < 60) THEN
+	Zadana_PID1 := 3500.0;
+	Zadana_DMC1 := 3500.0;
+	
+	Zadana_PID2 := 4500.0;
+	Zadana_DMC2 := 4500.0;
+END_IF;
+
+IF (AUTO_COUNTER > 60 AND AUTO_COUNTER < 90) THEN
+	Zadana_PID1 := 3500.0;
+	Zadana_DMC1 := 3500.0;
+	
+	Zadana_PID2 := 5000.0;
+	Zadana_DMC2 := 5000.0;
+END_IF;
+
+
+IF (AUTO_COUNTER > 90 AND AUTO_COUNTER < 120) THEN
+	Zadana_PID1 := 4000.0;
+	Zadana_DMC1 := 4000.0;
+	
+	Zadana_PID2 := 4000.0;
+	Zadana_DMC2 := 4000.0;
+END_IF;
+
+IF AUTO_COUNTER > 120 THEN
+	AUTO_COUNTER := 0;
+	END_IF;
+\end{lstlisting}

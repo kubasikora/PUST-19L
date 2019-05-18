@@ -4,12 +4,155 @@
 
 \section{Odpowiedzi skokowe}
 \label{thermal_dmc_odp_skok}
+Postawionym przed nami zadaniem było przeprowadzenie
+aproksymacji odpowiedzi skokowej dowolnym narzędziem. W celu dokładnego zamodelowania badanego obiektu posłużyliśmy się zaawansowanym
+toolboxem pakietu MATLAB System Identification. Pakiet ten
+pozwala na znalezienie parametrów rożnych modeli. Po załadowaniu odpowiedzi
+skokowej, wybraliśmy Transfer Function Model jako rodzaj zadanego modelu a
+następnie po chwili mieliśmy gotowy obiekt typu idtf. Kryterium, które braliśmy
+pod uwagę podczas oceny była wartość dopasowania modelu do obiektu
+wyrażona w procentach (fit to estimation data).
+Parametry, którymi manipulowaliśmy to ilość zakładanych biegunów i zer
+w transmitancji.
+\\ \indent Poniższe wykresy prezentują przebiegi znormalizowanej odpowiedzi skokowej i modelu obiektu otrzymanego przy pomocy pakietu System Identification dla
+zestawów wejście - wyjście. 
+\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=95,%ymin=25,ymax=41,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{1}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                    \addlegendentry{Obiekt},
+                    \addlegendentry{Model},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/lab/thermal_object/zad4/normalizacja/norm_response_y1_u1.csv};  
+                    \addplot[blue, semithick] file{../data/lab/thermal_object/zad4/normalizacja/appr_norm_response_y1_u1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzią skokowa dla pierwszego wejścia i pierwszego wyjścia ($u_{\mathrm{1}} - y_{\mathrm{1}}$)}
+        \label{lab_dmc_1_out_pkt_pracy}
+%        \end{subfigure}
+\end{figure}
 
+\begin{figure}
+%        \begin{subfigure}[t]{\textwidth}
+%            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=95,ymin=-0.02,ymax=0.1,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{1}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{Obiekt},
+	                    \addlegendentry{Model},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                       \addplot[red, semithick] file{../data/lab/thermal_object/zad4/normalizacja/norm_response_y1_u2.csv};  
+                    \addplot[blue, semithick] file{../data/lab/thermal_object/zad4/normalizacja/appr_norm_response_y1_u2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+%        \end{subfigure}
+        \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzią skokowa dla drugiego wejścia i pierwszego wyjścia ($u_{\mathrm{2}} - y_{\mathrm{1}}$)}
+        \label{lab_dmc_2_out_pkt_pracy}
+\end{figure}
+
+\begin{figure}
+%    \centering
+%    \begin{subfigure}[t]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=0.0,xmax=95,%ymin=25,ymax=41,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{2}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+					\addlegendentry{Obiekt},
+                    \addlegendentry{Model},
+                
+                    \addlegendimage{no markers,red}
+                    \addlegendimage{no markers,blue}
+                
+                    \addplot[red, semithick] file{../data/lab/thermal_object/zad4/normalizacja/norm_response_y2_u1.csv};  
+                    \addplot[blue, semithick] file{../data/lab/thermal_object/zad4/normalizacja/appr_norm_response_y2_u1.csv};
+                    
+                    \end{axis}
+            \end{tikzpicture}
+        }
+        \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzią skokowa dla pierwszego wejścia i drugiego wyjścia ($u_{\mathrm{1}} - y_{\mathrm{2}}$)}
+        \label{lab_dmc_3_out_pkt_pracy}
+%        \end{subfigure}
+\end{figure}
+
+\begin{figure}
+%        \begin{subfigure}[t]{\textwidth}
+%            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=95,%ymin=-0.02,ymax=0.1,
+                        xlabel={$k$},
+                        ylabel={$y_{\mathrm{2}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                        \addlegendentry{Obiekt},
+                    		\addlegendentry{Model},
+                    
+                        \addlegendimage{no markers,red}
+                        \addlegendimage{no markers,blue}
+                    
+                       \addplot[red, semithick] file{../data/lab/thermal_object/zad4/normalizacja/norm_response_y2_u2.csv};  
+                    \addplot[blue, semithick] file{../data/lab/thermal_object/zad4/normalizacja/appr_norm_response_y2_u2.csv};
+                        
+                        \end{axis}
+                \end{tikzpicture}
+            }
+%        \end{subfigure}
+        \caption{Porównanie modelu obiektu otrzymanego przy pomocy pakietu System Identifiaction
+z rzeczywista odpowiedzią skokowa dla drugiego wejścia i drugiego wyjścia ($u_{\mathrm{2}} - y_{\mathrm{2}}$)}
+        \label{lab_dmc_4_out_pkt_pracy}
+\end{figure}
+\FloatBarrier
+
+Zaprezentowane modele obiektów są najlepszymi, które udało nam się uzyskać. 
 
 \section{Implementacja algorytmu regulacji DMC na sterowniku PLC}
 \label{thermal_dmc_impl}
 TU OPISAĆ KOD Z MATLABA
-Część algorytmu odpowiadającą za wyliczanie sterowań (wejść procesu) napisaliśmy w języku ST w programie GX Works 3 i umieściliśmy w części Fixed Scan. Plik w którym ten kod się znajduje nosi nazwę \textit{DMC}.
+~\\\\Część algorytmu odpowiadającą za wyliczanie sterowań (wejść procesu) napisaliśmy w języku ST w programie GX Works 3 i umieściliśmy w części Fixed Scan. Plik w którym ten kod się znajduje nosi nazwę \textit{DMC}.
 \begin{lstlisting}[caption={Kod obliczający sterownanie dla regulatora dwuwymiarowego DMC (GX Works)}, language=C]
 DMC_K11 := 0.0935;
 DMC_K12 := 0.004;
