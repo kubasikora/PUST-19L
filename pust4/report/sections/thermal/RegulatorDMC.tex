@@ -151,7 +151,6 @@ Zaprezentowane modele obiektów są najlepszymi, które udało nam się uzyskać
 
 \section{Implementacja algorytmu regulacji DMC na sterowniku PLC}
 \label{thermal_dmc_impl}
-TU OPISAĆ KOD Z MATLABA
 ~\\\\Część algorytmu odpowiadającą za wyliczanie sterowań (wejść procesu) napisaliśmy w języku ST w programie GX Works 3 i umieściliśmy w części Fixed Scan. Plik w którym ten kod się znajduje nosi nazwę \textit{DMC}.
 \begin{lstlisting}[caption={Kod obliczający sterownanie dla regulatora dwuwymiarowego DMC (GX Works)}, language=C]
 DMC_K11 := 0.0935;
@@ -193,120 +192,7 @@ END_IF;
 
 \section{Wyniki działania algorytmu regulacji}
 \label{thermal_dmc_wyniki}
-%% wyjscia 
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[t]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=7cm,
-                    xmin=0.0,xmax=284,%ymin=25,ymax=41,
-                    xlabel={$k$},
-                    ylabel={$y_{\mathrm{1}}[k]$},
-                    legend pos=north east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$y_{\mathrm{1}}[k]$},
-                    \addlegendentry{$y_{\mathrm{1}}^{\mathrm{zad}}[k]$},
-                
-                    \addlegendimage{no markers,red}
-                    \addlegendimage{no markers,blue}
-                
-                    \addplot[red, semithick] file{../lab/thermal_object/DMC/PROBA1output_1.csv};  
-                    \addplot[blue, semithick] file{../lab/thermal_object/DMC/PROBA1stpt_1.csv};
-                    
-                    \end{axis}
-            \end{tikzpicture}
-        }
-        \end{subfigure}
-
-        \begin{subfigure}[t]{\textwidth}
-            \centering
-            \resizebox{\linewidth}{!}{
-                \begin{tikzpicture}
-                    \begin{axis}[
-                        width=0.98\textwidth,
-                        height=7cm,
-                        xmin=0.0,xmax=284,%ymin=25,ymax=41,
-                        xlabel={$k$},
-                        ylabel={$y_{\mathrm{2}}[k]$},
-                        legend pos=south east,
-                        y tick label style={/pgf/number format/1000 sep=},
-                        ] 
-                        \addlegendentry{$y_{\mathrm{2}}[k]$},
-                        \addlegendentry{$y_{\mathrm{2}}^{\mathrm{zad}}[k]$},
-                    
-                        \addlegendimage{no markers,red}
-                        \addlegendimage{no markers,blue}
-                    
-                        \addplot[red, semithick] file{../lab/thermal_object/DMC/PROBA1output_2.csv};  
-                        \addplot[blue, semithick] file{../lab/thermal_object/DMC/PROBA1stpt_2.csv};
-                        
-                        \end{axis}
-                \end{tikzpicture}
-            }
-        \end{subfigure}
-        \caption{Wyjścia procesu wielowymiarowego}
-        \label{lab_dmc_1_out}
-
-\end{figure}
-
-%% wejscia 
-
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=6cm,
-                    xmin=0.0,xmax=284,%ymin=-3,ymax=3,
-                    xlabel={$k$},
-                    ylabel={$u_{\mathrm{1}}[k]$},
-                    legend pos=north east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$u_{\mathrm{1}}[k]$},
-                    \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../lab/thermal_object/DMC/PROBA1input_1.csv};  
-                \end{axis}
-            \end{tikzpicture}
-        }
-    \end{subfigure}
-
-    \begin{subfigure}[b]{\textwidth}
-        \centering
-        \resizebox{\linewidth}{!}{
-            \begin{tikzpicture}
-                \begin{axis}[
-                    width=0.98\textwidth,
-                    height=6cm,
-                    xmin=0.0,xmax=284,%ymin=-3,ymax=3,
-                    xlabel={$k$},
-                    ylabel={$u_{\mathrm{2}}[k]$},
-                    legend pos=south east,
-                    y tick label style={/pgf/number format/1000 sep=},
-                    ] 
-                    \addlegendentry{$u_{\mathrm{2}}[k]$},
-                    \addlegendimage{no markers,blue}
-                    \addplot[const plot, blue, semithick] file{../lab/thermal_object/DMC/PROBA1input_2.csv};  
-                \end{axis}
-            \end{tikzpicture}
-        }
-    \end{subfigure}
-
-    
-    \caption{Wejścia procesu wielowymiarowego}
-    \label{lab_dmc_1_in}
-\end{figure}
-\FloatBarrier
-
+Podczas laboratoriów udało nam się dostroić regulator DMC, tak żeby wyjście procesu i wejście  nie miało oscylacji. Po kilku próbach na laboratorium dobraliśmy optymalne nastawy, które prezentowały się następująco $D=N=N_{\mathrm{u}}=\lambda=100$. Zmiana wartości zadanej nastąpiła na chwilę przed rozpoczęciem rejestrowania danych do wykresów. Wartości wielkości zadanych przed rozpoczęciem pomiaru wynosiły $y_{\mathrm{1}}^{zad}[k] = 37^{\circ} C$, $y_{\mathrm{2}}^{zad}[k] = \num{46.8}^{\circ} C$, a dla obu wyjść chcieliśmy osiągnąć $y_{\mathrm{1}}^{zad}[k] = 45^{\circ} C$, $y_{\mathrm{2}}^{zad}[k] = 45^{\circ} C$. Jak możemy zauważyć na poniższych wykresach wartości zadane są osiągane, bez oscylacji sygnałów. Małym minusem jest fakt, że regulacja zajmuje odrobinę za dużo czasu. Może stanowić to problemem podczas regulacji pewnych obiektów. Gdyby zostało nam więcej czasu na przeprowadzenie eksperymentów, pozwoliłoby to na znalezienie współczynników regulatora, które zapewniałyby szybszą regulację.  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% wyjscia 
 
