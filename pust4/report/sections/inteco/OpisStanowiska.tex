@@ -148,6 +148,20 @@ zegar taktujący z \texttt{SM412} na \texttt{SM415}. Jest to konfigurowalny licz
 pozwala na ustawienie odpowiedniej liczby milisekund jako okres. Aby uzyskać żądany okres
 wpisaliśmy do rejestru \texttt{SD415} wartość $\num{250}$.
 
+\section{Konfiguracja przerwań}
+\label{inteco_interrupts}
+W celu uzyskania okresu próbkowania równego $T_{\mathrm{p}} = \num{0.5}$s skonfigurowaliśmy
+przerwania tak aby sekcja Fixed Scan obliczała sterowania co żądany kwant czasu. W tym celu
+ustawiliśmy Interrupt Setting from Internal Timer dla przerwania I31 Nna $\num{500}$ms.
+
+
+\begin{figure}[h]
+    \label{PLC::Konfiguracja::HIOEN::WindowCH5}
+    \centering
+    \includegraphics[scale=0.36]{./sections/inteco/images/interrupt.png}
+    \caption{Konfiguracja przerwań w systemu GxWorks 3}
+\end{figure}
+
 
 \section{Ethernet}
 \label{PLC::Konfiguracja::Ethernet}
