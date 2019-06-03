@@ -1,0 +1,66 @@
+K_PID1 := 0.06;
+TI_PID1 := 200.0;
+TD_PID1 := 1.1;
+
+
+
+TP_PID1 := 0.5;
+E0_PID1 := 0.0;
+E1_PID1 := 0.0;
+E2_PID1 := 0.0;
+R0_PID1 := 0.0;
+R1_PID1 := 0.0;
+R2_PID1 := 0.0;
+U_PID1 := 0.0;
+
+SV_PID1 := 100;
+PV_PID1 := 0.0;
+
+
+IF Reguluj THEN
+	//Regulator PID_1 na podstawie rownania roznicowego
+	SV_PID1 := Zadana_PID1;
+	PV_PID1 := SD4500; 
+	//Wyliczenie parametrow
+	R0_PID1 := K_PID1*(1+(TP_PID1/(2*TI_PID1)) + TD_PID1/TP_PID1); //r0 = K*( 1+(Tp/(2*Ti))+Td/Tp );
+	R1_PID1 := K_PID1*( (TP_PID1/(2*TI_PID1)) - (2*TD_PID1/TP_PID1) - 1); //r1 = K*( (Tp/(2*Ti))-(2*Td/Tp)-1 );
+	R2_PID1 := K_PID1*TD_PID1/TP_PID1; //K*Td/Tp;
+	//Wyliczenie uchybu regulacji i przesuniecie historii
+	E2_PID1 := E1_PID1;
+	E1_PID1 := E0_PID1;
+	E0_PID1 := SV_PID1 - PV_PID1;
+
+	//Obliczenie sterowania
+	U_PID1 := R2_PID1*E2_PID1 + R1_PID1*E1_PID1 + R0_PID1*E0_PID1 + U_PID1;
+	//u = R2*E2 + R1*E1 + R0*E0 + u;
+	EVAL_U_PID1 := U_PID1;
+	
+	IF (EVAL_U_PID1 > 50.0) THEN
+		EVAL_U_PID1 := 50.0;
+	END_IF;
+	
+	IF (EVAL_U_PID1 < -50.0) THEN
+		EVAL_U_PID1 := -50.0;
+	END_IF;
+	
+	
+	IF (U_PID1 > 0) THEN
+		SET(TRUE, X_direction);
+	ELSE
+		RST(TRUE, X_direction);
+		U_PID1 := ABS(U_PID1);
+	END_IF;	
+		
+	IF( REAL_TO_INT(U_PID1) = 0) THEN
+		U_PID1 := 1;
+	END_IF;
+		
+	
+	IF (U_PID1 > 50.0) THEN
+		U_PID1 := 50.0;
+	END_IF;
+	MOV(TRUE, REAL_TO_INT(U_PID1), X_PWM);
+	MOVB(TRUE, TRUE, X_allowPWM);
+	MOVB(TRUE, TRUE, X_enable);
+END_IF;
+

@@ -1,0 +1,2 @@
+PWM(TRUE, X_PWM, K100, X_output); // PWM OSI X - JAZDA WOZKA
+PWM(TRUE, Y_PWM, K100, Y_output); // PWM OSI Y - OBRÓT DZWIGU

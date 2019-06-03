@@ -1,0 +1,46 @@
+//Opoznienie po wlaczeniu sterownika - zezwolenie komunikacji modbus ze stanowiskiem
+OUT_T(TRUE,TC0,K20);
+
+SET(LDP(TRUE,TS0),Pozwolenie_pomiar_MODBUS);
+SET(LDP(TRUE,TS0),Pozwolenie_zapis_MODBUS);
+
+
+//float(real) przykladowe operacje
+licznik := 0;
+liczba1 := 123.4;
+licbza2 := 123.2;
+wynik   := 0.0;
+
+//petla FOR
+FOR  licznik := 1  TO  1000  BY  1  DO
+	 wynik := liczba1 * licbza2;
+END_FOR;
+
+
+//Generacja tesktu do wyslania przez socket communication
+tekst_temp := 'u_x=';
+tekst_temp := CONCAT(tekst_temp, INT_TO_STRING(REAL_TO_INT(EVAL_U_PID1)));
+tekst_temp := CONCAT(tekst_temp,';u_y=');
+tekst_temp := CONCAT(tekst_temp, INT_TO_STRING(REAL_TO_INT(EVAL_U_PID2)));
+tekst_temp := CONCAT(tekst_temp,';y_x=');
+tekst_temp := CONCAT(tekst_temp, INT_TO_STRING(SD4500));
+tekst_temp := CONCAT(tekst_temp,';y_y=');
+tekst_temp := CONCAT(tekst_temp, INT_TO_STRING(SD4620));
+tekst_temp := CONCAT(tekst_temp,';STPT1=');
+tekst_temp := CONCAT(tekst_temp, INT_TO_STRING(REAL_TO_INT(Zadana_PID1)));
+tekst_temp := CONCAT(tekst_temp,';STPT2=');
+tekst_temp := CONCAT(tekst_temp, INT_TO_STRING(REAL_TO_INT(Zadana_PID2)));
+
+//tekst_temp := CONCAT(tekst_temp,REAL_TO_STRING(y_k));
+tekst_temp := CONCAT(tekst_temp,';$L');
+
+send_string := tekst_temp;
+
+//Dlugosc tekstu
+dlugosc_tekstu := LEN(send_string);
+
+
+
+EI(TRUE); //przerwania zalaczone
+
+

@@ -1,0 +1,41 @@
+//Inicjalizacja MODBUS
+Pomiar_MODBUS := 0;
+Zapis_MODBUS := 0;
+
+MOV(TRUE, K10, Slave_adres);
+MOV(TRUE, K4, Function_code); //4-pomiar, 3-sterowanie
+MOV(TRUE, K0, Modbus_adres); //zaczynamy liczyc od 0
+MOV(TRUE, K7, Device_count); //7 pomiarow, 6 sterowan
+
+//Ustawienie poczatkowe wyjsc zadanych procesu
+ZRST(TRUE, D110, D120);
+Y_ZAD1 := 2500;
+Y_ZAD2 := 2500;
+
+MOV(TRUE, K250, SD415);
+
+//MOV(TRUE, K2, SD414);
+SET(TRUE, auto_send);
+
+//Y_enable:=FALSE;
+
+HIOEN(TRUE, K0, K1+K16, K0);
+
+
+
+
+//Ustawienia PID
+D4000 := 100; //okres regulacji 100ms
+D4022 := 1000; //limit gorny wartosci wyjsciowej
+D4023 := 0;    //limit dolny wartosci wyjsciowej
+SET(TRUE, D4001.5); //aktywacja limitow wyjsciowych - od razu antiwindup
+D4003 := 10; //wzmocnienie regulatora
+D4004 := 20; //stala czasowa calkowania regulatora
+SET(TRUE, D4001.0); //aktywacja trybu grzania - znak petli sprzezenia zwrotnego
+
+X_PWM:=K1;
+Y_PWM:=K1;
+Reguluj := FALSE;
+
+
+AUTO_COUNTER := 0;

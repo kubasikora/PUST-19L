@@ -1,0 +1,66 @@
+// PID2
+//Parametry regulatora z dyskretnego rownania roznicowego
+K_PID2 := 0.8;
+TI_PID2 := 900.0;
+TD_PID2 := 0.5;
+
+
+
+TP_PID2 := 0.5;
+E0_PID2 := 0.0;
+E1_PID2 := 0.0;
+E2_PID2 := 0.0;
+R0_PID2 := 0.0;
+R1_PID2 := 0.0;
+R2_PID2 := 0.0;
+U_PID2 := 0.0;
+
+
+SV_PID2 := 100;
+PV_PID2 := 0.0;
+
+
+IF Reguluj THEN
+	//Regulator PID_1 na podstawie rownania roznicowego
+	SV_PID2 := Zadana_PID2;
+	PV_PID2 :=SD4620; // y_k ma byc zmienna okreslajaca pierwsze wyjscie z obiektu UPEWNIC SIE CZY TO JEST TA ZMIENNA 
+	//Wyliczenie parametrow
+	R0_PID2 := K_PID2*(1+(TP_PID2/(2*TI_PID2)) + TD_PID2/TP_PID2); //r0 = K*( 1+(Tp/(2*Ti))+Td/Tp );
+	R1_PID2 := K_PID2*( (TP_PID2/(2*TI_PID2)) - (2*TD_PID2/TP_PID2) - 1); //r1 = K*( (Tp/(2*Ti))-(2*Td/Tp)-1 );
+	R2_PID2 := K_PID2*TD_PID2/TP_PID2; //K*Td/Tp;
+	//Wyliczenie uchybu regulacji i przesuniecie historii
+	E2_PID2 := E1_PID2;
+	E1_PID2 := E0_PID2;
+	E0_PID2 := SV_PID2 - PV_PID2;
+
+	//Obliczenie sterowania
+	U_PID2 := R2_PID2*E2_PID2 + R1_PID2*E1_PID2 + R0_PID2*E0_PID2 + U_PID2;
+	EVAL_U_PID2 := U_PID2;
+	
+	IF (EVAL_U_PID2 > 50.0) THEN
+		EVAL_U_PID2 := 50.0;
+	END_IF;
+		
+	IF (EVAL_U_PID2 < -50.0) THEN
+		EVAL_U_PID2 := -50.0;
+	END_IF;
+
+	IF (U_PID2 > 0) THEN
+		SET(TRUE, Y_direction);
+		ELSE
+		RST(TRUE, Y_direction);
+		U_PID2 := ABS(U_PID2); 
+	END_IF;	
+		
+	IF( REAL_TO_INT(U_PID2) = 0) THEN
+		U_PID2 := 1;
+	END_IF;
+		
+	
+	IF (U_PID2 > 50.0) THEN
+		U_PID2 := 50.0;
+	END_IF;
+	MOV(TRUE, REAL_TO_INT(U_PID2), Y_PWM);
+	MOVB(TRUE, TRUE, Y_allowPWM);
+	MOVB(TRUE, TRUE, Y_enable);
+END_IF;
