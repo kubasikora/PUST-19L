@@ -1,3 +1,69 @@
 \chapter{Zabezpieczenia stanowiska INTECO CRANE}
 \label{inteco_zabezpieczenie}
 
+\section{Procedura bazowania}
+\label{homecoming}
+\begin{lstlisting}
+IF start_homing = TRUE THEN	
+  IF homed_X = FALSE THEN
+	IF krancowka_X = FALSE THEN
+		SET(TRUE, X_enable); 
+		RST(TRUE, X_direction);
+		MOV(TRUE, K30, X_PWM);
+		MOVB(TRUE, TRUE,  X_allowPWM);
+	ELSE
+		MOV(TRUE, K1, X_PWM);
+		RST(TRUE, X_enable);
+		DHCMOVP(TRUE, 0, 0, SD4500); 
+		MOVB(TRUE, TRUE, homed_X);
+	END_IF;
+  END_IF;	
+  IF homed_Y = FALSE THEN
+	IF krancowka_Y = FALSE THEN
+		SET(TRUE, Y_enable); 
+		RST(TRUE, Y_direction);
+		MOV(TRUE, K30, Y_PWM);
+		MOVB(TRUE,TRUE,  Y_allowPWM);
+	ELSE
+		MOV(TRUE, K1, Y_PWM);
+		RST(TRUE,  Y_enable);
+		DHCMOVP(TRUE, 0, 0, SD4620); 
+		MOVB(TRUE, TRUE, homed_Y);
+	END_IF;
+  END_IF;	
+  IF homed_X AND homed_Y THEN
+	start_homing := FALSE;
+  END_IF;	
+END_IF;
+\end{lstlisting}
+
+
+Aby rozpoczynać pracę w położeniu początkowym, zawarliśmy w projekcie procedurę bazującą obiekt. Zadaniem programu było ustawienie obiektu w zerowym położeniu dla obydwu osi. Procedurę rozpoczynało ustawienie flagi \verb+start_homing+. Następnie sprawdzane były warunki na bazowanie osi (flagi \verb+homed_X+, \verb+homed_Y+). Do momentu osiągnięcia stanu wysokiego na czujnikach krańcowych dla każdej osi, odbywał się ruch obiektu w kierunku czujników. Gdy czujniki zostały aktywowane, rejestry przechowujące wartości odczytów z enkoderów były zerowane, co kończyło bazowanie.\\
+
+\section{Program ST}
+\label{program_zabezpieczenia}
+
+\begin{lstlisting}
+IF homed_X = TRUE THEN
+  IF encoder_X > K9450 OR encoder_X < -K50 THEN
+	MOVB(TRUE, FALSE, X_enable);
+	PWM(FALSE, K1, K100, X_output);
+	MOVB(TRUE, FALSE, homed_X);
+  END_IF;
+END_IF;
+
+IF homed_Y = TRUE THEN
+  IF encoder_Y  > K2350 OR encoder_Y < -K50 THEN
+	MOVB(TRUE, FALSE, Y_enable);
+	PWM(FALSE, K1, K100, Y_output);
+	MOVB(TRUE, FALSE, homed_Y);
+  END_IF;
+END_IF;
+\end{lstlisting}
+
+Programowe zabezpieczenia zostały zrealizowane w programie przedstawionym powyżej. W programie pod warunkiem wykrycia wcześniejszego bazowania obiektu, badane były wartości enkoderów odpowiadających poszczególnym osiom. W przypadku przekroczenia maksymalnych wartości dopuszczalnych na którymś z enkoderów, dalszy ruch w danej osi był blokowany poprzez reset flagi \verb+brake+ dla odpowiednich osi. Następnie resetowana była również flaga bazowania blokowanej osi.
+
+
+\section{Zabezpieczenie sprzętowe}
+Każdy obiekt z rodziny INTECO w laboratorium CS402 zawiera czerwony, awaryjny przycisk bezpieczeństwa. Podczas pracy z obiektem TCRANE był on szczególnie potrzebny ponieważ obiekt czasem nie pracował tak jakbyśmy sobie tego życzyli. Podczas eksperymentów trzeba było uważać zarówno na obiekt jak i na osoby w jego otoczeniu. W kryzysowych sytuacjach odłączaliśmy zasilanie od obiektu wciskając przycisk bezpieczeństwa.
+\label{czerwony_przycisk}
