@@ -3,6 +3,102 @@
 
 \section{Implementacja wielopętlowego regulatora PID dla stanowiska INTECO CRANE}
 \label{inteco_impl}
+
+Regulatory PID przygotowaliśmy w języku ST.
+
+\begin{lstlisting}
+K_PID1 := 0.06;
+TI_PID1 := 200.0;
+TD_PID1 := 1.1;
+    
+    
+TP_PID1 := 0.5;
+E0_PID1 := 0.0;
+E1_PID1 := 0.0;
+E2_PID1 := 0.0;
+R0_PID1 := 0.0;
+R1_PID1 := 0.0;
+R2_PID1 := 0.0;
+U_PID1 := 0.0;
+  
+SV_PID1 := 100;
+PV_PID1 := 0.0;
+    
+//Wyliczenie parametrow
+R0_PID1 := K_PID1*(1+(TP_PID1/(2*TI_PID1)) + 
+    TD_PID1/TP_PID1); 
+R1_PID1 := K_PID1*( (TP_PID1/(2*TI_PID1)) 
+- (2*TD_PID1/TP_PID1) - 1);
+R2_PID1 := K_PID1*TD_PID1/TP_PID1; //K*Td/Tp;
+
+
+IF Reguluj THEN
+    //Regulator PID_1 na podstawie rownania roznicowego
+    SV_PID1 := Zadana_PID1;
+    PV_PID1 := SD4500; 
+
+
+    //Wyliczenie uchybu regulacji i przesuniecie historii
+    E2_PID1 := E1_PID1;
+    E1_PID1 := E0_PID1;
+    E0_PID1 := SV_PID1 - PV_PID1;
+    
+    //Obliczenie sterowania
+    U_PID1 := R2_PID1*E2_PID1 + R1_PID1*E1_PID1 + 
+    R0_PID1*E0_PID1 + U_PID1;
+    EVAL_U_PID1 := U_PID1;
+      
+    IF (EVAL_U_PID1 > 50.0) THEN
+        EVAL_U_PID1 := 50.0;
+    END_IF;
+        
+    IF (EVAL_U_PID1 < -50.0) THEN
+        EVAL_U_PID1 := -50.0;
+    END_IF;
+        
+    //ustalenie kierunku i normalizacja
+    IF (U_PID1 > 0) THEN
+        SET(TRUE, X_direction);
+    ELSE
+        RST(TRUE, X_direction);
+        U_PID1 := ABS(U_PID1);
+    END_IF;	
+            
+    IF( REAL_TO_INT(U_PID1) = 0) THEN
+        U_PID1 := 1;
+    END_IF;
+            
+    //ograniczenia
+    IF (U_PID1 > 50.0) THEN
+        U_PID1 := 50.0;
+    END_IF;
+
+    MOV(TRUE, REAL_TO_INT(U_PID1), X_PWM);
+    MOVB(TRUE, TRUE, X_allowPWM);
+    MOVB(TRUE, TRUE, X_enable);
+END_IF;
+    
+\end{lstlisting}
+\vspace{0.5cm}
+\indent{} Wyliczanie nowego sterowania następuje tylko w przypadku gdy bit \texttt{Reguluj} jest aktywny.
+W pierwszej kolejności odczytywana jest wartość zadana oraz aktualna wartość wyjścia procesu.
+W dalszej kolejności obliczane i przesuwane są uchyby $e[k-2]$, $e[k-1]$ oraz $e[k]$, a następnie 
+obliczane sterowanie zgodnie ze wzorem na cyfrowy regulator PID. Ostatecznie sterowanie jest doprowadzane 
+do postaci rozumianej przez obiekt - znak wartości sterowania ustala stan wyjścia określającego kierunek.
+Ostatecznie następuje implementacja programowych ograniczeń na wartość sterowania. Zgodnie z prowadzącym
+ustaliliśmy że sygnał sterujący powinien nie przekraczać $50$\% maksymalnej dostępnej wartości. \\
+
+Regulator PID dla osi Y został zaimplementowany analogicznie, dlatego też jego kod nie został zamieszczony
+w sprawozdaniu.
+
+
+
+
+
+
+
+
+
 \newpage
 \section{Proces strojenia regulatorów PID}
 \label{inteco_strojenie_pid}
