@@ -1,0 +1,17 @@
+IF homed_X = TRUE THEN
+	IF encoder_X > K9450 OR encoder_X < -K50 THEN
+		MOVB(TRUE, FALSE, X_enable);
+		PWM(FALSE, K1, K100, X_output); // PWM OSI X - KARETKA
+		MOVB(TRUE, FALSE, homed_X);
+	END_IF;
+END_IF;
+
+IF homed_Y = TRUE THEN
+	IF encoder_Y  > K2350 OR encoder_Y < -K50 THEN
+		MOVB(TRUE, FALSE, Y_enable);
+		PWM(FALSE, K1, K100, Y_output); // PWM OSI Z - OBRÓT DZWIGU
+		MOVB(TRUE, FALSE, homed_Y);
+	END_IF;
+END_IF;
+
+//MOVB(TRUE, FALSE, Y_enable);  // blokada osi Y

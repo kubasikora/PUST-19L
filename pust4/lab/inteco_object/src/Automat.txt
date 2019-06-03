@@ -1,0 +1,38 @@
+IF automat THEN
+	SET(TRUE, Reguluj);
+	AUTO_COUNTER := AUTO_COUNTER + 1;
+
+	IF (AUTO_COUNTER < 30) THEN
+		Zadana_PID1 := 4000.0;
+		Zadana_PID2 := 300.0;
+		
+	END_IF;
+
+	IF (AUTO_COUNTER > 30 AND AUTO_COUNTER < 60) THEN
+		Zadana_PID1 := 4000.0;
+		Zadana_PID2 := 500.0;
+	END_IF;
+
+	IF (AUTO_COUNTER > 60 AND AUTO_COUNTER < 90) THEN
+		Zadana_PID1 := 3000.0;
+		Zadana_PID2 := 500.0;
+	END_IF;
+
+
+	IF (AUTO_COUNTER > 90 AND AUTO_COUNTER < 120) THEN
+		Zadana_PID1 := 3000.0;
+		Zadana_PID2 := 400.0;
+	END_IF;
+	
+	IF (AUTO_COUNTER > 120 AND AUTO_COUNTER < 150) THEN
+		Zadana_PID1 := 3500.0;
+		Zadana_PID2 := 400.0;
+	END_IF;
+
+	IF AUTO_COUNTER > 150 THEN
+		AUTO_COUNTER := 0;
+	END_IF;
+
+ELSE
+	RST(TRUE, Reguluj);
+END_IF;

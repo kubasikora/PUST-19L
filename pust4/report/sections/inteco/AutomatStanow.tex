@@ -1,2 +1,49 @@
 \chapter{Automat sterujący}
 \label{inteco_automat}
+
+\section{Listing programu}
+\label{automat_lst}
+
+\begin{lstlisting}
+IF automat THEN
+  SET(TRUE, Reguluj);
+  AUTO_COUNTER := AUTO_COUNTER + 1;
+
+  IF (AUTO_COUNTER < 30) THEN
+	Zadana_PID1 := 4000.0;
+	Zadana_PID2 := 300.0;	
+  END_IF;
+
+  IF (AUTO_COUNTER > 30 AND AUTO_COUNTER < 60) THEN
+	Zadana_PID1 := 4000.0;
+	Zadana_PID2 := 500.0;
+  END_IF;
+
+  IF (AUTO_COUNTER > 60 AND AUTO_COUNTER < 90) THEN
+	Zadana_PID1 := 3000.0;
+	Zadana_PID2 := 500.0;
+  END_IF;
+
+  IF (AUTO_COUNTER > 90 AND AUTO_COUNTER < 120) THEN
+  	Zadana_PID1 := 3000.0;
+	Zadana_PID2 := 400.0;
+  END_IF;
+	
+  IF (AUTO_COUNTER > 120 AND AUTO_COUNTER < 150) THEN
+	Zadana_PID1 := 3500.0;
+	Zadana_PID2 := 400.0;
+  END_IF;
+
+  IF AUTO_COUNTER > 150 THEN
+	AUTO_COUNTER := 0;
+  END_IF;
+
+ELSE
+  RST(TRUE, Reguluj);
+END_IF;
+
+\end{lstlisting}
+
+\section{Opis automatu}
+\label{automat_opis}
+Program zawierający automat stanów umieszczony został w sekcji \verb+Fixed Scan+. Przejście na pracę automatyczną realizuje się poprzez ustawienie flagi \verb+automat+. Po ustawieniu flagi następuje zliczanie cykli wywoływania sekcji \verb+Fixed Scan+ za pomocą zmiennej \verb+AUTO_COUNTER+, od której zależą zmiany wartości zadanych dla każdego toru regulacji. Zmiany następują co 30 cykli programu co daje 15 sekund na regulację do poszczególnych wartości zadanych przy okresie próbkowania równym \num{0,5}s.
