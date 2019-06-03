@@ -152,30 +152,35 @@ Zaprezentowane modele obiektów są najlepszymi, które udało nam się uzyskać
 \section{Implementacja algorytmu regulacji DMC na sterowniku PLC}
 \label{thermal_dmc_impl}
 ~\\\\Część algorytmu odpowiadającą za wyliczanie sterowań (wejść procesu) napisaliśmy w języku ST w programie GX Works 3 i umieściliśmy w części Fixed Scan. Plik w którym ten kod się znajduje nosi nazwę \textit{DMC}.
-\begin{lstlisting}[caption={Kod obliczający sterownanie dla regulatora dwuwymiarowego DMC (GX Works)}, language=C]
+\begin{lstlisting}[caption={Kod obliczający sterownanie dla regulatora dwuwymiarowego DMC (GX Works)}]
 DMC_K11 := 0.0935;
 DMC_K12 := 0.004;
 DMC_K21 := 0.0038;
 DMC_K22 := 0.0952;
 
-dU1 := DMC_K11 *( Zadana_DMC1 - D100 ) + DMC_K12 *( Zadana_DMC2 - D102 ) ;
-dU2 := DMC_K21 *( Zadana_DMC1 - D100 ) + DMC_K22 *( Zadana_DMC2 - D102 ) ;
+dU1 := DMC_K11 *( Zadana_DMC1 - D100 ) + 
+    DMC_K12 *( Zadana_DMC2 - D102 ) ;
+dU2 := DMC_K21 *( Zadana_DMC1 - D100 ) + 
+    DMC_K22 *( Zadana_DMC2 - D102 ) ;
 dU1 := dU1 /100.0;
 dU2 := dU2 /100.0;
 temp_1 := dU1 ;
 temp_2 := dU2 ;
 
 FOR licznik := 0 TO 98 BY 1 DO
-	dU1 := dU1 - tablica_MP[0].wiersz[ licznik ]* tablica_MP[2].wiersz[ licznik ];
-	dU2 := dU2 - tablica_MP[1].wiersz[ licznik ]* tablica_MP[2].wiersz[ licznik ];
+    dU1 := dU1 - tablica_MP[0].wiersz[ licznik ]* 
+        tablica_MP[2].wiersz[ licznik ];
+    dU2 := dU2 - tablica_MP[1].wiersz[ licznik ]* 
+        tablica_MP[2].wiersz[ licznik ];
 END_FOR ;
 
 FOR licznik := 98 TO 2 BY -1 DO
-	tablica_MP[2].wiersz[ licznik ]:= tablica_MP[2].wiersz[ licznik-2];
+    tablica_MP[2].wiersz[ licznik ]:= 
+        tablica_MP[2].wiersz[licznik-2];
 END_FOR ;
 
-tablica_MP[2].wiersz[0]:= dU1 ;
-tablica_MP[2].wiersz[1]:= dU2 ;
+tablica_MP[2].wiersz[0]:= dU1;
+tablica_MP[2].wiersz[1]:= dU2;
 U_DMC1 := ( U_DMC1 / 10 + dU1 ) * 10; 
 U_DMC2 := ( U_DMC2 / 10 + dU2 ) * 10; 
 
@@ -192,7 +197,19 @@ END_IF;
 
 \section{Wyniki działania algorytmu regulacji}
 \label{thermal_dmc_wyniki}
-Podczas laboratoriów udało nam się dostroić regulator DMC, tak żeby wyjście procesu i wejście  nie miało oscylacji. Po kilku próbach na laboratorium dobraliśmy optymalne nastawy, które prezentowały się następująco $D=N=N_{\mathrm{u}}=\lambda=100$. Zmiana wartości zadanej nastąpiła na chwilę przed rozpoczęciem rejestrowania danych do wykresów. Wartości wielkości zadanych przed rozpoczęciem pomiaru wynosiły $y_{\mathrm{1}}^{zad}[k] = 37^{\circ} C$, $y_{\mathrm{2}}^{zad}[k] = \num{46.8}^{\circ} C$, a dla obu wyjść chcieliśmy osiągnąć $y_{\mathrm{1}}^{zad}[k] = 45^{\circ} C$, $y_{\mathrm{2}}^{zad}[k] = 45^{\circ} C$. Jak możemy zauważyć na poniższych wykresach wartości zadane są osiągane, bez oscylacji sygnałów. Małym minusem jest fakt, że regulacja zajmuje odrobinę za dużo czasu. Może stanowić to problemem podczas regulacji pewnych obiektów. Gdyby zostało nam więcej czasu na przeprowadzenie eksperymentów, pozwoliłoby to na znalezienie współczynników regulatora, które zapewniałyby szybszą regulację.  
+Podczas laboratoriów udało nam się dostroić regulator DMC, tak żeby wyjście procesu i wejście 
+nie miało oscylacji. 
+Po kilku próbach na laboratorium dobraliśmy optymalne nastawy, 
+które prezentowały się następująco $D=N=N_{\mathrm{u}}=\lambda=100$. 
+Zmiana wartości zadanej nastąpiła na chwilę przed rozpoczęciem rejestrowania danych do wykresów. 
+Wartości wielkości zadanych przed rozpoczęciem pomiaru wynosiły $y_{\mathrm{1}}^{zad}[k] = 37^{\circ} C$, 
+$y_{\mathrm{2}}^{zad}[k] = \num{46.8}^{\circ} C$, a dla obu wyjść chcieliśmy osiągnąć 
+$y_{\mathrm{1}}^{zad}[k] = 45^{\circ} C$, $y_{\mathrm{2}}^{zad}[k] = 45^{\circ} C$. 
+Jak możemy zauważyć na poniższych wykresach wartości zadane są osiągane, 
+bez oscylacji sygnałów. Małym minusem jest fakt, że regulacja zajmuje odrobinę za dużo czasu. 
+Może stanowić to problemem podczas regulacji pewnych obiektów. Zmniejszenie czasu regulacji można osiągnąć
+poprzez zmniejszenie parametru kary $\lambda$.
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% wyjscia 
 
