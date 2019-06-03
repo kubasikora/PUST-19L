@@ -1,9 +1,37 @@
 \chapter{Porównanie działania wbudowanego PID z PID-em zaimplementowanym przez nas na laboratorium}
 \label{pid_wbudowany}
-Do sekcji programów SCAN dodajemy program realizujący zadanie wbudowanego w PLC regulatora PID. Tak jak wcześniej sekcja programów FIXED SCAN zawiera programy odpowiedzialne za cykliczne wykonywanie symulacji procesu. Dla wbudowanego regulatora PID tworzymy elementy SV, PV, MV i $Control\_ON$ - do włączania regulatora. Przyjęty przez nas typ danych dla SV, PV, MV to Word[Signed], a dla $Control\_ON$ Bit. Dodaliśmy również zmienne, które prezentowały nastawy regulatora PID. Wszystkie wymienione zmienne zostały zadeklarowane jako zmienne globalne. Poniższy kodu pozwolił na wykorzystanie wbudowanego w sterowniku PLC regulatora PID (umieszczony w sekcji SCAN). 
-\begin{lstlisting}[caption={Użycie wbudowanego regulatora PID}, language=C]
-MOV(PID1.Control_ON, REAL_TO_INT( Proces1.y_k ),PID1.PV);
-PID( PID1.Control_ON, PID1.SV , PID1.PV , PID1.params[0] , PID1.MV);
-EMOV(PID1.Control_ON, INT_TO_REAL(PID1.MV), Proces1.u_k);
+Aby zaimplementować regulator PID przy użyciu wbudowanej funkcji PID należy 
+do sekcji programów SCAN dodać program realizujący zadanie wbudowanego w PLC regulatora PID, w 
+odróżnieniu od zwykłej implementacji gdzie program obliczający sterowanie znajdował się w sekcji programów 
+FIXED SCAN. \\
+
+Dla wbudowanego regulatora PID tworzymy elementy SV, PV, 
+MV do opisu procesu oraz $Control\_ON$ do włączania regulatora. Przyjęty przez nas typ danych dla 
+SV, PV, MV to Word[Signed], a dla $Control\_ON$ Bit. Należy dodać również zmienne, 
+reprezentujące nastawy regulatora PID. Najlepiej zadeklarować omówione zmienne jako globalne. 
+Niniejszy kod uruchamia wbudowany regulator PID.
+
+\begin{lstlisting}[caption={Użycie wbudowanego regulatora PID}]
+MOV(PID1.Control_ON, 
+    REAL_TO_INT( Proces1.y_k ),
+    PID1.PV);
+
+PID( PID1.Control_ON, 
+     PID1.SV , 
+     PID1.PV , 
+     PID1.params[0] , 
+     PID1.MV);
+
+EMOV(PID1.Control_ON, 
+     INT_TO_REAL(PID1.MV), 
+     Proces1.u_k);
 \end{lstlisting}
-Symulacji procesu dokonujemy w odpowiednich programach z grupie FIXED SCAN. Przed uruchomieniem całego programu na sterowniku PLC musieliśmy jeszcze dokonać prawidłowej inicjalizacji. W tym celu w grupie INIT stworzyliśmy kod realizujący to zadanie. 
+
+Struktura PID1 przechowuje informacje o podstawowych nastawach regulatora PID oraz bardziej zaawansowane 
+parametry takie jak limity sterowania, kierunki działania oraz ustawienia mechanizmu \textit{anti-windup}.\\
+
+Z powodu błędu w instrukcji laboratoryjnej opisanego wcześniej, nie mogliśmy zrealizować tego zadania, gdyż 
+nie starczyło nam czasu, mimo iż wiedzieliśmy jak je wykonać. 
+Użycie wbudowanego regulatora PID jest o wiele prostsze i szybsze niż implementacja własnego regulatora
+i należy z tej możliwości korzystać w przypadku gdy jest ona dostępna.
+
