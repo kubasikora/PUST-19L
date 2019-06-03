@@ -3,6 +3,654 @@
 
 \section{Implementacja wielopętlowego regulatora PID dla stanowiska INTECO CRANE}
 \label{inteco_impl}
-
+\newpage
 \section{Proces strojenia regulatorów PID}
 \label{inteco_strojenie_pid}
+Parametry regulatorów PID dla stanowiska INTECO TCRANE dobraliśmy metodą eksperymentalną.
+W każdej kolejnej iteracji, wykorzystując doświadczenie i intuicje zmienialiśmy poszczególne
+parametry obu regulatorów.\\
+
+
+\subsubsection{Próba 1}
+W pierwszej próbie, sprawdziliśmy jak zachowa się obiekt przy sterowaniu regulatorami
+typu P z jednostkowymi wzmocnieniami. Takie eksperyment pozwolił nam na rozeznanie się
+jak poszczególne wyjścia reagują na sterowanie w pętli sprzężenia zwrotnego.\\
+
+Wykorzystany zestaw parametrów:
+
+\begin{center}
+    $K^{\num{1}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{1}}_{\mathrm{i}} = \num{99999.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{0.0}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{1.0}$, $T^{\num{2}}_{\mathrm{i}} = \num{99999.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.0}$ \\
+\end{center}
+\vspace{1cm}
+
+Wyniki eksperymentu nie były zadowalające. Zaobserwowaliśmy bardzo duże uchyby ustalone, a 
+wyjście osi X cechowały się sporymi oscylacjami. Mimo złych wyników, eksperyment ten dał nam dużo 
+informacji o obiekcie i pozwolił na sprawniejsze strojenie.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=74,ymin=0,ymax=5000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{X}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{X}}[k]$},
+                \addlegendentry{$y_{\mathrm{X}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid1_output_x.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid1_stpt_x.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=74,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{X}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{X}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid1_input_x.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi X}
+    \label{pid_1_x}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=74,ymin=0,ymax=1000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{Y}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{Y}}[k]$},
+                \addlegendentry{$y_{\mathrm{Y}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid1_output_y.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid1_stpt_y.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=74,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{Y}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{Y}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid1_input_y.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi Y}
+    \label{pid_1_y}
+\end{figure}
+\FloatBarrier
+
+
+
+\subsubsection{Próba 2}
+W drugiej próbie uruchomiliśmy człony całkujący i różniczkujący obu regulatorów oraz dopasowaliśmy wzmocnienia 
+do charakteru wyjść. W przypadku osi X wzmocnienie zmniejszyliśmy tak aby zlikwidować oscylacje. W przypadku osi Y, 
+zwiększylismy wzmocnienie aby zmniejszyć uchyb ustalony.
+
+Wykorzystany zestaw parametrów:
+
+\begin{center}
+    $K^{\num{1}}_{\mathrm{p}} = \num{0.5}$, $T^{\num{1}}_{\mathrm{i}} = \num{600.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{1.0}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{2.0}$, $T^{\num{2}}_{\mathrm{i}} = \num{700.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.5}$ \\
+\end{center}
+\vspace{1cm}
+
+Wyjście osi X nadal pozostawało dalekie od doskonałości. Uruchomienie członu całkującego pozwoliło na 
+usunięcie uchybu ustalonego, jednak nie zlikwidowało oscylacji położenia. Sygnał sterujący
+oscyluje pomiędzy wartościami granicznymi co utrudnia skuteczną regulację. W przypadku osi Y, sytuacja
+wygląda o wiele lepiej. Pomimo oscylacji w początkowej fazie, sygnał wyjściowy ustala się na wartości zadanej
+a sterowanie spada do zera.
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=64,ymin=0,ymax=5000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{X}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{X}}[k]$},
+                \addlegendentry{$y_{\mathrm{X}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid2_output_x.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid2_stpt_x.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=64,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{X}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{X}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid2_input_x.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi X}
+    \label{pid_2_x}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=64,ymin=0,ymax=1000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{Y}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{Y}}[k]$},
+                \addlegendentry{$y_{\mathrm{Y}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid2_output_y.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid2_stpt_y.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=0.0,xmax=64,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{Y}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{Y}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid2_input_y.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi Y}
+    \label{pid_2_y}
+\end{figure}
+\FloatBarrier
+
+%%%%%%%% proba 3
+
+\subsubsection{Próba 3}
+W trzeciej próbie uznaliśmy że jeszcze bardziej zmniejszymy wzmocnienie regulatora sterującego osią X, tak 
+aby niedoprowadzić do oscylacji. Zmniejszając wzmocnienie, zdecydowaliśmy się na zmniejszenie parametru 
+$T^{\num{1}}_{\mathrm{i}}$ i zwiększenie $T^{\num{1}}_{\mathrm{d}}$ tak aby utrzymać rozsądny czas regulacji.
+W przypadku osi Y, głownym celem było skrócenie czasu oscylacji lub ich ewentualne wyeliminowanie. Spróbowaliśmy 
+zrealizować ten cel poprzez zmniejszenie wzmocnienia i zwiększenie $T^{\num{2}}_{\mathrm{i}}$.\\
+
+Wykorzystany zestaw parametrów:
+
+\begin{center}
+    $K^{\num{1}}_{\mathrm{p}} = \num{0.05}$, $T^{\num{1}}_{\mathrm{i}} = \num{200.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{1.0}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{1.6}$, $T^{\num{2}}_{\mathrm{i}} = \num{800.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.5}$ \\
+\end{center}
+\vspace{1cm}
+
+Taki dobór parametrów pozwolił na całkiem dobrą regulację obu wyjść stanowiska. W przypadku osi X
+pojawił się niewielki uchyb ustalony. Wynika on z faktu że dla małych sterowań, stanowisko nie reaguje
+z powodu za dużego oporu silnika. W przypadku osi Y, dalej zauważalne są niewielkie oscylacje, jednak 
+udało się znacznie zmniejszyć czas ich trwania.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=118,ymin=0,ymax=5000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{X}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{X}}[k]$},
+                \addlegendentry{$y_{\mathrm{X}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid3_output_x.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid3_stpt_x.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=1,xmax=118,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{X}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{X}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid3_input_x.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi X}
+    \label{pid_3_x}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=118,ymin=0,ymax=1000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{Y}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{Y}}[k]$},
+                \addlegendentry{$y_{\mathrm{Y}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid3_output_y.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid3_stpt_y.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=1,xmax=118,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{Y}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{Y}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid3_input_y.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi Y}
+    \label{pid_3_y}
+\end{figure}
+\FloatBarrier
+
+
+%%%%%%%% proba 4
+
+\subsubsection{Próba 4}
+W jak się okazało ostatniej próbie zdecydowaliśmy się na lekkie modyfikacje poszczególnych parametrów obu
+regulatorów. Zmian dokonywalismy na podstawie intuicji inżynierskiej. \\
+
+Wykorzystany zestaw parametrów:
+
+\begin{center}
+    $K^{\num{1}}_{\mathrm{p}} = \num{0.06}$, $T^{\num{1}}_{\mathrm{i}} = \num{200.0}$, $T^{\num{1}}_{\mathrm{d}} = \num{1.1}$ \\
+    $K^{\num{2}}_{\mathrm{p}} = \num{1.2}$, $T^{\num{2}}_{\mathrm{i}} = \num{900.0}$, $T^{\num{2}}_{\mathrm{d}} = \num{0.6}$ \\
+\end{center}
+\vspace{1cm}
+
+Ostateczny zestaw parametrów regulatorów pozwolił nam na uzyskanie bardzo dobrych rezultatów eksperymentu.
+Sygnał wyjściowy bardzo szybko osiągał okolice wartości zadanej, a sterowanie bardzo szybko ustalało się
+na danej wartości.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=52,ymin=0,ymax=5000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{X}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{X}}[k]$},
+                \addlegendentry{$y_{\mathrm{X}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid5_output_x.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid5_stpt_x.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=1,xmax=52,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{X}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{X}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid5_input_x.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi X}
+    \label{pid_4_x}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=52,ymin=0,ymax=1000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{Y}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{Y}}[k]$},
+                \addlegendentry{$y_{\mathrm{Y}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/pid5_output_y.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/pid5_stpt_y.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=1,xmax=52,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{Y}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{Y}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/pid5_input_y.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi Y}
+    \label{pid_4_y}
+\end{figure}
+\FloatBarrier
+
+\section{Prezentacja działania regulatorów PID przy cyklicznej zmianie wartości zadanych przez automat sterujący}
+\label{automat_sterowanie_pid}
+Po zaimplementowaniu automatu sterującego, przetestowaliśmy działanie nastrojonych regulatorów przy zmianie 
+wartości zadanych przez ten automat.
+
+Jak widać na poniżej przedstawionych wykresach, regulatory bardzo dobrze radzą sobie ze zmienną wartością 
+zadaną położenia.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=110,ymin=0,ymax=5000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{X}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{X}}[k]$},
+                \addlegendentry{$y_{\mathrm{X}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/PID_FINAL_output_x.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/PID_FINAL_stpt_x.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=1,xmax=110,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{X}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{X}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/PID_FINAL_input_x.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi X}
+    \label{pid_4_x}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}
+                \begin{axis}[
+                    width=0.98\textwidth,
+                    height=7cm,
+                    xmin=1,xmax=110,ymin=0,ymax=1000,
+                    xlabel={$k$},
+                    ylabel={$y_{\mathrm{Y}}[k]$},
+                    legend pos=south east,
+                    y tick label style={/pgf/number format/1000 sep=},
+                    ] 
+                \addlegendentry{$y_{\mathrm{Y}}[k]$},
+                \addlegendentry{$y_{\mathrm{Y}}^{\mathrm{zad}}[k]$},
+                
+                \addlegendimage{no markers,red}
+                \addlegendimage{no markers,blue}
+                
+                \addplot[red, semithick] file{../data/lab/inteco_object/zad10/PID_FINAL_output_y.csv};  
+                \addplot[blue, semithick] file{../data/lab/inteco_object/zad10/PID_FINAL_stpt_y.csv};
+                  
+                \end{axis}
+            \end{tikzpicture}
+        }
+        \end{subfigure}
+
+        \begin{subfigure}[b]{\textwidth}
+            \centering
+            \resizebox{\linewidth}{!}{
+                \begin{tikzpicture}
+                    \begin{axis}[
+                        width=0.98\textwidth,
+                        height=7cm,
+                        xmin=1,xmax=110,ymin=-60,ymax=60,
+                        xlabel={$k$},
+                        ylabel={$u_{\mathrm{Y}}[k]$},
+                        legend pos=south east,
+                        y tick label style={/pgf/number format/1000 sep=},
+                        ] 
+                    \addlegendentry{$u_{\mathrm{Y}}[k]$},
+                    
+                    \addlegendimage{no markers, blue}
+                    
+                    \addplot[const plot, blue, semithick] file{../data/lab/inteco_object/zad10/PID_FINAL_input_y.csv};  
+                    \end{axis}
+            \end{tikzpicture}
+        }
+    \end{subfigure}
+    \caption{Przebiegi sygnałów wyjściowych i wejściowych dla osi Y}
+    \label{pid_4_y}
+\end{figure}
+\FloatBarrier
+
