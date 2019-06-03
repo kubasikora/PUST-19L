@@ -1,0 +1,70 @@
+PID1 
+
+OS X
+KP 1
+TI 9999999
+TD 0
+
+OS Y 
+KP 1 
+TI 9999999
+TD 0
+
+
+PID2 
+
+OS X 
+KP 0.5
+TI 600
+TD 1
+
+OS Y
+KP 2
+TI 700
+TD 0.5
+
+PID3 
+
+OS X
+KP 0.05 
+TI 200
+TD 1
+
+OS Y
+KP 1.6
+TD 800
+TI 0.5
+
+PID4 
+
+OS X
+KP 0.09
+TI 190
+TD 1.1
+
+
+OS Y
+KP 1.6
+TI 850
+TD 1.1
+
+PID5
+OS X 0.06
+TI 200
+TD 1.1
+
+OS Y
+KP 1.2
+TI 900
+TD 0.6
+
+
+PID6 
+
+OS X 
+TAK SAMO
+
+OS Y
+KP 1.1
+TI 1000
+TD 0.5
